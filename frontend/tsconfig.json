@@ -1,0 +1,40 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "target": "es5",
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "lib": [
+      "es2017",
+      "dom"
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "@kmeal-frontend/*": [
+        "libs/*"
+      ],
+      "@kmeal-frontend/nativescript": [
+        "xplat/nativescript/index.ts"
+      ],
+      "@kmeal-frontend/nativescript/*": [
+        "xplat/nativescript/*"
+      ],
+      "@kmeal-frontend/web": [
+        "xplat/web/index.ts"
+      ],
+      "@kmeal-frontend/web/*": [
+        "xplat/web/*"
+      ]
+    }
+  },
+  "exclude": [
+    "node_modules",
+    "tmp"
+  ]
+}
