@@ -14,4 +14,4 @@ const config = Object.keys(configs)
 
 //console.log(config);
 
-module.exports = config;
+export default config;
