@@ -1,0 +1,44 @@
+<FlexboxLayout class="page">
+        <StackLayout class="form">
+            <Label class="header" text="Sign In"></Label>
+
+            <TextField #firstname 
+                class="input" 
+                hint="First Name" 
+                keyboardType="text" 
+                autocorrect="false" 
+                autocapitalizationType="none" 
+                [(ngModel)]="user.firstName" ></TextField>
+            
+            <TextField #lastname 
+                class="input" 
+                hint="Last Name" 
+                keyboardType="text" 
+                autocorrect="false" 
+                autocapitalizationType="none" 
+                [(ngModel)]="user.lastName" ></TextField>
+    
+            
+            <TextField #username 
+                class="input" 
+                hint="Phone Number" 
+                keyboardType="text" 
+                autocorrect="false" 
+                autocapitalizationType="none" 
+                [(ngModel)]="user.username" ></TextField>
+                
+            
+            <TextField 
+                #password 
+                class="input" 
+                hint="Password" 
+                secure="true" 
+                [(ngModel)]="user.password" ></TextField>
+    
+                
+            <ActivityIndicator rowSpan="3" [busy]="processing"></ActivityIndicator>
+    
+            <Button [text]="'Log In'" [isEnabled]="!processing" (tap)="submit()" class="btn btn-primary m-t-20"></Button>
+            <Label text="Back to Login" col="1" row="0" backgroundColor="green" (tap)="backtoLogin()"/>
+        </StackLayout>
+    </FlexboxLayout>

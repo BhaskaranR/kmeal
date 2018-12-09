@@ -1,0 +1,33 @@
+<FlexboxLayout class="page">
+    <StackLayout class="form">
+        <Label class="header" text="Sign In"></Label>
+
+        
+        <TextField #username 
+            class="input" 
+            hint="User Name / Phone #" 
+            [isEnabled]="!processing" 
+            keyboardType="text" 
+            autocorrect="false" 
+            autocapitalizationType="none" 
+            [(ngModel)]="user.email" ></TextField>
+            
+        
+        <TextField 
+            #password 
+            class="input" 
+            [isEnabled]="!processing" 
+            hint="Password" 
+            secure="true" 
+            [(ngModel)]="user.password" ></TextField>
+
+        <GridLayout columns="auto,auto" rows="auto,auto" backgroundColor="lightgray" >
+            <Label text="" col="0" row="0" backgroundColor="red"/>
+            <Label text="Sign Up Now" col="1" row="0" backgroundColor="green" (tap)="register()"/>
+        </GridLayout> 
+            
+        <ActivityIndicator rowSpan="3" [busy]="processing"></ActivityIndicator>
+
+        <Button [text]="'Log In'" [isEnabled]="!processing" (tap)="submit()" class="btn btn-primary m-t-20"></Button>
+    </StackLayout>
+</FlexboxLayout>
