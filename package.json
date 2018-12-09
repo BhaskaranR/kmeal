@@ -15,7 +15,10 @@
     "setup:wallets": "./eos/scripts/setup_wallets.sh",
     "setup:contract": "./eos/scripts/setup_contract.sh",
     "restart": "yarn eos:stop && rm -rf ./eos/data ./eos/wallets ./eos/work && yarn eos:start && ./eos/scripts/setup_wallets.sh && ./eos/scripts/setup_contract.sh",
-    "test": "yarn restart && mocha -R spec ./test/test.config.js ./test/specs --recursive"
+    "test": "yarn restart && mocha -R spec ./test/test.config.js ./test/specs --recursive",
+    "api:start": "nodemon --exec ts-node ./index.ts",
+    "watch": "nodemon -e ts -w ./ -x npm run watch:serve",
+    "watch:serve": "ts-node --inspect ./index.ts"
   },
   "devDependencies": {
     "@types/bluebird": "^3.5.24",
