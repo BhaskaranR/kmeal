@@ -4,8 +4,9 @@ import { Component } from '@angular/core';
 import { AppBaseComponent } from '@kmeal-frontend/web';
 
 @Component({
-  selector: 'foo-root',
-  templateUrl: './app.component.html'
+  selector: 'app-root',
+  template: `
+  <router-outlet></router-outlet>`
 })
 export class AppComponent extends AppBaseComponent {
   constructor() {

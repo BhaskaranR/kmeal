@@ -2,16 +2,14 @@ import { Routes, RouterModule } from '@angular/router';
 
 export const AppRoutes: Routes = [{
         path: '',
-        redirectTo: 'home',
+        redirectTo: '/home',
         pathMatch: 'full',
 }, {
         path: 'home',
-        loadChildren: './pages/home/home.module#HomeModule   ' , 
-        canActivate: [],
+        loadChildren: './pages/home/home.module#HomeModule' , 
 }, {
         path: 'login', 
         loadChildren: './pages/login/login.module#LoginModule', 
-        canActivate: []
 }];
 
 export const routing = RouterModule.forRoot(AppRoutes, {enableTracing:true});

@@ -15,6 +15,6 @@ class User {
     templateUrl: "./home.html",
     styleUrls: ['./home-common.scss']
 })
-export class HomeModule {
+export class ResModule {
     constructor(){}
 }
