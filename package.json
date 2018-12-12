@@ -76,6 +76,8 @@
     "node-cron": "^2.0.3",
     "node-fetch": "^2.2.1",
     "text-encoder": "0.0.4",
-    "trie-prefix-tree": "^1.5.0"
+    "trie-prefix-tree": "^1.5.0",
+    "babel-plugin-transform-async-to-generator": "^6.24.1",
+    "babel-polyfill": "^6.26.0"
   }
 }

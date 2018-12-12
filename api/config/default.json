@@ -1,5 +1,5 @@
 {
-    "mongodb" : "mongodb://kmealadmin:jamona@192.168.99.100:27017/admin",
+    "mongodb" : "mongodb://kmeal:jamona@192.168.99.100:27017",
     "elasticSearchUrl": "http://192.168.99.100:9200",
     "mailGunApiKey": "key-37e33cd29131d15500fd1d6a36552875",
     "mailGunDomain": "kmeal.com",

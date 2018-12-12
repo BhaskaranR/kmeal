@@ -41,3 +41,21 @@ services:
     volumes:
       - ./eos/contracts:/opt/eosio/bin/contracts
     entrypoint: /usr/bin/eosio-cpp
+
+  mongo:
+    container_name: kmeal_mongo
+    image: mongo=
+    restart: always
+    volumes:
+      - mongo-data-volume:/data/db
+    ports:
+      - '27017:27017'
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: kmealadmin
+      MONGO_INITDB_ROOT_PASSWORD: jamona
+      VIRTUAL_HOST: mongo.kmeal.io
+      VIRTUAL_PORT: 27017
+    networks:
+      default:
+        aliases:
+          - mongo.kmeal.io
