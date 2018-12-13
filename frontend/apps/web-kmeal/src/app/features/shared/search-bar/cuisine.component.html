@@ -1,1 +1,8 @@
-<h1>Cuisie</h1>
+<h4 mat-dialog-title>Quick Search</h4>
+<mat-dialog-content>
+    <a *ngFor="let cat of categories" (click)="selectCuisine($event,cat)" class="capsule">{{cat}}</a>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Close</button>
+</mat-dialog-actions>
+

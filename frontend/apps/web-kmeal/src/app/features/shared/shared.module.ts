@@ -3,11 +3,12 @@ import { ModuleWithProviders, NgModule } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from "@angular/flex-layout";
-import { MatTabsModule, MatListModule, MatIconModule, MatProgressBarModule, MatSidenavModule } from '@angular/material';
+import { MatTabsModule, MatDialogModule,MatListModule, MatIconModule, MatProgressBarModule, MatSidenavModule, MatIconRegistry ,MatButtonModule} from '@angular/material';
 
 //import { FlexLayoutModule } from '@angular/flex-layout';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule }    from '@angular/common/http';
+
 
 
 @NgModule({
@@ -21,16 +22,26 @@ import { HttpClientModule }    from '@angular/common/http';
     MatListModule,
     MatIconModule,
     MatSidenavModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatButtonModule,
+    MatDialogModule
   ],
   exports: [
     CommonModule,
-    ReactiveFormsModule,
+    RouterModule,
     FormsModule,
-    FlexLayoutModule
+    HttpClientModule,
+    FlexLayoutModule,
+    MatTabsModule,
+    MatListModule,
+    MatIconModule,
+    MatSidenavModule,
+    MatProgressBarModule,
+    MatButtonModule,
+    MatDialogModule
   ],
   declarations: [],
-  providers: []
+  providers: [MatIconRegistry]
 })
 export class SharedModule {
 

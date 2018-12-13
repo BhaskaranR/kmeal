@@ -1,18 +1,33 @@
 <div class="container"
     fxlayout="row"
-    fxLayoutWrap
-    fxLayout.xs="column"
-    fxLayoutAlign="center"
+    fxLayout.xs="row"
+    fxLayoutAlign="center center"
     fxLayoutGap="10px"
-    fxLayoutGap.xs="0">
-    <div class="" fxFlex="15%" fxFlexOrder="1"> KMEAL EATS</div>
-    <div class="" fxFlex fxFlexOrder="2">
+    fxLayoutGap.xs="0"
+    class="app-home-nav">
+    <div class="" fxFlex="20%" fxHide.xs="true" fxFlexOrder="1"> KMEAL EATS</div>
+    <div class="" fxFlex="80%" fxFlexFill.xs="true" fxFlexOrder="2">
         <search-bar></search-bar>
     </div>
-    <div class="" fxFlex="15%" fxFlexOrder="3">LOGIN</div>
+    <div class="" fxFlex="20%" fxHide.xs="true" fxFlexOrder="3" >LOGIN</div>
 </div>
 
-<hr>
+<div class="container-fluid">
+    <h4>what's hot</h4>
+    <restaurant-list></restaurant-list>
+    <br>
+    <h4>Nearby</h4>
+    <restaurant-list></restaurant-list>
+    <br>
+    <h4>Order Again</h4>
+    <restaurant-list></restaurant-list>  
+    <br>
+    <h4>Recommended</h4>
+    <resutarant-list></resutarant-list>
+    <br>
+</div>
 
-content
+
+<div class="container-fluid"> footer</div>
+
 
