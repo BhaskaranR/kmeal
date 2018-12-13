@@ -8,6 +8,6 @@ import { Component, ElementRef, ViewChild } from "@angular/core";
     styleUrls: ['./home.component.scss']
 })
 export class HomeComponent {
-    constructor(){
-    }
+    constructor(){}
+    isLoggedIn:boolean = true;
 }

@@ -10,6 +10,13 @@ export const AppRoutes: Routes = [{
 }, {
         path: 'login', 
         loadChildren: './pages/login/login.module#LoginModule', 
-}];
+}, {
+        path: 'profile', 
+        loadChildren: './pages/profile/profile.module#ProfileModule', 
+},{
+        path: '**', 
+        loadChildren: './pages/profile/profile.module#ProfileModule', 
+},
+];
 
 export const routing = RouterModule.forRoot(AppRoutes, {enableTracing:true});

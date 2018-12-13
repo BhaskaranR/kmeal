@@ -9,6 +9,6 @@ import { RestaurantListComponent } from './res-list.component';
   declarations: [RestaurantListComponent],
   providers: [RestaurantListService],
   entryComponents:[],
-  exports:[]
+  exports:[RestaurantListComponent]
 })
 export class RestaurantListModule {}

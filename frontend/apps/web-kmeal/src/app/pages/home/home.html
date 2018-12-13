@@ -9,7 +9,17 @@
     <div class="" fxFlex="80%" fxFlexFill.xs="true" fxFlexOrder="2">
         <search-bar></search-bar>
     </div>
-    <div class="" fxFlex="20%" fxHide.xs="true" fxFlexOrder="3" >LOGIN</div>
+    <div class="" fxFlex="20%" fxHide.xs="true" fxFlexOrder="3" >
+        <a routerLink="/login" *ngIf="!isLoggedIn">LOGIN</a>
+        <div *ngIf="isLoggedIn">
+            <button mat-button [matMenuTriggerFor]="menu">Welcome, User</button>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item routerLink="/profile">Profile</button>
+                <button mat-menu-item>Checkout</button>
+                <button mat-menu-item>Log Out</button>
+            </mat-menu>
+        </div>
+    </div>
 </div>
 
 <div class="container-fluid">
@@ -23,7 +33,7 @@
     <restaurant-list></restaurant-list>  
     <br>
     <h4>Recommended</h4>
-    <resutarant-list></resutarant-list>
+    <restaurant-list></restaurant-list> 
     <br>
 </div>
 
