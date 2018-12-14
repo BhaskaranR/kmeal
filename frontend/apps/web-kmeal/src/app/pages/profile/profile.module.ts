@@ -1,14 +1,19 @@
 import { NgModule, NO_ERRORS_SCHEMA } from "@angular/core";
 import { SharedModule } from "../../features/shared/shared.module";
 import { ProfileComponent } from "./profile.component";
+import { Routes, RouterModule } from '@angular/router';
+
+
+export const routing: Routes = [
+    { path: '', component: ProfileComponent },
+];
+
+const routingModule = RouterModule.forChild(routing)
 
 @NgModule({
-    imports: [ SharedModule],
+    imports: [ SharedModule,routingModule],
     declarations: [
         ProfileComponent
-    ],
-    entryComponents:[
-        ProfileComponent,
     ],
     exports:[ProfileComponent],
     schemas: [

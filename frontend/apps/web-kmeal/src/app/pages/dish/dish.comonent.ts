@@ -1,11 +1,12 @@
 import { Component, ElementRef, ViewChild } from "@angular/core";
 
+
 @Component({
-    selector: "app-restaurant",
+    selector: "app-dish",
     moduleId: module.id,
-    templateUrl: "./res.component.html",
+    templateUrl: "./dish.component.html",
     styleUrls: []
 })
-export class ResComponent {
+export class DishComponent {
     constructor(){}
 }

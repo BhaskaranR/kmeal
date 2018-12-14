@@ -1,5 +1,6 @@
 import { Component ,Input,ViewChild, ElementRef} from '@angular/core';
 import { MatDialog } from '@angular/material';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 @Component({
   selector: 'restaurant-list',
@@ -59,5 +60,9 @@ export class RestaurantListComponent  {
             discount:'20%'
         },
     ]
-    constructor(){}
+    constructor(public router:Router){}
+
+    goToRestaurant(){
+        this.router.navigate(['/restaurant']);
+    }
 }

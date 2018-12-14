@@ -1,12 +1,12 @@
 import { NgModule, NO_ERRORS_SCHEMA } from "@angular/core";
-import { ResComponent } from "./res.component";
 import { SharedModule } from "../../features/shared/shared.module";
-import { ResService } from "./res.service";
 import { Routes, RouterModule } from '@angular/router';
+import { DishComponent } from "./dish.comonent";
+import { DishService } from "./dish.service";
 
 
 export const routing: Routes = [
-    { path: '', component: ResComponent },
+    { path: '', component: DishComponent },
 ];
 
 const routingModule = RouterModule.forChild(routing)
@@ -15,12 +15,12 @@ const routingModule = RouterModule.forChild(routing)
 @NgModule({
     imports: [SharedModule,routingModule],
     declarations: [
-        ResComponent
+        DishComponent
     ],
-    providers:[ResService],
-    exports:[ResComponent],
+    providers:[DishService],
+    exports:[DishComponent],
     schemas: [
         NO_ERRORS_SCHEMA
     ]
 })
-export class ResModule { }
+export class DishModule { }
