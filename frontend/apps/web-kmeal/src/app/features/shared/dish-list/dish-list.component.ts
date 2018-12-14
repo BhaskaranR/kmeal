@@ -1,17 +1,17 @@
 import { Component ,Input,ViewChild, ElementRef} from '@angular/core';
-import { MatDialog } from '@angular/material';
+
 
 @Component({
-  selector: 'restaurant-list',
+  selector: 'dish-list',
   moduleId: module.id,
-  templateUrl:'./res-list.component.html' ,
-  styleUrls:['./res-list.component.scss']
+  templateUrl:'./dish-list.component.html' ,
+  styleUrls:['./dish-list.component.scss']
 })
-export class RestaurantListComponent  {
-    isListView:boolean = false;
+export class DishListComponent  {
+    constructor(){}
     data:any[] = [
         {
-            name:'Restaurant',
+            name:'noodle',
             lables:['Chinese','fast food','take out'],
             rating:5,
             distance:'198ft',
@@ -19,7 +19,7 @@ export class RestaurantListComponent  {
             discount:'20%'
         },
         {
-            name:'Restaurant 2',
+            name:'noodle',
             lables:['Chinese','fast food','take out'],
             rating:5,
             distance:'198ft',
@@ -27,7 +27,7 @@ export class RestaurantListComponent  {
             discount:'20%'
         },
         {
-            name:'Restaurant 4',
+            name:'noodle 3',
             lables:['Chinese','fast food','take out'],
             rating:5,
             distance:'198ft',
@@ -35,7 +35,7 @@ export class RestaurantListComponent  {
             discount:'20%'
         },
         {
-            name:'Restaurant 3',
+            name:'noodle',
             lables:['Chinese','fast food','take out'],
             rating:5,
             distance:'198ft',
@@ -43,7 +43,7 @@ export class RestaurantListComponent  {
             discount:'20%'
         },
         {
-            name:'Restaurant 7',
+            name:'noodle',
             lables:['Chinese','fast food','take out'],
             rating:5,
             distance:'198ft',
@@ -59,5 +59,4 @@ export class RestaurantListComponent  {
             discount:'20%'
         },
     ]
-    constructor(){}
 }

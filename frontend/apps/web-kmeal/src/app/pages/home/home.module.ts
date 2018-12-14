@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { SharedModule } from "../../features/shared/shared.module";
 import { SearchBarModule } from "../../features/shared/search-bar/search-bar.module";
 import { RestaurantListModule } from "../../features/shared/restaurant-list/res-list.module";
+import { DishListModule } from "../../features/shared/dish-list/dish-list.module";
 
 
 const routes: Routes = [
@@ -16,7 +17,12 @@ const routes: Routes = [
 const routing = RouterModule.forChild(routes);
 
 @NgModule({
-    imports: [routing, SharedModule, SearchBarModule, RestaurantListModule],
+    imports: [
+        routing, 
+        SharedModule, 
+        SearchBarModule, 
+        RestaurantListModule, 
+        DishListModule],
     declarations: [
         HomeComponent
     ],

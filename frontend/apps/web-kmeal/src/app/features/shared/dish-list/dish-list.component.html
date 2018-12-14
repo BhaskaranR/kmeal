@@ -1,0 +1,18 @@
+<div class="dish-list-container" >
+    <div style="width:2800px;padding:10px 5px" >
+        <mat-card *ngFor="let dish of data; let i = index" style="width:350px;box-shadow:none; margin-right:45px">
+                <img mat-card-image src="http://i2.wp.com/www.foodrepublic.com/wp-content/uploads/2016/02/beefnoodles.jpg?fit=700%2C434">
+                <mat-card-title>$11.00  <small style="text-decoration: line-through;">$13.09</small></mat-card-title>
+                <mat-card-subtitle>{{dish.name}}</mat-card-subtitle>
+                <mat-card-content>
+                    <mat-progress-bar mode="determinate" value="40"></mat-progress-bar>
+                    <p style="text-align:center"><small>20/30 orders,  Deal ends in 10:00:00</small></p>
+                    
+                    <mat-card-subtitle>Some Dish Name like Noodle, low Carbs Healthy</mat-card-subtitle>
+                    <h3></h3>
+                </mat-card-content>
+                <mat-card-actions><button mat-button>Order Now</button></mat-card-actions>
+                <mat-card-footer style="text-align:center"> <small></small> </mat-card-footer>
+            </mat-card>
+    </div>
+</div>
