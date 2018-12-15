@@ -1,61 +1,92 @@
-version: '3.2'
+version: '3.5'
 
 services:
 
-  nodeos:
-    image: eosio/eos-dev:v1.4.2
+  postgres:
+    image: postgres:10.4
+    volumes:
+      - postgres-data-volume:/var/lib/postgresql/data
     ports:
-      - 8888:8888
-    expose:
-      - 8888
-    volumes:
-      - ./eos/data:/mnt/dev/data
-      - ./eos/work:/work
-      - ./eos/config:/mnt/dev/config
-      - ./eos/contracts:/opt/eosio/bin/contracts
-    working_dir: /opt/eosio/bin
-    cap_add:
-      - IPC_LOCK
-    stop_grace_period: 10m
-    command: nodeos -e -p eosio --config-dir /mnt/dev/config --data-dir /mnt/dev/data --config config-nodeos.ini
-    #command: nodeos -e -p eosio --config-dir /mnt/dev/config --data-dir /mnt/dev/data --hard-replay-blockchain
-
-  keosd:
-    image: eosio/eos-dev:v1.4.2
-    ports:
-      - 8900:8900
-    volumes:
-      - ./eos/wallets:/mnt/dev/wallets
-      - ./eos/config:/mnt/dev/config
-    stop_grace_period: 10m
-    command: keosd --wallet-dir /mnt/dev/wallets --http-server-address=0.0.0.0:8900 --http-validate-host=false --unlock-timeout 3600000
-
-  cleos:
-    image: eosio/eos-dev:v1.4.2
-    volumes:
-      - ./eos/contracts:/opt/eosio/bin/contracts
-    entrypoint: cleos --url http://nodeos:8888 --wallet-url http://keosd:8900
-
-  cdt:
-    image: eosio/cdt:v1.3.2
-    volumes:
-      - ./eos/contracts:/opt/eosio/bin/contracts
-    entrypoint: /usr/bin/eosio-cpp
-
-  mongo:
-    container_name: kmeal_mongo
-    image: mongo=
-    restart: always
-    volumes:
-      - mongo-data-volume:/data/db
-    ports:
-      - '27017:27017'
+      - '5432:5432'
     environment:
-      MONGO_INITDB_ROOT_USERNAME: kmealadmin
-      MONGO_INITDB_ROOT_PASSWORD: jamona
-      VIRTUAL_HOST: mongo.kmeal.io
-      VIRTUAL_PORT: 27017
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+      DB_NAME: eosgreetings
+      DB_USER: user
+      DB_PASSWORD: pass
+      POSTGRES_DB: eosgreetings
+
+  pgweb:
+    image: sosedoff/pgweb:latest
+    restart: always
+    ports:
+      - "8082:8081"
+    environment:
+      DATABASE_URL: postgres://user:pass@postgres:5432/eosgreetings?sslmode=disable
+    depends_on:
+      - postgres
+
+  flyway:
+    image: boxfuse/flyway:5.2.1
+    command: -url=jdbc:postgresql://postgres:5432/eosgreetings -user=user -password=pass -connectRetries=60 migrate
+    volumes:
+      - ./services/postgres/migrations:/flyway/sql
+    depends_on:
+      - postgres
+
+  demux:
+    build:
+      context: ./services/demux
+      dockerfile: ./Dockerfile
+      args:
+        SERVICE: 'demux'
+    image: eosgreetings/demux
+    volumes:
+      - ./services/demux:/opt/application  # mount demux service folder
+      - /opt/application/node_modules # prevents host/container conflicts
+    depends_on:
+      - postgres
+    environment:
+      DB_USER: user
+      DB_PASSWORD: pass
+      DB_PORT: 5432
+      DB_NAME: eosgreetings
+      DB_HOST: postgres
+      DB_SCHEMA: public
+      CHAIN_HOST: 'http://eosio:8888'
+      CHAIN_INIT_BLOCK: 10
+      MONGO_URI: 'mongodb://mongo:27017'
+      MONGO_DB: EOSFN
+      WAIT_HOSTS: postgres:5432, mongo:27017
+      WAIT_HOSTS_TIMEOUT: 60
+    ports:
+      - '3030:3030'
     networks:
       default:
-        aliases:
-          - mongo.kmeal.io
+      eoslocal:
+
+  hasura:
+    image: hasura/graphql-engine:v1.0.0-alpha30.cli-migrations
+    ports:
+    - '8088:8080'
+    depends_on:
+    - postgres
+    restart: always
+    environment:
+      HASURA_GRAPHQL_DATABASE_URL: postgres://user:pass@postgres:5432/eosgreetings?sslmode=disable
+      HASURA_GRAPHQL_MIGRATIONS_DIR: /hasura-migrations
+    volumes:
+      - ./services/hasura/migrations:/hasura-migrations  #  mount hasura migrations folder
+    command:
+      - graphql-engine
+      - serve
+      - --enable-console
+
+volumes:
+  postgres-data-volume:
+
+networks:
+  default:
+    name: eosgreetings
+  eoslocal:
+    external: true
