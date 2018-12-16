@@ -36,6 +36,78 @@ export class DishListComponent  {
             maxOrders:30,
             rating:5,
             expireTime:"02:00:00"
+        },{
+            id:'4372djakhx',
+            name:'Chicken Curry',
+            description:"Grilled Chicken in creamy curry sauce, served with choice of white rice or brown rice",
+            lables:['Indian','Spicy','Chicken','Rice','curry'],
+            restaurant:'Indian Diner',
+            currentPrice:13.88,
+            orignalprice:16.00,
+            ordersCount:12,
+            maxOrders:30,
+            rating:5,
+            expireTime:"02:00:00"
+        },{
+            id:'4372djakhx',
+            name:'Chicken Curry',
+            description:"Grilled Chicken in creamy curry sauce, served with choice of white rice or brown rice",
+            lables:['Indian','Spicy','Chicken','Rice','curry'],
+            restaurant:'Indian Diner',
+            currentPrice:13.88,
+            orignalprice:16.00,
+            ordersCount:12,
+            maxOrders:30,
+            rating:5,
+            expireTime:"02:00:00"
+        },{
+            id:'4372djakhx',
+            name:'Chicken Curry',
+            description:"Grilled Chicken in creamy curry sauce, served with choice of white rice or brown rice",
+            lables:['Indian','Spicy','Chicken','Rice','curry'],
+            restaurant:'Indian Diner',
+            currentPrice:13.88,
+            orignalprice:16.00,
+            ordersCount:12,
+            maxOrders:30,
+            rating:5,
+            expireTime:"02:00:00"
+        },{
+            id:'4372djakhx',
+            name:'Chicken Curry',
+            description:"Grilled Chicken in creamy curry sauce, served with choice of white rice or brown rice",
+            lables:['Indian','Spicy','Chicken','Rice','curry'],
+            restaurant:'Indian Diner',
+            currentPrice:13.88,
+            orignalprice:16.00,
+            ordersCount:12,
+            maxOrders:30,
+            rating:5,
+            expireTime:"02:00:00"
+        },{
+            id:'4372djakhx',
+            name:'Chicken Curry',
+            description:"Grilled Chicken in creamy curry sauce, served with choice of white rice or brown rice",
+            lables:['Indian','Spicy','Chicken','Rice','curry'],
+            restaurant:'Indian Diner',
+            currentPrice:13.88,
+            orignalprice:16.00,
+            ordersCount:12,
+            maxOrders:30,
+            rating:5,
+            expireTime:"02:00:00"
+        },{
+            id:'4372djakhx',
+            name:'Chicken Curry',
+            description:"Grilled Chicken in creamy curry sauce, served with choice of white rice or brown rice",
+            lables:['Indian','Spicy','Chicken','Rice','curry'],
+            restaurant:'Indian Diner',
+            currentPrice:13.88,
+            orignalprice:16.00,
+            ordersCount:12,
+            maxOrders:30,
+            rating:5,
+            expireTime:"02:00:00"
         }
     ];
 

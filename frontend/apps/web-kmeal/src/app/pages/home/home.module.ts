@@ -7,6 +7,7 @@ import { RestaurantListModule } from "../../features/shared/restaurant-list/res-
 import { DishListModule } from "../../features/shared/dish-list/dish-list.module";
 import {NguCarouselModule} from '@ngu/carousel';
 import 'hammerjs';
+import { NavBarModule } from "../../features/shared/nav-bar/nav.module";
 
 const routes: Routes = [
     {
@@ -24,6 +25,7 @@ const routing = RouterModule.forChild(routes);
         SearchBarModule, 
         RestaurantListModule, 
         DishListModule,
+        NavBarModule,
         NguCarouselModule],
     declarations: [
         HomeComponent,

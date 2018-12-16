@@ -13,54 +13,198 @@ export class RestaurantListComponent  {
     isListView:boolean = false;
     public carouselTileItems:Array<any> = [
         {
-            name:'Restaurant',
-            lables:['Chinese','fast food','take out'],
-            rating:5,
+            id:"hudsan321",
+            restaurantName:'Indian Dinner',
+            description:'Authentic Indian Cuisine. Lunch and Dinner',
+            type:'Indian',
+            address:{
+                line:'19523 25th Ave',
+                city:'Queens',
+                state:'NY',
+                zipcode:11453,
+            },
+            location:{
+                long:198,
+                lat:21,
+            },
             distance:'198ft',
-            priceLevel:'$$',
-            discount:'20%'
-        },
-        {
-            name:'Restaurant 2',
-            lables:['Chinese','fast food','take out'],
+            lables:['Indian','Spicy', 'Takeout', 'Lunch','Dinner'],
             rating:5,
-            distance:'198ft',
             priceLevel:'$$',
-            discount:'20%'
-        },
-        {
-            name:'Restaurant 4',
-            lables:['Chinese','fast food','take out'],
+        },{
+            id:"hudsan321",
+            restaurantName:'Indian Dinner',
+            description:'Authentic Indian Cuisine. Lunch and Dinner',
+            type:'Indian',
+            address:{
+                line:'19523 25th Ave',
+                city:'Queens',
+                state:'NY',
+                zipcode:11453,
+            },
+            location:{
+                long:198,
+                lat:21,
+            },
+            distance:'198ft',
+            lables:['Indian','Spicy', 'Takeout', 'Lunch','Dinner'],
             rating:5,
-            distance:'198ft',
             priceLevel:'$$',
-            discount:'20%'
-        },
-        {
-            name:'Restaurant 3',
-            lables:['Chinese','fast food','take out'],
+        },{
+            id:"hudsan321",
+            restaurantName:'Indian Dinner',
+            description:'Authentic Indian Cuisine. Lunch and Dinner',
+            type:'Indian',
+            address:{
+                line:'19523 25th Ave',
+                city:'Queens',
+                state:'NY',
+                zipcode:11453,
+            },
+            location:{
+                long:198,
+                lat:21,
+            },
+            distance:'198ft',
+            lables:['Indian','Spicy', 'Takeout', 'Lunch','Dinner'],
             rating:5,
-            distance:'198ft',
             priceLevel:'$$',
-            discount:'20%'
-        },
-        {
-            name:'Restaurant 7',
-            lables:['Chinese','fast food','take out'],
+        },{
+            id:"hudsan321",
+            restaurantName:'Indian Dinner',
+            description:'Authentic Indian Cuisine. Lunch and Dinner',
+            type:'Indian',
+            address:{
+                line:'19523 25th Ave',
+                city:'Queens',
+                state:'NY',
+                zipcode:11453,
+            },
+            location:{
+                long:198,
+                lat:21,
+            },
+            distance:'198ft',
+            lables:['Indian','Spicy', 'Takeout', 'Lunch','Dinner'],
             rating:5,
-            distance:'198ft',
             priceLevel:'$$',
-            discount:'20%'
-        },
-        {
-            name:'Restaurant 5',
-            lables:['Chinese','fast food','take out'],
+        },{
+            id:"hudsan321",
+            restaurantName:'Indian Dinner',
+            description:'Authentic Indian Cuisine. Lunch and Dinner',
+            type:'Indian',
+            address:{
+                line:'19523 25th Ave',
+                city:'Queens',
+                state:'NY',
+                zipcode:11453,
+            },
+            location:{
+                long:198,
+                lat:21,
+            },
+            distance:'198ft',
+            lables:['Indian','Spicy', 'Takeout', 'Lunch','Dinner'],
             rating:5,
-            distance:'198ft',
             priceLevel:'$$',
-            discount:'20%'
-        },
+        },{
+            id:"hudsan321",
+            restaurantName:'Indian Dinner',
+            description:'Authentic Indian Cuisine. Lunch and Dinner',
+            type:'Indian',
+            address:{
+                line:'19523 25th Ave',
+                city:'Queens',
+                state:'NY',
+                zipcode:11453,
+            },
+            location:{
+                long:198,
+                lat:21,
+            },
+            distance:'198ft',
+            lables:['Indian','Spicy', 'Takeout', 'Lunch','Dinner'],
+            rating:5,
+            priceLevel:'$$',
+        },{
+            id:"hudsan321",
+            restaurantName:'Indian Dinner',
+            description:'Authentic Indian Cuisine. Lunch and Dinner',
+            type:'Indian',
+            address:{
+                line:'19523 25th Ave',
+                city:'Queens',
+                state:'NY',
+                zipcode:11453,
+            },
+            location:{
+                long:198,
+                lat:21,
+            },
+            distance:'198ft',
+            lables:['Indian','Spicy', 'Takeout', 'Lunch','Dinner'],
+            rating:5,
+            priceLevel:'$$',
+        },{
+            id:"hudsan321",
+            restaurantName:'Indian Dinner',
+            description:'Authentic Indian Cuisine. Lunch and Dinner',
+            type:'Indian',
+            address:{
+                line:'19523 25th Ave',
+                city:'Queens',
+                state:'NY',
+                zipcode:11453,
+            },
+            location:{
+                long:198,
+                lat:21,
+            },
+            distance:'198ft',
+            lables:['Indian','Spicy', 'Takeout', 'Lunch','Dinner'],
+            rating:5,
+            priceLevel:'$$',
+        },{
+            id:"hudsan321",
+            restaurantName:'Indian Dinner',
+            description:'Authentic Indian Cuisine. Lunch and Dinner',
+            type:'Indian',
+            address:{
+                line:'19523 25th Ave',
+                city:'Queens',
+                state:'NY',
+                zipcode:11453,
+            },
+            location:{
+                long:198,
+                lat:21,
+            },
+            distance:'198ft',
+            lables:['Indian','Spicy', 'Takeout', 'Lunch','Dinner'],
+            rating:5,
+            priceLevel:'$$',
+        },{
+            id:"hudsan321",
+            restaurantName:'Indian Dinner',
+            description:'Authentic Indian Cuisine. Lunch and Dinner',
+            type:'Indian',
+            address:{
+                line:'19523 25th Ave',
+                city:'Queens',
+                state:'NY',
+                zipcode:11453,
+            },
+            location:{
+                long:198,
+                lat:21,
+            },
+            distance:'198ft',
+            lables:['Indian','Spicy', 'Takeout', 'Lunch','Dinner'],
+            rating:5,
+            priceLevel:'$$',
+        }
     ]
+
     constructor(public router:Router){}
 
     public carouselTileConfig: NguCarouselConfig = {

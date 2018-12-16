@@ -1,13 +1,42 @@
-restaurant image 
-
-name
-
-
-rating ?
-
-price, orginal price
-
-
-karma menu
-
-<dish-list></dish-list>
+<nav-bar></nav-bar>
+<div fxLayout="row" >
+    <div fxFlex="50%" style="height:150px; overflow: hidden;">
+        <img style="display: block; width:100%;" src="https://auspost.com.au/content/dam/corp/travel-essentials/destination-guides/italy/photo-antipasto-platter-italian-food.jpg.auspostimage.970*0.low.jpg" alt="">
+    </div>
+    <div fxFlex="50%" style="background-color: rgb(207, 102, 70); padding:25px; color:white">
+        <h3>Indian Dinner</h3>
+        <p>176 96th, Ave, Queens , (646) 325 2201</p>
+    </div>
+</div>
+<div fxLayout="row" fxLayout.xs="column">
+    <div fxFlex="25%" fxFlex.xs="100%" style="padding:10px">
+        <br>
+        <br>
+        <h4>Menu</h4>
+        <p>Karma Items</p>
+    </div>
+    <div fxFlex="75%" fxFlex.xs="100%" style="padding:10px">
+        <br>
+        <br>
+        <h4>Most Popular</h4>
+        <div *ngFor="let dishDetails of dishes" style="width:400px; margin-right:25px; margin-bottom:25px;display:inline-block">
+            <mat-card  (click)="goToDish()">
+                <div fxLayout="row">
+                    <div fxFlex="40%">
+                        <mat-card-subtitle>{{dishDetails.name}}</mat-card-subtitle>
+                    </div>
+                    <div fxFlex="60%">
+                        <p style="text-align:right">${{dishDetails.currentPrice}} <small style="text-decoration: line-through;">  ${{dishDetails.orignalprice}}</small></p>
+                    </div>
+                </div>
+                <mat-card-content>
+                    <mat-progress-bar mode="determinate" value="40"></mat-progress-bar>
+                    <p style="text-align:center"><small>{{dishDetails.ordersCount}} orders / {{dishDetails.maxOrders}} max,  Deal ends in {{dishDetails.expireTime}} <mat-icon style="font-size:13px">help_outline</mat-icon></small></p>
+                    <mat-card-subtitle>{{dishDetails.description}}</mat-card-subtitle>
+                </mat-card-content>
+                <mat-card-actions><button mat-button>Order Now</button></mat-card-actions>
+                <mat-card-footer style="text-align:center"> <small></small> </mat-card-footer>
+            </mat-card>
+        </div>
+    </div>
+</div>

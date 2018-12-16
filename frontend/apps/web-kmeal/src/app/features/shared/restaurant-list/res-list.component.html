@@ -7,15 +7,18 @@
     <ngu-tile *nguCarouselDef="let res; let i = index; let ani = animate">
         <mat-card (click)="goToRestaurant()">
             <img mat-card-image src="https://ichef.bbci.co.uk/food/ic/food_16x9_832/recipes/one_pot_chorizo_and_15611_16x9.jpg">
-            <mat-card-title>{{res.name}}</mat-card-title>
-            <mat-card-content>
+            <h4><small>{{res.restaurantName}}</small></h4>
+            <mat-card-subtitle>
                 <span>{{res.priceLevel}} </span>
-                <span *ngFor="let label of res.lables" style="margin-right:5px">{{label}} ,</span>
-            </mat-card-content>
-            <mat-card-footer> discount: {{res.discount}}</mat-card-footer>
+                <span *ngFor="let label of res.lables" style="margin-right:5px">{{label}} &#8226; </span>
+                <br>
+                <p><small>{{res.address.line}}</small>  {{res.distance}}</p>
+            </mat-card-subtitle>
+            <p><small>{{res.description}}</small></p>
+            <mat-icon >star</mat-icon><mat-icon >star</mat-icon><mat-icon >star</mat-icon>
         </mat-card>
     </ngu-tile>
-    <button NguCarouselPrev class="leftRs" [style.opacity]="myCarousel.isFirst ? 0.5:1">&lt;</button>
-    <button NguCarouselNext class="rightRs" [style.opacity]="myCarousel.isLast ? 0.5:1">&gt;</button>
+    <button NguCarouselPrev class="leftRs" >&lt;</button>
+    <button NguCarouselNext class="rightRs" >&gt;</button>
 </ngu-carousel>
 

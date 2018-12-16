@@ -10,7 +10,6 @@ import { NguCarouselConfig } from "@ngu/carousel";
 })
 export class HomeComponent {
     constructor(){}
-    isLoggedIn:boolean = true;
     cuisines:string[] = ['Indian', 'Chinese','Korean','American','Brunch','Pizza','Breakfast','Jpanese','Burger','Mexican','South American','Sea Food','Caribbean'];
     public carouselTileConfig: NguCarouselConfig = {
         grid: { xs: 3, sm: 3, md: 6, lg: 6, all: 0 },
