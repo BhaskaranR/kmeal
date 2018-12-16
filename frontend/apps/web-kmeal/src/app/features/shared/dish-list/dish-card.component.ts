@@ -10,6 +10,9 @@ import { NguCarouselConfig } from '@ngu/carousel';
 })
 export class DishCardComponent  {
     @Input() public dishDetails:any;
-    @Output() public goToDish = new EventEmitter<any>();
+    @Output() public goToDishEvent = new EventEmitter<any>();
     constructor(){}
+    goToDish(){
+        this.goToDishEvent.emit('dish');
+    }
 }

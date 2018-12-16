@@ -124,6 +124,6 @@ export class DishListComponent  {
 
 
     goToDish(){
-        this.router.navigate(['/restaurant']);
+        this.router.navigate(['/dish']);
     }
 }

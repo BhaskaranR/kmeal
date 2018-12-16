@@ -7,7 +7,7 @@
     class="app-home-nav">
     <div fxFlex="15%" fxHide.sm="true" fxHide.xs="true" fxFlexOrder="1" fxLayout="row" fxLayoutAlign="left center">
         <mat-icon>menu</mat-icon>
-        <span style="margin-left:20px"> KMEAL EATS</span>
+        <a routerLink="/home" style="margin-left:20px"> KMEAL EATS</a>
     </div>
     <div fxFlex="70%" fxFlex.sm="100%" fxFlex.xs="100%" fxFlexOrder="2">
         <search-bar></search-bar>
@@ -22,6 +22,6 @@
                 <button mat-menu-item>Log Out</button>
             </mat-menu>
         </div>
-        <mat-icon>shopping_cart</mat-icon>
+        <mat-icon (click)="openCart()"  matBadge="15" matBadgeColor="warn">shopping_cart</mat-icon>
     </div>
 </div>
