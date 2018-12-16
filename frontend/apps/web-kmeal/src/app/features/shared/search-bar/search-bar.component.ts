@@ -14,21 +14,6 @@ export class SearchBarComponent  {
     @ViewChild("autocomplete", {read: ElementRef}) autocomplete: ElementRef;
     constructor(public dialogRef:MatDialog) {}
 
-    onOpenCuisine(e){
-        console.log(e);
-        this.dialogRef.open(CuisineMenuComponent, {
-            height: '400px',
-            width: '600px',
-            data:{
-                name:'shaun'
-            }
-        });
-    }
-
-    closeCuisine(){
-        this.dialogRef.closeAll();
-    }
-
     onFocus(e:Event){
         this.isSearching = true;
         console.log(e);

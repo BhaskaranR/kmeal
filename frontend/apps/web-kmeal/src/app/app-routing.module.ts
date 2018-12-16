@@ -7,10 +7,7 @@ export const AppRoutes: Routes = [{
 }, {
         path: 'home',
         loadChildren: './pages/home/home.module#HomeModule' , 
-}, {
-        path: 'login', 
-        loadChildren: './pages/login/login.module#LoginModule', 
-}, {
+},{
         path: 'profile', 
         loadChildren: './pages/profile/profile.module#ProfileModule', 
 },{
@@ -25,4 +22,4 @@ export const AppRoutes: Routes = [{
 },
 ];
 
-export const routing = RouterModule.forRoot(AppRoutes, {enableTracing:true});
+export const routing = RouterModule.forRoot(AppRoutes, {enableTracing:false});

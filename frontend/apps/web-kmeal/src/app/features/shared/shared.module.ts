@@ -40,7 +40,7 @@ import { MatAutocompleteModule,
 //import { FlexLayoutModule } from '@angular/flex-layout';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule }    from '@angular/common/http';
-
+import { NguCarouselModule } from '@ngu/carousel';
 
 
 @NgModule({
@@ -81,7 +81,8 @@ import { HttpClientModule }    from '@angular/common/http';
   MatTableModule,
   MatTabsModule,
   MatToolbarModule,
-  MatTooltipModule
+  MatTooltipModule,
+  NguCarouselModule
   ],
   exports: [
     CommonModule,
@@ -120,7 +121,8 @@ import { HttpClientModule }    from '@angular/common/http';
   MatTableModule,
   MatTabsModule,
   MatToolbarModule,
-  MatTooltipModule
+  MatTooltipModule,
+  NguCarouselModule
   ],
   declarations: [],
   providers: [MatIconRegistry]

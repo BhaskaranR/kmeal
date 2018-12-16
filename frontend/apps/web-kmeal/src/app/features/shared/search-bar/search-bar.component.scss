@@ -6,8 +6,11 @@
 }
 
 .search-bar-search{
-    border:solid 1px $primary-color-light;
+    background-color:rgb(243, 243, 243);
     padding:10px;
+    input{
+        background-color:inherit;
+    }
 }
 
 #search-bar{

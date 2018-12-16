@@ -3,6 +3,7 @@ import { ResComponent } from "./res.component";
 import { SharedModule } from "../../features/shared/shared.module";
 import { ResService } from "./res.service";
 import { Routes, RouterModule } from '@angular/router';
+import { DishListModule } from "../../features/shared/dish-list/dish-list.module";
 
 
 export const routing: Routes = [
@@ -13,7 +14,7 @@ const routingModule = RouterModule.forChild(routing)
 
 
 @NgModule({
-    imports: [SharedModule,routingModule],
+    imports: [SharedModule,routingModule,DishListModule],
     declarations: [
         ResComponent
     ],

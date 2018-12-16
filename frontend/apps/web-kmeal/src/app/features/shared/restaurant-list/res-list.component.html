@@ -1,14 +1,21 @@
-<div class="res-list-container" >
-    <div style="width:2800px;padding:10px 5px" >
-        <mat-card *ngFor="let res of data" style="width:350px; box-shadow:none;margin-right:45px" (click)="goToRestaurant()">
+
+
+<ngu-carousel 
+    #myCarousel 
+    [inputs]="carouselTileConfig" 
+    [dataSource]="carouselTileItems" >
+    <ngu-tile *nguCarouselDef="let res; let i = index; let ani = animate">
+        <mat-card (click)="goToRestaurant()">
             <img mat-card-image src="https://ichef.bbci.co.uk/food/ic/food_16x9_832/recipes/one_pot_chorizo_and_15611_16x9.jpg">
-                <mat-card-title>{{res.name}}</mat-card-title>
-                <mat-card-content>
-                    <span>{{res.priceLevel}} </span>
-                    <span *ngFor="let label of res.lables" style="margin-right:5px">{{label}} ,</span>
-                </mat-card-content>
-                <mat-card-footer> discount: {{res.discount}}</mat-card-footer>
-            </mat-card>
-    </div>
-</div>
+            <mat-card-title>{{res.name}}</mat-card-title>
+            <mat-card-content>
+                <span>{{res.priceLevel}} </span>
+                <span *ngFor="let label of res.lables" style="margin-right:5px">{{label}} ,</span>
+            </mat-card-content>
+            <mat-card-footer> discount: {{res.discount}}</mat-card-footer>
+        </mat-card>
+    </ngu-tile>
+    <button NguCarouselPrev class="leftRs" [style.opacity]="myCarousel.isFirst ? 0.5:1">&lt;</button>
+    <button NguCarouselNext class="rightRs" [style.opacity]="myCarousel.isLast ? 0.5:1">&gt;</button>
+</ngu-carousel>
 

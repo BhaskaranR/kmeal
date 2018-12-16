@@ -10,6 +10,9 @@ import { environment } from '@kmeal-frontend/core';
 import { AppComponent } from './app.component';
 import { routing } from './app-routing.module';
 import { SharedModule } from './features/shared/shared.module';
+import { ApolloModule, APOLLO_OPTIONS } from "apollo-angular";
+import { HttpLinkModule, HttpLink } from "apollo-angular-link-http";
+import { InMemoryCache } from "apollo-cache-inmemory";
 
 
 @NgModule({
@@ -17,7 +20,9 @@ import { SharedModule } from './features/shared/shared.module';
     routing,
     BrowserModule,
     BrowserAnimationsModule,
-    SharedModule
+    SharedModule,
+    ApolloModule,
+    HttpLinkModule
   ],
   declarations: [AppComponent],
   bootstrap: [AppComponent],
@@ -29,6 +34,18 @@ import { SharedModule } from './features/shared/shared.module';
     {
         provide: 'apiBase',
         useValue: environment.api_url
+    },
+    {
+      provide:APOLLO_OPTIONS,
+      useFactory(httpLink:HttpLink){
+        return {
+          cache:new InMemoryCache(),
+          link:httpLink.create({
+            uri:'https://w5xlvm3vzz.lp.gql.zone/graphql'
+          })
+        }
+      },
+      deps:[HttpLink]
     }
   ]
 })

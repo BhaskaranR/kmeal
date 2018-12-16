@@ -1,16 +1,15 @@
 import { NgModule } from '@angular/core';
 import { SearchBarComponent } from './search-bar.component';
 import { SearchBarService } from './search-bar.service';
-import { CuisineMenuComponent } from './cuisine.component';
 import { SharedModule } from '../shared.module';
 
 
 
 @NgModule({
   imports: [SharedModule],
-  declarations: [SearchBarComponent,CuisineMenuComponent],
+  declarations: [SearchBarComponent],
   providers: [SearchBarService],
-  entryComponents:[CuisineMenuComponent],
-  exports:[SearchBarComponent,CuisineMenuComponent]
+  entryComponents:[],
+  exports:[SearchBarComponent,]
 })
 export class SearchBarModule {}

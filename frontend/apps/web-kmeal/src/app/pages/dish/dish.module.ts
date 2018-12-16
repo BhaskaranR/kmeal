@@ -3,6 +3,7 @@ import { SharedModule } from "../../features/shared/shared.module";
 import { Routes, RouterModule } from '@angular/router';
 import { DishComponent } from "./dish.comonent";
 import { DishService } from "./dish.service";
+import { DishListModule } from "../../features/shared/dish-list/dish-list.module";
 
 
 export const routing: Routes = [

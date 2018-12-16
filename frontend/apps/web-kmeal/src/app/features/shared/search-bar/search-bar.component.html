@@ -4,14 +4,10 @@
     fxLayoutGap="10px"
     fxLayoutGap.xs="0"
     class="search-bar-container">
-    <div fxFlex="75%" fxLayout="row" fxFlexAlign="left center" class="search-bar-search">    
+    <div fxFlex="100%" fxLayout="row" fxFlexAlign="left center" class="search-bar-search">    
         <mat-icon  fxFlex="40px">search</mat-icon>
         <input fxFlex placeholder="Restaurant or dishes" class="" name="search-bar" id="search-bar" (blur)="onBlur($event)" (focus)="onFocus($event)"/>
         <div #autocomplete class="search-bar-autocomplete" *ngIf="isSearching"></div>
-    </div>
-    <div fxFlex="25%" (click)="onOpenCuisine($event)" fxLayout="row" fxFlexAlign="left center" style="cursor:pointer">
-        <mat-icon>apps</mat-icon>
-        <a >Cuisine</a>
-    </div>    
+    </div>   
 </div>
 
