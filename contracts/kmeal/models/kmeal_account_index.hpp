@@ -1,6 +1,3 @@
-#pragma once
-
-
 #include <eosiolib/eosio.hpp>
 #include <eosiolib/asset.hpp>
 using namespace std;

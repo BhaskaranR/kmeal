@@ -1,6 +1,6 @@
 
 CREATE TABLE IF NOT EXISTS "${schema^}"."customer" (
-  "owner" TEXT NOT NULL,
+  "owner" TEXT NOT NULL PRIMARY KEY,
   "created_at" TIMESTAMP NOT NULL,
   "created_block" BIGINT NOT NULL,
   "created_trx" TEXT NOT NULL,
@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS "${schema^}"."customer" (
   );
 
 CREATE TABLE IF NOT EXISTS "${schema^}"."restaurant" (
-  "owner" TEXT NOT NULL,
+  "owner" TEXT NOT NULL PRIMARY KEY,
   "description" TEXT NOT NULL,
   "phone"       INTEGER NOT NULL,
   "location"    TEXT NOT NULL,

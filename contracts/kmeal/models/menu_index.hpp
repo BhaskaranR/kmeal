@@ -1,5 +1,3 @@
-#pragma once
-
 #include <eosiolib/eosio.hpp>
 
 using namespace eosio;
@@ -11,12 +9,12 @@ struct item {
   account_name     owner;
   string           item_name;
   string           description;
-  vector<string>   characteristics;
+  vector<string>   types;
   vector<uint64_t> sides;
   string           group;
   uint64_t         primary_key() const { return item_id; }
 
-  EOSLIB_SERIALIZE(item, (item_id)(owner)(item_name)(description)(characteristics)(sides)(group))
+  EOSLIB_SERIALIZE(item, (item_id)(owner)(item_name)(description)(types)(sides)(group))
 };
 typedef eosio::multi_index<N(items), item> item_table;
 
@@ -24,11 +22,12 @@ typedef eosio::multi_index<N(items), item> item_table;
 struct listing {
   uint64_t listing_id;
   uint64_t item_id;
+  account_name owner;
   asset    list_price;
   bool     isactive; // activated user
   uint64_t primary_key() const { return listing_id; }
 
-  EOSLIB_SERIALIZE(listing, (listing_id)(item_id)(list_price)(isactive))
+  EOSLIB_SERIALIZE(listing, (listing_id)(owner)(item_id)(list_price)(isactive))
 };
 
 typedef eosio::multi_index<N(listings), listing> listing_table;
@@ -67,7 +66,7 @@ struct combolisting {
   bool     isactive; 
   uint64_t primary_key() const { return listing_id; }
 
-  EOSLIB_SERIALIZE(listing, (listing_id)(item_id)(list_price)(isactive))
+  EOSLIB_SERIALIZE(listing, (listing_id)(item_id)(owner)(list_price)(isactive))
 }
 
 // @abi table inventories
