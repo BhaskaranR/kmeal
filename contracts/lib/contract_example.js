@@ -112,4 +112,4 @@ class Contract_Example {
 
 }
 
-module.exports = Contract_Example;
+export default Contract_Example;

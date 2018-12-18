@@ -73,21 +73,21 @@ namespace kmeal {
 
         public:
             //@abi action
-            void createrestaurant(account_name account, string idx, string pubkey, string name, uint8_t phone, string address, coordinates location, string logo, string category, string timeofoperation) {
+            void createrestaurant(account_name account,string name, uint8_t phone, string address, coordinates location, string logo, string category, string timeofoperation) {
                 require_auth( account );
-                account_controller.createrestaurant(account, idx, pubkey, name, phone, address, location, logo, category, timeofoperation);
+                account_controller.createrestaurant(account, name, phone, address, location, logo, category, timeofoperation);
             }
 
             //@abi action
-            void createcustomer(account_name account, string idx, string pubkey, string name, uint8_t phone, string address, string avatar)
+            void createcustomer(account_name account)
                 require_auth( account );
-                account_controller.createcustomer(account, idx, pubkey, name, phone, address, avatar)
+                account_controller.createcustomer(account)
             }
 
             //@abi action
-            void createdriver(account_name account, string idx, string pubkey, string name, uint8_t phone, coordinates location, string avatar)
+            void createdriver(account_name account,string name, uint8_t phone, coordinates location, string avatar)
                 require_auth( account );
-                account_controller.createdriver(account, idx, pubkey, name, phone, location, avatar)
+                account_controller.createdriver(account, name, phone, location, avatar)
             }
 
             //@abi action

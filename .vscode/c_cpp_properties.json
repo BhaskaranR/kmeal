@@ -3,6 +3,10 @@
         {
             "name": "Mac",
             "includePath": [
+                "/Users/bhaskaran/Documents/eosio.cdt/libraries/eoslib",
+                "/Users/bhaskaran/Documents/eos/unittests",
+                "/Users/bhaskaran/Documents/eos/libraries/**",
+                "/Users/bhaskaran/Documents/eos/contracts/**",
                 "/usr/local/include",
                 "/usr/local/include/eosiolib",
                 "/usr/include",

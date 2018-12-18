@@ -22,18 +22,20 @@ class kmeal_account
   public:
     kmeal_account(account_name _self) : self(_self){};
 
-    void createrestaurant(account_name account, string idx, string pubkey, string name, uint8_t phone, string address, coordinates location, string logo, string category, string timeofoperation)
+    void createrestaurant(account_name account,  string name, string description, uint8_t phone, string address, coordinates location, string logo, string category, string timeofoperation)
     {
         //require auth
         //todo cant have same account as customer or driver..
+        //todo check if already registered
+
         time current_time = now();
 
         restaurantIndex pix(self, account);
         pix.emplace(self, [&](auto &s) {
             s.account = account;
-            s.pubkey = pubkey;
-            s.idx = idx;
+
             s.name = name;
+            s.description = description;
             s.phone = phone;
             s.address = address;
             s.location = location;
@@ -46,7 +48,7 @@ class kmeal_account
         });
     }
 
-    void createcustomer(account_name account, string idx, string pubkey, string name, uint8_t phone, string address, string avatar)
+    void createcustomer(account_name account)
     {
         //require auth
         //todo cant have same account as  restaurant or driver..
@@ -55,13 +57,6 @@ class kmeal_account
         customerIndex pix(self, account);
         pix.emplace(self, [&](auto &s) {
             s.account = account;
-            s.pubkey = pubkey;
-            s.idx = idx;
-            s.name = name;
-            s.phone = phone;
-            s.address = address;
-            s.avatar = avatar;
-            s.isactive = true;
             s.created = current_time;
             s.updated = current_time;
         });
