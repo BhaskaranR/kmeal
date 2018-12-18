@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS "${schema^}"."order" (
+CREATE TABLE IF NOT EXISTS kmeal."order" (
   "order_id" INTEGER  NOT NULL PRIMARY KEY,
   "seller" TEXT NOT NULL,
   "buyer" TEXT NOT NULL,
@@ -11,14 +11,14 @@ CREATE TABLE IF NOT EXISTS "${schema^}"."order" (
   "_dmx_created_at" TIMESTAMP DEFAULT current_timestamp NOT NULL
 );
 
-ALTER TABLE ONLY "${schema^}"."order"
-  ADD CONSTRAINT order_id_fkey FOREIGN KEY ("seller") REFERENCES "${schema^}".restaurant(owner);
+ALTER TABLE ONLY kmeal."order"
+  ADD CONSTRAINT order_id_fkey FOREIGN KEY ("seller") REFERENCES kmeal.restaurant(owner);
 
 
-ALTER TABLE ONLY "${schema^}"."order"
-  ADD CONSTRAINT order_id_fkey FOREIGN KEY ("buyer") REFERENCES "${schema^}".restaurant(owner);
+ALTER TABLE ONLY kmeal."order"
+  ADD CONSTRAINT order_id_fkey FOREIGN KEY ("buyer") REFERENCES kmeal.restaurant(owner);
 
-CREATE TABLE IF NOT EXISTS "${schema^}"."dporder" (
+CREATE TABLE IF NOT EXISTS kmeal."dporder" (
   "order_id" INTEGER  NOT NULL PRIMARY KEY,
   "seller" TEXT NOT NULL,
   "buyer" TEXT NOT NULL,
@@ -31,10 +31,10 @@ CREATE TABLE IF NOT EXISTS "${schema^}"."dporder" (
   "_dmx_created_at" TIMESTAMP DEFAULT current_timestamp NOT NULL
 );
 
-ALTER TABLE ONLY "${schema^}"."order"
-  ADD CONSTRAINT dporder_id_fkey FOREIGN KEY ("seller") REFERENCES "${schema^}".restaurant(owner);
+ALTER TABLE ONLY kmeal."order"
+  ADD CONSTRAINT dporder_id_fkey FOREIGN KEY ("seller") REFERENCES kmeal.restaurant(owner);
 
 
-ALTER TABLE ONLY "${schema^}"."order"
-  ADD CONSTRAINT dporder_id_fkey FOREIGN KEY ("buyer") REFERENCES "${schema^}".restaurant(owner);
+ALTER TABLE ONLY kmeal."order"
+  ADD CONSTRAINT dporder_id_fkey FOREIGN KEY ("buyer") REFERENCES kmeal.restaurant(owner);
 
