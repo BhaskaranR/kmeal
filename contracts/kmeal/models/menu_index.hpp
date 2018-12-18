@@ -69,15 +69,15 @@ struct combolisting {
   EOSLIB_SERIALIZE(listing, (listing_id)(item_id)(owner)(list_price)(isactive))
 }
 
-// @abi table inventories
-struct inventory {
-  account_name     owner;
-  vector<uint64_t> items;
-  vector<uint64_t> dpitems;
-  vector<uint64_t> comboitems;
+// // @abi table inventories
+// struct inventory {
+//   account_name     owner;
+//   vector<uint64_t> items;
+//   vector<uint64_t> dpitems;
+//   vector<uint64_t> comboitems;
 
-  uint64_t primary_key() const { return owner; }
+//   uint64_t primary_key() const { return owner; }
 
-};
+// };
 
-typedef eosio::multi_index<N(inventories), inventory> inventory_table;
+// typedef eosio::multi_index<N(inventories), inventory> inventory_table;

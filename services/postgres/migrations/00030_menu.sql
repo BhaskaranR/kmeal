@@ -100,4 +100,3 @@ ALTER TABLE ONLY "${schema^}"."combolisting_items"
 ALTER TABLE ONLY "${schema^}"."combolisting_items"
   ADD CONSTRAINT combolisting_id_fkey FOREIGN KEY ("list_id") REFERENCES "${schema^}".combolisting("listing_id");
 
-
