@@ -36,35 +36,3 @@ CREATE TABLE IF NOT EXISTS "kmeal"."restaurant" (
 ALTER TABLE ONLY kmeal."restaurant"
   ADD CONSTRAINT owner_restaurant_fkey FOREIGN KEY ("owner") REFERENCES kmeal.account(owner);
 
-
-
--- create view kmeal.restaurant_location as(
--- select 
---     b.owner, 
---     b.name, 
---     b.description,
---     b.phone, b.location, b.address, b.logo, 
---     ST_Distance_Sphere(b.location::Geometry, b.location::Geometry) as distance
---   from kmeal.account a 
--- inner join 
--- kmeal.restaurant b 
--- on  
--- a.owner = b.owner
--- );
-
--- CREATE OR REPLACE FUNCTION kmeal.get_restaurants (latitude DECIMAL, longitude DECIMAL, distance DECIMAL) 
---  RETURNS TABLE (
---  owner VARCHAR,
---  name INT
-
--- ) 
--- AS $$
--- BEGIN
---  RETURN QUERY SELECT
---  title,
---  cast( release_year as integer)
---  FROM
---  film
---  WHERE
---  title ILIKE p_pattern ;
--- END; 
