@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS kmeal."item" (
   "_dmx_created_at" TIMESTAMP DEFAULT current_timestamp NOT NULL
 );
 ALTER TABLE ONLY kmeal."item"
-  ADD CONSTRAINT owner_item_id_fkey FOREIGN KEY ("owner") REFERENCES kmeal.restaurant(owner);
+  ADD CONSTRAINT owner_item_id_fkey FOREIGN KEY ("owner") REFERENCES kmeal.account(owner);
 
 
 CREATE TABLE IF NOT EXISTS kmeal."group" (
@@ -53,7 +53,7 @@ ALTER TABLE ONLY kmeal."listing"
 
 
 ALTER TABLE ONLY kmeal."listing"
-  ADD CONSTRAINT owner_list_id_fkey FOREIGN KEY ("owner") REFERENCES kmeal.restaurant(owner);
+  ADD CONSTRAINT owner_list_id_fkey FOREIGN KEY ("owner") REFERENCES kmeal.account(owner);
 
 
 CREATE TABLE IF NOT EXISTS kmeal."dplisting" (
@@ -75,7 +75,7 @@ ALTER TABLE ONLY kmeal."dplisting"
 
 
 ALTER TABLE ONLY kmeal."dplisting"
-  ADD CONSTRAINT owner_dplist_id_fkey FOREIGN KEY ("owner") REFERENCES kmeal.restaurant(owner);
+  ADD CONSTRAINT owner_dplist_id_fkey FOREIGN KEY ("owner") REFERENCES kmeal.account(owner);
 
 
 CREATE TABLE IF NOT EXISTS kmeal."combolisting" (
@@ -86,7 +86,7 @@ CREATE TABLE IF NOT EXISTS kmeal."combolisting" (
 );
 
 ALTER TABLE ONLY kmeal."combolisting"
-  ADD CONSTRAINT owner_combolist_id_fkey FOREIGN KEY ("owner") REFERENCES kmeal.restaurant(owner);
+  ADD CONSTRAINT owner_combolist_id_fkey FOREIGN KEY ("owner") REFERENCES kmeal.account(owner);
 
 
 CREATE TABLE IF NOT EXISTS kmeal."combolisting_items" (

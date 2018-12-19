@@ -3,7 +3,6 @@ CREATE TABLE IF NOT EXISTS kmeal."order" (
   "seller" TEXT NOT NULL,
   "buyer" TEXT NOT NULL,
   "paid_price" TEXT NOT NULL,
-  "shipping_address" TEXT NOT NULL,
   "created_at" TIMESTAMP NOT NULL,
   "created_block" BIGINT NOT NULL,
   "created_trx" TEXT NOT NULL,
@@ -12,11 +11,30 @@ CREATE TABLE IF NOT EXISTS kmeal."order" (
 );
 
 ALTER TABLE ONLY kmeal."order"
-  ADD CONSTRAINT order_id_fkey FOREIGN KEY ("seller") REFERENCES kmeal.restaurant(owner);
+  ADD CONSTRAINT order_seller_id_fkey FOREIGN KEY ("seller") REFERENCES kmeal.account(owner);
 
 
 ALTER TABLE ONLY kmeal."order"
-  ADD CONSTRAINT order_id_fkey FOREIGN KEY ("buyer") REFERENCES kmeal.restaurant(owner);
+  ADD CONSTRAINT order_buyer_id_fkey FOREIGN KEY ("buyer") REFERENCES kmeal.account(owner);
+
+
+CREATE TABLE IF NOT EXISTS kmeal."order_status" (
+  "order_id" INTEGER  NOT NULL PRIMARY KEY,
+  "order_status" INTEGER  NOT NULL
+);
+
+ALTER TABLE ONLY kmeal."order_status"
+  ADD CONSTRAINT order_status_id_fkey FOREIGN KEY ("order_id") REFERENCES kmeal.order(order_id);
+
+
+CREATE TABLE IF NOT EXISTS kmeal."order_detail" (
+  "order_id" INTEGER  NOT NULL PRIMARY KEY,
+  "item_id" INTEGER  NOT NULL,
+  "item_price" INTEGER  NOT NULL
+);
+
+ALTER TABLE ONLY kmeal."order_detail"
+  ADD CONSTRAINT order_detail_id_fkey FOREIGN KEY ("order_id") REFERENCES kmeal.order(order_id);
 
 CREATE TABLE IF NOT EXISTS kmeal."dporder" (
   "order_id" INTEGER  NOT NULL PRIMARY KEY,
@@ -31,10 +49,20 @@ CREATE TABLE IF NOT EXISTS kmeal."dporder" (
   "_dmx_created_at" TIMESTAMP DEFAULT current_timestamp NOT NULL
 );
 
-ALTER TABLE ONLY kmeal."order"
-  ADD CONSTRAINT dporder_id_fkey FOREIGN KEY ("seller") REFERENCES kmeal.restaurant(owner);
+ALTER TABLE ONLY kmeal."dporder"
+  ADD CONSTRAINT dporde_seller_id_fkey FOREIGN KEY ("seller") REFERENCES kmeal.account(owner);
+
+ALTER TABLE ONLY kmeal."dporder"
+  ADD CONSTRAINT dporder_buyer_id_fkey FOREIGN KEY ("buyer") REFERENCES kmeal.account(owner);
+
+CREATE TABLE IF NOT EXISTS kmeal."dporder_detail" (
+  "order_id" INTEGER  NOT NULL PRIMARY KEY,
+  "item_id" INTEGER  NOT NULL,
+  "item_price" INTEGER  NOT NULL,
+  "paid_price" TEXT NOT NULL
+);
 
 
-ALTER TABLE ONLY kmeal."order"
-  ADD CONSTRAINT dporder_id_fkey FOREIGN KEY ("buyer") REFERENCES kmeal.restaurant(owner);
 
+ALTER TABLE ONLY kmeal."dporder_detail"
+  ADD CONSTRAINT dporder_detail_id_fkey FOREIGN KEY ("order_id") REFERENCES kmeal.dporder(order_id);
