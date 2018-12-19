@@ -69,9 +69,12 @@
     "nativescript-ngx-fonticon": "^4.2.0",
     "nativescript-theme-core": "^1.0.4",
     "ngx-avatar": "^3.2.0",
+    "ngx-google-places-autocomplete": "^2.0.3",
     "reflect-metadata": "^0.1.12",
     "rxjs": "~6.3.3",
     "rxjs-compat": "~6.3.3",
+    "scatterjs-core": "^2.5.0",
+    "scatterjs-plugin-eosjs2": "^1.2.0",
     "tns-core-modules": "~5.0.0",
     "zone.js": "^0.8.26"
   },

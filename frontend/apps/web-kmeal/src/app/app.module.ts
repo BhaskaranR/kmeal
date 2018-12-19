@@ -41,7 +41,7 @@ import { InMemoryCache } from "apollo-cache-inmemory";
         return {
           cache:new InMemoryCache(),
           link:httpLink.create({
-            uri:'https://w5xlvm3vzz.lp.gql.zone/graphql'
+            uri:environment.graphql_url,
           })
         }
       },

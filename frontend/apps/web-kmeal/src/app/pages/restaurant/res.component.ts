@@ -4,7 +4,7 @@ import { Component, ElementRef, ViewChild } from "@angular/core";
     selector: "app-restaurant",
     moduleId: module.id,
     templateUrl: "./res.component.html",
-    styleUrls: []
+    styleUrls: ['./res.component.scss'],
 })
 export class ResComponent {
     constructor(){}

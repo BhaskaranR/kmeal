@@ -12,7 +12,7 @@ export const routing: Routes = [
     { path: '', component: DishComponent },
 ];
 
-const routingModule = RouterModule.forChild(routing)
+const routingModule = RouterModule.forChild(routing);
 
 
 @NgModule({

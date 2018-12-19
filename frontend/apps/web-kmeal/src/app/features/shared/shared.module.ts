@@ -1,6 +1,6 @@
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ModuleWithProviders, NgModule } from '@angular/core';
-
+import { GooglePlaceModule } from "ngx-google-places-autocomplete";
 import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { MatAutocompleteModule,
@@ -82,7 +82,8 @@ import { NguCarouselModule } from '@ngu/carousel';
   MatTabsModule,
   MatToolbarModule,
   MatTooltipModule,
-  NguCarouselModule
+  NguCarouselModule,
+  GooglePlaceModule
   ],
   exports: [
     CommonModule,
@@ -122,7 +123,8 @@ import { NguCarouselModule } from '@ngu/carousel';
   MatTabsModule,
   MatToolbarModule,
   MatTooltipModule,
-  NguCarouselModule
+  NguCarouselModule,
+  GooglePlaceModule
   ],
   declarations: [],
   providers: [MatIconRegistry]

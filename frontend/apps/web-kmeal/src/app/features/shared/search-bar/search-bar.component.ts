@@ -1,6 +1,7 @@
 import { Component ,ViewChild, ElementRef} from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { CuisineMenuComponent } from './cuisine.component';
+import { GooglePlaceDirective } from 'ngx-google-places-autocomplete';
 
 @Component({
   selector: 'search-bar',
@@ -9,23 +10,22 @@ import { CuisineMenuComponent } from './cuisine.component';
   styleUrls:['./search-bar.component.scss']
 })
 export class SearchBarComponent  {
-    isCuisineOpen:boolean = false;
-    isSearching:boolean = false;
-    @ViewChild("autocomplete", {read: ElementRef}) autocomplete: ElementRef;
+    options={
+        types: [],
+        componentRestrictions: { country: 'USA' }
+        };
+    @ViewChild("placesRef") placesRef : GooglePlaceDirective;
     constructor(public dialogRef:MatDialog) {}
 
     onFocus(e:Event){
-        this.isSearching = true;
         console.log(e);
-        this.positionResultBox(e.srcElement.parentElement);
     }
 
     onBlur(){
-        this.isSearching = false;
+
     }
 
-    private positionResultBox(ele: Element){
-        console.log(ele);
-        console.log(this.autocomplete);
+    handleAddressChange(e){
+        console.log(e);
     }
 }
