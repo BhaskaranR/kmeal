@@ -1,3 +1,6 @@
+-- create postgis to enable location based search
+-- CREATE EXTENSION postgis;
+-- CREATE EXTENSION postgis_topology;
 
 CREATE TABLE IF NOT EXISTS "${schema^}"."customer" (
   "owner" TEXT NOT NULL PRIMARY KEY,
@@ -12,7 +15,7 @@ CREATE TABLE IF NOT EXISTS "${schema^}"."restaurant" (
   "owner" TEXT NOT NULL PRIMARY KEY,
   "description" TEXT NOT NULL,
   "phone"       INTEGER NOT NULL,
-  "location"    TEXT NOT NULL,
+  "location" GEOGRAPHY(Point) NOT NULL,
   "address"     TEXT NOT NULL,
   "logo"        TEXT NOT NULL,
   "category"    TEXT NOT NULL,
