@@ -2,7 +2,7 @@ CREATE TABLE IF NOT EXISTS kmeal."item" (
   "item_id" INTEGER  NOT NULL PRIMARY KEY,
   "item_name" TEXT NOT NULL,
   "description" TEXT NOT NULL,
-  "owner" TEXT NOT NULL,
+  "restaurant_id" INTEGER NOT NULL,
   "created_at" TIMESTAMP NOT NULL,
   "created_block" BIGINT NOT NULL,
   "created_trx" TEXT NOT NULL,
@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS kmeal."item" (
   "_dmx_created_at" TIMESTAMP DEFAULT current_timestamp NOT NULL
 );
 ALTER TABLE ONLY kmeal."item"
-  ADD CONSTRAINT owner_item_id_fkey FOREIGN KEY ("owner") REFERENCES kmeal.account(owner);
+  ADD CONSTRAINT restaurant_item_id_fkey FOREIGN KEY ("restaurant_id") REFERENCES kmeal.restaurant(restaurant_id);
 
 
 CREATE TABLE IF NOT EXISTS kmeal."group" (
@@ -43,7 +43,7 @@ ALTER TABLE ONLY kmeal."item_sides"
 CREATE TABLE IF NOT EXISTS kmeal."listing" (
   "listing_id" INTEGER NOT NULL PRIMARY KEY,
   "item_id" INTEGER  NOT NULL,
-  "owner" TEXT NOT NULL,
+  "restaurant_id" INTEGER NOT NULL,
   "list_price" DECIMAL NOT NULL,
   "isactive" BOOLEAN NOT NULL
 );
@@ -53,13 +53,13 @@ ALTER TABLE ONLY kmeal."listing"
 
 
 ALTER TABLE ONLY kmeal."listing"
-  ADD CONSTRAINT owner_list_id_fkey FOREIGN KEY ("owner") REFERENCES kmeal.account(owner);
+  ADD CONSTRAINT restaurant_list_id_fkey FOREIGN KEY ("restaurant_id") REFERENCES kmeal.restaurant(restaurant_id);
 
 
 CREATE TABLE IF NOT EXISTS kmeal."dplisting" (
   "listing_id" INTEGER NOT NULL PRIMARY KEY,
   "item_id" INTEGER  NOT NULL,
-  "owner" TEXT NOT NULL,
+  "restaurant_id" INTEGER NOT NULL,
   "list_price" DECIMAL NOT NULL,
   "min_price" DECIMAL NOT NULL,
   "quantity" INTEGER NOT NULL,
@@ -75,18 +75,18 @@ ALTER TABLE ONLY kmeal."dplisting"
 
 
 ALTER TABLE ONLY kmeal."dplisting"
-  ADD CONSTRAINT owner_dplist_id_fkey FOREIGN KEY ("owner") REFERENCES kmeal.account(owner);
+  ADD CONSTRAINT restaurant_dplist_id_fkey FOREIGN KEY ("restaurant_id") REFERENCES kmeal.restaurant(restaurant_id);
 
 
 CREATE TABLE IF NOT EXISTS kmeal."combolisting" (
   "listing_id" INTEGER NOT NULL PRIMARY KEY,
-  "owner" TEXT NOT NULL,
+  "restaurant_id" INTEGER NOT NULL,
   "list_price" DECIMAL NOT NULL,
   "isactive" BOOLEAN NOT NULL
 );
 
 ALTER TABLE ONLY kmeal."combolisting"
-  ADD CONSTRAINT owner_combolist_id_fkey FOREIGN KEY ("owner") REFERENCES kmeal.account(owner);
+  ADD CONSTRAINT restaurant_combolist_id_fkey FOREIGN KEY ("restaurant_id") REFERENCES kmeal.restaurant(restaurant_id);
 
 
 CREATE TABLE IF NOT EXISTS kmeal."combolisting_items" (

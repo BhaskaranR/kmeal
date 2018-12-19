@@ -9,6 +9,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "apollo-cache-control": "0.0.7",
+    "apollo-engine": "^0.6.1",
+    "apollo-server": "0.3.x",
+    "apollo-tracing": "0.0.9",
+    "config": "^1.28.1",
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "validate-order": "file:./validate-order",
