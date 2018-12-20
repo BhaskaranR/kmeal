@@ -1,7 +1,8 @@
 CREATE TABLE IF NOT EXISTS kmeal."item" (
   "item_id" INTEGER  NOT NULL PRIMARY KEY,
-  "item_name" TEXT NOT NULL,
+  "item_name" varchar(50) NOT NULL,
   "description" TEXT NOT NULL,
+  "photo" varchar(50) NOT NULL,
   "restaurant_id" INTEGER NOT NULL,
   "created_at" TIMESTAMP NOT NULL,
   "created_block" BIGINT NOT NULL,
@@ -40,65 +41,43 @@ ALTER TABLE ONLY kmeal."item_sides"
   ADD CONSTRAINT item_sides_id_fkey FOREIGN KEY ("item_id") REFERENCES kmeal.item("item_id");
 
 
+ -- list type regular, dynamically priced, combo menu
 CREATE TABLE IF NOT EXISTS kmeal."listing" (
   "listing_id" INTEGER NOT NULL PRIMARY KEY,
-  "item_id" INTEGER  NOT NULL,
   "restaurant_id" INTEGER NOT NULL,
   "list_price" DECIMAL NOT NULL,
-  "isactive" BOOLEAN NOT NULL
+  "list_type" CHAR(1) DEFAULT 'R' NOT NULL,
+  "isactive" BOOLEAN NOT NULL,
+  "created_at" TIMESTAMP NOT NULL,
+  "created_block" BIGINT NOT NULL,
+  "created_trx" TEXT NOT NULL,
+  "created_eosacc" TEXT NOT NULL,
+  "_dmx_created_at" TIMESTAMP DEFAULT current_timestamp NOT NULL
 );
-
-ALTER TABLE ONLY kmeal."listing"
-  ADD CONSTRAINT listing_id_fkey FOREIGN KEY ("item_id") REFERENCES kmeal.item("item_id");
-
 
 ALTER TABLE ONLY kmeal."listing"
   ADD CONSTRAINT restaurant_list_id_fkey FOREIGN KEY ("restaurant_id") REFERENCES kmeal.restaurant(restaurant_id);
 
-
 CREATE TABLE IF NOT EXISTS kmeal."dplisting" (
   "listing_id" INTEGER NOT NULL PRIMARY KEY,
-  "item_id" INTEGER  NOT NULL,
-  "restaurant_id" INTEGER NOT NULL,
-  "list_price" DECIMAL NOT NULL,
   "min_price" DECIMAL NOT NULL,
   "quantity" INTEGER NOT NULL,
   "start" INTEGER NOT NULL,
   "duration" INTEGER NOT NULL,
   "sliding_rate" INTEGER NOT NULL,
-  "status" INTEGER NOT NULL,
-  "isactive" BOOLEAN NOT NULL
+  "status" INTEGER NOT NULL
 );
 
 ALTER TABLE ONLY kmeal."dplisting"
-  ADD CONSTRAINT dplisting_id_fkey FOREIGN KEY ("item_id") REFERENCES kmeal.item("item_id");
+  ADD CONSTRAINT dplisting_listing_id_fkey FOREIGN KEY ("listing_id") REFERENCES kmeal.listing("listing_id");
 
-
-ALTER TABLE ONLY kmeal."dplisting"
-  ADD CONSTRAINT restaurant_dplist_id_fkey FOREIGN KEY ("restaurant_id") REFERENCES kmeal.restaurant(restaurant_id);
-
-
-CREATE TABLE IF NOT EXISTS kmeal."combolisting" (
-  "listing_id" INTEGER NOT NULL PRIMARY KEY,
-  "restaurant_id" INTEGER NOT NULL,
-  "list_price" DECIMAL NOT NULL,
-  "isactive" BOOLEAN NOT NULL
-);
-
-ALTER TABLE ONLY kmeal."combolisting"
-  ADD CONSTRAINT restaurant_combolist_id_fkey FOREIGN KEY ("restaurant_id") REFERENCES kmeal.restaurant(restaurant_id);
-
-
-CREATE TABLE IF NOT EXISTS kmeal."combolisting_items" (
+CREATE TABLE IF NOT EXISTS kmeal."listing_items" (
   "listing_id" INTEGER NOT NULL,
   "item_id" INTEGER  NOT NULL
 );
 
-ALTER TABLE ONLY kmeal."combolisting_items"
-  ADD CONSTRAINT combolisting_item_id_fkey FOREIGN KEY ("item_id") REFERENCES kmeal.item("item_id");
+ALTER TABLE ONLY kmeal."listing_items"
+  ADD CONSTRAINT listing_items_id_fkey FOREIGN KEY ("item_id") REFERENCES kmeal.item("item_id");
 
-ALTER TABLE ONLY kmeal."combolisting_items"
-  ADD CONSTRAINT combolisting_listing_id_fkey FOREIGN KEY ("listing_id") REFERENCES kmeal.combolisting("listing_id");
-
-
-
+ALTER TABLE ONLY kmeal."listing_items"
+  ADD CONSTRAINT listings_items_listing_id_fkey FOREIGN KEY ("listing_id") REFERENCES kmeal.listing("listing_id");
