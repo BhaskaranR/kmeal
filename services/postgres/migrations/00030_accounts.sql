@@ -33,7 +33,6 @@ CREATE TABLE IF NOT EXISTS "kmeal"."restaurant" (
   "_dmx_created_at" TIMESTAMP DEFAULT current_timestamp NOT NULL
   );
 
-
 ALTER TABLE ONLY kmeal."restaurant"
   ADD CONSTRAINT owner_restaurant_fkey FOREIGN KEY ("owner") REFERENCES kmeal.account(owner);
 
@@ -41,9 +40,7 @@ ALTER TABLE ONLY kmeal."restaurant"
 CREATE TABLE IF NOT EXISTS "kmeal"."restaurant_categories" (
   "restaurant_id" INTEGER NOT NULL,
   "category"    TEXT NOT NULL
-)
+);
 
 ALTER TABLE ONLY kmeal."restaurant_categories"
   ADD CONSTRAINT restaurant_categories_fkey FOREIGN KEY ("restaurant_id") REFERENCES kmeal.restaurant(restaurant_id);
-
-
