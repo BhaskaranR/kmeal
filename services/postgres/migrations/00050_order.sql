@@ -42,7 +42,7 @@ ALTER TABLE ONLY kmeal."order_detail"
   ADD CONSTRAINT order_detail_id_fkey FOREIGN KEY ("order_id") REFERENCES kmeal.order(order_id);
 
 ALTER TABLE ONLY kmeal."order_detail"
-  ADD CONSTRAINT order_detail_listing_id_fkey FOREIGN KEY ("order_id") REFERENCES kmeal.listing(listing_id);
+  ADD CONSTRAINT order_detail_listing_id_fkey FOREIGN KEY ("listing_id") REFERENCES kmeal.listing(listing_id);
 
 
 CREATE TABLE IF NOT EXISTS kmeal."dporder" (
