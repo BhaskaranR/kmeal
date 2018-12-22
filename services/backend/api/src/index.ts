@@ -1,10 +1,12 @@
-import express from 'express';
+
+import * as express from 'express';
 import {json } from 'body-parser';
-import { graphiqlExpress, graphqlExpress } from 'graphql-server-express';
-import * as mergeGraphqlSchemas from 'merge-graphql-schemas';
-import { addMockFunctionsToSchema, makeExecutableSchema } from 'graphql-tools';
+
+import {  makeExecutableSchema } from 'graphql-tools';
+const mergeGraphqlSchemas = require('merge-graphql-schemas');
 
 import * as path from 'path';
+import { graphqlExpress, graphiqlExpress } from 'graphql-server-express';
 
 const fileLoader = mergeGraphqlSchemas.fileLoader;
 const mergeTypes = mergeGraphqlSchemas.mergeTypes;
@@ -15,10 +17,6 @@ const resolvers = mergeResolvers(fileLoader(path.join(__dirname, './resolvers'))
 
 
 function createSchema() {
-    const mockResolvers = {
-      Query: {},
-      Mutation: {}
-    };
     
     const executableSchema = makeExecutableSchema({
       typeDefs: typeDefs,
@@ -50,6 +48,6 @@ app.use('/graphiql', graphiqlExpress({
     subscriptionsEndpoint: 'ws://localhost:3000/subscriptions',
   }));
 
-var server = app.listen(8081, function () {
+app.listen(8081, function () {
     console.log("server listening on port 8081");
 });

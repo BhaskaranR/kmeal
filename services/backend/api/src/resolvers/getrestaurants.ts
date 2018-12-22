@@ -1,14 +1,8 @@
 
 
-import * as Wreck from 'wreck';
-import * as config from 'config';
 import { validate } from '../helpers/util';
 import * as Joi from 'joi';
 import { getRestaurant } from '../models/searchrestaurant';
-
-let API_KEY = config.get("googlePlacesAPIKey");
-let OSM_KEY = config.get("OSMApiKey");
-
 
 const nearbyQueryOptional =
     Joi.object().keys({
@@ -29,7 +23,7 @@ export default {
             }
         }) => {
             try {
-                const validatedLike = await validate(nearby, nearbyQueryOptional);
+                await validate(nearby, nearbyQueryOptional);
                 return getRestaurant(nearby);
             }
             catch (e) {

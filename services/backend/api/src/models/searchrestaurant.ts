@@ -1,4 +1,4 @@
-import Sequelize from "sequelize";
+import * as Sequelize from "sequelize";
 
 const POSTGRES_CONNECTION_STRING = process.env.POSTGRES_CONNECTION_STRING || "postgres://postgres:password@localhost:6432/postgres";
 
@@ -8,10 +8,12 @@ export async function getRestaurant(nearby: {
     maxDistance: number,
     limit: number
 }){
+    var sequelize = new Sequelize(
+        POSTGRES_CONNECTION_STRING, {}
+    );
     try {
-        var sequelize = new Sequelize(
-            POSTGRES_CONNECTION_STRING, {}
-        );
+        console.log(nearby);
+     
         // var driverId = getRandomDriver();
         // var res = await sequelize.query('BEGIN;' +
         //                             'INSERT INTO assignment (order_id, driver_id) values (:orderId, :driverId); ' +
