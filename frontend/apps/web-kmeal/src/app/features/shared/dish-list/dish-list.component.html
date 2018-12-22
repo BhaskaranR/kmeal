@@ -5,6 +5,6 @@
     <ngu-tile *nguCarouselDef="let dish; let i = index; let ani = animate">
         <dish-card [dishDetails] = "dish" (goToDishEvent)="goToDish($event)"></dish-card>
     </ngu-tile>
-    <button NguCarouselPrev class="leftRs" >&lt;</button>
-    <button NguCarouselNext class="rightRs" >&gt;</button>
+    <button NguCarouselPrev class="arrowbtn arrowbtn-up" ></button>
+    <button NguCarouselNext class="arrowbtn arrowbtn-down" ></button>
 </ngu-carousel>

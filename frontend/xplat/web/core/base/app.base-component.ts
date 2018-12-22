@@ -1,7 +1,7 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject } from "@angular/core";
 
 // libs
-import { BaseComponent } from '@kmeal-frontend/core';
+import { BaseComponent } from "@kmeal-frontend/core";
 
 export abstract class AppBaseComponent extends BaseComponent {
   /**

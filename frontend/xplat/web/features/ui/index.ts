@@ -1,1 +1,1 @@
-export { UIModule } from './ui.module';
+export { UIModule } from "./ui.module";

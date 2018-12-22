@@ -1,6 +1,6 @@
-<nav-bar></nav-bar>
-
 <div class="container-fluid">
+    <br>
+    <br>
     <br>
     <br>
     <h5 style="margin-left:30px">Search By Cuisine</h5>
@@ -11,15 +11,17 @@
         <ngu-tile *nguCarouselDef="let cuisine; let i = index; let ani = animate">
                 <mat-card>{{cuisine}}</mat-card>
         </ngu-tile>
-        <button NguCarouselPrev class="leftRs" >&lt;</button>
-        <button NguCarouselNext class="rightRs" >&gt;</button>
+        <button NguCarouselPrev class="arrowbtn arrowbtn-up" ></button>
+        <button NguCarouselNext class="arrowbtn arrowbtn-down" ></button>
     </ngu-carousel>
     <br>
     <br>
-    <h5 style="margin-left:30px">what's hot</h5>
+    <br><br>
+    <h5 style="margin-left:30px">What's trending</h5>
     <dish-list></dish-list>
     <br>
     <br>
+    <br><br>
     <h5 style="margin-left:30px">Nearby Restaurants</h5>
     <restaurant-list></restaurant-list>
     <br>
@@ -29,7 +31,5 @@
     <br>
     <br>
 </div>
-
-<footer-bar></footer-bar>
 
 

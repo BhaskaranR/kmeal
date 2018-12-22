@@ -13,6 +13,8 @@ import { SharedModule } from './features/shared/shared.module';
 import { ApolloModule, APOLLO_OPTIONS } from "apollo-angular";
 import { HttpLinkModule, HttpLink } from "apollo-angular-link-http";
 import { InMemoryCache } from "apollo-cache-inmemory";
+import { NavBarModule } from './features/shared/nav-bar/nav.module';
+import { NavFooterLayout } from './layouts/nav-footer.layout';
 
 
 @NgModule({
@@ -22,9 +24,10 @@ import { InMemoryCache } from "apollo-cache-inmemory";
     BrowserAnimationsModule,
     SharedModule,
     ApolloModule,
-    HttpLinkModule
+    HttpLinkModule,
+    NavBarModule
   ],
-  declarations: [AppComponent],
+  declarations: [AppComponent, NavFooterLayout],
   bootstrap: [AppComponent],
   providers: [
     {

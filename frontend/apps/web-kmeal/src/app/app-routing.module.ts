@@ -17,6 +17,9 @@ export const AppRoutes: Routes = [{
         path: 'dish', 
         loadChildren: './pages/dish/dish.module#DishModule', 
 },{
+        path: 'search', 
+        loadChildren: './pages/search/search.module#SearchModule', 
+},{
         path: '**', 
         loadChildren: './pages/error/error.module#ErrorModule', 
 },

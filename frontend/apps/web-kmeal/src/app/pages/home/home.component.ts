@@ -1,7 +1,8 @@
 import { Component, ElementRef, ViewChild , OnInit} from "@angular/core";
 import { NguCarouselConfig } from "@ngu/carousel";
 import {Apollo} from 'apollo-angular';
-import gql from 'graphql-tag';
+import { categoriesQuery } from "./home.queries";
+
 
 
 @Component({
@@ -11,10 +12,11 @@ import gql from 'graphql-tag';
     styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit{
+
     constructor(private apollo: Apollo) {}
-    cuisines:string[] = ['Indian', 'Chinese','Korean','American','Brunch','Pizza','Breakfast','Jpanese','Burger','Mexican','South American','Sea Food','Caribbean'];
+    cuisines:string[] = [];
     public carouselTileConfig: NguCarouselConfig = {
-        grid: { xs: 3, sm: 3, md: 6, lg: 6, all: 0 },
+        grid: { xs: 2, sm: 2, md: 4, lg: 6, all: 0 },
         speed: 250,
         point: {
             visible: false
@@ -25,18 +27,10 @@ export class HomeComponent implements OnInit{
     };
 
     ngOnInit(){
-        this.apollo
-      .watchQuery({
-        query: gql`
-          {
-            restaurant{
-              name
-            }
-          }
-        `,
-      })
+      this.apollo
+      .watchQuery({query: categoriesQuery})
       .valueChanges.subscribe(result => {
-        console.log(result);
+        this.cuisines = result.data['kmeal_categories'].map(ca => ca['title']);
       });
     }
 }

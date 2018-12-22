@@ -1,12 +1,12 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 
 // nativescript
-import * as dialogs from 'tns-core-modules/ui/dialogs';
-import { device, isIOS } from 'tns-core-modules/platform';
-import * as timer from 'tns-core-modules/timer';
+import * as dialogs from "tns-core-modules/ui/dialogs";
+import { device, isIOS } from "tns-core-modules/platform";
+import * as timer from "tns-core-modules/timer";
 
 // app
-import { isString } from '@kmeal-frontend/utils';
+import { isString } from "@kmeal-frontend/utils";
 
 @Injectable()
 export class TNSWindowPlatformService {
@@ -15,12 +15,12 @@ export class TNSWindowPlatformService {
   public get navigator(): any {
     return {
       language: device.language,
-      userAgent: 'nativescript'
+      userAgent: "nativescript"
     };
   }
   public get location(): any {
     return {
-      host: 'nativescript'
+      host: "nativescript"
     };
   }
 
@@ -28,10 +28,10 @@ export class TNSWindowPlatformService {
     return new Promise(resolve => {
       if (!this._dialogOpened && msg) {
         this._dialogOpened = true;
-        if (typeof msg === 'string') {
+        if (typeof msg === "string") {
           const options: dialogs.AlertOptions = {
             message: <string>msg,
-            okButtonText: 'Ok'
+            okButtonText: "Ok"
           };
           dialogs.alert(options).then(ok => {
             this._dialogOpened = false;
@@ -47,10 +47,10 @@ export class TNSWindowPlatformService {
       if (!this._dialogOpened) {
         this._dialogOpened = true;
         const options: dialogs.ConfirmOptions = {
-          title: 'Confirm',
+          title: "Confirm",
           message,
-          okButtonText: 'Ok',
-          cancelButtonText: 'Cancel'
+          okButtonText: "Ok",
+          cancelButtonText: "Cancel"
         };
 
         dialogs.confirm(options).then(ok => {

@@ -1,24 +1,24 @@
-import { NgModule, Optional, SkipSelf } from '@angular/core';
+import { NgModule, Optional, SkipSelf } from "@angular/core";
 
 // nativescript
-import { NativeScriptModule } from 'nativescript-angular/nativescript.module';
-import { NativeScriptHttpClientModule } from 'nativescript-angular/http-client';
-import { device } from 'tns-core-modules/platform';
-import { TNSFontIconModule } from 'nativescript-ngx-fonticon';
+import { NativeScriptModule } from "nativescript-angular/nativescript.module";
+import { NativeScriptHttpClientModule } from "nativescript-angular/http-client";
+import { device } from "tns-core-modules/platform";
+import { TNSFontIconModule } from "nativescript-ngx-fonticon";
 
 // libs
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
 import {
   CoreModule,
   PlatformLanguageToken,
   WindowPlatformService
-} from '@kmeal-frontend/core';
-import { throwIfAlreadyLoaded } from '@kmeal-frontend/utils';
+} from "@kmeal-frontend/core";
+import { throwIfAlreadyLoaded } from "@kmeal-frontend/utils";
 
 // app
-import { PROVIDERS } from './services';
-import { TNSWindowPlatformService } from './services/tns-window.service';
-import { TNSTranslateLoader } from './services/tns-translate.loader';
+import { PROVIDERS } from "./services";
+import { TNSWindowPlatformService } from "./services/tns-window.service";
+import { TNSTranslateLoader } from "./services/tns-translate.loader";
 
 // factories
 export function platformLangFactory() {
@@ -26,7 +26,7 @@ export function platformLangFactory() {
 }
 
 export function createTranslateLoader() {
-  return new TNSTranslateLoader('/assets/i18n/');
+  return new TNSTranslateLoader("/assets/i18n/");
 }
 
 @NgModule({
@@ -34,7 +34,7 @@ export function createTranslateLoader() {
     NativeScriptModule,
     NativeScriptHttpClientModule,
     TNSFontIconModule.forRoot({
-      fa: './assets/fontawesome.min.css'
+      fa: "./assets/fontawesome.min.css"
     }),
     CoreModule.forRoot([
       {
@@ -61,6 +61,6 @@ export class FooCoreModule {
     @SkipSelf()
     parentModule: FooCoreModule
   ) {
-    throwIfAlreadyLoaded(parentModule, 'FooCoreModule');
+    throwIfAlreadyLoaded(parentModule, "FooCoreModule");
   }
 }

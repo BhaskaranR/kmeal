@@ -1,13 +1,13 @@
-import { Observable, Observer } from 'rxjs';
+import { Observable, Observer } from "rxjs";
 
 // nativescript
-import { knownFolders, File, Folder, path } from 'tns-core-modules/file-system';
+import { knownFolders, File, Folder, path } from "tns-core-modules/file-system";
 
 export class TNSTranslateLoader {
   constructor(private _path: string) {}
 
   public getTranslation(lang: string) {
-    const filePath = `${this._path || '/assets/i18n/'}${lang}.json`;
+    const filePath = `${this._path || "/assets/i18n/"}${lang}.json`;
     // console.log('TNSTranslateLoader getTranslation:', filePath);
     return this.requestLocalFile(filePath);
   }
@@ -26,7 +26,7 @@ export class TNSTranslateLoader {
               observer.next(json);
               observer.complete();
             } catch (error) {
-              console.log('parse error:', error);
+              console.log("parse error:", error);
               // Even though the response status was 2xx, this is still an error.
               // The parse error contains the text of the body that failed to parse.
               const errorResult = {
@@ -37,20 +37,20 @@ export class TNSTranslateLoader {
             }
           },
           (error: Object) => {
-            console.log('i18n error:', error);
+            console.log("i18n error:", error);
             const errorResult = { error };
             observer.error(errorResult);
           }
         );
       } else {
-        const errorResult = { error: 'not found' };
+        const errorResult = { error: "not found" };
         observer.error(errorResult);
       }
     });
   }
 
   private _isLocalRequest(url: string): boolean {
-    return url.indexOf('~') === 0 || url.indexOf('/') === 0;
+    return url.indexOf("~") === 0 || url.indexOf("/") === 0;
   }
 
   private _currentApp(): Folder {
@@ -66,7 +66,7 @@ export class TNSTranslateLoader {
   }
 
   private _getAbsolutePath(url: string): string {
-    url = url.replace('~', '').replace('/', '');
+    url = url.replace("~", "").replace("/", "");
     url = path.join(this._currentApp().path, url);
     return url;
   }

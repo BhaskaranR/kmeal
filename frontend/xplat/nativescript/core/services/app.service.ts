@@ -1,16 +1,16 @@
 // angular
-import { Injectable, Inject, NgZone } from '@angular/core';
+import { Injectable, Inject, NgZone } from "@angular/core";
 
 // nativescript
-import * as tnsApp from 'tns-core-modules/application';
-import * as tnsUtils from 'tns-core-modules/utils/utils';
-import { device, isIOS, isAndroid } from 'tns-core-modules/platform';
-import { DeviceOrientation } from 'tns-core-modules/ui/enums';
+import * as tnsApp from "tns-core-modules/application";
+import * as tnsUtils from "tns-core-modules/utils/utils";
+import { device, isIOS, isAndroid } from "tns-core-modules/platform";
+import { DeviceOrientation } from "tns-core-modules/ui/enums";
 
 // libs
-import { TranslateService } from '@ngx-translate/core';
-import { Subject } from 'rxjs';
-import { LogService, PlatformLanguageToken } from '@kmeal-frontend/core';
+import { TranslateService } from "@ngx-translate/core";
+import { Subject } from "rxjs";
+import { LogService, PlatformLanguageToken } from "@kmeal-frontend/core";
 
 /**
  * This service can be used for low level app wiring
@@ -28,7 +28,7 @@ export class AppService {
   // orientation helper
   private _orientation: string;
   private _orientation$: Subject<any> = new Subject();
-  private _deviceType: 'Phone' | 'Tablet';
+  private _deviceType: "Phone" | "Tablet";
 
   constructor(
     private _ngZone: NgZone,
@@ -48,7 +48,7 @@ export class AppService {
   }
 
   public set orientation(value) {
-    this._log.debug('setting orientation:', value);
+    this._log.debug("setting orientation:", value);
     this._orientation = value;
     this._orientation$.next(value);
   }
@@ -77,14 +77,14 @@ export class AppService {
       buildNumber = pi.versionCode.toString();
     } else if (tnsApp.ios) {
       versionName = NSBundle.mainBundle.objectForInfoDictionaryKey(
-        'CFBundleShortVersionString'
+        "CFBundleShortVersionString"
       );
       buildNumber = NSBundle.mainBundle.objectForInfoDictionaryKey(
-        'CFBundleVersion'
+        "CFBundleVersion"
       );
     }
     this._appVersion = `v${versionName} (${buildNumber})`;
-    this._log.debug('App version:', this._appVersion);
+    this._log.debug("App version:", this._appVersion);
   }
 
   private _initLocale() {
@@ -94,22 +94,22 @@ export class AppService {
   private _initAppEvents() {
     // For the future - may want to use these
     tnsApp.on(tnsApp.resumeEvent, () => {
-      this._log.debug('tnsApp.resumeEvent');
+      this._log.debug("tnsApp.resumeEvent");
     });
     tnsApp.on(tnsApp.suspendEvent, () => {
-      this._log.debug('tnsApp.suspendEvent');
+      this._log.debug("tnsApp.suspendEvent");
     });
   }
 
   private _initOrientation() {
     this._deviceType = device.deviceType;
-    this._log.debug('deviceType:', this._deviceType);
-    this._log.debug('initializing orientation handling.');
+    this._log.debug("deviceType:", this._deviceType);
+    this._log.debug("initializing orientation handling.");
 
     // set initial orientation
     let orientation = getOrientation();
     this.orientation = orientation ? orientation : DeviceOrientation.portrait;
-    this._log.debug('current orientation:', this.orientation);
+    this._log.debug("current orientation:", this.orientation);
 
     // handle orientation changes
     tnsApp.on(tnsApp.orientationChangedEvent, e => {
@@ -144,7 +144,7 @@ const getOrientation = function() {
     ) {
       return DeviceOrientation.portrait;
     } else {
-      return '';
+      return "";
     }
   } else {
     const orientation = getContext()
@@ -163,14 +163,14 @@ const getOrientation = function() {
 };
 
 const getContext = function() {
-  const ctx = java.lang.Class.forName('android.app.AppGlobals')
-    .getMethod('getInitialApplication', null)
+  const ctx = java.lang.Class.forName("android.app.AppGlobals")
+    .getMethod("getInitialApplication", null)
     .invoke(null, null);
   if (ctx) {
     return ctx;
   }
 
-  return java.lang.Class.forName('android.app.ActivityThread')
-    .getMethod('currentApplication', null)
+  return java.lang.Class.forName("android.app.ActivityThread")
+    .getMethod("currentApplication", null)
     .invoke(null, null);
 };
