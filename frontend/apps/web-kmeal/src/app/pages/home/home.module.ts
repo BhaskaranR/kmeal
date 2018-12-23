@@ -3,8 +3,8 @@ import { HomeComponent } from "./home.component";
 import { Routes, RouterModule } from '@angular/router';
 import { SharedModule } from "../../features/shared/shared.module";
 import { SearchBarModule } from "../../features/shared/search-bar/search-bar.module";
-import { RestaurantListModule } from "../../features/shared/restaurant-list/res-list.module";
-import { DishListModule } from "../../features/shared/dish-list/dish-list.module";
+import { RestaurantModule } from "../../features/shared/restaurant/res.module";
+import { DishModule } from "../../features/shared/dish/dish.module";
 import {NguCarouselModule} from '@ngu/carousel';
 import 'hammerjs';
 import { NavBarModule } from "../../features/shared/nav-bar/nav.module";
@@ -23,8 +23,8 @@ const routing = RouterModule.forChild(routes);
         routing, 
         SharedModule, 
         SearchBarModule, 
-        RestaurantListModule, 
-        DishListModule,
+        RestaurantModule, 
+        DishModule,
         NavBarModule,
         NguCarouselModule],
     declarations: [

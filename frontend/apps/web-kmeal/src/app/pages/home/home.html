@@ -1,35 +1,61 @@
 <div class="container-fluid">
-    <br>
-    <br>
-    <br>
-    <br>
-    <h5 style="margin-left:30px">Search By Cuisine</h5>
-    <ngu-carousel 
-        #myCarousel 
-        [inputs]="carouselTileConfig" 
-        [dataSource]="cuisines" >
-        <ngu-tile *nguCarouselDef="let cuisine; let i = index; let ani = animate">
-                <mat-card>{{cuisine}}</mat-card>
-        </ngu-tile>
-        <button NguCarouselPrev class="arrowbtn arrowbtn-up" ></button>
-        <button NguCarouselNext class="arrowbtn arrowbtn-down" ></button>
-    </ngu-carousel>
-    <br>
-    <br>
-    <br><br>
-    <h5 style="margin-left:30px">What's trending</h5>
-    <dish-list></dish-list>
-    <br>
-    <br>
-    <br><br>
-    <h5 style="margin-left:30px">Nearby Restaurants</h5>
-    <restaurant-list></restaurant-list>
-    <br>
-    <br>
-    <h5 style="margin-left:30px">Order Again</h5>
-    <restaurant-list></restaurant-list>  
-    <br>
-    <br>
+    <div class="content-wrapper" *ngIf="!!cuisines.length" >
+        <h5>Search By Cuisine</h5>
+        <ngu-carousel 
+            #myCarousel 
+            [inputs]="cuisineConfig" 
+            [dataSource]="cuisines" >
+            <ngu-tile *nguCarouselDef="let cuisine; let i = index; let ani = animate">
+                <mat-card (click)="onSearch('Cuisine', cuisine)" style="box-shadow:none; color:white" [style.background-color]=" (i % 2 == 0) ? '#6e5432' : '#b28d5f'  ">
+                    {{cuisine}}
+                </mat-card>
+            </ngu-tile>
+            <button NguCarouselPrev class="arrowbtn arrowbtn-left" ></button>
+            <button NguCarouselNext class="arrowbtn arrowbtn-right" ></button>
+        </ngu-carousel>
+    </div>
+    
+    <div class="content-wrapper">
+        <h5>What's trending</h5>
+        <ngu-carousel 
+            #myCarousel 
+            [inputs]="carConfig" 
+            [dataSource]="dishes" >
+            <ngu-tile *nguCarouselDef="let dish; let i = index; let ani = animate">
+                <dish-card [dishDetails] = "dish" (onError)="throwError($event)"></dish-card>
+            </ngu-tile>
+            <button NguCarouselPrev class="arrowbtn arrowbtn-left" ></button>
+            <button NguCarouselNext class="arrowbtn arrowbtn-right" ></button>
+        </ngu-carousel>
+    </div>
+    
+    <div class="content-wrapper">
+        <h5 style="margin-left:30px">Nearby Restaurants</h5>
+        <ngu-carousel 
+            #myCarousel 
+            [inputs]="carConfig" 
+            [dataSource]="restaurants" >
+            <ngu-tile *nguCarouselDef="let res; let i = index; let ani = animate">
+                <res-card [res]="res" (onError)="throwError($event)" ></res-card>
+            </ngu-tile>
+            <button NguCarouselPrev class="arrowbtn arrowbtn-left" ></button>
+            <button NguCarouselNext class="arrowbtn arrowbtn-right" ></button>
+        </ngu-carousel>
+    </div>
+    
+    <div class="content-wrapper">
+        <h5>Order Again</h5>
+        <ngu-carousel 
+            #myCarousel 
+            [inputs]="carConfig" 
+            [dataSource]="restaurants" >
+            <ngu-tile *nguCarouselDef="let res; let i = index; let ani = animate">
+                <res-card [res]="res" (onError)="throwError($event)" ></res-card>
+            </ngu-tile>
+            <button NguCarouselPrev class="arrowbtn arrowbtn-left" ></button>
+            <button NguCarouselNext class="arrowbtn arrowbtn-right" ></button>
+        </ngu-carousel>
+    </div>
 </div>
 
 

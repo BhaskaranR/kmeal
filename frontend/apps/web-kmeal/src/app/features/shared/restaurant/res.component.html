@@ -1,0 +1,17 @@
+<mat-card class="mat-elevation-z0"  (click)="goToRestaurant()">
+    <img mat-card-image src="https://ichef.bbci.co.uk/food/ic/food_16x9_832/recipes/one_pot_chorizo_and_15611_16x9.jpg">
+    <h4><small>{{res.restaurantName}}</small></h4>
+    <mat-card-subtitle>
+        <span>{{res.priceLevel}} </span>
+        <span *ngFor="let label of res.lables" style="margin-right:5px">{{label}} &#8226; </span>
+        <br>
+        <p><small>{{res.address.line}}</small>  </p>
+    </mat-card-subtitle>
+    <mat-chip-list>
+        <mat-chip>Papadum</mat-chip>
+        <mat-chip>4.5 <mat-icon >star</mat-icon></mat-chip>
+        <mat-chip>{{res.distance}}</mat-chip>
+    </mat-chip-list>
+</mat-card>
+
+

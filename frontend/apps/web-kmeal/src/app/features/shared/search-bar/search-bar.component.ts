@@ -39,7 +39,7 @@ export class SearchBarComponent  implements OnInit{
         this.searchService.searchString = e.formatted_address;
 
         if (this.needToReRoute()) {
-            this.router.navigate(['./search']);
+            this.router.navigate(['./search'],{ queryParams: { type: 'nearBy', value:e.formatted_address } });
         } else {
             this.search(e)
         }

@@ -1,5 +1,5 @@
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ModuleWithProviders, NgModule } from '@angular/core';
+import {  NgModule } from '@angular/core';
 import { GooglePlaceModule } from "ngx-google-places-autocomplete";
 import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from "@angular/flex-layout";

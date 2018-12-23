@@ -15,7 +15,7 @@ import { HttpLinkModule, HttpLink } from "apollo-angular-link-http";
 import { InMemoryCache } from "apollo-cache-inmemory";
 import { NavBarModule } from './features/shared/nav-bar/nav.module';
 import { NavFooterLayout } from './layouts/nav-footer.layout';
-
+import {ShoppingCartModule} from './features/shared/shopping-cart/shopping-cart.module';
 
 @NgModule({
   imports: [
@@ -25,7 +25,8 @@ import { NavFooterLayout } from './layouts/nav-footer.layout';
     SharedModule,
     ApolloModule,
     HttpLinkModule,
-    NavBarModule
+    NavBarModule,
+    ShoppingCartModule,
   ],
   declarations: [AppComponent, NavFooterLayout],
   bootstrap: [AppComponent],

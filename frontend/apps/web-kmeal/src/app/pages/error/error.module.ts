@@ -4,7 +4,7 @@ import { Routes, RouterModule } from "@angular/router";
 
 @Component({
     selector:'app-404',
-    template:'Page not found',
+    templateUrl:'./error.component.html',
 })
 export class FourZeroFourComponent {
     constructor(){}

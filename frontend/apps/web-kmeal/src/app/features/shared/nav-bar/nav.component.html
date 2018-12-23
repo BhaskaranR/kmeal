@@ -5,17 +5,17 @@
     fxLayoutGap="10px"
     fxLayoutGap.xs="0"
     class="app-home-nav">
-    <div fxFlex="15%" fxHide.sm="true" fxHide.xs="true" fxFlexOrder="1" fxLayout="row" fxLayoutAlign="left center">
+    <div fxFlex="25%" fxHide.sm="true" fxHide.xs="true" fxFlexOrder="1" fxLayout="row" fxLayoutAlign="left center">
         <mat-icon>menu</mat-icon>
-        <a routerLink="/home" style="margin-left:20px"> KMEAL EATS</a>
+        <a routerLink="/home"><img style="display:inline-block;width:120px;height:127px;margin-top:8px" src="https://mir-s3-cdn-cf.behance.net/project_modules/disp/76ab2e19585305.562dce0bcf645.png" alt=""></a>
     </div>
-    <div fxFlex="70%" fxFlex.sm="85%" fxFlex.xs="85%" fxFlexOrder="2">
+    <div fxFlex="55%" fxFlex.sm="80%" fxFlex.xs="80%" fxFlexOrder="2">
         <search-bar></search-bar>
     </div>
-    <div fxFlex="15%" fxHide.sm="false" fxHide.xs="false" fxFlexOrder="3" fxLayout="row" fxLayoutAlign="left center">
+    <div fxFlex="20%" fxHide.sm="false" fxHide.xs="false" fxFlexOrder="3" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="20px">
         <a routerLink="/login" *ngIf="!isLoggedIn">LOGIN</a>
         <div *ngIf="isLoggedIn">
-            <mat-icon [matMenuTriggerFor]="menu" style="margin-right:12px; margin-top:4px">person</mat-icon>
+            <mat-icon [matMenuTriggerFor]="menu" style="margin-top:5px">person</mat-icon>
             <mat-menu #menu="matMenu">
                 <button mat-menu-item routerLink="/profile">Profile</button>
                 <button mat-menu-item>Settings</button>
@@ -23,5 +23,6 @@
             </mat-menu>
         </div>
         <mat-icon (click)="openCart()"  matBadge="15" matBadgeColor="warn">shopping_cart</mat-icon>
+        <mat-icon  matBadge="15" matBadgeColor="warn">help</mat-icon>
     </div>
 </div>

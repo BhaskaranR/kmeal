@@ -15,7 +15,7 @@ export const AppRoutes: Routes = [{
         loadChildren: './pages/restaurant/res.module#ResModule', 
 },{
         path: 'dish', 
-        loadChildren: './pages/dish/dish.module#DishModule', 
+        loadChildren: './pages/dish/dish.module#DishScreenModule', 
 },{
         path: 'search', 
         loadChildren: './pages/search/search.module#SearchModule', 
