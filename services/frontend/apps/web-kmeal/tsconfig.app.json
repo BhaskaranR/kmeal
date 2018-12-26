@@ -2,7 +2,7 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "outDir": "../../dist/out-tsc/apps/web-kmeal",
-    "types": []
+    "types": ["node"]
   },
   "exclude": ["test.ts", "**/*.spec.ts"],
   "include": ["**/*.ts"]

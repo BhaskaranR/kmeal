@@ -1,3 +1,72 @@
-<ActionBar class="action-bar">
-    <Label class="action-bar-title" text="Home"></Label>
-</ActionBar>
+<div *ngIf="!isReady">
+        <div id="loading-wrapper">
+            <div id="loading-text">LOADING</div>
+            <div id="loading-content"></div>
+        </div>
+</div>
+
+<div class="container-fluid" *ngIf="isReady">
+    <div class="content-wrapper" *ngIf="!!cuisines.length" >
+        <h5>Search By Cuisine</h5>
+        <ngu-carousel 
+            #myCarousel 
+            [inputs]="cuisineConfig" 
+            [dataSource]="cuisines" >
+            <ngu-tile *nguCarouselDef="let cuisine; let i = index; let ani = animate">
+                 <mat-card (click)="onSearch('Cuisine', cuisine)" style="box-shadow:none; " [style.background-color]=" (i % 2 == 0) ? '#6e5432' : '#b28d5f'  ">
+                    <img mat-card-image [attr.src]="cuisine.img" alt="" style="max-height:100px">
+                    
+                    <mat-card-subtitle style="color:white">
+                            {{cuisine.title}}
+                    </mat-card-subtitle>
+                </mat-card>
+            </ngu-tile>
+            <button NguCarouselPrev class="arrowbtn arrowbtn-left" ></button>
+            <button NguCarouselNext class="arrowbtn arrowbtn-right" ></button>
+        </ngu-carousel>
+    </div>
+    
+    <div class="content-wrapper">
+        <h5>What's trending</h5>
+        <ngu-carousel 
+            #myCarousel 
+            [inputs]="carConfig" 
+            [dataSource]="dishes" >
+            <ngu-tile *nguCarouselDef="let dish; let i = index; let ani = animate">
+                <dish-card [dishDetails] = "dish" (onError)="throwError($event)" (reRoute)="navigate($event)"></dish-card>
+            </ngu-tile>
+            <button NguCarouselPrev class="arrowbtn arrowbtn-left" ></button>
+            <button NguCarouselNext class="arrowbtn arrowbtn-right" ></button>
+        </ngu-carousel>
+    </div>
+    
+    <div class="content-wrapper">
+        <h5 style="margin-left:30px">Nearby Restaurants</h5>
+        <ngu-carousel 
+            #myCarousel 
+            [inputs]="carConfig" 
+            [dataSource]="restaurants" >
+            <ngu-tile *nguCarouselDef="let res; let i = index; let ani = animate">
+                <res-card [res]="res" (onError)="throwError($event)" (reRoute)="navigate($event)"></res-card>
+            </ngu-tile>
+            <button NguCarouselPrev class="arrowbtn arrowbtn-left" ></button>
+            <button NguCarouselNext class="arrowbtn arrowbtn-right" ></button>
+        </ngu-carousel>
+    </div>
+    
+    <div class="content-wrapper">
+        <h5>Order Again</h5>
+        <ngu-carousel 
+            #myCarousel 
+            [inputs]="carConfig" 
+            [dataSource]="restaurants" >
+            <ngu-tile *nguCarouselDef="let res; let i = index; let ani = animate">
+                <res-card [res]="res" (onError)="throwError($event)" (reRoute)="navigate($event)"></res-card>
+            </ngu-tile>
+            <button NguCarouselPrev class="arrowbtn arrowbtn-left" ></button>
+            <button NguCarouselNext class="arrowbtn arrowbtn-right" ></button>
+        </ngu-carousel>
+    </div>
+</div>
+
+

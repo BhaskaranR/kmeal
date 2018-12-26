@@ -1,14 +1,41 @@
-import { Component } from '@angular/core';
+import { Component , OnInit} from '@angular/core';
 
 // xplat
 import { AppBaseComponent } from '@kmeal-frontend/web';
 
+//import ScatterJS from 'scatterjs-core';
+//import ScatterEOS from 'scatterjs-plugin-eosjs'
+
+
+
 @Component({
-  selector: 'foo-root',
-  templateUrl: './app.component.html'
+  selector: 'app-root',
+  template: `<app-nav-layout>
+    <div class="main-content">
+      <router-outlet></router-outlet>
+    </div>
+  </app-nav-layout>`
 })
-export class AppComponent extends AppBaseComponent {
+export class AppComponent extends AppBaseComponent implements OnInit{
   constructor() {
     super();
   }
+
+  scatter:any;
+  ngOnInit(){
+    
+  //this.scatter = ScatterJS.plugins( new ScatterEOS() );
+  //const connectionOptions = {initTimeout:10000}
+
+  //ScatterJS.scatter.connect("KMEAL", connectionOptions).then(connected => {
+    //  if(!connected) {
+          // User does not have Scatter installed/unlocked.
+      //    return false;
+     // }
+      
+      // Use `scatter` normally now.
+      //ScatterJS.scatter.getIdentity('Shaun');
+  //});
+  }
+
 }

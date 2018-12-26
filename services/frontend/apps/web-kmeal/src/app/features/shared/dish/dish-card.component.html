@@ -1,0 +1,17 @@
+<mat-card class="mat-elevation-z0"  >
+    <img mat-card-image src="https://teriyakiexperience.com/wp-content/uploads/2016/04/OUrfoodchicken2-3.png">
+    <button mat-raised-button style="border-radius: 999px; margin-bottom:15px" (click)="openDetailPopu()"><small>More Details</small></button>    
+    <mat-card-title>${{dishDetails.currentPrice}} <small style="text-decoration: line-through;font-weight:300; margin-left:10px">  ${{dishDetails.orignalprice}}</small></mat-card-title>
+    <mat-card-subtitle>{{dishDetails.name}}</mat-card-subtitle>
+    <mat-card-content>
+        <mat-progress-bar mode="determinate" value="40"></mat-progress-bar>
+        <div fxLayout="row">
+            <div fxFlex="40%"><small>42%</small></div>
+            <div fxFlex="60%" style="text-align:right"><small>Deal ends in {{dishDetails.expireTime}}</small></div>
+        </div>
+        <br>
+        <mat-card-subtitle style="height:60px">{{dishDetails.description}}</mat-card-subtitle>
+        <p><small>By <a href="" (click)="goToRestaurant($event)">{{dishDetails.restaurant}}</a></small></p>
+    </mat-card-content>
+    <mat-card-actions><button mat-stroked-button style="width:100%;background-color: lightgreen" (click)="goToDish($event)"> + Order Now</button></mat-card-actions>
+</mat-card>

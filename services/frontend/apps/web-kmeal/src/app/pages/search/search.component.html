@@ -1,0 +1,92 @@
+
+<div *ngIf="!restaurants || !restaurants.length">
+    <div id="loading-wrapper">
+        <div id="loading-text">LOADING</div>
+        <div id="loading-content"></div>
+    </div>
+</div>
+<div *ngIf="!!restaurants.length" style="padding:25px;">
+    <br>
+    <br>
+        <div fxLayout="row">
+            <div fxFlex="50%">
+                <h4>Results : {{type}}</h4>
+            </div>
+            <div fxFlex="50%" style="text-align: right">
+                <mat-icon (click)="isFilterOpen = !isFilterOpen">filter_list</mat-icon>
+            </div>
+        </div>
+        
+        <div *ngIf="isFilterOpen">
+                <br>
+                <br>
+            <form action="">
+                <mat-form-field>
+                    <mat-select placeholder="Cuisine" [value]="'Asian'">
+                        <mat-option>Chinese</mat-option>
+                        <mat-option>Japanese</mat-option>
+                        <mat-option>Indian</mat-option>
+                        <mat-option>American</mat-option>
+                        <mat-option>Korean</mat-option>
+                        <mat-option>French</mat-option>
+                        <mat-option>Italian</mat-option>
+                    </mat-select>
+
+                </mat-form-field>  
+                
+                <mat-form-field>
+                    <mat-select placeholder="Distance" [value]="'2 Blocks'">
+                        <mat-option>2 Blocks</mat-option>
+                        <mat-option>6 Blocks</mat-option>
+                        <mat-option>1 Mile</mat-option>
+                        <mat-option>5 Miles</mat-option>
+                    </mat-select>
+                </mat-form-field> 
+
+                <mat-form-field>
+                    <mat-select placeholder="Rating" [value]="'2 Blocks'">
+                        <mat-option>5 stars</mat-option>
+                        <mat-option>4 stars</mat-option>
+                        <mat-option>3 stars</mat-option>
+                        <mat-option>2 stars</mat-option>
+                        <mat-option>1 stars</mat-option>
+                    </mat-select>
+                </mat-form-field> 
+
+                <mat-form-field>
+                        <mat-select placeholder="Price" [value]="'2 Blocks'">
+                            <mat-option>$</mat-option>
+                            <mat-option>$$</mat-option>
+                            <mat-option>$$$</mat-option>
+                            <mat-option>$$$$</mat-option>
+                        </mat-select>
+                    </mat-form-field> 
+
+                
+                    <button  mat-stroked-button >Search</button>
+                
+            </form>
+        </div>
+        
+        <mat-grid-list [cols]="breakpoint"  (window:resize)="onResize($event)">
+            <mat-grid-tile *ngFor="let res of restaurants">
+                    <div >
+                    <mat-card class="mat-elevation-z0"  (click)="goToRestaurant()">
+                            <img mat-card-image src="https://ichef.bbci.co.uk/food/ic/food_16x9_832/recipes/one_pot_chorizo_and_15611_16x9.jpg">
+                            <h4><small>{{res.restaurantName}}</small></h4>
+                            <mat-card-subtitle>
+                                <span>{{res.priceLevel}} </span>
+                                <span *ngFor="let label of res.lables" style="margin-right:5px">{{label}} &#8226; </span>
+                                <br>
+                                <p><small>{{res.address.line}}</small>  </p>
+                            </mat-card-subtitle>
+                            <mat-chip-list>
+                                <mat-chip>Papadum</mat-chip>
+                                <mat-chip>4.5 <mat-icon >star</mat-icon></mat-chip>
+                                <mat-chip>{{res.distance}}</mat-chip>
+                            </mat-chip-list>
+                        </mat-card>
+                    </div>
+            </mat-grid-tile>
+        </mat-grid-list>
+</div>

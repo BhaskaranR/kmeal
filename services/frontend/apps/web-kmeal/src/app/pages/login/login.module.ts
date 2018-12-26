@@ -1,17 +1,18 @@
 import { NgModule, NO_ERRORS_SCHEMA } from "@angular/core";
-import { NativeScriptModule } from "nativescript-angular/nativescript.module";
-import { NativeScriptFormsModule} from 'nativescript-angular/forms';
 import {LoginComponent} from './login.component';
 import { SignupComponent } from "./signup.component";
-import { routing } from "./login.routing";
-import { NativeScriptRouterModule } from "nativescript-angular/router";
+import { Routes, RouterModule } from '@angular/router';
+
+
+export const routing: Routes = [
+    { path: '', component: LoginComponent },
+    { path: 'signup', component: SignupComponent}
+];
+
+const routingModule = RouterModule.forChild(routing)
 
 @NgModule({
-    imports: [
-        NativeScriptModule,
-        NativeScriptFormsModule,
-        NativeScriptRouterModule.forChild(routing)
-    ],
+    imports: [routingModule],
     declarations: [
         LoginComponent,
         SignupComponent

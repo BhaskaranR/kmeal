@@ -1,7 +1,5 @@
 import { Component, ElementRef, ViewChild } from "@angular/core";
 import { Router } from "@angular/router";
-import { alert, prompt } from "tns-core-modules/ui/dialogs";
-import { Page } from "tns-core-modules/ui/page";
 
 class User {
     username:string;
@@ -13,7 +11,7 @@ class User {
     selector: "app-login",
     moduleId: module.id,
     templateUrl: "./login.html",
-    styleUrls: ['./login-common.css']
+    styleUrls: ['./login-common.scss']
 })
 export class LoginComponent {
     isLoggingIn = false;
@@ -22,8 +20,7 @@ export class LoginComponent {
     @ViewChild("password") password: ElementRef;
     @ViewChild("confirmPassword") confirmPassword: ElementRef;
 
-    constructor(private page: Page, private router: Router) {
-        this.page.actionBarHidden = true;
+    constructor(private router: Router) {
         this.user = new User();
     }
 
@@ -51,10 +48,6 @@ export class LoginComponent {
     }
 
     alert(message: string) {
-        return alert({
-            title: "APP NAME",
-            okButtonText: "OK",
-            message: message
-        });
+
     }
 }

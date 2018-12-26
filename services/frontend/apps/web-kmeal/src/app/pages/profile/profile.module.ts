@@ -1,16 +1,21 @@
 import { NgModule, NO_ERRORS_SCHEMA } from "@angular/core";
-import { NativeScriptModule } from "nativescript-angular/nativescript.module";
-import { NativeScriptFormsModule} from 'nativescript-angular/forms';
+import { SharedModule } from "../../features/shared/shared.module";
+import { ProfileComponent } from "./profile.component";
+import { Routes, RouterModule } from '@angular/router';
 
+
+export const routing: Routes = [
+    { path: '', component: ProfileComponent },
+];
+
+const routingModule = RouterModule.forChild(routing)
 
 @NgModule({
-    imports: [
-        NativeScriptModule,
-        NativeScriptFormsModule,
-    ],
+    imports: [ SharedModule,routingModule],
     declarations: [
-        
+        ProfileComponent
     ],
+    exports:[ProfileComponent],
     schemas: [
         NO_ERRORS_SCHEMA
     ]

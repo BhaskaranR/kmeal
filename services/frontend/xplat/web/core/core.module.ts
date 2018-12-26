@@ -1,16 +1,16 @@
-import { NgModule, Optional, SkipSelf } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { NgModule, Optional, SkipSelf } from "@angular/core";
+import { BrowserModule } from "@angular/platform-browser";
+import { HttpClientModule, HttpClient } from "@angular/common/http";
 
 // libs
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { throwIfAlreadyLoaded } from '@kmeal-frontend/utils';
+import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
+import { TranslateHttpLoader } from "@ngx-translate/http-loader";
+import { throwIfAlreadyLoaded } from "@kmeal-frontend/utils";
 import {
   CoreModule,
   PlatformLanguageToken,
   WindowPlatformService
-} from '@kmeal-frontend/core';
+} from "@kmeal-frontend/core";
 
 // bring in custom web services here...
 
@@ -20,13 +20,13 @@ export function winFactory() {
 }
 
 export function platformLangFactory() {
-  const browserLang = window.navigator.language || 'en'; // fallback English
+  const browserLang = window.navigator.language || "en"; // fallback English
   // browser language has 2 codes, ex: 'en-US'
-  return browserLang.split('-')[0];
+  return browserLang.split("-")[0];
 }
 
 export function createTranslateLoader(http: HttpClient) {
-  return new TranslateHttpLoader(http, `./assets/i18n/`, '.json');
+  return new TranslateHttpLoader(http, `./assets/i18n/`, ".json");
 }
 
 @NgModule({
@@ -58,6 +58,6 @@ export class FooCoreModule {
     @SkipSelf()
     parentModule: FooCoreModule
   ) {
-    throwIfAlreadyLoaded(parentModule, 'FooCoreModule');
+    throwIfAlreadyLoaded(parentModule, "FooCoreModule");
   }
 }
