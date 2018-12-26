@@ -1,19 +1,33 @@
-node_modules
+# Compiled codes
+build/
+dist/
+*.wast
 
-# Blockchain nodes data
-
-/eos/data
-/eos/wallets
-
-keys.txt
-
-# system
-
+# IDE's
+.vscode
 .idea
+*.iml
+
+# Dependency directories
+node_modules
+*.log
+
+# Desktop Services Store on macOS
 .DS_Store
 
-*.wast
-*.wasm
-*.abi
+# Temp
+temp
+.mongo-data
+.pgsql-data
 
-.env
+# database data
+.dbdata/
+
+# wallet keys
+keys
+
+# netlify cli
+.netlify/
+
+# docs for development
+__docs
