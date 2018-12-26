@@ -1,0 +1,11 @@
+# import Business from "./yelp.graphql"
+# import Businesses from "./yelp.graphql"
+
+type Query {
+  hello (name: String): String!
+  favoriteBusinesses: Businesses!
+}
+
+type Mutation {
+  populateRestaurants: Boolean
+}

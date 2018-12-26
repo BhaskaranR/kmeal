@@ -3,10 +3,7 @@ CREATE OR REPLACE VIEW kmeal.restaurant_location
 as
   (
   select
-    b.owner,
-    b.name,
-    b.description,
-    b.phone, b.location, b.address, b.logo,
+    b.*,
     ST_Distance_Sphere(b.location::Geometry, b.location::Geometry) as distance
   from kmeal.account a
     inner join
@@ -31,3 +28,5 @@ LIMIT 1;
 END; $$
 
 LANGUAGE 'plpgsql';
+
+

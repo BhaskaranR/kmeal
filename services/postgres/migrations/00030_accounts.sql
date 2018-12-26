@@ -16,20 +16,23 @@ CREATE TABLE IF NOT EXISTS "kmeal"."account" (
 
 CREATE TABLE IF NOT EXISTS "kmeal"."restaurant" (
   "restaurant_id" INTEGER NOT NULL PRIMARY KEY,
-  "yelp_id" INTEGER,
+  "yelp_id" VARCHAR(60),
   "owner" CHAR(12) NOT NULL,
   "name" TEXT NOT NULL,
   "description" TEXT NOT NULL,
-  "phone"       INTEGER NOT NULL,
-  "location" GEOGRAPHY(Point) NOT NULL,
+  "phone"       VARCHAR(15) NOT NULL,
+  "latitude" FLOAT NOT NULL,
+  "longitude" FLOAT NOT NULL,
+  "location" GEOGRAPHY(Point),
   "address"     TEXT NOT NULL,
   "logo"        TEXT NOT NULL,
-  "timeofoperation" TEXT NOT NULL,
+  "rating"      INTEGER,
+  "timeofoperation" VARCHAR(60) NOT NULL,
   "isactive"    BOOLEAN NOT NULL,
   "created_at" TIMESTAMP NOT NULL,
   "created_block" BIGINT NOT NULL,
-  "created_trx" TEXT NOT NULL,
-  "created_eosacc" TEXT NOT NULL,
+  "created_trx" VARCHAR(200) NOT NULL,
+  "created_eosacc" VARCHAR(200) NOT NULL,
   "_dmx_created_at" TIMESTAMP DEFAULT current_timestamp NOT NULL
   );
 
@@ -44,3 +47,10 @@ CREATE TABLE IF NOT EXISTS "kmeal"."restaurant_categories" (
 
 ALTER TABLE ONLY kmeal."restaurant_categories"
   ADD CONSTRAINT restaurant_categories_fkey FOREIGN KEY ("restaurant_id") REFERENCES kmeal.restaurant(restaurant_id);
+
+
+-- ALTER TABLE ONLY kmeal."restaurant_categories"
+--   ADD CONSTRAINT categories_fkey FOREIGN KEY ("category") REFERENCES kmeal.categories(alias);
+
+
+

@@ -35,11 +35,55 @@ insert into kmeal.categories (title, alias) VALUES('Latin American', 'latin');
 insert into kmeal.categories (title, alias) VALUES('Cuban', 'cuban');
 insert into kmeal.categories (title, alias) VALUES('Indian', 'indian');
 insert into kmeal.categories (title, alias) VALUES('South Indian', 'southindian');
-commit;
 
 
 
-
-
-
-
+-- insert into kmeal.categories (alias, title) VALUES('pizza
+-- insert into kmeal.categories (alias, title) VALUES('bakeries
+-- insert into kmeal.categories (alias, title) VALUES('salad
+-- insert into kmeal.categories (alias, title) VALUES('brasseries
+-- insert into kmeal.categories (alias, title) VALUES('trinidadian
+-- insert into kmeal.categories (alias, title) VALUES('bbq
+-- insert into kmeal.categories (alias, title) VALUES('soulfood
+-- insert into kmeal.categories (alias, title) VALUES('burgers
+-- insert into kmeal.categories (alias, title) VALUES('wine_bars
+-- insert into kmeal.categories (alias, title) VALUES('pubs
+-- insert into kmeal.categories (alias, title) VALUES('austrian
+-- insert into kmeal.categories (alias, title) VALUES('venues
+-- insert into kmeal.categories (alias, title) VALUES('grocery
+-- insert into kmeal.categories (alias, title) VALUES('gastropubs
+-- insert into kmeal.categories (alias, title) VALUES('sandwiches
+-- insert into kmeal.categories (alias, title) VALUES('irish_pubs
+-- insert into kmeal.categories (alias, title) VALUES('kosher
+-- insert into kmeal.categories (alias, title) VALUES('moroccan
+-- insert into kmeal.categories (alias, title) VALUES('hotdogs
+-- insert into kmeal.categories (alias, title) VALUES('juicebars
+-- insert into kmeal.categories (alias, title) VALUES('breakfast_brunch
+-- insert into kmeal.categories (alias, title) VALUES('noodles
+-- insert into kmeal.categories (alias, title) VALUES('shanghainese
+-- insert into kmeal.categories (alias, title) VALUES('foodstands
+-- insert into kmeal.categories (alias, title) VALUES('indpak
+-- insert into kmeal.categories (alias, title) VALUES('lounges
+-- insert into kmeal.categories (alias, title) VALUES('japacurry
+-- insert into kmeal.categories (alias, title) VALUES('sushi
+-- insert into kmeal.categories (alias, title) VALUES('comfortfood
+-- insert into kmeal.categories (alias, title) VALUES('gluten_free
+-- insert into kmeal.categories (alias, title) VALUES('coffee
+-- insert into kmeal.categories (alias, title) VALUES('sportsbars
+-- insert into kmeal.categories (alias, title) VALUES('acaibowls
+-- insert into kmeal.categories (alias, title) VALUES('tapasmallplates
+-- insert into kmeal.categories (alias, title) VALUES('vegetarian
+-- insert into kmeal.categories (alias, title) VALUES('steak
+-- insert into kmeal.categories (alias, title) VALUES('poke
+-- insert into kmeal.categories (alias, title) VALUES('karaoke
+-- insert into kmeal.categories (alias, title) VALUES('mideastern
+-- insert into kmeal.categories (alias, title) VALUES('beerbar
+-- insert into kmeal.categories (alias, title) VALUES('beergardens
+-- insert into kmeal.categories (alias, title) VALUES('soup
+-- insert into kmeal.categories (alias, title) VALUES('bars
+-- insert into kmeal.categories (alias, title) VALUES('laotian
+-- insert into kmeal.categories (alias, title) VALUES('pastashops
+-- insert into kmeal.categories (alias, title) VALUES('hotdog
+-- insert into kmeal.categories (alias, title) VALUES('szechuan
+-- insert into kmeal.categories (alias, title) VALUES('cajun
+-- insert into kmeal.categories (alias, title) VALUES('foodtrucks
