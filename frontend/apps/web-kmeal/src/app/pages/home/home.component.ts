@@ -49,7 +49,10 @@ export class HomeComponent implements OnInit{
     querySubscription:any;
     ngOnInit(){
       this.querySubscription = this.apollo
-      .watchQuery({query: categoriesQuery})
+      .watchQuery({
+          query: categoriesQuery,
+          errorPolicy: 'all'
+        })
       .valueChanges.subscribe(result => {
         this.populateData(result);
       });

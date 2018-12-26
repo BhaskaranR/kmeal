@@ -63,6 +63,7 @@
     "apollo-link-context": "^1.0.12",
     "apollo-link-error": "^1.1.5",
     "apollo-link-http": "^1.5.9",
+    "apollo-link-ws": "^1.0.12",
     "braintree-web": "^3.39.0",
     "core-js": "^2.5.4",
     "flickity": "^2.1.2",

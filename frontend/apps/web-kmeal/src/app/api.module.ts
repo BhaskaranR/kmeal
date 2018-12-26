@@ -3,19 +3,19 @@ import { ApolloModule, Apollo } from 'apollo-angular';
 import { HttpLinkModule } from 'apollo-angular-link-http';
 import {
   InMemoryCache,
-  IntrospectionFragmentMatcher
 } from 'apollo-cache-inmemory';
-import { split, from, ApolloLink,concat } from 'apollo-link';
+import { split, from, ApolloLink } from 'apollo-link';
 import { getMainDefinition } from 'apollo-utilities';
 import { OperationDefinitionNode } from 'graphql';
 
 import { onError } from 'apollo-link-error';
-import { HttpHeaders } from '@angular/common/http';
+import { SubscriptionClient } from 'subscriptions-transport-ws';
+import { WebSocketLink } from 'apollo-link-ws';
 
 
 @NgModule({
   declarations: [],
-  imports: [],
+  imports: [ApolloModule,HttpLinkModule],
   exports: [ApolloModule, HttpLinkModule],
   providers: []
 })
@@ -23,27 +23,22 @@ export class ApiModule {
   constructor(
     apollo: Apollo,
   ) {
-      /*
-    const WS_URI = `wss://${environment.HOST}:${environment.PORT}${
-      environment.WS_PATH
-    }`;
+    
+    const WS_URI = `wss://kmeal-api.herokuapp.com/v1alpha1/graphql`;
 
-    const wsClient = subscriptionService.getWSClient(WS_URI, {
+    const wsClient = new SubscriptionClient(WS_URI, {
       lazy: true,
-      // When connectionParams is a function, it gets evaluated before each connection.
       connectionParams: () => {
         return {
-          token: `Bearer ${authService.getJwt()}`
+          'x-hasura-access-key': `baba`
         };
       },
       reconnect: true,
       reconnectionAttempts: 5,
       connectionCallback: (error: Error[]) => {
         if (error) {
-          console.log(error);
+          console.log("ws error!! : ", error);
         }
-
-        console.log('connectionCallback');
       },
       inactivityTimeout: 1000
     });
@@ -51,46 +46,41 @@ export class ApiModule {
     const wsLink = new WebSocketLink(wsClient);
 
     const networkLink = split(
-      ({ query }) => {
-        const { kind, operation } = getMainDefinition(
-          query
-        ) as OperationDefinitionNode;
+      ({query}) => {
+        const { kind, operation } = getMainDefinition( query ) as OperationDefinitionNode;
         return kind === 'OperationDefinition' && operation === 'subscription';
       },
       wsLink,
-      uploadLink
     );
 
-    const authLink = createAuthLink(authService);
-    const fragmentMatcher = new IntrospectionFragmentMatcher({
-      introspectionQueryResultData
+    
+   const errorLink = onError(({ graphQLErrors, networkError }) => {
+       
+        if (graphQLErrors) {
+            graphQLErrors.map(({ message, locations, path }) =>
+                console.log(`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`)
+            );
+        }
+    
+        if (networkError) {
+            console.log(`[Network error]: ${networkError}`);
+        }
     });
-    */
-   const errorLink = onError(({ graphQLErrors, networkError, operation, forward, response }) => {
-    if (graphQLErrors) {
-      graphQLErrors.map(({ message, locations, path }) =>
-        console.log(`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`)
-      );
-    }
-  
-    if (networkError) {
-      console.log(`[Network error]: ${networkError}`);
-    }
-  });
 
    const middleware = new ApolloLink((operation, forward) => {
-    operation.setContext({
-        headers: new HttpHeaders().set('X-Hasura-Access-Key', 'baba')
-    });
+        
+        operation.setContext(({ headers = {} }) => ({
+            headers: {
+            ...headers,
+            'x-hasura-access-key': 'baba',
+            } 
+        }));
 
-    if (forward)
-    return forward(operation)
-  else
-    return null
-  })
+        return forward(operation);
+    })
 
     apollo.create({
-      link: from([ middleware,errorLink]),
+      link: from([middleware,networkLink,errorLink]),
       cache: new InMemoryCache()
     });
   }
