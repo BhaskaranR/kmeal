@@ -8,8 +8,7 @@ const nearbyQueryOptional =
     Joi.object().keys({
         long: Joi.number(),
         lat: Joi.number(),
-        maxDistance: Joi.number().default(2),
-        limit: Joi.number().default(20)
+        radius: Joi.number().default(2)
     });
 
 export default {
@@ -18,8 +17,7 @@ export default {
             nearby: {
                 lat: number,
                 long: number,
-                maxDistance: number,
-                limit: number
+                radius: number
             }
         }) => {
             try {

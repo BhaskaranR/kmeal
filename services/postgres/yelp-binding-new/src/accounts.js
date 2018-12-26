@@ -126,7 +126,7 @@ async function insert({
 async function update(sequelize) {
     try {
         var res = await sequelize.query('BEGIN;' +
-            'update kmeal.restaurant set location= ST_POINT(latitude, longitude);' +
+            'update kmeal.restaurant set location= ST_SetSRID(ST_MakePoint(longitude, latitude), 4326);' +
             'COMMIT;'
         );
         return res;

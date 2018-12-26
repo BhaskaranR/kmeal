@@ -11,18 +11,20 @@ type Restaurant {
     name: String
     description: String
     phone: Int
+    latitude: Float
+    longitude: Float
     location: Coordinates
     address: String
     logo: String
+    rating: Int
     timeofoperation: String
     isactive: String
 }
 
 input GetNearByInput {
-    lat: Float,
-    long: Float,
-    maxDistance: Int,
-    limit: Int
+    lat: Float!
+    long: Float!
+    radius: Int!
 }
 
 type Query {

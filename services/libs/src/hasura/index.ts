@@ -20,14 +20,8 @@ import HasuraLink from './HasuraLink';
 export class Hasura {
   schema: GraphQLSchema
 
-  constructor(uri: string, accesskey: string) {
-    const typeDefs = fs.readFileSync(
-      path.join(__dirname, '..', 'schema', 'yelp.graphql'),
-      { encoding: 'utf8' },
-    )
-
-    const link = new HasuraLink(uri, accesskey)
-
+  constructor(link: HasuraLink, typeDefs: string | GraphQLSchema) {
+   
     this.schema = makeRemoteExecutableSchema({
       schema: typeDefs,
       link,

@@ -5,23 +5,17 @@ const POSTGRES_CONNECTION_STRING = process.env.POSTGRES_CONNECTION_STRING || "po
 export async function getRestaurant(nearby: {
     lat: number,
     long: number,
-    maxDistance: number,
-    limit: number
+    radius: number
 }){
     var sequelize = new Sequelize(
         POSTGRES_CONNECTION_STRING, {}
     );
     try {
-        console.log(nearby);
-     
-        // var driverId = getRandomDriver();
-        // var res = await sequelize.query('BEGIN;' +
-        //                             'INSERT INTO assignment (order_id, driver_id) values (:orderId, :driverId); ' +
-        //                             'UPDATE orders SET driver_assigned=true WHERE order_id = :orderId ;' +
-        //                             'COMMIT;',
-        //                             { replacements: { orderId: order.order_id, driverId: driverId } }
-        //                            );
-        //return res;
+        var res = await sequelize.query('select kmeal.get_nearby(:latitude, :longitude, :radius) ',
+                                    {  type: sequelize.QueryTypes.SELECT,
+                                         replacements: { latitude: nearby.lat, longitude: nearby.long, radius: nearby.radius } }
+                                   );
+        return res;
     } catch(e) {
         console.log(e);
         throw new Error(e);

@@ -36,7 +36,7 @@ BEGIN
     ) AS d
     WHERE distance <= radius
     ORDER BY distance
-    LIMIT 1;
+    LIMIT 100;
 END; $$
 LANGUAGE 'plpgsql';
 

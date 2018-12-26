@@ -4,7 +4,17 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "Launch Program",
+            "name": "api",
+            "args": ["${workspaceFolder}/services/backend/api/src/index.ts"],
+            "runtimeArgs": ["-r", "${workspaceFolder}/services/backend/api/node_modules/ts-node/register"],
+            "cwd": "${workspaceRoot}",
+            "protocol": "inspector",
+            "internalConsoleOptions": "openOnSessionStart"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "yelp-push",
             "program": "${workspaceFolder}/services/postgres/yelp-binding-new/src/index.js"
         },
         {

@@ -1,8 +1,7 @@
 {
   "scripts": {
     "start": "node src",
-    "dev": "./node_modules/nodemon/bin/nodemon.js",
-    "deploy": "now --public -e GITHUB_TOKEN && now alias && now rm --yes --safe graphql-binding-github"
+    "dev": "./node_modules/nodemon/bin/nodemon.js"
   },
   "dependencies": {
     "faker": "^4.1.0",

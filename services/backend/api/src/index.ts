@@ -1,9 +1,8 @@
-
 import * as express from 'express';
 import {json } from 'body-parser';
 
 import {  makeExecutableSchema } from 'graphql-tools';
-const mergeGraphqlSchemas = require('merge-graphql-schemas');
+import mergeGraphqlSchemas = require('merge-graphql-schemas');
 
 import * as path from 'path';
 import { graphqlExpress, graphiqlExpress } from 'graphql-server-express';
@@ -17,15 +16,13 @@ const resolvers = mergeResolvers(fileLoader(path.join(__dirname, './resolvers'))
 
 
 function createSchema() {
-    
     const executableSchema = makeExecutableSchema({
-      typeDefs: typeDefs,
+      typeDefs:  typeDefs,
       resolvers: resolvers,
       logger: { log: (e: any) => console.log(e) },
     });
-  
     return executableSchema;
-  }
+}
 
 const app = express();
 app.use(json());
