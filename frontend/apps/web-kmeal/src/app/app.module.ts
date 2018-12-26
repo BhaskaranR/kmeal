@@ -14,6 +14,7 @@ import { NavBarModule } from './features/shared/nav-bar/nav.module';
 import { NavFooterLayout } from './layouts/nav-footer.layout';
 import {ShoppingCartModule} from './features/shared/shopping-cart/shopping-cart.module';
 import { ApiModule } from './api.module';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { ApiModule } from './api.module';
     SharedModule,
     NavBarModule,
     ShoppingCartModule,
-    ApiModule
+    ApiModule,
+    HttpClientModule,
   ],
   declarations: [AppComponent, NavFooterLayout],
   bootstrap: [AppComponent],
