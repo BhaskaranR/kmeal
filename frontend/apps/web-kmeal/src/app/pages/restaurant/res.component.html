@@ -40,23 +40,11 @@
     <div style="padding:10px">
         <h5>Most Popular</h5>
         <div >
-            <mat-card  class="mat-elevation-z0"  (click)="goToDish()" *ngFor="let dishDetails of dishes"  style="width:400px;margin-right:25px;margin-bottom:25px;display:inline-block">
-                <div fxLayout="row">
-                    <div fxFlex="40%">
-                        <mat-card-subtitle>{{dishDetails.name}}</mat-card-subtitle>
-                    </div>
-                    <div fxFlex="60%">
-                        <p style="text-align:right">${{dishDetails.currentPrice}} <small style="text-decoration: line-through;">  ${{dishDetails.orignalprice}}</small></p>
-                    </div>
-                </div>
-                <mat-card-content>
-                    <mat-progress-bar mode="determinate" value="40"></mat-progress-bar>
-                    <p style="text-align:center"><small>{{dishDetails.ordersCount}} orders / {{dishDetails.maxOrders}} max,  Deal ends in {{dishDetails.expireTime}} <mat-icon style="font-size:13px">help_outline</mat-icon></small></p>
-                    <mat-card-subtitle>{{dishDetails.description}}</mat-card-subtitle>
-                </mat-card-content>
-                <mat-card-actions><button mat-stroked-button>Order Now</button></mat-card-actions>
-                <mat-card-footer style="text-align:center"> <small></small> </mat-card-footer>
-            </mat-card>
+            <mat-grid-list [cols]="breakpoint"  (window:resize)="onResize($event)">
+                <mat-grid-tile *ngFor="let dishDetails of dishes">
+                    <dish-card [dishDetails]="dishDetails" (reRoute)="placeOrder($event)"></dish-card>
+                </mat-grid-tile>
+            </mat-grid-list>
         </div>
     </div>
 </div>

@@ -1,4 +1,5 @@
-import { Component, ElementRef, ViewChild } from "@angular/core";
+import { Component, OnInit} from "@angular/core";
+import { MatDialog } from "@angular/material";
 
 @Component({
     selector: "app-restaurant",
@@ -6,8 +7,10 @@ import { Component, ElementRef, ViewChild } from "@angular/core";
     templateUrl: "./res.component.html",
     styleUrls: ['./res.component.scss'],
 })
-export class ResComponent {
-    constructor(){}
+export class ResComponent implements OnInit{
+    breakpoint:number;
+    dia:any;
+    constructor(public dialog:MatDialog){}
     public dishes:Array<any> = [
         {
             id:'321hdjsha',
@@ -107,4 +110,21 @@ export class ResComponent {
             expireTime:"02:00:00"
         }
     ];
+
+    ngOnInit(){
+        this.breakpoint = this.generateBreakpoint(window.innerWidth);
+    }
+
+    onResize(event) {
+        this.breakpoint = this.generateBreakpoint(event.target.innerWidth);
+      }
+  
+    private generateBreakpoint(width){
+        return (width <= 959 ) ? 1: (width <= 1279) ? 2: 3;
+    }
+
+
+    placeOrder(dish){
+
+    }
 }

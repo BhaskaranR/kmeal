@@ -35,7 +35,8 @@ import { MatAutocompleteModule,
   MatTableModule,
   MatTabsModule,
   MatToolbarModule,
-  MatTooltipModule} from '@angular/material';
+  MatTooltipModule,
+  MAT_DIALOG_DEFAULT_OPTIONS} from '@angular/material';
 
 //import { FlexLayoutModule } from '@angular/flex-layout';
 import { RouterModule } from '@angular/router';
@@ -127,7 +128,7 @@ import { NguCarouselModule } from '@ngu/carousel';
   GooglePlaceModule
   ],
   declarations: [],
-  providers: [MatIconRegistry]
+  providers: [MatIconRegistry, {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: true}}]
 })
 export class SharedModule {
 

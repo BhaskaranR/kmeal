@@ -1,4 +1,11 @@
-<div class="container-fluid">
+<div *ngIf="!isReady">
+        <div id="loading-wrapper">
+            <div id="loading-text">LOADING</div>
+            <div id="loading-content"></div>
+        </div>
+</div>
+
+<div class="container-fluid" *ngIf="isReady">
     <div class="content-wrapper" *ngIf="!!cuisines.length" >
         <h5>Search By Cuisine</h5>
         <ngu-carousel 
@@ -6,8 +13,12 @@
             [inputs]="cuisineConfig" 
             [dataSource]="cuisines" >
             <ngu-tile *nguCarouselDef="let cuisine; let i = index; let ani = animate">
-                <mat-card (click)="onSearch('Cuisine', cuisine)" style="box-shadow:none; color:white" [style.background-color]=" (i % 2 == 0) ? '#6e5432' : '#b28d5f'  ">
-                    {{cuisine}}
+                 <mat-card (click)="onSearch('Cuisine', cuisine)" style="box-shadow:none; " [style.background-color]=" (i % 2 == 0) ? '#6e5432' : '#b28d5f'  ">
+                    <img mat-card-image [attr.src]="cuisine.img" alt="" style="max-height:100px">
+                    
+                    <mat-card-subtitle style="color:white">
+                            {{cuisine.title}}
+                    </mat-card-subtitle>
                 </mat-card>
             </ngu-tile>
             <button NguCarouselPrev class="arrowbtn arrowbtn-left" ></button>
@@ -22,7 +33,7 @@
             [inputs]="carConfig" 
             [dataSource]="dishes" >
             <ngu-tile *nguCarouselDef="let dish; let i = index; let ani = animate">
-                <dish-card [dishDetails] = "dish" (onError)="throwError($event)"></dish-card>
+                <dish-card [dishDetails] = "dish" (onError)="throwError($event)" (reRoute)="navigate($event)"></dish-card>
             </ngu-tile>
             <button NguCarouselPrev class="arrowbtn arrowbtn-left" ></button>
             <button NguCarouselNext class="arrowbtn arrowbtn-right" ></button>
@@ -36,7 +47,7 @@
             [inputs]="carConfig" 
             [dataSource]="restaurants" >
             <ngu-tile *nguCarouselDef="let res; let i = index; let ani = animate">
-                <res-card [res]="res" (onError)="throwError($event)" ></res-card>
+                <res-card [res]="res" (onError)="throwError($event)" (reRoute)="navigate($event)"></res-card>
             </ngu-tile>
             <button NguCarouselPrev class="arrowbtn arrowbtn-left" ></button>
             <button NguCarouselNext class="arrowbtn arrowbtn-right" ></button>
@@ -50,7 +61,7 @@
             [inputs]="carConfig" 
             [dataSource]="restaurants" >
             <ngu-tile *nguCarouselDef="let res; let i = index; let ani = animate">
-                <res-card [res]="res" (onError)="throwError($event)" ></res-card>
+                <res-card [res]="res" (onError)="throwError($event)" (reRoute)="navigate($event)"></res-card>
             </ngu-tile>
             <button NguCarouselPrev class="arrowbtn arrowbtn-left" ></button>
             <button NguCarouselNext class="arrowbtn arrowbtn-right" ></button>
