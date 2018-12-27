@@ -1,7 +1,7 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "outDir": "../../dist/out-tsc/apps/web-web-restaurant",
+    "outDir": "../../dist/out-tsc/apps/web-restaurant",
     "types": ["jasmine", "node"]
   },
   "files": ["src/test.ts", "src/polyfills.ts"],

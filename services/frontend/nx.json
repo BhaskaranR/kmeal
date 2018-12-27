@@ -23,10 +23,10 @@
     "nativescript-kmeal": {
       "tags": []
     },
-    "web-web-restaurant": {
+    "web-restaurant": {
       "tags": []
     },
-    "web-web-restaurant-e2e": {
+    "web-restaurant-e2e": {
       "tags": []
     }
   }

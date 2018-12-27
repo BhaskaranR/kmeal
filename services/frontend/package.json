@@ -31,7 +31,7 @@
     "start.nativescript.kmeal.ios": "cd apps/nativescript-kmeal && tns run ios --emulator --bundle --hmr",
     "start.nativescript.kmeal.android": "cd apps/nativescript-kmeal && tns run android --emulator --bundle --hmr",
     "clean.nativescript.kmeal": "cd apps/nativescript-kmeal && npx rimraf -- hooks node_modules platforms package-lock.json && npm i && npx rimraf -- package-lock.json",
-    "start.web.web-restaurant": "ng serve web-web-restaurant"
+    "start.web-restaurant": "ng serve web-restaurant"
   },
   "private": true,
   "dependencies": {
