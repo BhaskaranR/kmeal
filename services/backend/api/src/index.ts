@@ -14,7 +14,7 @@ const mergeResolvers = mergeGraphqlSchemas.mergeResolvers;
 const typeDefs = mergeTypes(fileLoader(path.join(__dirname, './schemas'), { recursive: true, extensions: ['.graphql'] }))
 const resolvers = mergeResolvers(fileLoader(path.join(__dirname, './resolvers')));
 
-
+//create schema
 function createSchema() {
     const executableSchema = makeExecutableSchema({
       typeDefs:  typeDefs,
