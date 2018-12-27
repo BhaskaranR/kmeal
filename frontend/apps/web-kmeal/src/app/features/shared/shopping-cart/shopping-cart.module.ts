@@ -1,13 +1,14 @@
 import { NgModule } from '@angular/core';
 import { SharedModule } from '../shared.module';
+import { ShoppingCartComponent } from './shopping-cart.component';
 
 
 
 @NgModule({
   imports: [SharedModule],
-  declarations: [],
+  declarations: [ShoppingCartComponent],
   providers: [],
-  entryComponents:[],
+  entryComponents:[ShoppingCartComponent],
   exports:[]
 })
 export class ShoppingCartModule {}

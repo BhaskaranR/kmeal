@@ -10,18 +10,6 @@ import {  MatDialogRef } from '@angular/material';
     styleUrls:['./dish.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DishDetailPopupComponent implements OnInit {
+export class DishDetailPopupComponent  {
     constructor(public dialogRef: MatDialogRef<DishDetailPopupComponent>) { }
-
-    ngOnInit(){
-        console.log(this.dialogRef);
-    }
-
-    orderNow() {
-        this.dialogRef.close('order');
-    }
-
-    closeDialog(){
-        this.dialogRef.close('close');
-    }
 }

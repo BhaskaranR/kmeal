@@ -18,4 +18,4 @@ export class ShoppingCartComponent  {
     goToDish(){
         this.goToDishEvent.emit('dish');
     }
-}
+} 

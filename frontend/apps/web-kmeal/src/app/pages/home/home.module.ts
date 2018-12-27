@@ -30,6 +30,7 @@ const routing = RouterModule.forChild(routes);
     declarations: [
         HomeComponent,
     ],
+    exports:[SharedModule],
     schemas: [
         NO_ERRORS_SCHEMA,
         CUSTOM_ELEMENTS_SCHEMA

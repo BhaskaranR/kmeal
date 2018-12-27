@@ -1,0 +1,30 @@
+<form action="">
+    <h1 mat-dialog-title>{{data.name}}</h1>
+    <mat-card-subtitle>Some kind of desciption on this dish and blah blah blah.</mat-card-subtitle>
+    <h4 >$ 16.22 <small style="text-decoration: line-through;font-weight:300; margin-left:10px">  $20.22</small></h4>
+
+    <mat-dialog-content>    
+        <div *ngFor="let spe of data.specifications; let i = index">
+            <label *ngIf="spe.type === 'multiple'">{{spe.name}}</label><br>
+
+            <mat-form-field style="width:100% !important"  *ngIf="spe.type !== 'multiple'" >
+                <input matInput style="width:100% !important" type="number" placeholder="{{spe.name}}" [(ngModel)]="spe.value" name="qty+i" [hidden]="spe.type !== 'number'" >
+                <textarea matInput style="width:100% !important"  type="text" width=100 [(ngModel)]="spe.value" name="otherIn + i" [hidden]="spe.type !== 'string'"></textarea>
+                
+                <mat-select style="width:100% !important" placeholder="{{spe.name}}" [hidden]="spe.type !== 'select'" [(ngModel)]="spe.value" name="select+i">
+                    <mat-option *ngFor="let opt of spe.inputs" [value]="spe.value">
+                        {{opt}}
+                    </mat-option>
+                </mat-select>    
+            </mat-form-field>
+            <div *ngIf="spe.type === 'multiple'">
+                <mat-checkbox *ngFor="let opt of spe.inputs">{{opt}}</mat-checkbox>
+            </div> 
+        </div>      
+    </mat-dialog-content>
+    <mat-dialog-actions>
+        <button mat-button mat-dialog-close [mat-dialog-close]="'close'">Cancel</button>
+        <button mat-flat-button color="warn" [mat-dialog-close]="'order'">Add to Cart $16.99</button>
+    </mat-dialog-actions>
+
+</form>

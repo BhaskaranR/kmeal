@@ -1,6 +1,7 @@
 import { Component ,ChangeDetectionStrategy, Input, EventEmitter, Output} from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { DishDetailPopupComponent } from './dish-detail-popup.component';
+import { DishOrderComponent } from './dish-order.component';
 
 @Component({
   selector: 'dish-card',
@@ -25,25 +26,27 @@ export class DishCardComponent  {
         this.reRoute.emit({url:"./restaurant", id:this.dishDetails.id});
     }
 
-    openDetailPopu(): void{
+    openDetails(): void{
         const dialogRef = this.dialog.open(DishDetailPopupComponent, {
             width: '640px',
             data: {name: this.dishDetails.name}
           });
       
           dialogRef.afterClosed().subscribe(result => {
-            console.log(result);
+            if (result === 'order'){
+                this.orderNow();
+            }
           });
     }
 
     orderNow(){
-        const dialogRef = this.dialog.open(DishDetailPopupComponent, {
-            width: '640px',
+        const dialogRef = this.dialog.open(DishOrderComponent, {
+            width: '450px',
             data: {name: this.dishDetails.name}
           });
       
           dialogRef.afterClosed().subscribe(result => {
-            console.log('The dialog was closed');
+            console.log('The dialog was closed', result);
           });
     }
 }
