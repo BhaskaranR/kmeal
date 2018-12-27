@@ -84,7 +84,7 @@ import { NguCarouselModule } from '@ngu/carousel';
   MatToolbarModule,
   MatTooltipModule,
   NguCarouselModule,
-  GooglePlaceModule
+  GooglePlaceModule,
   ],
   exports: [
     CommonModule,
@@ -125,7 +125,7 @@ import { NguCarouselModule } from '@ngu/carousel';
   MatToolbarModule,
   MatTooltipModule,
   NguCarouselModule,
-  GooglePlaceModule
+  GooglePlaceModule,
   ],
   declarations: [],
   providers: [MatIconRegistry, {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: true}}]

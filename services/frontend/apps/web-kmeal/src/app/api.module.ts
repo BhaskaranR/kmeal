@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { ApolloModule, Apollo } from 'apollo-angular';
-import { HttpLinkModule } from 'apollo-angular-link-http';
+import { HttpLinkModule, HttpLink } from 'apollo-angular-link-http';
 import {
   InMemoryCache,
 } from 'apollo-cache-inmemory';
@@ -11,17 +11,20 @@ import { OperationDefinitionNode } from 'graphql';
 import { onError } from 'apollo-link-error';
 import { SubscriptionClient } from 'subscriptions-transport-ws';
 import { WebSocketLink } from 'apollo-link-ws';
+import { environment } from '../environments/environment';
+import { HttpHeaders } from '@angular/common/http';
 
 
 @NgModule({
   declarations: [],
-  imports: [ApolloModule,HttpLinkModule],
+  imports: [],
   exports: [ApolloModule, HttpLinkModule],
   providers: []
 })
 export class ApiModule {
   constructor(
     apollo: Apollo,
+    httpLink:HttpLink
   ) {
     
     const WS_URI = `wss://kmeal-api.herokuapp.com/v1alpha1/graphql`;
@@ -69,18 +72,20 @@ export class ApiModule {
 
    const middleware = new ApolloLink((operation, forward) => {
         
-        operation.setContext(({ headers = {} }) => ({
-            headers: {
-            ...headers,
-            'x-hasura-access-key': 'baba',
-            } 
-        }));
+        operation.setContext({
+            headers: new HttpHeaders().set('x-hasura-access-key', 'baba')
+        });
 
+        console.log(operation);
         return forward(operation);
-    })
+    });
+    
+    const link = httpLink.create({
+        uri: environment.api_entry
+    });
 
     apollo.create({
-      link: from([middleware,networkLink,errorLink]),
+      link: from([middleware,networkLink,errorLink,link]),
       cache: new InMemoryCache()
     });
   }
