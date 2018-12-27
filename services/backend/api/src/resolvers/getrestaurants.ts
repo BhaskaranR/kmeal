@@ -1,15 +1,15 @@
 
 
-import { validate } from '../helpers/util';
-import * as Joi from 'joi';
+// import { validate } from '../helpers/util';
+// import * as Joi from 'joi';
 import { getRestaurant } from '../models/searchrestaurant';
 
-const nearbyQueryOptional =
-    Joi.object().keys({
-        long: Joi.number(),
-        lat: Joi.number(),
-        radius: Joi.number().default(2)
-    });
+// const nearbyQueryOptional =
+//     Joi.object().keys({
+//         long: Joi.number(),
+//         lat: Joi.number(),
+//         radius: Joi.number().default(2)
+//     });
 
 export default {
     Query: {
@@ -21,8 +21,8 @@ export default {
             }
         }) => {
             try {
-                await validate(nearby, nearbyQueryOptional);
-                return getRestaurant(nearby);
+                //await validate(nearby, nearbyQueryOptional);
+                return await getRestaurant(nearby);
             }
             catch (e) {
                 throw new Error(e.ValidationError);
