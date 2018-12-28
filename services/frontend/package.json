@@ -32,7 +32,10 @@
     "start.nativescript.kmeal.android": "cd apps/nativescript-kmeal && tns run android --emulator --bundle --hmr",
     "clean.nativescript.kmeal": "cd apps/nativescript-kmeal && npx rimraf -- hooks node_modules platforms package-lock.json && npm i && npx rimraf -- package-lock.json",
     "start.web-restaurant": "ng serve web-restaurant",
-    "build-prod.web.kmeal": "ng build --prod web-kmeal"
+    "build-prod.web.kmeal": "ng build --prod web-kmeal",
+    "build-prod.web-restaurant": "ng build --prod web-restaurant",
+    "deploy.web.kmeal.prod": "ng build --prod web-kmeal && rm -rf firebase.json && cp firebase.kmeal.json firebase.json || true && firebase use web.kmeal-prod && firebase deploy || true",
+    "deploy.web.kmeal-restaurant.prod": "ng build --prod web-restaurant && rm -rf firebase.json && cp firebase.kmeal-restaurant.json firebase.json || true && firebase use web.kmeal-restaurant-prod && firebase deploy || true"
   },
   "private": true,
   "dependencies": {
