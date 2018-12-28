@@ -6,7 +6,7 @@
     class="search-bar-container">
     <div fxFlex="100%" fxLayout="row" fxFlexAlign="left center" class="search-bar-search">    
         <mat-icon  fxFlex="40px" style="position:absolute; margin-top:12px;margin-left:15px">search</mat-icon>
-        <input fxFlex="100%" ngx-google-places-autocomplete [(ngModel)]="userInput" [options]='options' #placesRef="ngx-places" (onAddressChange)="handleAddressChange($event)" placeholder="Street Addresses and Zip Code" class="" name="search-bar" id="search-bar" (blur)="onBlur($event)" (focus)="onFocus($event)"/>
+        <input fxFlex="100%" ngx-google-places-autocomplete [(ngModel)]="userInput" [options]='options' #placesRef="ngx-places" (onAddressChange)="handleAddressChange($event)" placeholder="Street Addresses and Zip Code" class="" name="search-bar" id="search-bar" (blur)="onBlur()" (focus)="onFocus($event)"/>
     </div>   
 </div>
 
