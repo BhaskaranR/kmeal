@@ -14,13 +14,17 @@ ALTER TABLE ONLY kmeal."item"
   ADD CONSTRAINT restaurant_item_id_fkey FOREIGN KEY ("restaurant_id") REFERENCES kmeal.restaurant(restaurant_id);
 
 
-CREATE TABLE IF NOT EXISTS kmeal."group" (
-  "item_id" INTEGER NOT NULL,
+CREATE TABLE IF NOT EXISTS kmeal."restaurant_group" (
+  "group_id" INTEGER PRIMARY KEY,
+  "restaurant_id" INTEGER NOT NULL REFERENCES kmeal.restaurant("restaurant_id"),
   "group_name" TEXT NOT NULL
 );
 
-ALTER TABLE ONLY kmeal."group"
-  ADD CONSTRAINT group_item_id_fkey FOREIGN KEY ("item_id") REFERENCES kmeal.item("item_id");
+
+CREATE TABLE IF NOT EXISTS kmeal."group" (
+  "item_id" INTEGER NOT NULL REFERENCES kmeal.item("item_id"),
+  "group_id" INTEGER NOT NULL REFERENCES kmeal.restaurant_group (group_id)
+);
 
 CREATE TABLE IF NOT EXISTS kmeal."item_types" (
   "item_id" INTEGER  NOT NULL,
