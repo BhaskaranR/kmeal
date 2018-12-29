@@ -1,5 +1,6 @@
-import { Component, OnInit} from "@angular/core";
+import { Component, OnInit, OnDestroy, ChangeDetectorRef} from "@angular/core";
 import { MatDialog } from "@angular/material";
+import { MediaMatcher } from "@angular/cdk/layout";
 
 @Component({
     selector: "app-restaurant",
@@ -7,10 +8,20 @@ import { MatDialog } from "@angular/material";
     templateUrl: "./res.component.html",
     styleUrls: ['./res.component.scss'],
 })
-export class ResComponent implements OnInit{
+export class ResComponent implements OnInit, OnDestroy{
     breakpoint:number;
     dia:any;
-    constructor(public dialog:MatDialog){}
+    mobileQuery: MediaQueryList;
+    private _mobileQueryListener: () => void;
+    constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher) {
+        this.mobileQuery = media.matchMedia('(max-width: 600px)');
+        this._mobileQueryListener = () => changeDetectorRef.detectChanges();
+        this.mobileQuery.addListener(this._mobileQueryListener);
+    }
+
+    ngOnDestroy(): void {
+        this.mobileQuery.removeListener(this._mobileQueryListener);
+    }
     public dishes:Array<any> = [
         {
             id:'321hdjsha',
@@ -120,11 +131,7 @@ export class ResComponent implements OnInit{
       }
   
     private generateBreakpoint(width){
-        return (width <= 959 ) ? 1: (width <= 1279) ? 2: 3;
+        return (width <= 959 ) ? 1: (width <= 1279) ? 2: 4;
     }
 
-
-    placeOrder(dish){
-
-    }
 }

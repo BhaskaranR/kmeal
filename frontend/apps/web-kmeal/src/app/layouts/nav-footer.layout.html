@@ -1,8 +1,40 @@
-<nav-bar></nav-bar>
+<nav-bar (toggleSidenavEvent)="snav.toggle($event)"></nav-bar>
 
-<div>
-    <ng-content select=".main-content">
-    </ng-content>
-</div>
+<mat-sidenav-container>
+        <mat-sidenav 
+          #snav 
+          [mode]="(mobileQuery.matches && !isHome) ? 'over' : (mobileQuery.matches) ? 'over':'side'"
+          [fixedInViewport]="mobileQuery.matches" 
+          opened="true"
+          style="background: #F3F3F3;"
+          class="shadow_right" 
+          autosize>
+          <div class="leftSidenavContent" fxLayout="column" fxFlexFill>
+            <mat-list fxFlex="100%">
+              <h3 mat-subheader>Folders</h3>
+              <mat-list-item >
+                <mat-icon mat-list-icon>settings</mat-icon>
+                <p mat-line> Settings</p>
+              </mat-list-item>
+              <mat-list-item >
+                  <mat-icon mat-list-icon>settings</mat-icon>
+                  <p mat-line> Some other settings</p>
+              </mat-list-item>
+              <mat-divider></mat-divider>
+              <h3 mat-subheader>Notes</h3>
+              <mat-list-item >
+                <mat-icon mat-list-icon>note</mat-icon>
+                <p mat-line> blo </p>
+              </mat-list-item>
+            </mat-list>
+          </div>
+        </mat-sidenav>
+          <!-- MENU LEFT -->
+
+        <mat-sidenav-content>
+            <ng-content select=".main-content"></ng-content>
+        </mat-sidenav-content>
+    
+</mat-sidenav-container>
 
 <footer-bar></footer-bar>

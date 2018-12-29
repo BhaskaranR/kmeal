@@ -5,4 +5,5 @@ export class SearchBarService {
  
   constructor() {console.warn('Service created!') }
   searchString:string;
+  results:{[key:string]:any};
 }

@@ -1,6 +1,6 @@
-import { Component, OnInit} from "@angular/core";
+import { Component, OnInit, OnDestroy} from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
-import { Subscription } from "apollo-angular";
+import { SearchBarService } from "../../features/shared/search-bar/search-bar.service";
 
 @Component({
     selector: "app-search",
@@ -8,216 +8,36 @@ import { Subscription } from "apollo-angular";
     templateUrl: "./search.component.html",
     styleUrls: ['./search.component.scss'],
 })
-export class SearchComponent implements OnInit{
+export class SearchComponent implements OnInit ,OnDestroy{
+
     breakpoint:number;
     isFilterOpen:boolean = false;
-    constructor(public router: Router, public route:ActivatedRoute){};
-    public restaurants:Array<any> = [
-        {
-            id:"hudsan321",
-            restaurantName:'Indian Dinner',
-            description:'Authentic Indian Cuisine. Lunch and Dinner',
-            type:'Indian',
-            address:{
-                line:'19523 25th Ave',
-                city:'Queens',
-                state:'NY',
-                zipcode:11453,
-            },
-            location:{
-                long:198,
-                lat:21,
-            },
-            distance:'198ft',
-            lables:['Indian','Spicy', 'Takeout', 'Lunch','Dinner'],
-            rating:5,
-            priceLevel:'$$',
-        },{
-            id:"hudsan321",
-            restaurantName:'Indian Dinner',
-            description:'Authentic Indian Cuisine. Lunch and Dinner',
-            type:'Indian',
-            address:{
-                line:'19523 25th Ave',
-                city:'Queens',
-                state:'NY',
-                zipcode:11453,
-            },
-            location:{
-                long:198,
-                lat:21,
-            },
-            distance:'198ft',
-            lables:['Indian','Spicy', 'Takeout', 'Lunch','Dinner'],
-            rating:5,
-            priceLevel:'$$',
-        },{
-            id:"hudsan321",
-            restaurantName:'Indian Dinner',
-            description:'Authentic Indian Cuisine. Lunch and Dinner',
-            type:'Indian',
-            address:{
-                line:'19523 25th Ave',
-                city:'Queens',
-                state:'NY',
-                zipcode:11453,
-            },
-            location:{
-                long:198,
-                lat:21,
-            },
-            distance:'198ft',
-            lables:['Indian','Spicy', 'Takeout', 'Lunch','Dinner'],
-            rating:5,
-            priceLevel:'$$',
-        },{
-            id:"hudsan321",
-            restaurantName:'Indian Dinner',
-            description:'Authentic Indian Cuisine. Lunch and Dinner',
-            type:'Indian',
-            address:{
-                line:'19523 25th Ave',
-                city:'Queens',
-                state:'NY',
-                zipcode:11453,
-            },
-            location:{
-                long:198,
-                lat:21,
-            },
-            distance:'198ft',
-            lables:['Indian','Spicy', 'Takeout', 'Lunch','Dinner'],
-            rating:5,
-            priceLevel:'$$',
-        },{
-            id:"hudsan321",
-            restaurantName:'Indian Dinner',
-            description:'Authentic Indian Cuisine. Lunch and Dinner',
-            type:'Indian',
-            address:{
-                line:'19523 25th Ave',
-                city:'Queens',
-                state:'NY',
-                zipcode:11453,
-            },
-            location:{
-                long:198,
-                lat:21,
-            },
-            distance:'198ft',
-            lables:['Indian','Spicy', 'Takeout', 'Lunch','Dinner'],
-            rating:5,
-            priceLevel:'$$',
-        },{
-            id:"hudsan321",
-            restaurantName:'Indian Dinner',
-            description:'Authentic Indian Cuisine. Lunch and Dinner',
-            type:'Indian',
-            address:{
-                line:'19523 25th Ave',
-                city:'Queens',
-                state:'NY',
-                zipcode:11453,
-            },
-            location:{
-                long:198,
-                lat:21,
-            },
-            distance:'198ft',
-            lables:['Indian','Spicy', 'Takeout', 'Lunch','Dinner'],
-            rating:5,
-            priceLevel:'$$',
-        },{
-            id:"hudsan321",
-            restaurantName:'Indian Dinner',
-            description:'Authentic Indian Cuisine. Lunch and Dinner',
-            type:'Indian',
-            address:{
-                line:'19523 25th Ave',
-                city:'Queens',
-                state:'NY',
-                zipcode:11453,
-            },
-            location:{
-                long:198,
-                lat:21,
-            },
-            distance:'198ft',
-            lables:['Indian','Spicy', 'Takeout', 'Lunch','Dinner'],
-            rating:5,
-            priceLevel:'$$',
-        },{
-            id:"hudsan321",
-            restaurantName:'Indian Dinner',
-            description:'Authentic Indian Cuisine. Lunch and Dinner',
-            type:'Indian',
-            address:{
-                line:'19523 25th Ave',
-                city:'Queens',
-                state:'NY',
-                zipcode:11453,
-            },
-            location:{
-                long:198,
-                lat:21,
-            },
-            distance:'198ft',
-            lables:['Indian','Spicy', 'Takeout', 'Lunch','Dinner'],
-            rating:5,
-            priceLevel:'$$',
-        },{
-            id:"hudsan321",
-            restaurantName:'Indian Dinner',
-            description:'Authentic Indian Cuisine. Lunch and Dinner',
-            type:'Indian',
-            address:{
-                line:'19523 25th Ave',
-                city:'Queens',
-                state:'NY',
-                zipcode:11453,
-            },
-            location:{
-                long:198,
-                lat:21,
-            },
-            distance:'198ft',
-            lables:['Indian','Spicy', 'Takeout', 'Lunch','Dinner'],
-            rating:5,
-            priceLevel:'$$',
-        },{
-            id:"hudsan321",
-            restaurantName:'Indian Dinner',
-            description:'Authentic Indian Cuisine. Lunch and Dinner',
-            type:'Indian',
-            address:{
-                line:'19523 25th Ave',
-                city:'Queens',
-                state:'NY',
-                zipcode:11453,
-            },
-            location:{
-                long:198,
-                lat:21,
-            },
-            distance:'198ft',
-            lables:['Indian','Spicy', 'Takeout', 'Lunch','Dinner'],
-            rating:5,
-            priceLevel:'$$',
-        }
-    ]
-
-    sub:any;
+    isReady:boolean = false;
+    restaurants:Array<any> ;
+    routeParamSub:any;
     type:string;
+
+    constructor(
+        public router: Router, 
+        public route:ActivatedRoute,
+        public searchBarService:SearchBarService){};
+    
+    
     ngOnInit() {
+        console.log('initing search screen');
         this.breakpoint = this.generateBreakpoint(window.innerWidth);
-        this.sub = this.route
+        this.routeParamSub = this.route
         .queryParams
         .subscribe(params => {
-            // Defaults to 0 if no query param provided.
-            if (!params.type){
-                alert('Wrong')
+
+            if (!params.type || !this.searchBarService.results){
+                this.restaurants = [];
+                this.isReady = true;
+                return
             }
             this.type = params.type;
+            this.restaurants = this.searchBarService.results.getRestaurantsNearby;
+            this.isReady = true;
         });
     }
     
@@ -227,5 +47,9 @@ export class SearchComponent implements OnInit{
 
     private generateBreakpoint(width){
         return (width <= 959 ) ? 1: (width <= 1279) ? 2: 3;
+    }
+
+    ngOnDestroy(){
+       
     }
 }
