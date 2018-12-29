@@ -21,11 +21,9 @@ const routing = RouterModule.forChild(routes);
 @NgModule({
     imports: [
         routing, 
-        SharedModule, 
-        SearchBarModule, 
+        SharedModule , 
         RestaurantModule, 
         DishModule,
-        NavBarModule,
         NguCarouselModule],
     declarations: [
         HomeComponent,

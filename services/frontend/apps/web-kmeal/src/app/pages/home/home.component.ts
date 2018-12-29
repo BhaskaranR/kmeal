@@ -48,7 +48,6 @@ export class HomeComponent implements OnInit{
     isReady:boolean = false;
     querySubscription:any;
     ngOnInit(){
-        console.log('calling API')
       this.querySubscription = this.apollo
       .watchQuery({
           query: categoriesQuery,

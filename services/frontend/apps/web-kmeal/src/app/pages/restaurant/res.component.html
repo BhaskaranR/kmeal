@@ -9,42 +9,45 @@
 </div>
 
 <br>
-<div>
-    <div style="padding:10px">
-        <h5>Menu</h5>
-        <div fxLayout fxLayoutAlign="left center">
-            <div fxFlex="70%">
-                    <mat-nav-list fxLayout>
-                            <mat-list-item>
-                                <a >Most Popular</a>
-                            </mat-list-item>
-                            <mat-list-item>
-                                <a>Appertizer</a>
-                            </mat-list-item>
-                            <mat-list-item>
-                                <a >Entry</a>
-                            </mat-list-item>
-                            <mat-list-item>
-                                <a >Soup</a>
-                            </mat-list-item>
-                            <mat-list-item>
-                                <a >Salad</a>
-                            </mat-list-item>
-                        </mat-nav-list>
-            </div>
-            <div fxFlex="30%" style="text-align:right">More..</div>
-        </div>
-        
-        <hr>
+<div fxLayout="row">
+    <div fxFlex="50%">
+        <button mat-button color="primary" [matMenuTriggerFor]="sortedBy">Sort By</button>
+        <mat-menu #sortedBy="matMenu">
+                <button mat-menu-item>Price Low to High</button>
+                <button mat-menu-item>Price High to Low</button>
+              </mat-menu>
     </div>
-    <div style="padding:10px">
-        <h5>Most Popular</h5>
-        <div >
-            <mat-grid-list [cols]="breakpoint"  (window:resize)="onResize($event)">
-                <mat-grid-tile *ngFor="let dishDetails of dishes">
-                    <dish-card [dishDetails]="dishDetails" (reRoute)="placeOrder($event)"></dish-card>
-                </mat-grid-tile>
-            </mat-grid-list>
-        </div>
+    <div fxFlex="50%" style="text-align: right">
+        <button mat-button (click)="menuToggle.toggle()">Menu</button>
     </div>
 </div>
+<hr style="margin-bottom:0;">
+<mat-sidenav-container class="example-container" >
+        <mat-sidenav 
+            #menuToggle
+            opened="true"
+            [mode]="mobileQuery.matches ? 'over' : 'side'" 
+            [fixedInViewport]="mobileQuery.matches" 
+            fixedTopGap="56"
+            position="start"
+            style="width:300px"
+            autosize>
+            <mat-list>
+                <h3 mat-subheader>Menu</h3>
+                <mat-list-item >
+                    <h4 mat-line>Most Populate</h4>
+                    <h4 mat-line>Beverage</h4>
+                    <h4 mat-line>Entree</h4>
+                    <h4 mat-line>Kmeal Menu</h4>
+                    <h4 mat-line>Soup</h4>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+                <h3 mat-subheader>Notes</h3>
+            </mat-list>
+        </mat-sidenav>
+        <mat-grid-list [cols]="breakpoint"  (window:resize)="onResize($event)">
+            <mat-grid-tile *ngFor="let dishDetails of dishes">
+                <dish-card [dishDetails]="dishDetails" (reRoute)="placeOrder($event)"></dish-card>
+            </mat-grid-tile>
+        </mat-grid-list>
+</mat-sidenav-container>

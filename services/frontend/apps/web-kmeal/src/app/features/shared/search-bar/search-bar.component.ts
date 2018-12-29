@@ -3,6 +3,9 @@ import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { GooglePlaceDirective } from 'ngx-google-places-autocomplete';
 import { SearchBarService } from './search-bar.service';
+import { Apollo } from 'apollo-angular';
+import { restaurantQuery } from './search-bar.query';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'search-bar',
@@ -14,45 +17,50 @@ export class SearchBarComponent  implements OnInit{
     options={
         types: [],
         componentRestrictions: { country: 'USA' }
-        };
+    };
     
     userInput:string;
+    isLoaded:boolean = true;
+    querySubscription:Subscription;
     @ViewChild("placesRef") placesRef : GooglePlaceDirective;
     
     constructor(
         public dialogRef:MatDialog, 
         public router:Router,
-        public searchService:SearchBarService) {}
+        public searchService:SearchBarService,
+        public apollo: Apollo) {}
 
+    
     ngOnInit(){
-        this.userInput= this.searchService.searchString || '';
+        console.log('initing search bar ');
     }
 
-    onFocus(e:Event){
-        console.log(e);
+    onFocus(e){
+        console.log('on focus : ', this.userInput);
     }
 
-    onBlur(){
+    onBlur(e){
+        console.log('on blur : ',this.userInput);
+        if(!this.userInput){
+            this.resetSearchBar();
+        }
     }
 
     handleAddressChange(e){
         this.searchService.searchString = e.formatted_address;
-
-        if (this.needToReRoute()) {
-            this.router.navigate(['./search'],{ queryParams: { type: 'nearBy', value:e.formatted_address } });
-        } else {
-            this.search(e)
-        }
-        
+        this.search(e.geometry.location.lat(),e.geometry.location.lng(), 5);
     }
 
-    private needToReRoute(){
-        let curr = this.router.url;
-        if (curr !== '/search') return true;
-        return false;
+    private search(lat, lng, radius){
+        this.isLoaded = false;
+        this.searchService.getSearchResult(lat,lng, 5, (data)=>{
+            this.router.navigate(['/search'])
+        })
     }
 
-    private search(e){
-        console.log(e);
+    private resetSearchBar(){
+        this.searchService.searchString = null;
+        this.searchService.results = null;
+        this.userInput = null;
     }
 }

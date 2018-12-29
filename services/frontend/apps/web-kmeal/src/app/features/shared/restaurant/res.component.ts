@@ -9,11 +9,20 @@ import { Component,ChangeDetectionStrategy,Input,Output, EventEmitter } from '@a
 })
 export class RestaurantComponent  {
     @Input() public res:any;
-    @Output() public goToDishEvent = new EventEmitter<any>();
+    @Output() public reRoute = new EventEmitter<any>();
     @Output() public onError = new EventEmitter<string>();
 
     constructor(){}    
-    goToRestaurant(){
-      this.goToDishEvent.emit('restaurant');
-    } 
+    goToRestaurant(e){
+      e.preventDefault();
+      this.reRoute.emit({url:"./restaurant", id:this.res.id});
+    }
+
+    generateLables(description) {
+      let result = '';
+      description.split(',').forEach( la => {
+        result += la + ' , ';
+      });
+      return result;
+    }
 }

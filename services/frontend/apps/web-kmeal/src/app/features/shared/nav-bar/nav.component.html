@@ -1,18 +1,19 @@
 <div class="container"
     fxlayout="row"
-    fxLayout.xs="row"
-    fxLayoutAlign="center center"
+    fxLayoutAlign="start center"
     fxLayoutGap="10px"
     fxLayoutGap.xs="0"
     class="app-home-nav">
-    <div fxFlex="25%" fxHide.sm="true" fxHide.xs="true" fxFlexOrder="1" fxLayout="row" fxLayoutAlign="left center">
-        <mat-icon>menu</mat-icon>
+    <div fxFlex="20px"  fxFlex.sm="20px" fxFlex.xs="20px" fxFlexOrder="1">
+        <mat-icon (click)="toggleSideNav()">menu</mat-icon>
+    </div>
+    <div fxFlex="200px" fxHide.sm="true" fxHide.xs="true" fxFlexOrder="2" >
         <a routerLink="/home"><img style="display:inline-block;width:120px;height:127px;margin-top:8px" src="https://mir-s3-cdn-cf.behance.net/project_modules/disp/76ab2e19585305.562dce0bcf645.png" alt=""></a>
     </div>
-    <div fxFlex="55%" fxFlex.sm="80%" fxFlex.xs="80%" fxFlexOrder="2">
+    <div fxFlex="65%" fxFlex.sm="70%" fxFlex.xs="70%" fxFlexOrder="3">
         <search-bar></search-bar>
     </div>
-    <div fxFlex="20%" fxHide.sm="false" fxHide.xs="false" fxFlexOrder="3" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="20px">
+    <div fxFlex="20%" fxFlex.sm="20%" fxFlex.xs="20%" fxFlexOrder="4" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="20px">
         <a routerLink="/login" *ngIf="!isLoggedIn">LOGIN</a>
         <div *ngIf="isLoggedIn">
             <mat-icon [matMenuTriggerFor]="menu" style="margin-top:5px">person</mat-icon>
@@ -22,7 +23,7 @@
                 <button mat-menu-item>Log Out</button>
             </mat-menu>
         </div>
-        <mat-icon (click)="openCart()"  matBadge="15" matBadgeColor="warn">shopping_cart</mat-icon>
+        <mat-icon  matBadge="15" matBadgeColor="warn">shopping_cart</mat-icon>
         <mat-icon  matBadge="15" matBadgeColor="warn">help</mat-icon>
     </div>
 </div>

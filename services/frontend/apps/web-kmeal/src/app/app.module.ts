@@ -15,6 +15,7 @@ import { NavFooterLayout } from './layouts/nav-footer.layout';
 import {ShoppingCartModule} from './features/shared/shopping-cart/shopping-cart.module';
 import { ApiModule } from './api.module';
 import { HttpClientModule } from '@angular/common/http';
+import {ScrollDispatchModule} from '@angular/cdk/scrolling';
 
 
 @NgModule({
@@ -27,6 +28,7 @@ import { HttpClientModule } from '@angular/common/http';
     ShoppingCartModule,
     ApiModule,
     HttpClientModule,
+    ScrollDispatchModule
   ],
   declarations: [AppComponent, NavFooterLayout],
   bootstrap: [AppComponent],

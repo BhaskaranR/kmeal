@@ -76,7 +76,6 @@ export class ApiModule {
             headers: new HttpHeaders().set('x-hasura-access-key', 'baba')
         });
 
-        console.log(operation);
         return forward(operation);
     });
     
