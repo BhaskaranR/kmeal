@@ -2,7 +2,6 @@ import { NgModule, NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from "@angular/cor
 import { HomeComponent } from "./home.component";
 import { Routes, RouterModule } from '@angular/router';
 import { SharedModule } from "../../features/shared/shared.module";
-import { SearchBarModule } from "../../features/shared/search-bar/search-bar.module";
 import { RestaurantModule } from "../../features/shared/restaurant/res.module";
 import { DishModule } from "../../features/shared/dish/dish.module";
 import {NguCarouselModule} from '@ngu/carousel';

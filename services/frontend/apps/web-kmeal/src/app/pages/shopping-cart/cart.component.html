@@ -1,0 +1,80 @@
+
+<div *ngIf="!isReady">
+    <div id="loading-wrapper">
+        <div id="loading-text">LOADING</div>
+        <div id="loading-content"></div>
+    </div>
+</div>
+<div *ngIf="isReady" style="padding:25px;">
+    <br>
+    <br>
+        <div fxLayout="row">
+            <div fxFlex="50%">
+                <h4>Results : {{type}}</h4>
+            </div>
+            <div fxFlex="50%" style="text-align: right">
+                Filter <mat-icon (click)="isFilterOpen = !isFilterOpen">filter_list</mat-icon>
+            </div>
+        </div>
+        
+        <div *ngIf="isFilterOpen">
+                <br>
+                <br>
+            <form action="">
+                <mat-form-field>
+                    <mat-select placeholder="Cuisine" [value]="'Asian'">
+                        <mat-option>Chinese</mat-option>
+                        <mat-option>Japanese</mat-option>
+                        <mat-option>Indian</mat-option>
+                        <mat-option>American</mat-option>
+                        <mat-option>Korean</mat-option>
+                        <mat-option>French</mat-option>
+                        <mat-option>Italian</mat-option>
+                    </mat-select>
+
+                </mat-form-field>  
+                
+                <mat-form-field>
+                    <mat-select placeholder="Distance" [value]="'2 Blocks'">
+                        <mat-option>2 Blocks</mat-option>
+                        <mat-option>6 Blocks</mat-option>
+                        <mat-option>1 Mile</mat-option>
+                        <mat-option>5 Miles</mat-option>
+                    </mat-select>
+                </mat-form-field> 
+
+                <mat-form-field>
+                    <mat-select placeholder="Rating" [value]="'2 Blocks'">
+                        <mat-option>5 stars</mat-option>
+                        <mat-option>4 stars</mat-option>
+                        <mat-option>3 stars</mat-option>
+                        <mat-option>2 stars</mat-option>
+                        <mat-option>1 stars</mat-option>
+                    </mat-select>
+                </mat-form-field> 
+
+                <mat-form-field>
+                        <mat-select placeholder="Price" [value]="'2 Blocks'">
+                            <mat-option>$</mat-option>
+                            <mat-option>$$</mat-option>
+                            <mat-option>$$$</mat-option>
+                            <mat-option>$$$$</mat-option>
+                        </mat-select>
+                    </mat-form-field> 
+
+                
+                    <button  mat-stroked-button >Search</button>
+                
+            </form>
+        </div>
+        
+        <mat-grid-list [cols]="breakpoint"  (window:resize)="onResize($event)">
+            <mat-grid-tile *ngFor="let res of searchBarService.results">
+                <res-card [res]="res" (onError)="throwError($event)" (reRoute)="navigate($event)"></res-card>
+            </mat-grid-tile>
+        </mat-grid-list>
+
+        <div *ngIf="!restauarants || !restaurants.length">
+            No Results
+        </div>
+</div>
