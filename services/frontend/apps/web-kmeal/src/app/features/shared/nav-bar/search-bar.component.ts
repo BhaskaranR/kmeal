@@ -2,10 +2,9 @@ import { Component ,ViewChild, OnInit} from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { GooglePlaceDirective } from 'ngx-google-places-autocomplete';
-import { SearchBarService } from './search-bar.service';
 import { Apollo } from 'apollo-angular';
-import { restaurantQuery } from './search-bar.query';
 import { Subscription } from 'rxjs';
+import { DataService } from '../../../core/data.service';
 
 @Component({
   selector: 'search-bar',
@@ -27,7 +26,7 @@ export class SearchBarComponent  implements OnInit{
     constructor(
         public dialogRef:MatDialog, 
         public router:Router,
-        public searchService:SearchBarService,
+        public dataService:DataService,
         public apollo: Apollo) {}
 
     
@@ -41,26 +40,17 @@ export class SearchBarComponent  implements OnInit{
 
     onBlur(e){
         console.log('on blur : ',this.userInput);
-        if(!this.userInput){
-            this.resetSearchBar();
-        }
     }
 
     handleAddressChange(e){
-        this.searchService.searchString = e.formatted_address;
+        this.dataService.searchInput = e.formatted_address;
         this.search(e.geometry.location.lat(),e.geometry.location.lng(), 5);
     }
 
     private search(lat, lng, radius){
         this.isLoaded = false;
-        this.searchService.getSearchResult(lat,lng, 5, (data)=>{
+        this.dataService.searchRestaurants(lat,lng, 5, (data)=>{
             this.router.navigate(['/search'])
-        })
-    }
-
-    private resetSearchBar(){
-        this.searchService.searchString = null;
-        this.searchService.results = null;
-        this.userInput = null;
+        });
     }
 }

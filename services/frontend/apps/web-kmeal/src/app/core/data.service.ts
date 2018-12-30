@@ -1,16 +1,17 @@
 import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
-import { restaurantQuery } from './search-bar.query';
+import { restaurantQuery } from './queries/queries';
 
 @Injectable()
-export class SearchBarService {
+export class DataService {
  
-  constructor(public apollo: Apollo) {console.warn('Service created!') }
-  searchString:string;
-  results:{[key:string]:any};
-  querySubscription:any;
+    constructor(public apollo: Apollo) {console.warn('Service created!') }
+    searchInput:string;
+    restaurants:{[key:string]:any};
+    cuisines:any[];
+    querySubscription:any;
 
-  getSearchResult(lat, lng, radius, callback){
+    searchRestaurants(lat, lng, radius, callback){
     this.querySubscription = this.apollo
         .watchQuery({
         query: restaurantQuery,
@@ -23,8 +24,10 @@ export class SearchBarService {
         },
         })
         .valueChanges.subscribe(({data}) => {
-          this.results = data;
+            this.restaurants = data;
             callback(data);
         })
-  }
+    }
+
+
 }
