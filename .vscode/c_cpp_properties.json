@@ -1,0 +1,27 @@
+{
+    "configurations": [
+        {
+            "name": "Mac",
+            "includePath": [
+                "/Users/bhaskaran/Documents/eosio.cdt/libraries/eoslib",
+                "/Users/bhaskaran/Documents/eos/unittests",
+                "/Users/bhaskaran/Documents/eos/libraries/**",
+                "/Users/bhaskaran/Documents/eos/contracts/**",
+                "/usr/local/include",
+                "/usr/local/include/eosiolib",
+                "/usr/include",
+                "${workspaceFolder}/**"
+            ],
+            "defines": [],
+            "macFrameworkPath": [
+                "/System/Library/Frameworks",
+                "/Library/Frameworks"
+            ],
+            "compilerPath": "/usr/bin/clang",
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "clang-x64"
+        }
+    ],
+    "version": 4
+}

@@ -1,0 +1,23 @@
+{
+  "scripts": {
+    "start": "node src",
+    "dev": "./node_modules/nodemon/bin/nodemon.js"
+  },
+  "dependencies": {
+    "faker": "^4.1.0",
+    "graphql-binding": "file:../../libs",
+    "graphql-import": "^0.1.5",
+    "graphql-yoga": "^0.2.2",
+    "pg": "^7.7.1",
+    "sequelize": "^4.42.0"
+  },
+  "now": {
+    "alias": "graphql-binding"
+  },
+  "engines": {
+    "node": ">=8.6.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.9"
+  }
+}

@@ -12,6 +12,8 @@
       "typeinfo": "cpp",
       "variant": "cpp",
       "algorithm": "cpp",
-      "iosfwd": "cpp"
-    }
+      "iosfwd": "cpp",
+      "memory": "cpp"
+    },
+    "vscode-postgres.prettyPrintJSONfields": true
   }
