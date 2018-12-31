@@ -20,6 +20,9 @@ export const AppRoutes: Routes = [{
         path: 'search', 
         loadChildren: './pages/search/search.module#SearchModule', 
 },{
+        path: 'shaopping-cart', 
+        loadChildren: './pages/shopping-cart/cart.module#CartModule', 
+},{
         path: '**', 
         loadChildren: './pages/error/error.module#ErrorModule', 
 },

@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy} from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
-import { DataService } from "../../core/data.service";
+import { CartService } from "../../core/shopping-cart.service";
 
 @Component({
     selector: "app-cart",
@@ -20,7 +20,7 @@ export class CartComponent implements OnInit ,OnDestroy{
     constructor(
         public router: Router, 
         public route:ActivatedRoute,
-        public dataService:DataService){};
+        public cartService:CartService){};
     
     
     ngOnInit() {
