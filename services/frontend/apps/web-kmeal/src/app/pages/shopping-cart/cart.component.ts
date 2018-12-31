@@ -24,21 +24,7 @@ export class CartComponent implements OnInit ,OnDestroy{
     
     
     ngOnInit() {
-        console.log('initing search screen');
-        this.breakpoint = this.generateBreakpoint(window.innerWidth);
-        this.routeParamSub = this.route
-        .queryParams
-        .subscribe(params => {
 
-            if (!params.type || !this.dataService.restaurants){
-                this.restaurants = [];
-                this.isReady = true;
-                return
-            }
-            this.type = params.type;
-            this.restaurants = this.dataService.restaurants.getRestaurantsNearby;
-            this.isReady = true;
-        });
     }
     
     onResize(event) {
