@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy} from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
-import { SearchBarService } from "../../features/shared/search-bar/search-bar.service";
+import { DataService } from "../../core/data.service";
 
 @Component({
     selector: "app-search",
@@ -20,7 +20,7 @@ export class SearchComponent implements OnInit ,OnDestroy{
     constructor(
         public router: Router, 
         public route:ActivatedRoute,
-        public searchBarService:SearchBarService){};
+        public dataService:DataService){};
     
     
     ngOnInit() {
@@ -30,13 +30,13 @@ export class SearchComponent implements OnInit ,OnDestroy{
         .queryParams
         .subscribe(params => {
 
-            if (!params.type || !this.searchBarService.results){
+            if (!params.type || !this.dataService.restaurants){
                 this.restaurants = [];
                 this.isReady = true;
                 return
             }
             this.type = params.type;
-            this.restaurants = this.searchBarService.results.getRestaurantsNearby;
+            this.restaurants = this.dataService.restaurants.getRestaurantsNearby;
             this.isReady = true;
         });
     }

@@ -13,12 +13,8 @@ import { AppBaseComponent } from '@kmeal-frontend/web';
     </div>
   </app-nav-layout>`
 })
-export class AppComponent extends AppBaseComponent implements OnInit{
+export class AppComponent extends AppBaseComponent {
   constructor() {
     super();
   }
-
-  ngOnInit(){
-  }
-
 }

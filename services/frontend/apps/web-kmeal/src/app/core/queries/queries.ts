@@ -22,3 +22,13 @@ query getRestaurantsNearBy($nearby:GetNearByInput){
   }
 }
 `;
+
+
+export const categoriesQuery = gql`
+{
+  kmeal_categories {
+    title
+    alias
+  }
+ }
+`;

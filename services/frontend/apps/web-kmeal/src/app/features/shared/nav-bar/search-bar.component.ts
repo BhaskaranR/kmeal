@@ -10,7 +10,7 @@ import { DataService } from '../../../core/data.service';
   selector: 'search-bar',
   moduleId: module.id,
   templateUrl:'./search-bar.component.html' ,
-  styleUrls:['./search-bar.component.scss']
+  styleUrls:['./nav.component.scss']
 })
 export class SearchBarComponent  implements OnInit{
     options={
@@ -44,13 +44,11 @@ export class SearchBarComponent  implements OnInit{
 
     handleAddressChange(e){
         this.dataService.searchInput = e.formatted_address;
-        this.search(e.geometry.location.lat(),e.geometry.location.lng(), 5);
+        this.search(e.geometry.location.lat(),e.geometry.location.lng(), 10);
     }
 
     private search(lat, lng, radius){
         this.isLoaded = false;
-        this.dataService.searchRestaurants(lat,lng, 5, (data)=>{
-            this.router.navigate(['/search'])
-        });
+        this.dataService.searchRestaurants(lat,lng, radius);
     }
 }

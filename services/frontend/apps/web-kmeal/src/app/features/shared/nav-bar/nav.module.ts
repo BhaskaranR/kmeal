@@ -10,6 +10,6 @@ import { SearchBarComponent } from './search-bar.component';
   declarations: [NavBarComponent,FooterComponent,SearchBarComponent],
   providers: [],
   entryComponents:[],
-  exports:[NavBarComponent,FooterComponent]
+  exports:[NavBarComponent,FooterComponent,SearchBarComponent]
 })
 export class NavBarModule {}
