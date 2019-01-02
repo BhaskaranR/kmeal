@@ -12,7 +12,6 @@ import { routing } from './app-routing.module';
 import { SharedModule } from './features/shared/shared.module';
 import { NavBarModule } from './features/shared/nav-bar/nav.module';
 import { NavFooterLayout } from './layouts/nav-footer.layout';
-import {ShoppingCartModule} from './features/shared/shopping-cart/shopping-cart.module';
 import { ApiModule } from './api.module';
 import { HttpClientModule } from '@angular/common/http';
 import {ScrollDispatchModule} from '@angular/cdk/scrolling';
@@ -26,7 +25,6 @@ import { CoreModule } from './core/core.module';
     BrowserAnimationsModule,
     SharedModule,
     NavBarModule,
-    ShoppingCartModule,
     ApiModule,
     HttpClientModule,
     ScrollDispatchModule,

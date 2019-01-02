@@ -1,0 +1,6 @@
+query kmeal_categories {
+  kmeal_categories {
+    title
+    alias
+  }
+ }

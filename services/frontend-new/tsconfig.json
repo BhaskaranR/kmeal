@@ -1,0 +1,53 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "target": "es5",
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "lib": [
+      "es2017",
+      "dom",
+      "esnext.asynciterable"
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "@kmeal-nx/feature-restaurant-menu": [
+        "libs/feature-restaurant-menu/src/index.ts"
+      ],
+      "@kmeal-nx/feature-restaurant-orders": [
+        "libs/feature-restaurant-orders/src/index.ts"
+      ],
+      "@kmeal-nx/feature-order": [
+        "libs/feature-order/src/index.ts"
+      ],
+      "@kmeal-nx/scatter": [
+        "libs/scatter/src/index.ts"
+      ],
+      "@kmeal-nx/ui": [
+        "libs/ui/src/index.ts"
+      ],
+      "@kmeal-nx/feature-home": [
+        "libs/feature-home/src/index.ts"
+      ],
+      "@kmeal-nx/feature-profile": [
+        "libs/feature-profile/src/index.ts"
+      ],
+      "@kmeal-nx/feature-settings": [
+        "libs/feature-settings/src/index.ts"
+      ],
+      "@kmeal-nx/feature-menu": [
+        "libs/feature-menu/src/index.ts"
+      ]
+    }
+  },
+  "exclude": [
+    "node_modules",
+    "tmp"
+  ]
+}

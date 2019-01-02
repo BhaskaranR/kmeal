@@ -9,7 +9,8 @@
           style="background: #F3F3F3;"
           class="shadow_right" 
           autosize>
-          <div class="leftSidenavContent" fxLayout="column" fxFlexFill>
+          <cdk-virtual-scroll-viewport [itemSize]="1" >
+            <div class="leftSidenavContent" fxLayout="column" fxFlexFill>
             <mat-list fxFlex="100%">
               <h3 mat-subheader>Folders</h3>
               <mat-list-item >
@@ -28,10 +29,11 @@
               </mat-list-item>
             </mat-list>
           </div>
+          </cdk-virtual-scroll-viewport>
         </mat-sidenav>
           <!-- MENU LEFT -->
 
-        <mat-sidenav-content>
+        <mat-sidenav-content class="mat-content-class">
             <ng-content select=".main-content"></ng-content>
         </mat-sidenav-content>
     

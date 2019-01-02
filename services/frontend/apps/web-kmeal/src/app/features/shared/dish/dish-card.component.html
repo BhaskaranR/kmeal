@@ -11,7 +11,7 @@
         </div>
         <br>
         <mat-card-subtitle style="height:60px">{{dishDetails.description}}</mat-card-subtitle>
-        <p><small>By <a href="" (click)="goToRestaurant($event)">{{dishDetails.restaurant}}</a></small></p>
+        <p><small>By <a href="" (click)="byRestaurant($event)">{{dishDetails.restaurant}}</a></small></p>
     </mat-card-content>
     <mat-card-actions><button mat-stroked-button style="width:100%;" (click)="orderNow()"> + Order Now</button></mat-card-actions>
 </mat-card>

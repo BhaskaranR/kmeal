@@ -45,9 +45,10 @@
                 <h3 mat-subheader>Notes</h3>
             </mat-list>
         </mat-sidenav>
-        <mat-grid-list [cols]="breakpoint"  (window:resize)="onResize($event)">
-            <mat-grid-tile *ngFor="let dishDetails of dishes">
-                <dish-card [dishDetails]="dishDetails" (reRoute)="placeOrder($event)"></dish-card>
+
+        <mat-grid-list [cols]="breakpoint" [rowHeight]="fit" (window:resize)="onResize($event)">
+            <mat-grid-tile *ngFor="let dish of dataService.trendingDishes">
+                <dish-card [dishDetails]="dish" (reRoute)="placeOrder($event)"></dish-card>
             </mat-grid-tile>
         </mat-grid-list>
 </mat-sidenav-container>

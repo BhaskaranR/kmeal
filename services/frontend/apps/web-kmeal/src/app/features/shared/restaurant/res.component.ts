@@ -8,21 +8,12 @@ import { Component,ChangeDetectionStrategy,Input,Output, EventEmitter } from '@a
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RestaurantComponent  {
-    @Input() public res:any;
-    @Output() public reRoute = new EventEmitter<any>();
+    @Input() public res:{[key:string]:string};
+    @Output() public getRestaurantDetailsEvent = new EventEmitter<string>();
     @Output() public onError = new EventEmitter<string>();
 
     constructor(){}    
-    goToRestaurant(e){
-      e.preventDefault();
-      this.reRoute.emit({url:"./restaurant", id:this.res.id});
-    }
-
-    generateLables(description) {
-      let result = '';
-      description.split(',').forEach( la => {
-        result += la + ' , ';
-      });
-      return result;
+    restaurantDetails(e){
+      this.getRestaurantDetailsEvent.emit(this.res.id);
     }
 }
