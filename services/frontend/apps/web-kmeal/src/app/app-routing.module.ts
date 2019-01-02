@@ -11,7 +11,7 @@ export const AppRoutes: Routes = [{
         path: 'profile', 
         loadChildren: './pages/profile/profile.module#ProfileModule', 
 },{
-        path: 'restaurant', 
+        path: 'restaurant/:id', 
         loadChildren: './pages/restaurant/res.module#ResModule', 
 },{
         path: 'dish', 

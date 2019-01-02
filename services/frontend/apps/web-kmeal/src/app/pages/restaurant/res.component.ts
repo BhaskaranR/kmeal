@@ -11,10 +11,8 @@ import { DataService } from "../../core/data.service";
 })
 export class ResComponent implements OnInit, OnDestroy{
     breakpoint:number;
-    dia:any;
     mobileQuery: MediaQueryList;
     private _mobileQueryListener: () => void;
-    dishes:any;
     constructor(
         changeDetectorRef: ChangeDetectorRef, 
         media: MediaMatcher,
@@ -22,7 +20,6 @@ export class ResComponent implements OnInit, OnDestroy{
         this.mobileQuery = media.matchMedia('(max-width: 600px)');
         this._mobileQueryListener = () => changeDetectorRef.detectChanges();
         this.mobileQuery.addListener(this._mobileQueryListener);
-        console.log(dataService);
     }
 
     ngOnDestroy(): void {

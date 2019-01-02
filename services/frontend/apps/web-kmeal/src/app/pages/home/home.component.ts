@@ -2,9 +2,11 @@ import { Component, ElementRef, ViewChild , OnInit} from "@angular/core";
 import { NguCarouselConfig } from "@ngu/carousel";
 import {Apollo} from 'apollo-angular';
 import { Router } from "@angular/router";
-import {MatSnackBar} from '@angular/material';
+import {MatSnackBar, MatDialog} from '@angular/material';
 import {  imagesMapping } from "../../features/shared/utils/utils";
 import { DataService } from "../../core/data.service";
+import { DishDetailPopupComponent } from "../../features/shared/dish/dish-detail-popup.component";
+import { DishOrderComponent } from "../../features/shared/dish/dish-order.component";
 
 
 @Component({
@@ -18,9 +20,9 @@ export class HomeComponent implements OnInit{
     constructor(
         public router:Router,
         public snackBar: MatSnackBar,
-        public dataService: DataService) {}
+        public dataService: DataService,
+        public dialog: MatDialog) {}
 
-    cuisines:string[] = [];
     cuisineConfig: NguCarouselConfig = {
         grid: { xs: 2, sm: 2, md: 4, lg: 6, all: 0 },
         speed: 250,
@@ -32,8 +34,6 @@ export class HomeComponent implements OnInit{
         animation: 'lazy'
     };
 
-    dishes:Array<any>;
-    restaurants:Array<any>;
     carConfig:NguCarouselConfig = {
       grid: { xs: 1, sm: 2, md: 3, lg: 4, all: 0 },
       speed: 250,
@@ -70,8 +70,32 @@ export class HomeComponent implements OnInit{
         });
     }
 
-    navigate(e){
-        this.router.navigate([e.url],{queryParams:{value:e.id}});
+    byRestaurant(e){
+        this.router.navigate(['/restaurant']);
+    }
+
+    openDishDetails(e){
+        const dialogRef = this.dialog.open(DishDetailPopupComponent, {
+            width: '640px',
+            data: {id: e}
+        });
+    
+        dialogRef.afterClosed().subscribe(result => {
+            if (result === 'order'){
+                this.orderDishNow(e);
+            }
+        });
+    }
+
+    orderDishNow(e){
+        const dialogRef = this.dialog.open(DishOrderComponent, {
+            width: '450px',
+            data: {id:e}
+        });
+    
+        dialogRef.afterClosed().subscribe(result => {
+            console.log('Order Dish now closed', result);
+        });
     }
 
     getCuisineImg(cuisine){

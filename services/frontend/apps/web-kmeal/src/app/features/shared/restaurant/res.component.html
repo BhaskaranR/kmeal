@@ -1,9 +1,9 @@
-<mat-card class="mat-elevation-z0"  (click)="goToRestaurant($event)">
+<mat-card class="mat-elevation-z0"  (click)="restaurantDetails($event)">
     <img mat-card-image [attr.src]="res.logo" style="height:160px">
     <h4><small>{{res.name}}</small></h4>
     <mat-card-subtitle>
         <span>{{res.priceLevel}} </span>
-        <span style="margin-right:5px">{{ generateLables(res.description)}}</span>
+        <span style="margin-right:5px">{{ res.description}}</span>
         <br>
         <p><small>{{res.address}}</small>  </p>
     </mat-card-subtitle>
