@@ -4,14 +4,14 @@
         <div id="loading-content"></div>
     </div>
 </div>
-
+<!--asdf-->
 <div class="container-fluid" *ngIf="isReady">
-    <div class="content-wrapper"  >
+    <div class="content-wrapper" *ngIf="cuisines$ | async as cuisines"  >
         <h5>Search By Cuisine</h5>
         <ngu-carousel 
             #myCarousel 
             [inputs]="cuisineConfig" 
-            [dataSource]="cuisines$ | async" >
+            [dataSource]="cuisines" >
             <ngu-tile *nguCarouselDef="let cuisine; let i = index; let ani = animate">
                  <mat-card (click)="onSearch('Cuisine', cuisine)" style="box-shadow:none; " [style.background-color]=" (i % 2 == 0) ? '#6e5432' : '#b28d5f'  ">
                     <img mat-card-image [attr.src]="cuisine.img" alt="" style="max-height:100px">

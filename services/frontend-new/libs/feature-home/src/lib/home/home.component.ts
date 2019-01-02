@@ -27,7 +27,7 @@ export class HomeComponent implements OnInit {
     cuisines$: Observable<{
         title: string,
         img: string
-    }>;
+    }[]>;
 
     cuisineConfig: NguCarouselConfig = {
         grid: { xs: 2, sm: 2, md: 4, lg: 6, all: 0 },
@@ -56,13 +56,13 @@ export class HomeComponent implements OnInit {
     isReady: boolean = false;
     querySubscription: any;
     ngOnInit() {
-        this.cuisines$ = this.kmealCategoriesGQL.watch({}, {}).valueChanges.pipe(map(result => result.data.kmeal_categories),
-            map((ca) => {
-                return {
-                    title: ca['title'],
-                    img: imagesMapping[ca['title'].toLowerCase()] || imagesMapping['indian']
-                };
-            }))
+        this.cuisines$ = this.kmealCategoriesGQL.watch({}, {}).valueChanges.pipe(map(result => {
+            return result.data.kmeal_categories.map(ca => {
+            return {
+                title: ca['title'],
+                img: imagesMapping[ca['title'].toLowerCase()] || imagesMapping['indian']
+            };
+        })}))
         this.populateData();
     }
 
