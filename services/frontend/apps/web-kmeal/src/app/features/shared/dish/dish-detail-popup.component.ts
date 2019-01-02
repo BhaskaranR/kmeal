@@ -2,7 +2,6 @@ import { Component ,ChangeDetectionStrategy, OnInit ,Input, EventEmitter, Output
 import {  MatDialogRef } from '@angular/material';
 
 
-
 @Component({
     selector: 'dish-card-popup',
     moduleId: module.id,

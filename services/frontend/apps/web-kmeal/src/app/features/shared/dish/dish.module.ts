@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { SharedModule } from '../shared.module';
-import { DishService } from './dish.service';
 import { DishCardComponent } from './dish-card.component';
 import { DishDetailPopupComponent } from './dish-detail-popup.component';
 import { DishOrderComponent } from './dish-order.component';
@@ -9,8 +8,8 @@ import { DishOrderComponent } from './dish-order.component';
 @NgModule({
   imports: [SharedModule],
   declarations: [DishCardComponent,DishDetailPopupComponent,DishOrderComponent],
-  providers: [DishService],
+  providers: [],
   entryComponents:[DishDetailPopupComponent,DishOrderComponent],
-  exports:[DishCardComponent,DishDetailPopupComponent]
+  exports:[DishCardComponent,DishDetailPopupComponent,DishOrderComponent],
 })
 export class DishModule {}

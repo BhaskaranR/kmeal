@@ -1,13 +1,12 @@
 import { NgModule } from '@angular/core';
 import { SharedModule } from '../shared.module';
-import { RestaurantService } from './res.service';
 import { RestaurantComponent } from './res.component';
 
 
 @NgModule({
   imports: [SharedModule],
   declarations: [RestaurantComponent],
-  providers: [RestaurantService],
+  providers: [],
   entryComponents:[],
   exports:[RestaurantComponent]
 })
