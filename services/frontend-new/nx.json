@@ -1,0 +1,51 @@
+{
+  "npmScope": "kmeal-nx",
+  "implicitDependencies": {
+    "angular.json": "*",
+    "package.json": "*",
+    "tsconfig.json": "*",
+    "tslint.json": "*",
+    "nx.json": "*"
+  },
+  "projects": {
+    "web-kmeal": {
+      "tags": []
+    },
+    "web-kmeal-e2e": {
+      "tags": []
+    },
+    "web-kmeal-restaurant": {
+      "tags": []
+    },
+    "web-kmeal-restaurant-e2e": {
+      "tags": []
+    },
+    "feature-restaurant-menu": {
+      "tags": []
+    },
+    "feature-restaurant-orders": {
+      "tags": []
+    },
+    "feature-order": {
+      "tags": []
+    },
+    "scatter": {
+      "tags": []
+    },
+    "ui": {
+      "tags": []
+    },
+    "feature-home": {
+      "tags": []
+    },
+    "feature-profile": {
+      "tags": []
+    },
+    "feature-settings": {
+      "tags": []
+    },
+    "feature-menu": {
+      "tags": []
+    }
+  }
+}

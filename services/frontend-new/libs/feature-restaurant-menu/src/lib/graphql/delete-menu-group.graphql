@@ -1,0 +1,9 @@
+mutation ($where: kmeal_restaurant_group_bool_exp!) {
+  delete_kmeal_restaurant_group(where: $where) {
+    affected_rows
+    returning {
+      group_id
+      group_name
+    }
+  }
+}

@@ -8,7 +8,7 @@ import { CartService } from "../../core/shopping-cart.service";
     templateUrl: "./cart.component.html",
     styleUrls: ['./cart.component.scss'],
 })
-export class CartComponent implements OnInit ,OnDestroy{
+export class CartComponent implements OnDestroy{
 
     breakpoint:number;
     isFilterOpen:boolean = false;
@@ -23,23 +23,23 @@ export class CartComponent implements OnInit ,OnDestroy{
         public cartService:CartService){};
     
     
-    ngOnInit() {
-        console.log('initing search screen');
-        this.breakpoint = this.generateBreakpoint(window.innerWidth);
-        this.routeParamSub = this.route
-        .queryParams
-        .subscribe(params => {
+    // ngOnInit() {
+    //     console.log('initing search screen');
+    //     this.breakpoint = this.generateBreakpoint(window.innerWidth);
+    //     this.routeParamSub = this.route
+    //     .queryParams
+    //     .subscribe(params => {
 
-            if (!params.type || !this.dataService.restaurants){
-                this.restaurants = [];
-                this.isReady = true;
-                return
-            }
-            this.type = params.type;
-            this.restaurants = this.dataService.restaurants.getRestaurantsNearby;
-            this.isReady = true;
-        });
-    }
+    //         if (!params.type || !this.dataService.33){
+    //             this.restaurants = [];
+    //             this.isReady = true;
+    //             return
+    //         }
+    //         this.type = params.type;
+    //         this.restaurants = this.dataService.restaurants.getRestaurantsNearby;
+    //         this.isReady = true;
+    //     });
+    // }
     
     onResize(event) {
       this.breakpoint = this.generateBreakpoint(event.target.innerWidth);

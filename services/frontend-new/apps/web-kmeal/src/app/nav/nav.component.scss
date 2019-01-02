@@ -1,0 +1,12 @@
+@import '../../scss/index';
+
+.kmeal-nx-home-nav {
+  padding: 10px;
+  height: 80px;
+  border-bottom: 1px solid rgb(238, 238, 238);
+}
+
+mat-spinner.small-spinner svg {
+  width: 40px !important;
+  height: 40px !important;
+}
