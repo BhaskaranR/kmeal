@@ -7,13 +7,9 @@ import { ApiModule } from './graphql.module';
 import { HttpClientModule } from '@angular/common/http';
 import { APP_BASE_HREF } from '@angular/common';
 import { environment } from '../environments/environment';
-import { FooterComponent } from './footer/footer';
-
-
 import { RouterModule } from '@angular/router';
-import { homeRoutes, FeatureHomeModule } from '@kmeal-nx/feature-home';
+import { FeatureHomeModule } from '@kmeal-nx/feature-home';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { NavBarComponent } from './nav/nav.component';
 
 import {
   MatIconModule,
@@ -22,9 +18,10 @@ import {
   MatSidenavModule,
   MatListModule
 } from '@angular/material';
+import { FeatureNavigationBarModule } from '@kmeal-nx/feature-navigation-bar';
 
 @NgModule({
-  declarations: [AppComponent, NavBarComponent, FooterComponent],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -37,7 +34,7 @@ import {
     MatBadgeModule,
     MatListModule,
     FlexLayoutModule,
-    FeatureHomeModule,
+    FeatureNavigationBarModule,
     RouterModule.forRoot(
       [
         {
@@ -47,14 +44,17 @@ import {
         },
         {
           path: 'home',
-          children: homeRoutes
+          loadChildren: '@kmeal-nx/feature-home#FeatureHomeModule'
         },
         {
-          path: 'menu',
-          loadChildren: '@kmeal-nx/feature-menu#FeatureMenuModule'
+          path: 'restaurant', 
+          loadChildren: '@kmeal-nx/feature-restaurant#FeatureRestaurantModule'
         }
       ],
-      { paramsInheritanceStrategy: 'always' }
+      { 
+        paramsInheritanceStrategy: 'always',
+        enableTracing:false 
+      }
     )
   ],
   providers: [

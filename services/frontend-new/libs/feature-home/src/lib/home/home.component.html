@@ -31,7 +31,7 @@
         <ngu-carousel 
             #myCarousel 
             [inputs]="carConfig" 
-            [dataSource]="dishes" >
+            [dataSource]="trendingDishes" >
             <ngu-tile *nguCarouselDef="let dish; let i = index; let ani = animate">
                 <dish-card [dishDetails] = "dish" (onError)="throwError($event)" (reRoute)="navigate($event)"></dish-card>
             </ngu-tile>
@@ -45,7 +45,7 @@
         <ngu-carousel 
             #myCarousel 
             [inputs]="carConfig" 
-            [dataSource]="restaurants" >
+            [dataSource]="restaurants$ | async" >
             <ngu-tile *nguCarouselDef="let res; let i = index; let ani = animate">
                 <res-card [res]="res" (onError)="throwError($event)" (reRoute)="navigate($event)"></res-card>
             </ngu-tile>
@@ -59,7 +59,7 @@
         <ngu-carousel 
             #myCarousel 
             [inputs]="carConfig" 
-            [dataSource]="restaurants" >
+            [dataSource]="restaurants$ | async" >
             <ngu-tile *nguCarouselDef="let res; let i = index; let ani = animate">
                 <res-card [res]="res" (onError)="throwError($event)" (reRoute)="navigate($event)"></res-card>
             </ngu-tile>

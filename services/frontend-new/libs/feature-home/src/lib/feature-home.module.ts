@@ -1,45 +1,29 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { NgModule, NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { HomeComponent } from './home/home.component';
-import { SearchComponent } from './search/search.component';
 import { Routes, RouterModule } from '@angular/router';
-import { FlexLayoutModule } from '@angular/flex-layout';
-import { NguCarouselModule } from '@ngu/carousel';
-import { MatCardModule, MatSelectModule, MatGridListModule, MatIconModule, MatSnackBarModule, MatProgressSpinnerModule } from '@angular/material';
+import { FeatureCoreModule } from 'libs/feature-core/src';
 import { UiModule } from '@kmeal-nx/ui';
-import { SearchBarComponent } from './search-bar/search-bar.component';
-import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
-import { FormsModule } from '@angular/forms';
+import { FeatureNavigationBarModule } from '@kmeal-nx/feature-navigation-bar';
 
-const components = [HomeComponent, SearchComponent, SearchBarComponent];
-
-export const homeRoutes: Routes = [
+const routes: Routes = [
   {
     path: '',
     component: HomeComponent
-  },
-  {
-    path: 'search',
-    data: {},
-    component: SearchComponent
   }
 ];
 
+
 @NgModule({
   imports: [
-    CommonModule, 
-    FormsModule,
-    NguCarouselModule, 
-    MatCardModule, 
-    MatProgressSpinnerModule,
-    MatSelectModule,
-    MatGridListModule,
-    MatIconModule,
-    MatSnackBarModule,
-    FlexLayoutModule,
-    GooglePlaceModule, 
-    UiModule],
-  declarations: [components],
-  exports: [components]
+    FeatureCoreModule, 
+    RouterModule.forChild(routes), 
+    UiModule,
+  ],
+  declarations: [HomeComponent],
+  exports: [HomeComponent],
+  schemas: [
+    NO_ERRORS_SCHEMA,
+    CUSTOM_ELEMENTS_SCHEMA
+  ]
 })
 export class FeatureHomeModule {}

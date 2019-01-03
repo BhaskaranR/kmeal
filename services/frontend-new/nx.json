@@ -46,6 +46,21 @@
     },
     "feature-menu": {
       "tags": []
+    },
+    "app-restaurant-feature-restaurant": {
+      "tags": []
+    },
+    "kmeal-ng-restaurant-feature-restaurant": {
+      "tags": []
+    },
+    "feature-restaurant": {
+      "tags": []
+    },
+    "feature-navigation-bar": {
+      "tags": []
+    },
+    "feature-core": {
+      "tags": []
     }
   }
 }
