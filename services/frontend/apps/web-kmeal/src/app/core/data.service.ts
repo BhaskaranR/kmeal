@@ -7,7 +7,7 @@ import { imagesMapping } from '../features/shared/utils/utils';
 export class DataService {
  
     constructor(public apollo: Apollo) {console.warn('Service created!') }
-    searchInput:string;
+    searchInput:{[key:string]:string};
     restaurants:any;
     cuisines:any;
     querySubscription:any;

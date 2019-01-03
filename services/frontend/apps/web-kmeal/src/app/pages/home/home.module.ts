@@ -6,7 +6,6 @@ import { RestaurantModule } from "../../features/shared/restaurant/res.module";
 import { DishModule } from "../../features/shared/dish/dish.module";
 import {NguCarouselModule} from '@ngu/carousel';
 import 'hammerjs';
-import { NavBarModule } from "../../features/shared/nav-bar/nav.module";
 
 const routes: Routes = [
     {
