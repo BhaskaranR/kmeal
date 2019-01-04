@@ -9,7 +9,7 @@ import { RestaurantComponent } from './restaurant/restaurant.component';
 const components = [DishDetailPopupComponent, DishCardComponent, RestaurantComponent]
 
 @NgModule({
-  declarations: [components],
+  declarations: components,
   imports: [
     MatCardModule, 
     MatDialogModule, 
@@ -17,6 +17,6 @@ const components = [DishDetailPopupComponent, DishCardComponent, RestaurantCompo
     MatIconModule,
     MatProgressBarModule, 
     CommonModule],
-  exports: [components]
+  exports: components
 })
 export class UiModule { }

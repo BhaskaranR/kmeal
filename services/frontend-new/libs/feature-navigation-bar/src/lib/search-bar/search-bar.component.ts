@@ -1,4 +1,4 @@
-import { Component ,ViewChild, OnInit} from '@angular/core';
+import { Component ,ViewChild, OnInit, EventEmitter,Output} from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { GooglePlaceDirective } from 'ngx-google-places-autocomplete';
@@ -18,18 +18,15 @@ export class SearchBarComponent  implements OnInit{
     };
     
     userInput:string;
-    isLoaded:boolean = true;
-    querySubscription:Subscription;
+    @Output() public onAddressChangeEvent = new EventEmitter<{[key:string]:string}>();
     @ViewChild("placesRef") placesRef : GooglePlaceDirective;
     
-    constructor(
-        public dialogRef:MatDialog, 
-        public router:Router,
-        public apollo: Apollo) {}
+    constructor() {}
 
     
     ngOnInit(){
         console.log('initing search bar ');
+        console.log(this.placesRef)
     }
 
     onFocus(e){
@@ -41,6 +38,6 @@ export class SearchBarComponent  implements OnInit{
     }
 
     handleAddressChange(e){
-        this.router.navigate(['/search']);
+        this.onAddressChangeEvent.emit(e);
     }
 }

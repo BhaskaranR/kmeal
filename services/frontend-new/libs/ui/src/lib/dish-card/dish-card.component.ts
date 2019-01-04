@@ -18,41 +18,18 @@ import { DishDetailPopupComponent } from '../dish-detail/dish-detail-popup.compo
 })
 export class DishCardComponent {
   @Input() public dishDetails: any;
-  @Output() public reRoute = new EventEmitter<any>();
+  @Output() public onOpenDetailsEvent: EventEmitter<string> = new EventEmitter();
+  @Output() public onPlaceOrderEvent:EventEmitter<string> = new EventEmitter();
   @Output() public onError = new EventEmitter<string>();
 
   constructor(public dialog: MatDialog) {}
 
-  goToDish(e) {
-    this.reRoute.emit({ url: './dish', id: this.dishDetails.id });
+  openDetails(){
+    this.onOpenDetailsEvent.emit(this.dishDetails.id);
   }
 
-  goToRestaurant(e) {
-    e.preventDefault();
-    this.reRoute.emit({ url: './restaurant', id: this.dishDetails.id });
+  orderNow(){
+    this.onPlaceOrderEvent.emit(this.dishDetails.id);
   }
 
-  openDetails(): void {
-    const dialogRef = this.dialog.open(DishDetailPopupComponent, {
-      width: '640px',
-      data: { name: this.dishDetails.name }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result === 'order') {
-        //this.orderNow();
-      }
-    });
-  }
-
-//   orderNow() {
-//     const dialogRef = this.dialog.open(DishOrderComponent, {
-//       width: '450px',
-//       data: { name: this.dishDetails.name }
-//     });
-
-//     dialogRef.afterClosed().subscribe(result => {
-//       console.log('The dialog was closed', result);
-//     });
-//   }
 }

@@ -1,4 +1,8 @@
-<kmeal-nx-nav-bar (toggleSidenavEvent)="snav.toggle($event)"></kmeal-nx-nav-bar>
+<kmeal-nx-nav-bar 
+  (toggleSidenavEvent)="snav.toggle($event)" 
+  (onAddressChangeEvent)="onAddressChange($event)"
+  ></kmeal-nx-nav-bar>
+
 <mat-sidenav-container>
         <mat-sidenav 
           #snav 

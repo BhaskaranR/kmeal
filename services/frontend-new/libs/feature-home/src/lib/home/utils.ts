@@ -38,5 +38,3 @@ export const imagesMapping = {
   brazilian:
     'https://www.bbcgoodfood.com/sites/default/files/editor_files/2018/08/barbecued-meats.jpg'
 };
-
-export const delay = ms => new Promise(res => setTimeout(res, ms));

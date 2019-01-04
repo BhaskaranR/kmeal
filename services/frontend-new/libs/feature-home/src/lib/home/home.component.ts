@@ -35,13 +35,10 @@ export class HomeComponent implements OnInit, OnDestroy {
     mobileQuery: MediaQueryList;
   
 
-    cuisines$: Observable<{
-        title: string,
-        img: string
-    }>;
+    cuisines$: Observable<{ title: string; img: any; }[]>;
 
     dishes: Array<any>;
-    restaurants$: Observable<any>;
+    restaurants$: Observable<any[]>;
 
     cuisineConfig: NguCarouselConfig = {
         grid: { xs: 2, sm: 2, md: 4, lg: 6, all: 0 },
@@ -169,21 +166,29 @@ export class HomeComponent implements OnInit, OnDestroy {
 
 
     ngOnInit() {
-        this.cuisines$ = this.kmealCategoriesGQL.watch({}, {}).valueChanges.pipe(
-            map(result => result.data.kmeal_categories),
-            map((ca) => {
+        this.kmealCategoriesGQL
+            .watch()
+            .valueChanges
+            .pipe(map(result => result.data.kmeal_categories.map(ca => {
                 return {
-                    title: ca['title'],
-                    img: imagesMapping[ca['title'].toLowerCase()] || imagesMapping['indian']
-                };
-            }));
+                    title:ca.title,
+                    img:imagesMapping[ca['title'].toLowerCase()] || imagesMapping['japanese'],
+                }
+            }))).subscribe(resu =>{
+                console.log(resu);
+            });
         
-        this.restaurants$ = this.getRestaurantsNearByGQL.watch({},{}).valueChanges.pipe(
-            map(result => result.data.getRestaurantsNearby),
-            map((res) => {
-                res['img']= imagesMapping[res['name'].toLowerCase()] || imagesMapping['japanese'];
-                return res;
-            }));
+        console.log('reading restaurants data');
+        this.restaurants$ = this.getRestaurantsNearByGQL
+            .watch({
+                nearby:{
+                    lat:11,
+                    long:11,
+                    radius:5
+                }
+            })
+            .valueChanges
+            .pipe(map(result => {console.log('got data, ', result);return result.data.getRestaurantsNearby}));
 
         this.isReady=true;
     }
@@ -193,9 +198,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
 
     onSearch(type, cuisine) {
-        this.router.navigate(['./search'], {
-            queryParams: { type: type, value: cuisine }
-        });
+        console.log(type,cuisine);
     }
 
     throwError(msg) {
@@ -207,4 +210,5 @@ export class HomeComponent implements OnInit, OnDestroy {
     navigate(e) {
         this.router.navigate([e.url], { queryParams: { value: e.id } });
     }
+    
 }

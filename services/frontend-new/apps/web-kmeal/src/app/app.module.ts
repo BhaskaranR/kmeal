@@ -4,12 +4,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
 import { NxModule } from '@nrwl/nx';
 import { ApiModule } from './graphql.module';
-import { HttpClientModule } from '@angular/common/http';
 import { APP_BASE_HREF } from '@angular/common';
 import { environment } from '../environments/environment';
 import { RouterModule } from '@angular/router';
-import { FeatureHomeModule } from '@kmeal-nx/feature-home';
-import { FlexLayoutModule } from '@angular/flex-layout';
 
 import {
   MatIconModule,
@@ -19,6 +16,7 @@ import {
   MatListModule
 } from '@angular/material';
 import { FeatureNavigationBarModule } from '@kmeal-nx/feature-navigation-bar';
+import { SharedModule } from './app.shared';
 
 @NgModule({
   declarations: [AppComponent],
@@ -27,13 +25,7 @@ import { FeatureNavigationBarModule } from '@kmeal-nx/feature-navigation-bar';
     BrowserAnimationsModule,
     NxModule.forRoot(),
     ApiModule,
-    HttpClientModule,
-    MatSidenavModule,
-    MatIconModule,
-    MatMenuModule,
-    MatBadgeModule,
-    MatListModule,
-    FlexLayoutModule,
+    SharedModule,
     FeatureNavigationBarModule,
     RouterModule.forRoot(
       [

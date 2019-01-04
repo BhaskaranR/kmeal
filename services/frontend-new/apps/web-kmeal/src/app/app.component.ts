@@ -28,4 +28,8 @@ export class AppComponent {
     this.mobileQuery.removeListener(this._mobileQueryListener);
   }
 
+  onAddressChange(e){
+    console.log('address changed : ',e);
+  }
+  
 }
