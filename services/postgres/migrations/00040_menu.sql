@@ -1,9 +1,15 @@
 
+CREATE TABLE IF NOT EXISTS kmeal."restaurant_menu_group" (
+  "menu_book_id" SERIAL PRIMARY KEY,
+  "restaurant_id" INTEGER NOT NULL REFERENCES kmeal.restaurant("restaurant_id"),
+  "menu_book" VARCHAR(100) NOT NULL
+);
+
 CREATE TABLE IF NOT EXISTS kmeal."restaurant_group" (
   "group_id" SERIAL PRIMARY KEY,
   "restaurant_id" INTEGER NOT NULL REFERENCES kmeal.restaurant("restaurant_id"),
   "group_name" VARCHAR(100) NOT NULL,
-  "menu_book"  VARCHAR(100) NOT NULL
+  "menu_book_id"  INTEGER NOT NULL REFERENCES kmeal.restaurant_menu_group("menu_book_id")
 );
 
 CREATE TABLE IF NOT EXISTS kmeal."item" (
