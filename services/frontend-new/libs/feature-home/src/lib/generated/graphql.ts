@@ -566,6 +566,8 @@ export interface KmealRestaurantGroupBoolExp {
 
   groupsBygroupId?: KmealGroupBoolExp | null;
 
+  menu_book?: VarcharComparisonExp | null;
+
   restaurantByrestaurantId?: KmealRestaurantBoolExp | null;
 
   restaurant_id?: IntegerComparisonExp | null;
@@ -975,6 +977,8 @@ export interface KmealRestaurantGroupOrderBy {
   group_id?: OrderBy | null;
 
   group_name?: OrderBy | null;
+
+  menu_book?: OrderBy | null;
 
   restaurantByrestaurantId?: KmealRestaurantOrderBy | null;
 
@@ -1723,6 +1727,8 @@ export interface KmealRestaurantGroupInsertInput {
   group_name?: string | null;
 
   groupsBygroupId?: KmealGroupArrRelInsertInput | null;
+
+  menu_book?: string | null;
 
   restaurantByrestaurantId?: KmealRestaurantObjRelInsertInput | null;
 
@@ -2537,6 +2543,8 @@ export interface KmealRestaurantGroupSetInput {
 
   group_name?: string | null;
 
+  menu_book?: string | null;
+
   restaurant_id?: number | null;
 }
 /** input type for incrementing integer columne in table "spatial_ref_sys" */
@@ -2731,512 +2739,514 @@ export interface TopologyTopologyArrRelInsertInput {
 }
 /** select columns of table "geography_columns" */
 export enum GeographyColumnsSelectColumn {
-  CoordDimension = 'coord_dimension',
-  FGeographyColumn = 'f_geography_column',
-  FTableCatalog = 'f_table_catalog',
-  FTableName = 'f_table_name',
-  FTableSchema = 'f_table_schema',
-  Srid = 'srid',
-  Type = 'type'
+  CoordDimension = "coord_dimension",
+  FGeographyColumn = "f_geography_column",
+  FTableCatalog = "f_table_catalog",
+  FTableName = "f_table_name",
+  FTableSchema = "f_table_schema",
+  Srid = "srid",
+  Type = "type"
 }
 /** column ordering options */
 export enum OrderBy {
-  Asc = 'asc',
-  AscNullsFirst = 'asc_nulls_first',
-  AscNullsLast = 'asc_nulls_last',
-  Desc = 'desc',
-  DescNullsFirst = 'desc_nulls_first',
-  DescNullsLast = 'desc_nulls_last'
+  Asc = "asc",
+  AscNullsFirst = "asc_nulls_first",
+  AscNullsLast = "asc_nulls_last",
+  Desc = "desc",
+  DescNullsFirst = "desc_nulls_first",
+  DescNullsLast = "desc_nulls_last"
 }
 /** select columns of table "geometry_columns" */
 export enum GeometryColumnsSelectColumn {
-  CoordDimension = 'coord_dimension',
-  FGeometryColumn = 'f_geometry_column',
-  FTableCatalog = 'f_table_catalog',
-  FTableName = 'f_table_name',
-  FTableSchema = 'f_table_schema',
-  Srid = 'srid',
-  Type = 'type'
+  CoordDimension = "coord_dimension",
+  FGeometryColumn = "f_geometry_column",
+  FTableCatalog = "f_table_catalog",
+  FTableName = "f_table_name",
+  FTableSchema = "f_table_schema",
+  Srid = "srid",
+  Type = "type"
 }
 /** select columns of table "kmeal._block_number_txid" */
 export enum KmealBlockNumberTxidSelectColumn {
-  BlockNumber = 'block_number',
-  Txid = 'txid'
+  BlockNumber = "block_number",
+  Txid = "txid"
 }
 /** select columns of table "kmeal._index_state" */
 export enum KmealIndexStateSelectColumn {
-  BlockHash = 'block_hash',
-  BlockNumber = 'block_number',
-  Id = 'id',
-  IsReplay = 'is_replay'
+  BlockHash = "block_hash",
+  BlockNumber = "block_number",
+  Id = "id",
+  IsReplay = "is_replay"
 }
 /** select columns of table "kmeal.account" */
 export enum KmealAccountSelectColumn {
-  _DmxCreatedAt = '_dmx_created_at',
-  AccountType = 'account_type',
-  Balance = 'balance',
-  CreatedAt = 'created_at',
-  CreatedBlock = 'created_block',
-  CreatedEosacc = 'created_eosacc',
-  CreatedTrx = 'created_trx',
-  Owner = 'owner'
+  _DmxCreatedAt = "_dmx_created_at",
+  AccountType = "account_type",
+  Balance = "balance",
+  CreatedAt = "created_at",
+  CreatedBlock = "created_block",
+  CreatedEosacc = "created_eosacc",
+  CreatedTrx = "created_trx",
+  Owner = "owner"
 }
 /** select columns of table "kmeal.dporder" */
 export enum KmealDporderSelectColumn {
-  _DmxCreatedAt = '_dmx_created_at',
-  BidPrice = 'bid_price',
-  Buyer = 'buyer',
-  CreatedAt = 'created_at',
-  CreatedBlock = 'created_block',
-  CreatedEosacc = 'created_eosacc',
-  CreatedTrx = 'created_trx',
-  DporderId = 'dporder_id',
-  Instructions = 'instructions',
-  ListingId = 'listing_id',
-  OrderId = 'order_id',
-  RestaurantId = 'restaurant_id'
+  _DmxCreatedAt = "_dmx_created_at",
+  BidPrice = "bid_price",
+  Buyer = "buyer",
+  CreatedAt = "created_at",
+  CreatedBlock = "created_block",
+  CreatedEosacc = "created_eosacc",
+  CreatedTrx = "created_trx",
+  DporderId = "dporder_id",
+  Instructions = "instructions",
+  ListingId = "listing_id",
+  OrderId = "order_id",
+  RestaurantId = "restaurant_id"
 }
 /** select columns of table "kmeal.dplisting" */
 export enum KmealDplistingSelectColumn {
-  Duration = 'duration',
-  ListingId = 'listing_id',
-  MinPrice = 'min_price',
-  Quantity = 'quantity',
-  SlidingRate = 'sliding_rate',
-  Start = 'start',
-  Status = 'status'
+  Duration = "duration",
+  ListingId = "listing_id",
+  MinPrice = "min_price",
+  Quantity = "quantity",
+  SlidingRate = "sliding_rate",
+  Start = "start",
+  Status = "status"
 }
 /** select columns of table "kmeal.listing_item_sides" */
 export enum KmealListingItemSidesSelectColumn {
-  ItemId = 'item_id',
-  ListPrice = 'list_price',
-  ListingId = 'listing_id'
+  ItemId = "item_id",
+  ListPrice = "list_price",
+  ListingId = "listing_id"
 }
 /** select columns of table "kmeal.group" */
 export enum KmealGroupSelectColumn {
-  GroupId = 'group_id',
-  ItemId = 'item_id'
+  GroupId = "group_id",
+  ItemId = "item_id"
 }
 /** select columns of table "kmeal.item" */
 export enum KmealItemSelectColumn {
-  _DmxCreatedAt = '_dmx_created_at',
-  CreatedAt = 'created_at',
-  CreatedBlock = 'created_block',
-  CreatedEosacc = 'created_eosacc',
-  CreatedTrx = 'created_trx',
-  Description = 'description',
-  ItemId = 'item_id',
-  ItemName = 'item_name',
-  Photo = 'photo',
-  RestaurantId = 'restaurant_id'
+  _DmxCreatedAt = "_dmx_created_at",
+  CreatedAt = "created_at",
+  CreatedBlock = "created_block",
+  CreatedEosacc = "created_eosacc",
+  CreatedTrx = "created_trx",
+  Description = "description",
+  ItemId = "item_id",
+  ItemName = "item_name",
+  Photo = "photo",
+  RestaurantId = "restaurant_id"
 }
 /** select columns of table "kmeal.listing" */
 export enum KmealListingSelectColumn {
-  _DmxCreatedAt = '_dmx_created_at',
-  CreatedAt = 'created_at',
-  CreatedBlock = 'created_block',
-  CreatedEosacc = 'created_eosacc',
-  CreatedTrx = 'created_trx',
-  Isactive = 'isactive',
-  ListPrice = 'list_price',
-  ListType = 'list_type',
-  ListingId = 'listing_id',
-  RestaurantId = 'restaurant_id'
+  _DmxCreatedAt = "_dmx_created_at",
+  CreatedAt = "created_at",
+  CreatedBlock = "created_block",
+  CreatedEosacc = "created_eosacc",
+  CreatedTrx = "created_trx",
+  Isactive = "isactive",
+  ListPrice = "list_price",
+  ListType = "list_type",
+  ListingId = "listing_id",
+  RestaurantId = "restaurant_id"
 }
 /** select columns of table "kmeal.order" */
 export enum KmealOrderSelectColumn {
-  _DmxCreatedAt = '_dmx_created_at',
-  Buyer = 'buyer',
-  CreatedAt = 'created_at',
-  CreatedBlock = 'created_block',
-  CreatedEosacc = 'created_eosacc',
-  CreatedTrx = 'created_trx',
-  Instructions = 'instructions',
-  OrderId = 'order_id',
-  Price = 'price',
-  RestaurantId = 'restaurant_id'
+  _DmxCreatedAt = "_dmx_created_at",
+  Buyer = "buyer",
+  CreatedAt = "created_at",
+  CreatedBlock = "created_block",
+  CreatedEosacc = "created_eosacc",
+  CreatedTrx = "created_trx",
+  Instructions = "instructions",
+  OrderId = "order_id",
+  Price = "price",
+  RestaurantId = "restaurant_id"
 }
 /** select columns of table "kmeal.order_detail" */
 export enum KmealOrderDetailSelectColumn {
-  Instructions = 'instructions',
-  ListingId = 'listing_id',
-  ListingType = 'listing_type',
-  OrderId = 'order_id',
-  OrderedPrice = 'ordered_price',
-  Qty = 'qty'
+  Instructions = "instructions",
+  ListingId = "listing_id",
+  ListingType = "listing_type",
+  OrderId = "order_id",
+  OrderedPrice = "ordered_price",
+  Qty = "qty"
 }
 /** select columns of table "kmeal.order_status" */
 export enum KmealOrderStatusSelectColumn {
-  CreatedAt = 'created_at',
-  OrderId = 'order_id',
-  OrderStatus = 'order_status'
+  CreatedAt = "created_at",
+  OrderId = "order_id",
+  OrderStatus = "order_status"
 }
 /** select columns of table "kmeal.payment" */
 export enum KmealPaymentSelectColumn {
-  OrderId = 'order_id',
-  PaymentId = 'payment_id',
-  PaymentStatus = 'payment_status'
+  OrderId = "order_id",
+  PaymentId = "payment_id",
+  PaymentStatus = "payment_status"
 }
 /** select columns of table "kmeal.restaurant_categories" */
 export enum KmealRestaurantCategoriesSelectColumn {
-  Category = 'category',
-  RestaurantId = 'restaurant_id'
+  Category = "category",
+  RestaurantId = "restaurant_id"
 }
 /** select columns of table "kmeal.restaurant_group" */
 export enum KmealRestaurantGroupSelectColumn {
-  GroupId = 'group_id',
-  GroupName = 'group_name',
-  RestaurantId = 'restaurant_id'
+  GroupId = "group_id",
+  GroupName = "group_name",
+  MenuBook = "menu_book",
+  RestaurantId = "restaurant_id"
 }
 /** select columns of table "kmeal.item_types" */
 export enum KmealItemTypesSelectColumn {
-  ItemId = 'item_id',
-  ItemType = 'item_type'
+  ItemId = "item_id",
+  ItemType = "item_type"
 }
 /** select columns of table "kmeal.listing_items" */
 export enum KmealListingItemsSelectColumn {
-  ItemId = 'item_id',
-  ListingId = 'listing_id'
+  ItemId = "item_id",
+  ListingId = "listing_id"
 }
 /** select columns of table "kmeal.restaurant" */
 export enum KmealRestaurantSelectColumn {
-  _DmxCreatedAt = '_dmx_created_at',
-  Address = 'address',
-  CreatedAt = 'created_at',
-  CreatedBlock = 'created_block',
-  CreatedEosacc = 'created_eosacc',
-  CreatedTrx = 'created_trx',
-  Description = 'description',
-  Isactive = 'isactive',
-  Latitude = 'latitude',
-  Location = 'location',
-  Logo = 'logo',
-  Longitude = 'longitude',
-  Name = 'name',
-  Owner = 'owner',
-  Phone = 'phone',
-  Rating = 'rating',
-  RestaurantId = 'restaurant_id',
-  Timeofoperation = 'timeofoperation',
-  YelpId = 'yelp_id'
+  _DmxCreatedAt = "_dmx_created_at",
+  Address = "address",
+  CreatedAt = "created_at",
+  CreatedBlock = "created_block",
+  CreatedEosacc = "created_eosacc",
+  CreatedTrx = "created_trx",
+  Description = "description",
+  Isactive = "isactive",
+  Latitude = "latitude",
+  Location = "location",
+  Logo = "logo",
+  Longitude = "longitude",
+  Name = "name",
+  Owner = "owner",
+  Phone = "phone",
+  Rating = "rating",
+  RestaurantId = "restaurant_id",
+  Timeofoperation = "timeofoperation",
+  YelpId = "yelp_id"
 }
 /** select columns of table "kmeal.categories" */
 export enum KmealCategoriesSelectColumn {
-  Alias = 'alias',
-  Title = 'title'
+  Alias = "alias",
+  Title = "title"
 }
 /** select columns of table "kmeal.restaurant_location" */
 export enum KmealRestaurantLocationSelectColumn {
-  Address = 'address',
-  Description = 'description',
-  Distance = 'distance',
-  Location = 'location',
-  Logo = 'logo',
-  Name = 'name',
-  Owner = 'owner',
-  Phone = 'phone'
+  Address = "address",
+  Description = "description",
+  Distance = "distance",
+  Location = "location",
+  Logo = "logo",
+  Name = "name",
+  Owner = "owner",
+  Phone = "phone"
 }
 /** select columns of table "raster_columns" */
 export enum RasterColumnsSelectColumn {
-  BlocksizeX = 'blocksize_x',
-  BlocksizeY = 'blocksize_y',
-  Extent = 'extent',
-  NodataValues = 'nodata_values',
-  NumBands = 'num_bands',
-  OutDb = 'out_db',
-  PixelTypes = 'pixel_types',
-  RRasterColumn = 'r_raster_column',
-  RTableCatalog = 'r_table_catalog',
-  RTableName = 'r_table_name',
-  RTableSchema = 'r_table_schema',
-  RegularBlocking = 'regular_blocking',
-  SameAlignment = 'same_alignment',
-  ScaleX = 'scale_x',
-  ScaleY = 'scale_y',
-  SpatialIndex = 'spatial_index',
-  Srid = 'srid'
+  BlocksizeX = "blocksize_x",
+  BlocksizeY = "blocksize_y",
+  Extent = "extent",
+  NodataValues = "nodata_values",
+  NumBands = "num_bands",
+  OutDb = "out_db",
+  PixelTypes = "pixel_types",
+  RRasterColumn = "r_raster_column",
+  RTableCatalog = "r_table_catalog",
+  RTableName = "r_table_name",
+  RTableSchema = "r_table_schema",
+  RegularBlocking = "regular_blocking",
+  SameAlignment = "same_alignment",
+  ScaleX = "scale_x",
+  ScaleY = "scale_y",
+  SpatialIndex = "spatial_index",
+  Srid = "srid"
 }
 /** select columns of table "raster_overviews" */
 export enum RasterOverviewsSelectColumn {
-  ORasterColumn = 'o_raster_column',
-  OTableCatalog = 'o_table_catalog',
-  OTableName = 'o_table_name',
-  OTableSchema = 'o_table_schema',
-  OverviewFactor = 'overview_factor',
-  RRasterColumn = 'r_raster_column',
-  RTableCatalog = 'r_table_catalog',
-  RTableName = 'r_table_name',
-  RTableSchema = 'r_table_schema'
+  ORasterColumn = "o_raster_column",
+  OTableCatalog = "o_table_catalog",
+  OTableName = "o_table_name",
+  OTableSchema = "o_table_schema",
+  OverviewFactor = "overview_factor",
+  RRasterColumn = "r_raster_column",
+  RTableCatalog = "r_table_catalog",
+  RTableName = "r_table_name",
+  RTableSchema = "r_table_schema"
 }
 /** select columns of table "spatial_ref_sys" */
 export enum SpatialRefSysSelectColumn {
-  AuthName = 'auth_name',
-  AuthSrid = 'auth_srid',
-  Proj4text = 'proj4text',
-  Srid = 'srid',
-  Srtext = 'srtext'
+  AuthName = "auth_name",
+  AuthSrid = "auth_srid",
+  Proj4text = "proj4text",
+  Srid = "srid",
+  Srtext = "srtext"
 }
 /** select columns of table "topology.layer" */
 export enum TopologyLayerSelectColumn {
-  ChildId = 'child_id',
-  FeatureColumn = 'feature_column',
-  FeatureType = 'feature_type',
-  LayerId = 'layer_id',
-  Level = 'level',
-  SchemaName = 'schema_name',
-  TableName = 'table_name',
-  TopologyId = 'topology_id'
+  ChildId = "child_id",
+  FeatureColumn = "feature_column",
+  FeatureType = "feature_type",
+  LayerId = "layer_id",
+  Level = "level",
+  SchemaName = "schema_name",
+  TableName = "table_name",
+  TopologyId = "topology_id"
 }
 /** select columns of table "topology.topology" */
 export enum TopologyTopologySelectColumn {
-  Hasz = 'hasz',
-  Id = 'id',
-  Name = 'name',
-  Precision = 'precision',
-  Srid = 'srid'
+  Hasz = "hasz",
+  Id = "id",
+  Name = "name",
+  Precision = "precision",
+  Srid = "srid"
 }
 /** conflict action */
 export enum ConflictAction {
-  Ignore = 'ignore',
-  Update = 'update'
+  Ignore = "ignore",
+  Update = "update"
 }
 /** unique or primary key constraints on table "kmeal._block_number_txid" */
 export enum KmealBlockNumberTxidConstraint {
-  _BlockNumberTxidPkey = '_block_number_txid_pkey'
+  _BlockNumberTxidPkey = "_block_number_txid_pkey"
 }
 /** update columns of table "kmeal._block_number_txid" */
 export enum KmealBlockNumberTxidUpdateColumn {
-  BlockNumber = 'block_number',
-  Txid = 'txid'
+  BlockNumber = "block_number",
+  Txid = "txid"
 }
 /** unique or primary key constraints on table "kmeal._index_state" */
 export enum KmealIndexStateConstraint {
-  _IndexStatePkey = '_index_state_pkey'
+  _IndexStatePkey = "_index_state_pkey"
 }
 /** update columns of table "kmeal._index_state" */
 export enum KmealIndexStateUpdateColumn {
-  BlockHash = 'block_hash',
-  BlockNumber = 'block_number',
-  Id = 'id',
-  IsReplay = 'is_replay'
+  BlockHash = "block_hash",
+  BlockNumber = "block_number",
+  Id = "id",
+  IsReplay = "is_replay"
 }
 /** unique or primary key constraints on table "kmeal.account" */
 export enum KmealAccountConstraint {
-  AccountPkey = 'account_pkey'
+  AccountPkey = "account_pkey"
 }
 /** update columns of table "kmeal.account" */
 export enum KmealAccountUpdateColumn {
-  _DmxCreatedAt = '_dmx_created_at',
-  AccountType = 'account_type',
-  Balance = 'balance',
-  CreatedAt = 'created_at',
-  CreatedBlock = 'created_block',
-  CreatedEosacc = 'created_eosacc',
-  CreatedTrx = 'created_trx',
-  Owner = 'owner'
+  _DmxCreatedAt = "_dmx_created_at",
+  AccountType = "account_type",
+  Balance = "balance",
+  CreatedAt = "created_at",
+  CreatedBlock = "created_block",
+  CreatedEosacc = "created_eosacc",
+  CreatedTrx = "created_trx",
+  Owner = "owner"
 }
 /** unique or primary key constraints on table "kmeal.dplisting" */
 export enum KmealDplistingConstraint {
-  DplistingPkey = 'dplisting_pkey'
+  DplistingPkey = "dplisting_pkey"
 }
 /** update columns of table "kmeal.dplisting" */
 export enum KmealDplistingUpdateColumn {
-  Duration = 'duration',
-  ListingId = 'listing_id',
-  MinPrice = 'min_price',
-  Quantity = 'quantity',
-  SlidingRate = 'sliding_rate',
-  Start = 'start',
-  Status = 'status'
+  Duration = "duration",
+  ListingId = "listing_id",
+  MinPrice = "min_price",
+  Quantity = "quantity",
+  SlidingRate = "sliding_rate",
+  Start = "start",
+  Status = "status"
 }
 /** unique or primary key constraints on table "kmeal.item" */
 export enum KmealItemConstraint {
-  ItemPkey = 'item_pkey'
+  ItemPkey = "item_pkey"
 }
 /** update columns of table "kmeal.item" */
 export enum KmealItemUpdateColumn {
-  _DmxCreatedAt = '_dmx_created_at',
-  CreatedAt = 'created_at',
-  CreatedBlock = 'created_block',
-  CreatedEosacc = 'created_eosacc',
-  CreatedTrx = 'created_trx',
-  Description = 'description',
-  ItemId = 'item_id',
-  ItemName = 'item_name',
-  Photo = 'photo',
-  RestaurantId = 'restaurant_id'
+  _DmxCreatedAt = "_dmx_created_at",
+  CreatedAt = "created_at",
+  CreatedBlock = "created_block",
+  CreatedEosacc = "created_eosacc",
+  CreatedTrx = "created_trx",
+  Description = "description",
+  ItemId = "item_id",
+  ItemName = "item_name",
+  Photo = "photo",
+  RestaurantId = "restaurant_id"
 }
 /** unique or primary key constraints on table "kmeal.listing" */
 export enum KmealListingConstraint {
-  ListingPkey = 'listing_pkey'
+  ListingPkey = "listing_pkey"
 }
 /** update columns of table "kmeal.listing" */
 export enum KmealListingUpdateColumn {
-  _DmxCreatedAt = '_dmx_created_at',
-  CreatedAt = 'created_at',
-  CreatedBlock = 'created_block',
-  CreatedEosacc = 'created_eosacc',
-  CreatedTrx = 'created_trx',
-  Isactive = 'isactive',
-  ListPrice = 'list_price',
-  ListType = 'list_type',
-  ListingId = 'listing_id',
-  RestaurantId = 'restaurant_id'
+  _DmxCreatedAt = "_dmx_created_at",
+  CreatedAt = "created_at",
+  CreatedBlock = "created_block",
+  CreatedEosacc = "created_eosacc",
+  CreatedTrx = "created_trx",
+  Isactive = "isactive",
+  ListPrice = "list_price",
+  ListType = "list_type",
+  ListingId = "listing_id",
+  RestaurantId = "restaurant_id"
 }
 /** unique or primary key constraints on table "kmeal.order" */
 export enum KmealOrderConstraint {
-  OrderPkey = 'order_pkey'
+  OrderPkey = "order_pkey"
 }
 /** update columns of table "kmeal.order" */
 export enum KmealOrderUpdateColumn {
-  _DmxCreatedAt = '_dmx_created_at',
-  Buyer = 'buyer',
-  CreatedAt = 'created_at',
-  CreatedBlock = 'created_block',
-  CreatedEosacc = 'created_eosacc',
-  CreatedTrx = 'created_trx',
-  Instructions = 'instructions',
-  OrderId = 'order_id',
-  Price = 'price',
-  RestaurantId = 'restaurant_id'
+  _DmxCreatedAt = "_dmx_created_at",
+  Buyer = "buyer",
+  CreatedAt = "created_at",
+  CreatedBlock = "created_block",
+  CreatedEosacc = "created_eosacc",
+  CreatedTrx = "created_trx",
+  Instructions = "instructions",
+  OrderId = "order_id",
+  Price = "price",
+  RestaurantId = "restaurant_id"
 }
 /** unique or primary key constraints on table "kmeal.order_detail" */
 export enum KmealOrderDetailConstraint {
-  OrderDetailPkey = 'order_detail_pkey'
+  OrderDetailPkey = "order_detail_pkey"
 }
 /** update columns of table "kmeal.order_detail" */
 export enum KmealOrderDetailUpdateColumn {
-  Instructions = 'instructions',
-  ListingId = 'listing_id',
-  ListingType = 'listing_type',
-  OrderId = 'order_id',
-  OrderedPrice = 'ordered_price',
-  Qty = 'qty'
+  Instructions = "instructions",
+  ListingId = "listing_id",
+  ListingType = "listing_type",
+  OrderId = "order_id",
+  OrderedPrice = "ordered_price",
+  Qty = "qty"
 }
 /** unique or primary key constraints on table "kmeal.order_status" */
 export enum KmealOrderStatusConstraint {
-  OrderStatusPkey = 'order_status_pkey'
+  OrderStatusPkey = "order_status_pkey"
 }
 /** update columns of table "kmeal.order_status" */
 export enum KmealOrderStatusUpdateColumn {
-  CreatedAt = 'created_at',
-  OrderId = 'order_id',
-  OrderStatus = 'order_status'
+  CreatedAt = "created_at",
+  OrderId = "order_id",
+  OrderStatus = "order_status"
 }
 /** unique or primary key constraints on table "kmeal.payment" */
 export enum KmealPaymentConstraint {
-  PaymentPkey = 'payment_pkey'
+  PaymentPkey = "payment_pkey"
 }
 /** update columns of table "kmeal.payment" */
 export enum KmealPaymentUpdateColumn {
-  OrderId = 'order_id',
-  PaymentId = 'payment_id',
-  PaymentStatus = 'payment_status'
+  OrderId = "order_id",
+  PaymentId = "payment_id",
+  PaymentStatus = "payment_status"
 }
 /** unique or primary key constraints on table "kmeal.restaurant_group" */
 export enum KmealRestaurantGroupConstraint {
-  RestaurantGroupPkey = 'restaurant_group_pkey'
+  RestaurantGroupPkey = "restaurant_group_pkey"
 }
 /** update columns of table "kmeal.restaurant_group" */
 export enum KmealRestaurantGroupUpdateColumn {
-  GroupId = 'group_id',
-  GroupName = 'group_name',
-  RestaurantId = 'restaurant_id'
+  GroupId = "group_id",
+  GroupName = "group_name",
+  MenuBook = "menu_book",
+  RestaurantId = "restaurant_id"
 }
 /** unique or primary key constraints on table "kmeal.restaurant" */
 export enum KmealRestaurantConstraint {
-  RestaurantPkey = 'restaurant_pkey'
+  RestaurantPkey = "restaurant_pkey"
 }
 /** update columns of table "kmeal.restaurant" */
 export enum KmealRestaurantUpdateColumn {
-  _DmxCreatedAt = '_dmx_created_at',
-  Address = 'address',
-  CreatedAt = 'created_at',
-  CreatedBlock = 'created_block',
-  CreatedEosacc = 'created_eosacc',
-  CreatedTrx = 'created_trx',
-  Description = 'description',
-  Isactive = 'isactive',
-  Latitude = 'latitude',
-  Location = 'location',
-  Logo = 'logo',
-  Longitude = 'longitude',
-  Name = 'name',
-  Owner = 'owner',
-  Phone = 'phone',
-  Rating = 'rating',
-  RestaurantId = 'restaurant_id',
-  Timeofoperation = 'timeofoperation',
-  YelpId = 'yelp_id'
+  _DmxCreatedAt = "_dmx_created_at",
+  Address = "address",
+  CreatedAt = "created_at",
+  CreatedBlock = "created_block",
+  CreatedEosacc = "created_eosacc",
+  CreatedTrx = "created_trx",
+  Description = "description",
+  Isactive = "isactive",
+  Latitude = "latitude",
+  Location = "location",
+  Logo = "logo",
+  Longitude = "longitude",
+  Name = "name",
+  Owner = "owner",
+  Phone = "phone",
+  Rating = "rating",
+  RestaurantId = "restaurant_id",
+  Timeofoperation = "timeofoperation",
+  YelpId = "yelp_id"
 }
 /** unique or primary key constraints on table "kmeal.dporder" */
 export enum KmealDporderConstraint {
-  DporderPkey = 'dporder_pkey'
+  DporderPkey = "dporder_pkey"
 }
 /** update columns of table "kmeal.dporder" */
 export enum KmealDporderUpdateColumn {
-  _DmxCreatedAt = '_dmx_created_at',
-  BidPrice = 'bid_price',
-  Buyer = 'buyer',
-  CreatedAt = 'created_at',
-  CreatedBlock = 'created_block',
-  CreatedEosacc = 'created_eosacc',
-  CreatedTrx = 'created_trx',
-  DporderId = 'dporder_id',
-  Instructions = 'instructions',
-  ListingId = 'listing_id',
-  OrderId = 'order_id',
-  RestaurantId = 'restaurant_id'
+  _DmxCreatedAt = "_dmx_created_at",
+  BidPrice = "bid_price",
+  Buyer = "buyer",
+  CreatedAt = "created_at",
+  CreatedBlock = "created_block",
+  CreatedEosacc = "created_eosacc",
+  CreatedTrx = "created_trx",
+  DporderId = "dporder_id",
+  Instructions = "instructions",
+  ListingId = "listing_id",
+  OrderId = "order_id",
+  RestaurantId = "restaurant_id"
 }
 /** unique or primary key constraints on table "kmeal.categories" */
 export enum KmealCategoriesConstraint {
-  CategoriesPkey = 'categories_pkey'
+  CategoriesPkey = "categories_pkey"
 }
 /** update columns of table "kmeal.categories" */
 export enum KmealCategoriesUpdateColumn {
-  Alias = 'alias',
-  Title = 'title'
+  Alias = "alias",
+  Title = "title"
 }
 /** unique or primary key constraints on table "spatial_ref_sys" */
 export enum SpatialRefSysConstraint {
-  SpatialRefSysPkey = 'spatial_ref_sys_pkey'
+  SpatialRefSysPkey = "spatial_ref_sys_pkey"
 }
 /** update columns of table "spatial_ref_sys" */
 export enum SpatialRefSysUpdateColumn {
-  AuthName = 'auth_name',
-  AuthSrid = 'auth_srid',
-  Proj4text = 'proj4text',
-  Srid = 'srid',
-  Srtext = 'srtext'
+  AuthName = "auth_name",
+  AuthSrid = "auth_srid",
+  Proj4text = "proj4text",
+  Srid = "srid",
+  Srtext = "srtext"
 }
 /** unique or primary key constraints on table "topology.layer" */
 export enum TopologyLayerConstraint {
-  LayerPkey = 'layer_pkey',
-  LayerSchemaNameTableNameFeatureColumnKey = 'layer_schema_name_table_name_feature_column_key'
+  LayerPkey = "layer_pkey",
+  LayerSchemaNameTableNameFeatureColumnKey = "layer_schema_name_table_name_feature_column_key"
 }
 /** update columns of table "topology.layer" */
 export enum TopologyLayerUpdateColumn {
-  ChildId = 'child_id',
-  FeatureColumn = 'feature_column',
-  FeatureType = 'feature_type',
-  LayerId = 'layer_id',
-  Level = 'level',
-  SchemaName = 'schema_name',
-  TableName = 'table_name',
-  TopologyId = 'topology_id'
+  ChildId = "child_id",
+  FeatureColumn = "feature_column",
+  FeatureType = "feature_type",
+  LayerId = "layer_id",
+  Level = "level",
+  SchemaName = "schema_name",
+  TableName = "table_name",
+  TopologyId = "topology_id"
 }
 /** unique or primary key constraints on table "topology.topology" */
 export enum TopologyTopologyConstraint {
-  TopologyNameKey = 'topology_name_key',
-  TopologyPkey = 'topology_pkey'
+  TopologyNameKey = "topology_name_key",
+  TopologyPkey = "topology_pkey"
 }
 /** update columns of table "topology.topology" */
 export enum TopologyTopologyUpdateColumn {
-  Hasz = 'hasz',
-  Id = 'id',
-  Name = 'name',
-  Precision = 'precision',
-  Srid = 'srid'
+  Hasz = "hasz",
+  Id = "id",
+  Name = "name",
+  Precision = "precision",
+  Srid = "srid"
 }
 
 export type Name = any;
@@ -3269,13 +3279,13 @@ export namespace KmealCategories {
   export type Variables = {};
 
   export type Query = {
-    __typename?: 'Query';
+    __typename?: "Query";
 
     kmeal_categories: KmealCategories[];
   };
 
   export type KmealCategories = {
-    __typename?: 'kmeal_categories';
+    __typename?: "kmeal_categories";
 
     title: string;
 
@@ -3289,13 +3299,13 @@ export namespace GetRestaurantsNearBy {
   };
 
   export type Query = {
-    __typename?: 'Query';
+    __typename?: "Query";
 
     getRestaurantsNearby: (GetRestaurantsNearby | null)[] | null;
   };
 
   export type GetRestaurantsNearby = {
-    __typename?: 'Restaurant';
+    __typename?: "Restaurant";
 
     address: string | null;
 
@@ -3331,22 +3341,19 @@ export namespace GetRestaurantsNearBy {
 // START: Apollo Angular template
 // ====================================================
 
-import { Injectable } from '@angular/core';
-import * as Apollo from 'apollo-angular';
+import { Injectable } from "@angular/core";
+import * as Apollo from "apollo-angular";
 
-import gql from 'graphql-tag';
+import gql from "graphql-tag";
 
 // ====================================================
 // Apollo Services
 // ====================================================
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
-export class KmealCategoriesGQL extends Apollo.Query<
-  KmealCategories.Query,
-  KmealCategories.Variables
-> {
+export class KmealCategoriesGQL extends Apollo.Query<KmealCategories.Query, KmealCategories.Variables> {
   document: any = gql`
     query kmeal_categories {
       kmeal_categories {
@@ -3357,12 +3364,9 @@ export class KmealCategoriesGQL extends Apollo.Query<
   `;
 }
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
-export class GetRestaurantsNearByGQL extends Apollo.Query<
-  GetRestaurantsNearBy.Query,
-  GetRestaurantsNearBy.Variables
-> {
+export class GetRestaurantsNearByGQL extends Apollo.Query<GetRestaurantsNearBy.Query, GetRestaurantsNearBy.Variables> {
   document: any = gql`
     query getRestaurantsNearBy($nearby: GetNearByInput) {
       getRestaurantsNearby(nearby: $nearby) {

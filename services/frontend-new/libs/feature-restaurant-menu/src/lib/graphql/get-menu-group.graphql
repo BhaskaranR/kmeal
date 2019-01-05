@@ -2,5 +2,6 @@ query kmeal_restaurant_group($where: kmeal_restaurant_group_bool_exp) {
   kmeal_restaurant_group(where: $where) {
     group_id
     group_name
+    menu_book
   }
  }

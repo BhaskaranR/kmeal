@@ -8,19 +8,24 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { NewgroupComponent } from './newgroup/newgroup.component';
 import { HomeComponent } from './home/home.component';
+import { NewlistingComponent } from './newlisting/newlisting.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 
 
-export const restaurantMenuRoutes : Routes = [
-  {path: '', component: HomeComponent},
-  {path: 'newmenu', component: NewmenuComponent},
-  {path: 'newgroup', component: NewgroupComponent}
+export const restaurantMenuRoutes: Routes = [
+  { path: '', component: HomeComponent },
+  { path: 'newmenu', component: NewmenuComponent },
+  { path: 'newgroup', component: NewgroupComponent },
+  { path: 'newlisting', component: NewlistingComponent }
 ]
 
 @NgModule({
-  imports: [CommonModule, MatInputModule, MatButtonModule, MatSelectModule, MatRadioModule, MatCardModule, ReactiveFormsModule, 
+  imports: [CommonModule, MatInputModule, MatButtonModule, MatSelectModule, MatRadioModule,
+    MatCardModule, ReactiveFormsModule,
     MatGridListModule, MatMenuModule, MatIconModule, LayoutModule, FlexLayoutModule,
+    DragDropModule,
     RouterModule.forChild(restaurantMenuRoutes)],
-  declarations: [ NewmenuComponent, HomeComponent, NewgroupComponent]
+  declarations: [NewmenuComponent, HomeComponent, NewgroupComponent, NewlistingComponent]
 })
-export class FeatureRestaurantMenuModule {}
+export class FeatureRestaurantMenuModule { }

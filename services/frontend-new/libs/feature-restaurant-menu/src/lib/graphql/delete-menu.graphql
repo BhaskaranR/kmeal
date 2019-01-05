@@ -1,4 +1,4 @@
-mutation ($where: kmeal_item_bool_exp!) {
+mutation delete_kmeal_item($where: kmeal_item_bool_exp!) {
   delete_kmeal_item(where: $where) {
     affected_rows
     returning {
