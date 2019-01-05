@@ -61,10 +61,6 @@ import {
     {
       provide: APP_BASE_HREF,
       useValue: '/'
-    },
-    {
-      provide: 'apiBase',
-      useValue: environment.api_entry
     }
   ],
   bootstrap: [AppComponent]

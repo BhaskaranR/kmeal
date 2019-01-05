@@ -272,62 +272,6 @@
         }
       }
     },
-    "feature-restaurant-menu": {
-      "root": "libs/feature-restaurant-menu",
-      "sourceRoot": "libs/feature-restaurant-menu/src",
-      "projectType": "library",
-      "prefix": "kmeal-nx",
-      "architect": {
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "libs/feature-restaurant-menu/src/test.ts",
-            "tsConfig": "libs/feature-restaurant-menu/tsconfig.spec.json",
-            "karmaConfig": "libs/feature-restaurant-menu/karma.conf.js"
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "libs/feature-restaurant-menu/tsconfig.lib.json",
-              "libs/feature-restaurant-menu/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        }
-      }
-    },
-    "feature-restaurant-orders": {
-      "root": "libs/feature-restaurant-orders",
-      "sourceRoot": "libs/feature-restaurant-orders/src",
-      "projectType": "library",
-      "prefix": "kmeal-nx",
-      "architect": {
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "libs/feature-restaurant-orders/src/test.ts",
-            "tsConfig": "libs/feature-restaurant-orders/tsconfig.spec.json",
-            "karmaConfig": "libs/feature-restaurant-orders/karma.conf.js"
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "libs/feature-restaurant-orders/tsconfig.lib.json",
-              "libs/feature-restaurant-orders/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        }
-      }
-    },
     "feature-order": {
       "root": "libs/feature-order",
       "sourceRoot": "libs/feature-order/src",
@@ -516,6 +460,90 @@
             "tsConfig": [
               "libs/feature-menu/tsconfig.lib.json",
               "libs/feature-menu/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "feature-restaurant-orders": {
+      "root": "libs/feature-restaurant-orders",
+      "sourceRoot": "libs/feature-restaurant-orders/src",
+      "projectType": "library",
+      "prefix": "kmeal-nx",
+      "architect": {
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "libs/feature-restaurant-orders/src/test.ts",
+            "tsConfig": "libs/feature-restaurant-orders/tsconfig.spec.json",
+            "karmaConfig": "libs/feature-restaurant-orders/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/feature-restaurant-orders/tsconfig.lib.json",
+              "libs/feature-restaurant-orders/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "feature-restaurant-dashboard": {
+      "root": "libs/feature-restaurant-dashboard",
+      "sourceRoot": "libs/feature-restaurant-dashboard/src",
+      "projectType": "library",
+      "prefix": "kmeal-nx",
+      "architect": {
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "libs/feature-restaurant-dashboard/src/test.ts",
+            "tsConfig": "libs/feature-restaurant-dashboard/tsconfig.spec.json",
+            "karmaConfig": "libs/feature-restaurant-dashboard/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/feature-restaurant-dashboard/tsconfig.lib.json",
+              "libs/feature-restaurant-dashboard/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "feature-restaurant-menu": {
+      "root": "libs/feature-restaurant-menu",
+      "sourceRoot": "libs/feature-restaurant-menu/src",
+      "projectType": "library",
+      "prefix": "kmeal-nx",
+      "architect": {
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "libs/feature-restaurant-menu/src/test.ts",
+            "tsConfig": "libs/feature-restaurant-menu/tsconfig.spec.json",
+            "karmaConfig": "libs/feature-restaurant-menu/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/feature-restaurant-menu/tsconfig.lib.json",
+              "libs/feature-restaurant-menu/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"

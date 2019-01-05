@@ -17,12 +17,6 @@
     ],
     "baseUrl": ".",
     "paths": {
-      "@kmeal-nx/feature-restaurant-menu": [
-        "libs/feature-restaurant-menu/src/index.ts"
-      ],
-      "@kmeal-nx/feature-restaurant-orders": [
-        "libs/feature-restaurant-orders/src/index.ts"
-      ],
       "@kmeal-nx/feature-order": [
         "libs/feature-order/src/index.ts"
       ],
@@ -43,6 +37,15 @@
       ],
       "@kmeal-nx/feature-menu": [
         "libs/feature-menu/src/index.ts"
+      ],
+      "@kmeal-nx/feature-restaurant-orders": [
+        "libs/feature-restaurant-orders/src/index.ts"
+      ],
+      "@kmeal-nx/feature-restaurant-dashboard": [
+        "libs/feature-restaurant-dashboard/src/index.ts"
+      ],
+      "@kmeal-nx/feature-restaurant-menu": [
+        "libs/feature-restaurant-menu/src/index.ts"
       ]
     }
   },

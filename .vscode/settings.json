@@ -15,5 +15,6 @@
       "iosfwd": "cpp",
       "memory": "cpp"
     },
-    "vscode-postgres.prettyPrintJSONfields": true
+    "vscode-postgres.prettyPrintJSONfields": true,
+    "editor.formatOnSave": false,
   }

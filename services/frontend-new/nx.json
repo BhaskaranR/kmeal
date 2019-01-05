@@ -20,12 +20,6 @@
     "web-kmeal-restaurant-e2e": {
       "tags": []
     },
-    "feature-restaurant-menu": {
-      "tags": []
-    },
-    "feature-restaurant-orders": {
-      "tags": []
-    },
     "feature-order": {
       "tags": []
     },
@@ -45,6 +39,15 @@
       "tags": []
     },
     "feature-menu": {
+      "tags": []
+    },
+    "feature-restaurant-orders": {
+      "tags": []
+    },
+    "feature-restaurant-dashboard": {
+      "tags": []
+    },
+    "feature-restaurant-menu": {
       "tags": []
     }
   }
