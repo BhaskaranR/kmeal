@@ -18,6 +18,7 @@ export class SearchBarComponent  implements OnInit{
     };
     
     userInput:string;
+    isLoaded:boolean = true;
     @Output() public onAddressChangeEvent = new EventEmitter<{[key:string]:string}>();
     @ViewChild("placesRef") placesRef : GooglePlaceDirective;
     
@@ -25,8 +26,6 @@ export class SearchBarComponent  implements OnInit{
 
     
     ngOnInit(){
-        console.log('initing search bar ');
-        console.log(this.placesRef)
     }
 
     onFocus(e){

@@ -2,8 +2,13 @@ import { NgModule, NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/cor
 import { HomeComponent } from './home/home.component';
 import { Routes, RouterModule } from '@angular/router';
 import { UiModule } from '@kmeal-nx/ui';
+import { CommonModule } from '@angular/common';
+import { NguCarouselModule } from '@ngu/carousel';
+import { FeatureCoreModule } from '@kmeal-nx/feature-core';
+import 'hammerjs';
+import { DishDetailPopupComponent } from 'libs/ui/src/lib/dish-detail/dish-detail-popup.component';
 
-const routes: Routes = [
+export const homeRoutes: Routes = [
   {
     path: '',
     component: HomeComponent
@@ -13,7 +18,9 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
-    RouterModule.forChild(routes), 
+    CommonModule,
+    NguCarouselModule,
+    FeatureCoreModule,
     UiModule,
   ],
   declarations: [HomeComponent],
@@ -21,6 +28,7 @@ const routes: Routes = [
   schemas: [
     NO_ERRORS_SCHEMA,
     CUSTOM_ELEMENTS_SCHEMA
-  ]
+  ],
+  entryComponents:[]
 })
 export class FeatureHomeModule {}

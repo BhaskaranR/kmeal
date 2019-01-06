@@ -7,16 +7,10 @@ import { ApiModule } from './graphql.module';
 import { APP_BASE_HREF } from '@angular/common';
 import { environment } from '../environments/environment';
 import { RouterModule } from '@angular/router';
-
-import {
-  MatIconModule,
-  MatMenuModule,
-  MatBadgeModule,
-  MatSidenavModule,
-  MatListModule
-} from '@angular/material';
 import { FeatureNavigationBarModule } from '@kmeal-nx/feature-navigation-bar';
 import { SharedModule } from './app.shared';
+import { homeRoutes, FeatureHomeModule } from '@kmeal-nx/feature-home';
+import { FeatureSearchModule ,featureSearchRoutes} from '@kmeal-nx/feature-search';
 
 @NgModule({
   declarations: [AppComponent],
@@ -26,6 +20,8 @@ import { SharedModule } from './app.shared';
     NxModule.forRoot(),
     ApiModule,
     SharedModule,
+    FeatureHomeModule,
+    FeatureSearchModule,
     FeatureNavigationBarModule,
     RouterModule.forRoot(
       [
@@ -36,7 +32,11 @@ import { SharedModule } from './app.shared';
         },
         {
           path: 'home',
-          loadChildren: '@kmeal-nx/feature-home#FeatureHomeModule'
+          children:homeRoutes
+        },
+        {
+          path: 'search',
+          children:featureSearchRoutes
         },
         {
           path: 'restaurant', 

@@ -1,5 +1,12 @@
 import { Component, ChangeDetectorRef } from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
+import { RouterModule, Router } from '@angular/router';
+
+interface Coordinate {
+  lat:number,
+  lng:number,
+  radius:number
+}
 
 @Component({
   selector: 'kmeal-nx-root',
@@ -16,7 +23,8 @@ export class AppComponent {
   
   constructor(
     public changeDetectorRef: ChangeDetectorRef, 
-    public media: MediaMatcher,) 
+    public media: MediaMatcher,
+    public router:Router) 
   {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = ()=> changeDetectorRef.detectChanges();
@@ -30,6 +38,17 @@ export class AppComponent {
 
   onAddressChange(e){
     console.log('address changed : ',e);
+    let param : Coordinate = {
+      lat:e.geometry.location.lat(),
+      lng:e.geometry.location.lng(),
+      radius:10
+    }
+    this.updateLocateStorage(param);
+    this.router.navigate(['./search'],{queryParams:param});
+  }
+
+  private updateLocateStorage(param){
+    window.localStorage.setItem('address', param)
   }
   
 }

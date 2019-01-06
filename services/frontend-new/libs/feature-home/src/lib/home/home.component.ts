@@ -2,12 +2,13 @@ import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { NguCarouselConfig } from '@ngu/carousel';
 import { Apollo } from 'apollo-angular';
 import { Router } from '@angular/router';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, MatDialog } from '@angular/material';
 import { imagesMapping } from './utils';
 import { KmealCategoriesGQL, GetRestaurantsNearByGQL } from '../generated/graphql';
-import { MediaMatcher } from '@angular/cdk/layout';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { DishDetailPopupComponent } from 'libs/ui/src/lib/dish-detail/dish-detail-popup.component';
+import { DishOrderComponent } from 'libs/ui/src/lib/dish-order/dish-order.component';
 
 @Component({
     selector: 'kmeal-nx-home',
@@ -23,21 +24,11 @@ export class HomeComponent implements OnInit, OnDestroy {
         public snackBar: MatSnackBar,
         private kmealCategoriesGQL: KmealCategoriesGQL,
         private getRestaurantsNearByGQL:GetRestaurantsNearByGQL,
-        public changeDetectorRef: ChangeDetectorRef, 
-        public media: MediaMatcher,
-    ) {
-        this.mobileQuery = media.matchMedia('(max-width: 600px)');
-        this._mobileQueryListener = ()=> changeDetectorRef.detectChanges();
-        this.mobileQuery.addListener(this._mobileQueryListener);
-     }
+        public dialog: MatDialog,
+    ) {}
 
-    private _mobileQueryListener: () => void;
-    mobileQuery: MediaQueryList;
-  
+    cuisines$: Observable<any[]>;
 
-    cuisines$: Observable<{ title: string; img: any; }[]>;
-
-    dishes: Array<any>;
     restaurants$: Observable<any[]>;
 
     cuisineConfig: NguCarouselConfig = {
@@ -166,29 +157,25 @@ export class HomeComponent implements OnInit, OnDestroy {
 
 
     ngOnInit() {
-        this.kmealCategoriesGQL
-            .watch()
+        
+        this.cuisines$ = this.kmealCategoriesGQL
+            .watch({}, {})
             .valueChanges
             .pipe(map(result => result.data.kmeal_categories.map(ca => {
-                return {
-                    title:ca.title,
-                    img:imagesMapping[ca['title'].toLowerCase()] || imagesMapping['japanese'],
-                }
-            }))).subscribe(resu =>{
-                console.log(resu);
-            });
+                ca['img'] = imagesMapping[ca['title'].toLowerCase()] || imagesMapping['japanese'];
+                return ca ;
+            })));
         
-        console.log('reading restaurants data');
         this.restaurants$ = this.getRestaurantsNearByGQL
             .watch({
                 nearby:{
-                    lat:11,
-                    long:11,
+                    lat:40.82319,
+                    long:-73.94181,
                     radius:5
                 }
             })
             .valueChanges
-            .pipe(map(result => {console.log('got data, ', result);return result.data.getRestaurantsNearby}));
+            .pipe(map(result => result.data.getRestaurantsNearby));
 
         this.isReady=true;
     }
@@ -209,6 +196,56 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     navigate(e) {
         this.router.navigate([e.url], { queryParams: { value: e.id } });
+    }
+
+    openDishDetails(e){
+        const dialogRef = this.dialog.open(DishDetailPopupComponent, {
+            width: '650px',
+            data: e
+          });
+      
+          dialogRef.afterClosed().subscribe(result => {
+            console.log('The dialog was closed', result);
+          });
+    }
+
+    orderDishNow(e){
+        let data = {
+            name:'Chicken noodle',
+            id:'hxusa2432nk',
+            specifications:[
+                {
+                    type:'number',
+                    inputs:'',
+                    name:'Quantity',
+                    value:null,
+                },{
+                    type:'select',
+                    inputs:['Mild','Medium','Extra Spicy'],
+                    value:null,
+                    name:'Spicy Level'
+                },{
+                    type:'multiple',
+                    inputs:['extra shrimp','extra chicken breast','salad'],
+                    name:'AddOn',
+                    value:null,
+                },{
+                    type:'string',
+                    inputs:'',
+                    name:'Other Instructions',
+                    value:null
+                }
+            ]
+        }
+
+        const dialogRef = this.dialog.open(DishOrderComponent, {
+            width: '650px',
+            data: data
+          });
+      
+          dialogRef.afterClosed().subscribe(result => {
+            console.log('The dialog was closed', result);
+          });
     }
     
 }

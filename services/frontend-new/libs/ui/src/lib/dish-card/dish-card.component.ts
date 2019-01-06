@@ -13,14 +13,13 @@ import { DishDetailPopupComponent } from '../dish-detail/dish-detail-popup.compo
   selector: 'dish-card',
   moduleId: module.id,
   templateUrl: './dish-card.component.html',
-  styleUrls: ['./dish.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DishCardComponent {
   @Input() public dishDetails: any;
   @Output() public onOpenDetailsEvent: EventEmitter<string> = new EventEmitter();
   @Output() public onPlaceOrderEvent:EventEmitter<string> = new EventEmitter();
-  @Output() public onError = new EventEmitter<string>();
+  @Output() public onErrorEvent = new EventEmitter<string>();
 
   constructor(public dialog: MatDialog) {}
 
@@ -30,6 +29,10 @@ export class DishCardComponent {
 
   orderNow(){
     this.onPlaceOrderEvent.emit(this.dishDetails.id);
+  }
+
+  onError(e){
+    this.onErrorEvent.emit(e);
   }
 
 }

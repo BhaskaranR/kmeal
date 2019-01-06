@@ -6,9 +6,9 @@
 <mat-sidenav-container>
         <mat-sidenav 
           #snav 
-          [mode]="mobileQuery.matches ? 'over':'side'"
+          [mode]="'over'"
           [fixedInViewport]="mobileQuery.matches" 
-          opened="true"
+          opened="false"
           style="background: #F3F3F3;"
           class="shadow_right" 
           autosize>
@@ -36,9 +36,9 @@
 
         <mat-sidenav-content>
           
-    <div class="main-content">
-      <router-outlet></router-outlet>
-    </div>
+          <div class="main-content">
+            <router-outlet></router-outlet>
+          </div>
         </mat-sidenav-content>
     
 </mat-sidenav-container>

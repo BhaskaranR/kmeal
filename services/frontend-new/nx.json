@@ -61,6 +61,9 @@
     },
     "feature-core": {
       "tags": []
+    },
+    "feature-search": {
+      "tags": []
     }
   }
 }

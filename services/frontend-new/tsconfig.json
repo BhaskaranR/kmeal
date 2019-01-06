@@ -58,6 +58,9 @@
       ],
       "@kmeal-nx/feature-core": [
         "libs/feature-core/src/index.ts"
+      ],
+      "@kmeal-nx/feature-search": [
+        "libs/feature-search/src/index.ts"
       ]
     }
   },
