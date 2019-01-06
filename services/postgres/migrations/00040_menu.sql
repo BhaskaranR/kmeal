@@ -8,9 +8,9 @@ CREATE TABLE IF NOT EXISTS kmeal."menu_book" (
 
 CREATE TABLE  kmeal."menu_book_section" (
   "section_id" SERIAL PRIMARY KEY,
-  "restaurant_id" INTEGER NOT NULL REFERENCES kmeal.restaurant("restaurant_id"),
   "section_name" VARCHAR(100) NOT NULL,
-  "menu_book_id"  INTEGER NOT NULL REFERENCES kmeal.menu_book("menu_book_id")
+  "menu_book_id"  INTEGER NOT NULL REFERENCES kmeal.menu_book("menu_book_id"),
+  "sort_order" INTEGER NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS kmeal."item" (

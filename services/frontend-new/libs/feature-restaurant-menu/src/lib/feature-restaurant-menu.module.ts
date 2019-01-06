@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NewmenuComponent } from './newmenu/newmenu.component';
-import { MatInputModule, MatButtonModule, MatSelectModule, MatRadioModule, MatCardModule, MatGridListModule, MatMenuModule, MatIconModule } from '@angular/material';
+import { MatInputModule, MatButtonModule, MatSelectModule, MatRadioModule, MatCardModule, MatGridListModule, MatMenuModule, MatIconModule, MatSnackBarModule } from '@angular/material';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 import { LayoutModule } from '@angular/cdk/layout';
@@ -23,6 +23,7 @@ export const restaurantMenuRoutes: Routes = [
 @NgModule({
   imports: [CommonModule, MatInputModule, MatButtonModule, MatSelectModule, MatRadioModule,
     MatCardModule, ReactiveFormsModule,
+    MatSnackBarModule,
     MatGridListModule, MatMenuModule, MatIconModule, LayoutModule, FlexLayoutModule,
     DragDropModule,
     RouterModule.forChild(restaurantMenuRoutes)],
