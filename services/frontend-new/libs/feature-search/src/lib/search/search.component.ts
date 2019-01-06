@@ -8,11 +8,12 @@ import { Router, ActivatedRoute } from "@angular/router";
 })
 export class SearchComponent implements OnInit ,OnDestroy{
 
-
+    breakpoint:number;
     isReady:boolean = false;
     restaurants:Array<any> ;
     routeParamSub:any;
     type:string;
+    isFilterOpen:boolean = false;
 
     constructor(
         public router: Router, 
@@ -24,10 +25,18 @@ export class SearchComponent implements OnInit ,OnDestroy{
         this.routeParamSub = this.route
         .queryParams
         .subscribe(params => {
-            console.log('routed to search ', params)
+            console.log('routed to search ', params);
+            this.isReady=true;
         });
     }
     
+    onResize(event) {
+        this.breakpoint = this.generateBreakpoint(event.target.innerWidth);
+      }
+  
+      private generateBreakpoint(width){
+          return (width <= 959 ) ? 1: (width <= 1279) ? 2: 3;
+      }
 
     ngOnDestroy(){
        

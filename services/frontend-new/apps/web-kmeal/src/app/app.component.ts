@@ -44,7 +44,7 @@ export class AppComponent {
       radius:10
     }
     this.updateLocateStorage(param);
-    this.router.navigate(['./search'],{queryParams:param});
+    this.router.navigate(['/search'],{queryParams:param});
   }
 
   private updateLocateStorage(param){

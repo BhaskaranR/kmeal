@@ -69,8 +69,8 @@
             </div>
             
             <mat-grid-list [cols]="breakpoint"  (window:resize)="onResize($event)">
-                <mat-grid-tile *ngFor="let res of searchBarService.results">
-                    <res-card [res]="res" (onError)="throwError($event)" (reRoute)="navigate($event)"></res-card>
+                <mat-grid-tile >
+                    dd
                 </mat-grid-tile>
             </mat-grid-list>
     
