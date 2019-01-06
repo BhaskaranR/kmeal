@@ -2,7 +2,8 @@
 CREATE TABLE IF NOT EXISTS kmeal."menu_book" (
   "menu_book_id" SERIAL PRIMARY KEY,
   "restaurant_id" INTEGER NOT NULL REFERENCES kmeal.restaurant("restaurant_id"),
-  "menu_book" VARCHAR(100) NOT NULL
+  "menu_book" VARCHAR(100) NOT NULL,
+  "sort_order" INTEGER NOT NULL
 );
 
 CREATE TABLE  kmeal."menu_book_section" (
