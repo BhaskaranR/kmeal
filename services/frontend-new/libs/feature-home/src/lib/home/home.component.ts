@@ -54,7 +54,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         animation: 'lazy'
     };
 
-    isReady: boolean = false;
+
     trendingDishes = [
         {
             id:'321hdjsha',
@@ -155,7 +155,6 @@ export class HomeComponent implements OnInit, OnDestroy {
         }
     ];
 
-
     ngOnInit() {
         
         this.cuisines$ = this.kmealCategoriesGQL
@@ -176,26 +175,21 @@ export class HomeComponent implements OnInit, OnDestroy {
             })
             .valueChanges
             .pipe(map(result => result.data.getRestaurantsNearby));
-
-        this.isReady=true;
     }
 
     ngOnDestroy() {
         
     }
 
-    onSearch(type, cuisine) {
-        console.log(type,cuisine);
+    onSearchCuisine(cuisine) {
+        console.log(cuisine);
+        this.router.navigate(['./search'],{queryParams:{type:'CUISINE', cuisine:cuisine}});
     }
 
     throwError(msg) {
         this.snackBar.open(msg, '', {
             duration: 2000
         });
-    }
-
-    navigate(e) {
-        this.router.navigate([e.url], { queryParams: { value: e.id } });
     }
 
     openDishDetails(e){
@@ -205,11 +199,13 @@ export class HomeComponent implements OnInit, OnDestroy {
           });
       
           dialogRef.afterClosed().subscribe(result => {
-            console.log('The dialog was closed', result);
+            if (result == 'ORDER'){
+                this.orderDishNow();
+            }
           });
     }
 
-    orderDishNow(e){
+    orderDishNow(){
         let data = {
             name:'Chicken noodle',
             id:'hxusa2432nk',
@@ -244,8 +240,13 @@ export class HomeComponent implements OnInit, OnDestroy {
           });
       
           dialogRef.afterClosed().subscribe(result => {
-            console.log('The dialog was closed', result);
+            console.log('closed', result);
           });
+    }
+
+
+    restaurantDetails(res){
+        this.router.navigate(['./restaurant:' + res.restaurant_id]);
     }
     
 }

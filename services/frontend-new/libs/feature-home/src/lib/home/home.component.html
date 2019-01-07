@@ -1,11 +1,11 @@
-<div *ngIf="!isReady">
+<div *ngIf="!cuisines$ | async">
     <div id="loading-wrapper">
         <div id="loading-text">LOADING</div>
         <div id="loading-content"></div>
     </div>
 </div>
 
-<div class="container-fluid" *ngIf="isReady">
+<div class="container-fluid" >
     <div class="content-wrapper" *ngIf="cuisines$ | async as cuisines">
         <h5>Search By Cuisine</h5>
         <ngu-carousel 
@@ -13,7 +13,7 @@
             [inputs]="cuisineConfig" 
             [dataSource]="cuisines" >
             <ngu-tile NguCarouselItem  *nguCarouselDef="let cuisine; let i = index;">
-                <mat-card (click)="onSearch('Cuisine', cuisine)" style="box-shadow:none; " [style.background-color]=" (i % 2 == 0) ? '#6e5432' : '#b28d5f'  ">
+                <mat-card (click)="onSearchCuisine(cuisine.title)" style="box-shadow:none; cursor:pointer" [style.background-color]=" (i % 2 == 0) ? '#6e5432' : '#b28d5f'  ">
                     <img mat-card-image [attr.src]="cuisine.img" alt="" style="max-height:100px">
                     
                     <mat-card-subtitle style="color:white">
@@ -51,7 +51,7 @@
             [inputs]="carConfig" 
             [dataSource]="restaurants" >
             <ngu-tile *nguCarouselDef="let res; let i = index; let ani = animate">
-                <res-card [res]="res" ></res-card>
+                <res-card [res]="res" (click)="restaurantDetails(res)" style="box-shadow:none; cursor:pointer"></res-card>
             </ngu-tile>
             <button NguCarouselPrev class="arrowbtn arrowbtn-left" ></button>
             <button NguCarouselNext class="arrowbtn arrowbtn-right" ></button>
@@ -65,7 +65,7 @@
             [inputs]="carConfig" 
             [dataSource]="restaurants" >
             <ngu-tile *nguCarouselDef="let res; let i = index; let ani = animate">
-                <res-card [res]="res" ></res-card>
+                <res-card [res]="res" (click)="restaurantDetails(res)" style="box-shadow:none; cursor:pointer"></res-card>
             </ngu-tile>
             <button NguCarouselPrev class="arrowbtn arrowbtn-left" ></button>
             <button NguCarouselNext class="arrowbtn arrowbtn-right" ></button>

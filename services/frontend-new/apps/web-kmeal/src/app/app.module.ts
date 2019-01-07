@@ -11,9 +11,10 @@ import { FeatureNavigationBarModule } from '@kmeal-nx/feature-navigation-bar';
 import { SharedModule } from './app.shared';
 import { homeRoutes, FeatureHomeModule } from '@kmeal-nx/feature-home';
 import { FeatureSearchModule ,featureSearchRoutes} from '@kmeal-nx/feature-search';
+import { ErrorComponent } from './error.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, ErrorComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -39,8 +40,12 @@ import { FeatureSearchModule ,featureSearchRoutes} from '@kmeal-nx/feature-searc
           children:featureSearchRoutes
         },
         {
-          path: 'restaurant', 
+          path: 'restaurant:id', 
           loadChildren: '@kmeal-nx/feature-restaurant#FeatureRestaurantModule'
+        },
+        {
+          path: '**', 
+          component:ErrorComponent
         }
       ],
       { 
