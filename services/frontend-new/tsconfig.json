@@ -17,6 +17,9 @@
     ],
     "baseUrl": ".",
     "paths": {
+      "@kmeal-env/*": ["apps/web-kmeal/src/environments/*"],
+      "@kmeal-restaurant-env/*": ["apps/web-kmeal-restaurant/src/environments/*"],
+      "@env-api/environment": ["apps/api/src/environments/environment.ts"],
       "@kmeal-nx/feature-order": [
         "libs/feature-order/src/index.ts"
       ],
