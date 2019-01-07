@@ -3265,171 +3265,65 @@ export type _Text = any;
 // Documents
 // ====================================================
 
-export namespace AnonymousMutation_1 {
-  export type Variables = {
-    where: KmealRestaurantGroupBoolExp;
+export namespace KmealCategories {
+  export type Variables = {};
+
+  export type Query = {
+    __typename?: 'Query';
+
+    kmeal_categories: KmealCategories[];
   };
 
-  export type Mutation = {
-    __typename?: 'Mutation';
+  export type KmealCategories = {
+    __typename?: 'kmeal_categories';
 
-    delete_kmeal_restaurant_group: DeleteKmealRestaurantGroup | null;
-  };
+    title: string;
 
-  export type DeleteKmealRestaurantGroup = {
-    __typename?: 'kmeal_restaurant_group_mutation_response';
-
-    affected_rows: number;
-
-    returning: Returning[];
-  };
-
-  export type Returning = {
-    __typename?: 'kmeal_restaurant_group';
-
-    group_id: number;
-
-    group_name: string;
+    alias: string;
   };
 }
 
-export namespace AnonymousMutation_2 {
+export namespace GetRestaurantsNearBy {
   export type Variables = {
-    where: KmealItemBoolExp;
+    nearby?: GetNearByInput | null;
   };
 
-  export type Mutation = {
-    __typename?: 'Mutation';
+  export type Query = {
+    __typename?: 'Query';
 
-    delete_kmeal_item: DeleteKmealItem | null;
+    getRestaurantsNearby: (GetRestaurantsNearby | null)[] | null;
   };
 
-  export type DeleteKmealItem = {
-    __typename?: 'kmeal_item_mutation_response';
+  export type GetRestaurantsNearby = {
+    __typename?: 'Restaurant';
 
-    affected_rows: number;
+    address: string | null;
 
-    returning: Returning[];
-  };
+    description: string | null;
 
-  export type Returning = {
-    __typename?: 'kmeal_item';
+    distance: number | null;
 
-    item_id: number;
-  };
-}
+    isactive: string | null;
 
-export namespace AnonymousMutation_3 {
-  export type Variables = {
-    where: KmealRestaurantGroupBoolExp;
-    _set?: KmealRestaurantGroupSetInput | null;
-    _inc?: KmealRestaurantGroupIncInput | null;
-  };
+    latitude: number | null;
 
-  export type Mutation = {
-    __typename?: 'Mutation';
+    longitude: number | null;
 
-    update_kmeal_restaurant_group: UpdateKmealRestaurantGroup | null;
-  };
+    logo: string | null;
 
-  export type UpdateKmealRestaurantGroup = {
-    __typename?: 'kmeal_restaurant_group_mutation_response';
+    name: string | null;
 
-    affected_rows: number;
+    owner: string | null;
 
-    returning: Returning[];
-  };
+    phone: string | null;
 
-  export type Returning = {
-    __typename?: 'kmeal_restaurant_group';
+    restaurant_id: number;
 
-    group_id: number;
+    timeofoperation: string | null;
 
-    group_name: string;
-  };
-}
+    yelp_id: number | null;
 
-export namespace AnonymousMutation_4 {
-  export type Variables = {
-    where: KmealItemBoolExp;
-    _set?: KmealItemSetInput | null;
-    _inc?: KmealItemIncInput | null;
-  };
-
-  export type Mutation = {
-    __typename?: 'Mutation';
-
-    update_kmeal_item: UpdateKmealItem | null;
-  };
-
-  export type UpdateKmealItem = {
-    __typename?: 'kmeal_item_mutation_response';
-
-    affected_rows: number;
-
-    returning: Returning[];
-  };
-
-  export type Returning = {
-    __typename?: 'kmeal_item';
-
-    item_id: number;
-  };
-}
-
-export namespace AnonymousMutation_5 {
-  export type Variables = {
-    objects: KmealRestaurantGroupInsertInput[];
-    on_conflict?: KmealRestaurantGroupOnConflict | null;
-  };
-
-  export type Mutation = {
-    __typename?: 'Mutation';
-
-    insert_kmeal_restaurant_group: InsertKmealRestaurantGroup | null;
-  };
-
-  export type InsertKmealRestaurantGroup = {
-    __typename?: 'kmeal_restaurant_group_mutation_response';
-
-    affected_rows: number;
-
-    returning: Returning[];
-  };
-
-  export type Returning = {
-    __typename?: 'kmeal_restaurant_group';
-
-    group_id: number;
-
-    group_name: string;
-  };
-}
-
-export namespace AnonymousMutation_6 {
-  export type Variables = {
-    object: KmealItemInsertInput[];
-    on_conflict?: KmealItemOnConflict | null;
-  };
-
-  export type Mutation = {
-    __typename?: 'Mutation';
-
-    insert_kmeal_item: InsertKmealItem | null;
-  };
-
-  export type InsertKmealItem = {
-    __typename?: 'kmeal_item_mutation_response';
-
-    affected_rows: number;
-
-    returning: Returning[];
-  };
-
-  export type Returning = {
-    __typename?: 'kmeal_item';
-
-    item_id: number;
+    rating: number | null;
   };
 }
 
@@ -3449,18 +3343,15 @@ import gql from 'graphql-tag';
 @Injectable({
   providedIn: 'root'
 })
-export class AnonymousMutation_7GQL extends Apollo.Mutation<
-  AnonymousMutation_7.Mutation,
-  AnonymousMutation_7.Variables
+export class KmealCategoriesGQL extends Apollo.Query<
+  KmealCategories.Query,
+  KmealCategories.Variables
 > {
   document: any = gql`
-    mutation($where: kmeal_restaurant_group_bool_exp!) {
-      delete_kmeal_restaurant_group(where: $where) {
-        affected_rows
-        returning {
-          group_id
-          group_name
-        }
+    query kmeal_categories {
+      kmeal_categories {
+        title
+        alias
       }
     }
   `;
@@ -3468,108 +3359,27 @@ export class AnonymousMutation_7GQL extends Apollo.Mutation<
 @Injectable({
   providedIn: 'root'
 })
-export class AnonymousMutation_8GQL extends Apollo.Mutation<
-  AnonymousMutation_8.Mutation,
-  AnonymousMutation_8.Variables
+export class GetRestaurantsNearByGQL extends Apollo.Query<
+  GetRestaurantsNearBy.Query,
+  GetRestaurantsNearBy.Variables
 > {
   document: any = gql`
-    mutation($where: kmeal_item_bool_exp!) {
-      delete_kmeal_item(where: $where) {
-        affected_rows
-        returning {
-          item_id
-        }
-      }
-    }
-  `;
-}
-@Injectable({
-  providedIn: 'root'
-})
-export class AnonymousMutation_9GQL extends Apollo.Mutation<
-  AnonymousMutation_9.Mutation,
-  AnonymousMutation_9.Variables
-> {
-  document: any = gql`
-    mutation(
-      $where: kmeal_restaurant_group_bool_exp!
-      $_set: kmeal_restaurant_group_set_input
-      $_inc: kmeal_restaurant_group_inc_input
-    ) {
-      update_kmeal_restaurant_group(where: $where, _set: $_set, _inc: $_inc) {
-        affected_rows
-        returning {
-          group_id
-          group_name
-        }
-      }
-    }
-  `;
-}
-@Injectable({
-  providedIn: 'root'
-})
-export class AnonymousMutation_10GQL extends Apollo.Mutation<
-  AnonymousMutation_10.Mutation,
-  AnonymousMutation_10.Variables
-> {
-  document: any = gql`
-    mutation(
-      $where: kmeal_item_bool_exp!
-      $_set: kmeal_item_set_input
-      $_inc: kmeal_item_inc_input
-    ) {
-      update_kmeal_item(where: $where, _set: $_set, _inc: $_inc) {
-        affected_rows
-        returning {
-          item_id
-        }
-      }
-    }
-  `;
-}
-@Injectable({
-  providedIn: 'root'
-})
-export class AnonymousMutation_11GQL extends Apollo.Mutation<
-  AnonymousMutation_11.Mutation,
-  AnonymousMutation_11.Variables
-> {
-  document: any = gql`
-    mutation(
-      $objects: [kmeal_restaurant_group_insert_input!]!
-      $on_conflict: kmeal_restaurant_group_on_conflict
-    ) {
-      insert_kmeal_restaurant_group(
-        objects: $objects
-        on_conflict: $on_conflict
-      ) {
-        affected_rows
-        returning {
-          group_id
-          group_name
-        }
-      }
-    }
-  `;
-}
-@Injectable({
-  providedIn: 'root'
-})
-export class AnonymousMutation_12GQL extends Apollo.Mutation<
-  AnonymousMutation_12.Mutation,
-  AnonymousMutation_12.Variables
-> {
-  document: any = gql`
-    mutation(
-      $object: [kmeal_item_insert_input!]!
-      $on_conflict: kmeal_item_on_conflict
-    ) {
-      insert_kmeal_item(objects: $object, on_conflict: $on_conflict) {
-        affected_rows
-        returning {
-          item_id
-        }
+    query getRestaurantsNearBy($nearby: GetNearByInput) {
+      getRestaurantsNearby(nearby: $nearby) {
+        address
+        description
+        distance
+        isactive
+        latitude
+        longitude
+        logo
+        name
+        owner
+        phone
+        restaurant_id
+        timeofoperation
+        yelp_id
+        rating
       }
     }
   `;

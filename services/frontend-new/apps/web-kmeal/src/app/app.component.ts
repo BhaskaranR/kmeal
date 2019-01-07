@@ -3,6 +3,7 @@ import { MediaMatcher } from '@angular/cdk/layout';
 import { RouterModule, Router } from '@angular/router';
 
 interface Coordinate {
+  type:string,
   lat:number,
   lng:number,
   radius:number
@@ -39,6 +40,7 @@ export class AppComponent {
   onAddressChange(e){
     console.log('address changed : ',e);
     let param : Coordinate = {
+      type:'ADDRESS',
       lat:e.geometry.location.lat(),
       lng:e.geometry.location.lng(),
       radius:10

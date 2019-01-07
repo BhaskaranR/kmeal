@@ -3,6 +3,7 @@ import { CommonModule } from "@angular/common";
 import { Routes } from "@angular/router";
 import { SearchComponent } from "./search/search.component";
 import { FeatureCoreModule } from "@kmeal-nx/feature-core";
+import { UiModule } from "@kmeal-nx/ui";
 
 
 export const featureSearchRoutes: Routes = [
@@ -13,7 +14,7 @@ export const featureSearchRoutes: Routes = [
 ];
 
 @NgModule({
-  imports: [CommonModule, FeatureCoreModule],
+  imports: [CommonModule, FeatureCoreModule,UiModule],
   declarations:[SearchComponent]
 })
 export class FeatureSearchModule {}
