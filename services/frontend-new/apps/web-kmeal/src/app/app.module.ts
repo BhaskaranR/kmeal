@@ -22,6 +22,7 @@ import {
   MatSidenavModule,
   MatListModule
 } from '@angular/material';
+import { ScatterModule, scatterRoutes } from '@kmeal-nx/scatter';
 
 @NgModule({
   declarations: [AppComponent, NavBarComponent, FooterComponent],
@@ -38,6 +39,7 @@ import {
     MatListModule,
     FlexLayoutModule,
     FeatureHomeModule,
+    ScatterModule,
     RouterModule.forRoot(
       [
         {
@@ -48,6 +50,10 @@ import {
         {
           path: 'home',
           children: homeRoutes
+        },
+        {
+          path: 'profile',
+          children: scatterRoutes
         },
         {
           path: 'menu',

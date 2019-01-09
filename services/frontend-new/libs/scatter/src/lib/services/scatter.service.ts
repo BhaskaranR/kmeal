@@ -571,7 +571,7 @@ export class ScatterService {
             }).catch((error) => {
                 console.error(error);
                 reject(error);
-            });   
+            });
         });
     }
 
