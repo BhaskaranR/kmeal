@@ -18,6 +18,7 @@ import { HttpClientModule } from "@angular/common/http";
 import { Routes, RouterModule } from "@angular/router";
 import { NavBarComponent } from "./nav/nav.component";
 import { FlexLayoutModule } from "@angular/flex-layout";
+import { ScatterModule, scatterRoutes } from '@kmeal-nx/scatter';
 
 @NgModule({
   declarations: [AppComponent, NavBarComponent],
@@ -34,6 +35,7 @@ import { FlexLayoutModule } from "@angular/flex-layout";
     MatButtonModule,
     MatSidenavModule,
     MatMenuModule,
+    ScatterModule,
     RouterModule.forRoot(
       [
         {
@@ -46,8 +48,11 @@ import { FlexLayoutModule } from "@angular/flex-layout";
           loadChildren: "@kmeal-nx/feature-restaurant-dashboard#FeatureRestaurantDashboardModule"
         },
         { path: "orders", loadChildren: "@kmeal-nx/feature-restaurant-orders#FeatureRestaurantOrdersModule" },
-         {path: 'menu', loadChildren: '@kmeal-nx/feature-restaurant-menu#FeatureRestaurantMenuModule'}
-       
+        { path: 'menu', loadChildren: '@kmeal-nx/feature-restaurant-menu#FeatureRestaurantMenuModule' },
+        {
+          path: 'profile',
+          children: scatterRoutes
+        },
       ],
       { paramsInheritanceStrategy: "always" }
     ),
@@ -57,4 +62,4 @@ import { FlexLayoutModule } from "@angular/flex-layout";
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

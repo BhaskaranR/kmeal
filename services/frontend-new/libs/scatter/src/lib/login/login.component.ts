@@ -3,9 +3,9 @@ import { ScatterService } from '../services/scatter.service';
 
 
 @Component({
-    selector: 'home-page',
-    templateUrl: './home.page.html',
-    styleUrls: ['./home.page.scss']
+    selector: 'kmeal-nx-login',
+    templateUrl: './login.component.html',
+    styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
 
