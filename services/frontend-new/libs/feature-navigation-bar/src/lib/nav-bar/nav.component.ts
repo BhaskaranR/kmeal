@@ -9,6 +9,7 @@ import { Component, Output , EventEmitter} from '@angular/core';
 })
 export class NavBarComponent  {
     isSideNavOpen : boolean = false;
+    isLoggedIn:boolean = false;
     @Output() toggleSidenavEvent: EventEmitter<boolean> = new EventEmitter();
     @Output() onAddressChangeEvent : EventEmitter<{[key:string]:string}> = new EventEmitter();
     constructor(){}

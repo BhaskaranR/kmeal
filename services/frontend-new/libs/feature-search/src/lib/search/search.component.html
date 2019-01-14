@@ -15,7 +15,7 @@
             <h4>Results : {{type}}</h4>
         </div>
         <div fxFlex="50%" style="text-align: right">
-            Filter <mat-icon (click)="isFilterOpen = !isFilterOpen">filter_list</mat-icon>
+            Filter <mat-icon (click)="isFilterOpen = !isFilterOpen" style="margin-top:20px">filter_list</mat-icon>
         </div>
     </div>
         
@@ -23,7 +23,7 @@
             <br>
             <br>
         <form action="">
-            <mat-form-field>
+            <mat-form-field style="margin-right:15px">
                 <mat-select placeholder="Cuisine" [value]="'Asian'">
                     <mat-option>Chinese</mat-option>
                     <mat-option>Japanese</mat-option>
@@ -33,10 +33,9 @@
                     <mat-option>French</mat-option>
                     <mat-option>Italian</mat-option>
                 </mat-select>
-
             </mat-form-field>  
             
-            <mat-form-field>
+            <mat-form-field style="margin-right:15px">
                 <mat-select placeholder="Distance" [value]="'2 Blocks'">
                     <mat-option>2 Blocks</mat-option>
                     <mat-option>6 Blocks</mat-option>
@@ -45,8 +44,8 @@
                 </mat-select>
             </mat-form-field> 
 
-            <mat-form-field>
-                <mat-select placeholder="Rating" [value]="'2 Blocks'">
+            <mat-form-field style="margin-right:15px">
+                <mat-select placeholder="Rating" [value]="'4 stars'">
                     <mat-option>5 stars</mat-option>
                     <mat-option>4 stars</mat-option>
                     <mat-option>3 stars</mat-option>
@@ -55,18 +54,17 @@
                 </mat-select>
             </mat-form-field> 
 
-            <mat-form-field>
-                    <mat-select placeholder="Price" [value]="'2 Blocks'">
-                        <mat-option>$</mat-option>
-                        <mat-option>$$</mat-option>
-                        <mat-option>$$$</mat-option>
-                        <mat-option>$$$$</mat-option>
-                    </mat-select>
-                </mat-form-field> 
+            <mat-form-field style="margin-right:15px">
+                <mat-select placeholder="Price" [value]="'$'">
+                    <mat-option>$</mat-option>
+                    <mat-option>$$</mat-option>
+                    <mat-option>$$$</mat-option>
+                    <mat-option>$$$$</mat-option>
+                </mat-select>
+            </mat-form-field> 
 
             
-                <button  mat-stroked-button >Search</button>
-            
+            <button  mat-stroked-button >Search</button>
         </form>
     </div>
         
