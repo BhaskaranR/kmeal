@@ -1,9 +1,0 @@
-mutation ($where: kmeal_restaurant_group_bool_exp!, $_set: kmeal_restaurant_group_set_input, $_inc: kmeal_restaurant_group_inc_input) {
-  update_kmeal_restaurant_group(where: $where, _set: $_set, _inc: $_inc) {
-    affected_rows
-    returning {
-      group_id
-      group_name
-    }
-  }
-}

@@ -1,0 +1,74 @@
+<div class="homepage-promo">
+    <div class="homepage-row">
+        <form [formGroup]="menuBookForm" novalidate (ngSubmit)="onBookSubmit()">
+            <div class="container">
+                <div class="header-section">
+                    <div class="header-headline">
+                        <h1 class="mat-h2">Menu Book</h1>
+                        <h2> Add menu book title</h2>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <mat-form-field class="full-width">
+                                <input matInput placeholder="Chinese" formControlName="menubook">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <button mat-raised-button color="primary" type="submit">Create New Menubook</button>
+                        </div>
+                    </div>
+                </div>
+                <div cdkDropList class="list" (cdkDropListDropped)="drop($event)">
+                    <div class="box" *ngFor="let item of menubook" cdkDrag>
+                        <div class="handle" cdkDragHandle>
+                            <mat-icon>menu</mat-icon>
+                        </div>
+                        <div>{{item}}</div>
+
+                        <div class="action">
+                            <mat-icon>delete</mat-icon>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class="seperator"></div>
+        <form [formGroup]="sectionsForm" novalidate (ngSubmit)="onSectionsSubmit()">
+            <div class="container">
+                <div class="header-section">
+                    <div class="header-headline">
+                        <h1 class="mat-h2">Sections for {{selectedMenuBook}}</h1>
+                        <h2> Add section title</h2>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <mat-form-field class="full-width">
+                                <input matInput placeholder="Breakfast" formControlName="section">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <button mat-raised-button color="primary" type="submit">Create New Section</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div cdkDropList class="list" (cdkDropListDropped)="drop($event)">
+                    <div class="box" *ngFor="let item of sections" cdkDrag>
+                        <div class="handle" cdkDragHandle>
+                            <mat-icon>menu</mat-icon>
+                        </div>
+                        <div>{{item}}</div>
+
+                        <div class="action">
+                            <mat-icon>delete</mat-icon>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

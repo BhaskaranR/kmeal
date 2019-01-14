@@ -1,9 +1,0 @@
-mutation ($objects: [kmeal_restaurant_group_insert_input!]!, $on_conflict: kmeal_restaurant_group_on_conflict) {
-  insert_kmeal_restaurant_group(objects: $objects, on_conflict : $on_conflict) {
-    affected_rows
-    returning {
-      group_id
-      group_name
-    }
-  }
-}
