@@ -4,7 +4,7 @@
             <h1 class="mat-h1">Welcome to Kmeal</h1>
             <h2>
                 You would need to have have scatter desktop wallet for sigining in. Download scatter from this
-                <a class="component-list-item" href="https://get-scatter.com/">link</a>, if you don't have them.
+                <a class="wallet-link" href="https://get-scatter.com/">link</a>, if you don't have them.
             </h2>
         </div>
     </div>
@@ -13,7 +13,7 @@
 <div class="homepage-promo">
     <div class="homepage-row">
         <div class="component-list-category">
-            <a [hidden]="!scatter.logged" class="component-list-item" (click)="logout()">
+            <a *ngIf="scatter.logged" class="component-list-item" (click)="logout()">
                 <mat-card>
                     <mat-card-header class="component-list-card-header">
                         <mat-card-title class="component-list-card-title">Logout</mat-card-title>
@@ -23,7 +23,7 @@
                     </mat-card-header>
                 </mat-card>
             </a>
-            <a [hidden]="scatter.logged" class="component-list-item" (click)="login()">
+            <a *ngIf="!scatter.logged" class="component-list-item" (click)="login()">
                 <mat-card>
                     <mat-card-header class="component-list-card-header">
                         <mat-card-title class="component-list-card-title">Login with scatter</mat-card-title>

@@ -10,8 +10,11 @@
     </div>
     <div fxFlex="20%" fxFlex.sm="20%" fxFlex.xs="20%" fxFlexOrder="4" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="20px">
         <a routerLink="/profile" *ngIf="!scatter.logged">LOGIN</a>
+
+
         <div *ngIf="scatter.logged">
-            <mat-icon [matMenuTriggerFor]="menu" [routerLink]="/profile/account" style="margin-top:5px">person</mat-icon>
+            [routerLink]="/profile/account"
+            <mat-icon [matMenuTriggerFor]="menu" style="margin-top:5px">person</mat-icon>
             <!-- <mat-menu #menu="matMenu">
                 <button mat-menu-item routerLink="/profile">Profile</button>
                 <button mat-menu-item>Settings</button>

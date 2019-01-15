@@ -377,7 +377,6 @@ export class ScatterService {
             if (this._connected) return; // <---- avoids a loop
             this.waitEosjs.then(() => {
                 this.lib.connect(this.appTitle, connectionOptions).then(connected => {
-                    // si está logueado this.lib.identity se carga sólo y ya está disponible
                     console.log("this.lib.connect()", connected);
                     this._connected = connected;
                     if(!connected) {
@@ -503,7 +502,7 @@ export class ScatterService {
     login() {
         console.log("ScatterService.login()");
         return new Promise<any>((resolve, reject) => {
-            if (this.lib.identity) {
+            if (this.lib && this.lib.identity) {
                 this.setIdentity(this.lib.identity);
                 resolve(this.lib.identity);
             } else {

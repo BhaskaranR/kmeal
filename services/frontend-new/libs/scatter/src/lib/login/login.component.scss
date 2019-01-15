@@ -65,6 +65,15 @@ $small-breakpoint-width: 720px;
     }
 }
 
+.wallet-link {
+    &,
+    &:active,
+    &:hover,
+    &:focus {
+        text-decoration: none;
+    }
+}
+
 .component-list-item {
     display: inline-block;
     margin: 20px;

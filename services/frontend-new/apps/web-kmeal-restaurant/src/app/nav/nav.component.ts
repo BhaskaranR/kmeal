@@ -1,4 +1,5 @@
 import { Component, Output, EventEmitter } from "@angular/core";
+import { ScatterService } from "@kmeal-nx/scatter";
 
 @Component({
   selector: "kmeal-nx-nav-bar",
@@ -11,7 +12,8 @@ export class NavBarComponent {
   isLoggedIn = true;
   isSideNavOpen: boolean = false;
   @Output() toggleSidenavEvent: EventEmitter<boolean> = new EventEmitter();
-  constructor() {}
+  constructor(
+    public scatter: ScatterService) {}
   toggleSideNav() {
     this.isSideNavOpen = !this.isSideNavOpen;
     this.toggleSidenavEvent.emit(this.isSideNavOpen);
