@@ -1,29 +1,27 @@
-
 .search-bar-container {
     height: 45px;
-  }
-  
-  .search-bar-search {
+}
+
+.search-bar-search {
     input {
-      background-color: rgb(243, 243, 243);
-      padding: 10px 48px 10px 48px;
-      height: 45px;
-      outline: none;
+        background-color: rgb(243, 243, 243);
+        padding: 10px 48px 10px 48px;
+        height: 45px;
+        outline: none;
     }
-  }
-  
-  #search-bar {
+}
+
+#search-bar {
     border: 0;
-  }
-  
-  .search-bar-autocomplete {
-    width: 300px;
+}
+
+.search-bar-autocomplete {
     height: 600px;
     position: absolute;
     border: 1px solid lightgray;
     border-top: 0px;
-  }
-  
-  input:focus {
+}
+
+input:focus {
     outline: none;
-  }
+}

@@ -1,42 +1,41 @@
+<!-- <div *ngIf="!isAddressSet; else app">
+    <kmeal-nx-welcomepage></kmeal-nx-welcomepage>
+    <kmeal-nx-footer-bar></kmeal-nx-footer-bar>
+</div>
+
+<ng-template #app> -->
 <kmeal-nx-nav-bar (toggleSidenavEvent)="snav.toggle($event)"></kmeal-nx-nav-bar>
 <mat-sidenav-container>
-        <mat-sidenav 
-          #snav 
-          [mode]="(mobileQuery.matches && !isHome) ? 'over' : (mobileQuery.matches) ? 'over':'side'"
-          [fixedInViewport]="mobileQuery.matches" 
-          opened="true"
-          style="background: #F3F3F3;"
-          class="shadow_right" 
-          autosize>
-          <div class="leftSidenavContent" fxLayout="column" fxFlexFill>
+    <mat-sidenav #snav [mode]="(mobileQuery.matches && !isHome) ? 'over' : (mobileQuery.matches) ? 'over':'side'" [fixedInViewport]="mobileQuery.matches" opened="true" style="background: #F3F3F3;" class="shadow_right" autosize>
+        <div class="leftSidenavContent" fxLayout="column" fxFlexFill>
             <mat-list fxFlex="100%">
-              <h3 mat-subheader>Folders</h3>
-              <mat-list-item >
-                <mat-icon mat-list-icon>settings</mat-icon>
-                <p mat-line> Settings</p>
-              </mat-list-item>
-              <mat-list-item >
-                  <mat-icon mat-list-icon>settings</mat-icon>
-                  <p mat-line> Some other settings</p>
-              </mat-list-item>
-              <mat-divider></mat-divider>
-              <h3 mat-subheader>Notes</h3>
-              <mat-list-item >
-                <mat-icon mat-list-icon>note</mat-icon>
-                <p mat-line> blo </p>
-              </mat-list-item>
+                <h3 mat-subheader>Folders</h3>
+                <mat-list-item>
+                    <mat-icon mat-list-icon>settings</mat-icon>
+                    <p mat-line> Settings</p>
+                </mat-list-item>
+                <mat-list-item>
+                    <mat-icon mat-list-icon>settings</mat-icon>
+                    <p mat-line> Some other settings</p>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+                <h3 mat-subheader>Notes</h3>
+                <mat-list-item>
+                    <mat-icon mat-list-icon>note</mat-icon>
+                    <p mat-line> blo </p>
+                </mat-list-item>
             </mat-list>
-          </div>
-        </mat-sidenav>
-          <!-- MENU LEFT -->
+        </div>
+    </mat-sidenav>
+    <!-- MENU LEFT -->
 
-        <mat-sidenav-content>
-          
-    <div class="main-content">
-      <router-outlet></router-outlet>
-    </div>
-        </mat-sidenav-content>
-    
+    <mat-sidenav-content>
+
+        <div class="main-content">
+            <router-outlet></router-outlet>
+        </div>
+    </mat-sidenav-content>
+
+    <kmeal-nx-footer-bar></kmeal-nx-footer-bar>
 </mat-sidenav-container>
-
-<kmeal-nx-footer-bar></kmeal-nx-footer-bar>
+<!-- </ng-template> -->

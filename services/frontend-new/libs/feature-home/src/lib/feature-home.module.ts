@@ -6,12 +6,14 @@ import { Routes, RouterModule } from '@angular/router';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { NguCarouselModule } from '@ngu/carousel';
 import { MatCardModule, MatSelectModule, MatGridListModule, MatIconModule, MatSnackBarModule, MatProgressSpinnerModule } from '@angular/material';
-import { UiModule } from '@kmeal-nx/ui';
+import { UiModule, SvgViewerModule } from '@kmeal-nx/ui';
 import { SearchBarComponent } from './search-bar/search-bar.component';
 import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 import { FormsModule } from '@angular/forms';
+import { Welcomepage } from './welcomepage/welcomepage';
 
-const components = [HomeComponent, SearchComponent, SearchBarComponent];
+
+const components = [HomeComponent, SearchComponent, SearchBarComponent, Welcomepage];
 
 export const homeRoutes: Routes = [
   {
@@ -38,6 +40,7 @@ export const homeRoutes: Routes = [
     MatSnackBarModule,
     FlexLayoutModule,
     GooglePlaceModule, 
+    SvgViewerModule,
     UiModule],
   declarations: [components],
   exports: [components]

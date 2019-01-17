@@ -1,564 +1,556 @@
 {
-  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-  "version": 1,
-  "newProjectRoot": "",
-  "projects": {
-    "web-kmeal": {
-      "root": "apps/web-kmeal/",
-      "sourceRoot": "apps/web-kmeal/src",
-      "projectType": "application",
-      "prefix": "kmeal-nx",
-      "schematics": {
-        "@schematics/angular:component": {
-          "styleext": "scss",
-          "spec": true,
-          "flat": true,
-          "changeDetection": "OnPush"
-        }
-      },
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:browser",
-          "options": {
-            "outputPath": "dist/apps/web-kmeal",
-            "index": "apps/web-kmeal/src/index.html",
-            "main": "apps/web-kmeal/src/main.ts",
-            "polyfills": "apps/web-kmeal/src/polyfills.ts",
-            "tsConfig": "apps/web-kmeal/tsconfig.app.json",
-            "assets": [
-              "apps/web-kmeal/src/favicon.ico",
-              "apps/web-kmeal/src/assets"
-            ],
-            "styles": [
-              "apps/web-kmeal/src/styles.scss"
-            ],
-            "scripts": []
-          },
-          "configurations": {
-            "production": {
-              "fileReplacements": [
-                {
-                  "replace": "apps/web-kmeal/src/environments/environment.ts",
-                  "with": "apps/web-kmeal/src/environments/environment.prod.ts"
+    "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+    "version": 1,
+    "newProjectRoot": "",
+    "projects": {
+        "web-kmeal": {
+            "root": "apps/web-kmeal/",
+            "sourceRoot": "apps/web-kmeal/src",
+            "projectType": "application",
+            "prefix": "kmeal-nx",
+            "schematics": {
+                "@schematics/angular:component": {
+                    "styleext": "scss",
+                    "spec": true,
+                    "flat": true,
+                    "changeDetection": "OnPush"
                 }
-              ],
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
-              "aot": true,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
+            },
+            "architect": {
+                "build": {
+                    "builder": "@angular-devkit/build-angular:browser",
+                    "options": {
+                        "outputPath": "dist/apps/web-kmeal",
+                        "index": "apps/web-kmeal/src/index.html",
+                        "main": "apps/web-kmeal/src/main.ts",
+                        "polyfills": "apps/web-kmeal/src/polyfills.ts",
+                        "tsConfig": "apps/web-kmeal/tsconfig.app.json",
+                        "assets": [
+                            "apps/web-kmeal/src/favicon.ico",
+                            "apps/web-kmeal/src/assets"
+                        ],
+                        "styles": [
+                            "apps/web-kmeal/src/styles.scss"
+                        ],
+                        "scripts": []
+                    },
+                    "configurations": {
+                        "production": {
+                            "fileReplacements": [{
+                                "replace": "apps/web-kmeal/src/environments/environment.ts",
+                                "with": "apps/web-kmeal/src/environments/environment.prod.ts"
+                            }],
+                            "optimization": true,
+                            "outputHashing": "all",
+                            "sourceMap": false,
+                            "extractCss": true,
+                            "namedChunks": false,
+                            "aot": true,
+                            "extractLicenses": true,
+                            "vendorChunk": false,
+                            "buildOptimizer": true,
+                            "budgets": [{
+                                "type": "initial",
+                                "maximumWarning": "2mb",
+                                "maximumError": "5mb"
+                            }]
+                        }
+                    }
+                },
+                "serve": {
+                    "builder": "@angular-devkit/build-angular:dev-server",
+                    "options": {
+                        "browserTarget": "web-kmeal:build"
+                    },
+                    "configurations": {
+                        "production": {
+                            "browserTarget": "web-kmeal:build:production"
+                        }
+                    }
+                },
+                "extract-i18n": {
+                    "builder": "@angular-devkit/build-angular:extract-i18n",
+                    "options": {
+                        "browserTarget": "web-kmeal:build"
+                    }
+                },
+                "test": {
+                    "builder": "@angular-devkit/build-angular:karma",
+                    "options": {
+                        "main": "apps/web-kmeal/src/test.ts",
+                        "polyfills": "apps/web-kmeal/src/polyfills.ts",
+                        "tsConfig": "apps/web-kmeal/tsconfig.spec.json",
+                        "karmaConfig": "apps/web-kmeal/karma.conf.js",
+                        "styles": [
+                            "apps/web-kmeal/src/styles.scss"
+                        ],
+                        "scripts": [],
+                        "assets": [
+                            "apps/web-kmeal/src/favicon.ico",
+                            "apps/web-kmeal/src/assets"
+                        ]
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "tsConfig": [
+                            "apps/web-kmeal/tsconfig.app.json",
+                            "apps/web-kmeal/tsconfig.spec.json"
+                        ],
+                        "exclude": [
+                            "**/node_modules/**"
+                        ]
+                    }
                 }
-              ]
             }
-          }
         },
-        "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
-            "browserTarget": "web-kmeal:build"
-          },
-          "configurations": {
-            "production": {
-              "browserTarget": "web-kmeal:build:production"
-            }
-          }
-        },
-        "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n",
-          "options": {
-            "browserTarget": "web-kmeal:build"
-          }
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "apps/web-kmeal/src/test.ts",
-            "polyfills": "apps/web-kmeal/src/polyfills.ts",
-            "tsConfig": "apps/web-kmeal/tsconfig.spec.json",
-            "karmaConfig": "apps/web-kmeal/karma.conf.js",
-            "styles": [
-              "apps/web-kmeal/src/styles.scss"
-            ],
-            "scripts": [],
-            "assets": [
-              "apps/web-kmeal/src/favicon.ico",
-              "apps/web-kmeal/src/assets"
-            ]
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "apps/web-kmeal/tsconfig.app.json",
-              "apps/web-kmeal/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        }
-      }
-    },
-    "web-kmeal-e2e": {
-      "root": "apps/web-kmeal-e2e",
-      "projectType": "application",
-      "prefix": "",
-      "schematics": {
-        "@schematics/angular:component": {
-          "styleext": "scss",
-          "spec": true,
-          "flat": true,
-          "changeDetection": "OnPush"
-        }
-      },
-      "architect": {
-        "e2e": {
-          "builder": "@angular-devkit/build-angular:protractor",
-          "options": {
-            "protractorConfig": "apps/web-kmeal-e2e/protractor.conf.js",
-            "devServerTarget": "web-kmeal:serve"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "web-kmeal:serve:production"
-            }
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": "apps/web-kmeal-e2e/tsconfig.e2e.json",
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        }
-      }
-    },
-    "web-kmeal-restaurant": {
-      "root": "apps/web-kmeal-restaurant/",
-      "sourceRoot": "apps/web-kmeal-restaurant/src",
-      "projectType": "application",
-      "prefix": "kmeal-nx",
-      "schematics": {},
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:browser",
-          "options": {
-            "outputPath": "dist/apps/web-kmeal-restaurant",
-            "index": "apps/web-kmeal-restaurant/src/index.html",
-            "main": "apps/web-kmeal-restaurant/src/main.ts",
-            "polyfills": "apps/web-kmeal-restaurant/src/polyfills.ts",
-            "tsConfig": "apps/web-kmeal-restaurant/tsconfig.app.json",
-            "assets": [
-              "apps/web-kmeal-restaurant/src/favicon.ico",
-              "apps/web-kmeal-restaurant/src/assets"
-            ],
-            "styles": [
-              "apps/web-kmeal-restaurant/src/styles.scss"
-            ],
-            "scripts": []
-          },
-          "configurations": {
-            "production": {
-              "fileReplacements": [
-                {
-                  "replace": "apps/web-kmeal-restaurant/src/environments/environment.ts",
-                  "with": "apps/web-kmeal-restaurant/src/environments/environment.prod.ts"
+        "web-kmeal-e2e": {
+            "root": "apps/web-kmeal-e2e",
+            "projectType": "application",
+            "prefix": "",
+            "schematics": {
+                "@schematics/angular:component": {
+                    "styleext": "scss",
+                    "spec": true,
+                    "flat": true,
+                    "changeDetection": "OnPush"
                 }
-              ],
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
-              "aot": true,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
+            },
+            "architect": {
+                "e2e": {
+                    "builder": "@angular-devkit/build-angular:protractor",
+                    "options": {
+                        "protractorConfig": "apps/web-kmeal-e2e/protractor.conf.js",
+                        "devServerTarget": "web-kmeal:serve"
+                    },
+                    "configurations": {
+                        "production": {
+                            "devServerTarget": "web-kmeal:serve:production"
+                        }
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "tsConfig": "apps/web-kmeal-e2e/tsconfig.e2e.json",
+                        "exclude": [
+                            "**/node_modules/**"
+                        ]
+                    }
                 }
-              ]
             }
-          }
         },
-        "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
-            "browserTarget": "web-kmeal-restaurant:build"
-          },
-          "configurations": {
-            "production": {
-              "browserTarget": "web-kmeal-restaurant:build:production"
+        "web-kmeal-restaurant": {
+            "root": "apps/web-kmeal-restaurant/",
+            "sourceRoot": "apps/web-kmeal-restaurant/src",
+            "projectType": "application",
+            "prefix": "kmeal-nx",
+            "schematics": {},
+            "architect": {
+                "build": {
+                    "builder": "@angular-devkit/build-angular:browser",
+                    "options": {
+                        "outputPath": "dist/apps/web-kmeal-restaurant",
+                        "index": "apps/web-kmeal-restaurant/src/index.html",
+                        "main": "apps/web-kmeal-restaurant/src/main.ts",
+                        "polyfills": "apps/web-kmeal-restaurant/src/polyfills.ts",
+                        "tsConfig": "apps/web-kmeal-restaurant/tsconfig.app.json",
+                        "assets": [
+                            "apps/web-kmeal-restaurant/src/favicon.ico",
+                            "apps/web-kmeal-restaurant/src/assets"
+                        ],
+                        "styles": [
+                            "apps/web-kmeal-restaurant/src/styles.scss"
+                        ],
+                        "scripts": []
+                    },
+                    "configurations": {
+                        "production": {
+                            "fileReplacements": [{
+                                "replace": "apps/web-kmeal-restaurant/src/environments/environment.ts",
+                                "with": "apps/web-kmeal-restaurant/src/environments/environment.prod.ts"
+                            }],
+                            "optimization": true,
+                            "outputHashing": "all",
+                            "sourceMap": false,
+                            "extractCss": true,
+                            "namedChunks": false,
+                            "aot": true,
+                            "extractLicenses": true,
+                            "vendorChunk": false,
+                            "buildOptimizer": true,
+                            "budgets": [{
+                                "type": "initial",
+                                "maximumWarning": "2mb",
+                                "maximumError": "5mb"
+                            }]
+                        }
+                    }
+                },
+                "serve": {
+                    "builder": "@angular-devkit/build-angular:dev-server",
+                    "options": {
+                        "browserTarget": "web-kmeal-restaurant:build"
+                    },
+                    "configurations": {
+                        "production": {
+                            "browserTarget": "web-kmeal-restaurant:build:production"
+                        }
+                    }
+                },
+                "extract-i18n": {
+                    "builder": "@angular-devkit/build-angular:extract-i18n",
+                    "options": {
+                        "browserTarget": "web-kmeal-restaurant:build"
+                    }
+                },
+                "test": {
+                    "builder": "@angular-devkit/build-angular:karma",
+                    "options": {
+                        "main": "apps/web-kmeal-restaurant/src/test.ts",
+                        "polyfills": "apps/web-kmeal-restaurant/src/polyfills.ts",
+                        "tsConfig": "apps/web-kmeal-restaurant/tsconfig.spec.json",
+                        "karmaConfig": "apps/web-kmeal-restaurant/karma.conf.js",
+                        "styles": [
+                            "apps/web-kmeal-restaurant/src/styles.scss"
+                        ],
+                        "scripts": [],
+                        "assets": [
+                            "apps/web-kmeal-restaurant/src/favicon.ico",
+                            "apps/web-kmeal-restaurant/src/assets"
+                        ]
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "tsConfig": [
+                            "apps/web-kmeal-restaurant/tsconfig.app.json",
+                            "apps/web-kmeal-restaurant/tsconfig.spec.json"
+                        ],
+                        "exclude": [
+                            "**/node_modules/**"
+                        ]
+                    }
+                }
             }
-          }
         },
-        "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n",
-          "options": {
-            "browserTarget": "web-kmeal-restaurant:build"
-          }
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "apps/web-kmeal-restaurant/src/test.ts",
-            "polyfills": "apps/web-kmeal-restaurant/src/polyfills.ts",
-            "tsConfig": "apps/web-kmeal-restaurant/tsconfig.spec.json",
-            "karmaConfig": "apps/web-kmeal-restaurant/karma.conf.js",
-            "styles": [
-              "apps/web-kmeal-restaurant/src/styles.scss"
-            ],
-            "scripts": [],
-            "assets": [
-              "apps/web-kmeal-restaurant/src/favicon.ico",
-              "apps/web-kmeal-restaurant/src/assets"
-            ]
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "apps/web-kmeal-restaurant/tsconfig.app.json",
-              "apps/web-kmeal-restaurant/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        }
-      }
-    },
-    "web-kmeal-restaurant-e2e": {
-      "root": "apps/web-kmeal-restaurant-e2e",
-      "projectType": "application",
-      "prefix": "",
-      "architect": {
-        "e2e": {
-          "builder": "@angular-devkit/build-angular:protractor",
-          "options": {
-            "protractorConfig": "apps/web-kmeal-restaurant-e2e/protractor.conf.js",
-            "devServerTarget": "web-kmeal-restaurant:serve"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "web-kmeal-restaurant:serve:production"
+        "web-kmeal-restaurant-e2e": {
+            "root": "apps/web-kmeal-restaurant-e2e",
+            "projectType": "application",
+            "prefix": "",
+            "architect": {
+                "e2e": {
+                    "builder": "@angular-devkit/build-angular:protractor",
+                    "options": {
+                        "protractorConfig": "apps/web-kmeal-restaurant-e2e/protractor.conf.js",
+                        "devServerTarget": "web-kmeal-restaurant:serve"
+                    },
+                    "configurations": {
+                        "production": {
+                            "devServerTarget": "web-kmeal-restaurant:serve:production"
+                        }
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "tsConfig": "apps/web-kmeal-restaurant-e2e/tsconfig.e2e.json",
+                        "exclude": [
+                            "**/node_modules/**"
+                        ]
+                    }
+                }
             }
-          }
         },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": "apps/web-kmeal-restaurant-e2e/tsconfig.e2e.json",
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        }
-      }
-    },
-    "feature-order": {
-      "root": "libs/feature-order",
-      "sourceRoot": "libs/feature-order/src",
-      "projectType": "library",
-      "prefix": "kmeal-nx",
-      "architect": {
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "libs/feature-order/src/test.ts",
-            "tsConfig": "libs/feature-order/tsconfig.spec.json",
-            "karmaConfig": "libs/feature-order/karma.conf.js"
-          }
+        "feature-order": {
+            "root": "libs/feature-order",
+            "sourceRoot": "libs/feature-order/src",
+            "projectType": "library",
+            "prefix": "kmeal-nx",
+            "architect": {
+                "test": {
+                    "builder": "@angular-devkit/build-angular:karma",
+                    "options": {
+                        "main": "libs/feature-order/src/test.ts",
+                        "tsConfig": "libs/feature-order/tsconfig.spec.json",
+                        "karmaConfig": "libs/feature-order/karma.conf.js"
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "tsConfig": [
+                            "libs/feature-order/tsconfig.lib.json",
+                            "libs/feature-order/tsconfig.spec.json"
+                        ],
+                        "exclude": [
+                            "**/node_modules/**"
+                        ]
+                    }
+                }
+            }
         },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "libs/feature-order/tsconfig.lib.json",
-              "libs/feature-order/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        }
-      }
-    },
-    "scatter": {
-      "root": "libs/scatter",
-      "sourceRoot": "libs/scatter/src",
-      "projectType": "library",
-      "prefix": "kmeal-nx",
-      "architect": {
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "libs/scatter/src/test.ts",
-            "tsConfig": "libs/scatter/tsconfig.spec.json",
-            "karmaConfig": "libs/scatter/karma.conf.js"
-          }
+        "scatter": {
+            "root": "libs/scatter",
+            "sourceRoot": "libs/scatter/src",
+            "projectType": "library",
+            "prefix": "kmeal-nx",
+            "architect": {
+                "test": {
+                    "builder": "@angular-devkit/build-angular:karma",
+                    "options": {
+                        "main": "libs/scatter/src/test.ts",
+                        "tsConfig": "libs/scatter/tsconfig.spec.json",
+                        "karmaConfig": "libs/scatter/karma.conf.js"
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "tsConfig": [
+                            "libs/scatter/tsconfig.lib.json",
+                            "libs/scatter/tsconfig.spec.json"
+                        ],
+                        "exclude": [
+                            "**/node_modules/**"
+                        ]
+                    }
+                }
+            }
         },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "libs/scatter/tsconfig.lib.json",
-              "libs/scatter/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        }
-      }
-    },
-    "ui": {
-      "root": "libs/ui",
-      "sourceRoot": "libs/ui/src",
-      "projectType": "library",
-      "prefix": "kmeal-nx",
-      "architect": {
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "libs/ui/src/test.ts",
-            "tsConfig": "libs/ui/tsconfig.spec.json",
-            "karmaConfig": "libs/ui/karma.conf.js"
-          }
+        "ui": {
+            "root": "libs/ui",
+            "sourceRoot": "libs/ui/src",
+            "projectType": "library",
+            "prefix": "kmeal-nx",
+            "architect": {
+                "test": {
+                    "builder": "@angular-devkit/build-angular:karma",
+                    "options": {
+                        "main": "libs/ui/src/test.ts",
+                        "tsConfig": "libs/ui/tsconfig.spec.json",
+                        "karmaConfig": "libs/ui/karma.conf.js"
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "tsConfig": [
+                            "libs/ui/tsconfig.lib.json",
+                            "libs/ui/tsconfig.spec.json"
+                        ],
+                        "exclude": [
+                            "**/node_modules/**"
+                        ]
+                    }
+                }
+            }
         },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "libs/ui/tsconfig.lib.json",
-              "libs/ui/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        }
-      }
-    },
-    "feature-home": {
-      "root": "libs/feature-home",
-      "sourceRoot": "libs/feature-home/src",
-      "projectType": "library",
-      "prefix": "kmeal-nx",
-      "architect": {
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "libs/feature-home/src/test.ts",
-            "tsConfig": "libs/feature-home/tsconfig.spec.json",
-            "karmaConfig": "libs/feature-home/karma.conf.js"
-          }
+        "feature-home": {
+            "root": "libs/feature-home",
+            "sourceRoot": "libs/feature-home/src",
+            "projectType": "library",
+            "prefix": "kmeal-nx",
+            "architect": {
+                "test": {
+                    "builder": "@angular-devkit/build-angular:karma",
+                    "options": {
+                        "main": "libs/feature-home/src/test.ts",
+                        "tsConfig": "libs/feature-home/tsconfig.spec.json",
+                        "karmaConfig": "libs/feature-home/karma.conf.js"
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "tsConfig": [
+                            "libs/feature-home/tsconfig.lib.json",
+                            "libs/feature-home/tsconfig.spec.json"
+                        ],
+                        "exclude": [
+                            "**/node_modules/**"
+                        ]
+                    }
+                }
+            }
         },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "libs/feature-home/tsconfig.lib.json",
-              "libs/feature-home/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        }
-      }
-    },
-    "feature-profile": {
-      "root": "libs/feature-profile",
-      "sourceRoot": "libs/feature-profile/src",
-      "projectType": "library",
-      "prefix": "kmeal-nx",
-      "architect": {
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "libs/feature-profile/src/test.ts",
-            "tsConfig": "libs/feature-profile/tsconfig.spec.json",
-            "karmaConfig": "libs/feature-profile/karma.conf.js"
-          }
+        "feature-profile": {
+            "root": "libs/feature-profile",
+            "sourceRoot": "libs/feature-profile/src",
+            "projectType": "library",
+            "prefix": "kmeal-nx",
+            "architect": {
+                "test": {
+                    "builder": "@angular-devkit/build-angular:karma",
+                    "options": {
+                        "main": "libs/feature-profile/src/test.ts",
+                        "tsConfig": "libs/feature-profile/tsconfig.spec.json",
+                        "karmaConfig": "libs/feature-profile/karma.conf.js"
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "tsConfig": [
+                            "libs/feature-profile/tsconfig.lib.json",
+                            "libs/feature-profile/tsconfig.spec.json"
+                        ],
+                        "exclude": [
+                            "**/node_modules/**"
+                        ]
+                    }
+                }
+            }
         },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "libs/feature-profile/tsconfig.lib.json",
-              "libs/feature-profile/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        }
-      }
-    },
-    "feature-settings": {
-      "root": "libs/feature-settings",
-      "sourceRoot": "libs/feature-settings/src",
-      "projectType": "library",
-      "prefix": "kmeal-nx",
-      "architect": {
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "libs/feature-settings/src/test.ts",
-            "tsConfig": "libs/feature-settings/tsconfig.spec.json",
-            "karmaConfig": "libs/feature-settings/karma.conf.js"
-          }
+        "feature-settings": {
+            "root": "libs/feature-settings",
+            "sourceRoot": "libs/feature-settings/src",
+            "projectType": "library",
+            "prefix": "kmeal-nx",
+            "architect": {
+                "test": {
+                    "builder": "@angular-devkit/build-angular:karma",
+                    "options": {
+                        "main": "libs/feature-settings/src/test.ts",
+                        "tsConfig": "libs/feature-settings/tsconfig.spec.json",
+                        "karmaConfig": "libs/feature-settings/karma.conf.js"
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "tsConfig": [
+                            "libs/feature-settings/tsconfig.lib.json",
+                            "libs/feature-settings/tsconfig.spec.json"
+                        ],
+                        "exclude": [
+                            "**/node_modules/**"
+                        ]
+                    }
+                }
+            }
         },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "libs/feature-settings/tsconfig.lib.json",
-              "libs/feature-settings/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        }
-      }
-    },
-    "feature-menu": {
-      "root": "libs/feature-menu",
-      "sourceRoot": "libs/feature-menu/src",
-      "projectType": "library",
-      "prefix": "kmeal-nx",
-      "architect": {
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "libs/feature-menu/src/test.ts",
-            "tsConfig": "libs/feature-menu/tsconfig.spec.json",
-            "karmaConfig": "libs/feature-menu/karma.conf.js"
-          }
+        "feature-menu": {
+            "root": "libs/feature-menu",
+            "sourceRoot": "libs/feature-menu/src",
+            "projectType": "library",
+            "prefix": "kmeal-nx",
+            "architect": {
+                "test": {
+                    "builder": "@angular-devkit/build-angular:karma",
+                    "options": {
+                        "main": "libs/feature-menu/src/test.ts",
+                        "tsConfig": "libs/feature-menu/tsconfig.spec.json",
+                        "karmaConfig": "libs/feature-menu/karma.conf.js"
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "tsConfig": [
+                            "libs/feature-menu/tsconfig.lib.json",
+                            "libs/feature-menu/tsconfig.spec.json"
+                        ],
+                        "exclude": [
+                            "**/node_modules/**"
+                        ]
+                    }
+                }
+            }
         },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "libs/feature-menu/tsconfig.lib.json",
-              "libs/feature-menu/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        }
-      }
-    },
-    "feature-restaurant-orders": {
-      "root": "libs/feature-restaurant-orders",
-      "sourceRoot": "libs/feature-restaurant-orders/src",
-      "projectType": "library",
-      "prefix": "kmeal-nx",
-      "architect": {
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "libs/feature-restaurant-orders/src/test.ts",
-            "tsConfig": "libs/feature-restaurant-orders/tsconfig.spec.json",
-            "karmaConfig": "libs/feature-restaurant-orders/karma.conf.js"
-          }
+        "feature-restaurant-orders": {
+            "root": "libs/feature-restaurant-orders",
+            "sourceRoot": "libs/feature-restaurant-orders/src",
+            "projectType": "library",
+            "prefix": "kmeal-nx",
+            "architect": {
+                "test": {
+                    "builder": "@angular-devkit/build-angular:karma",
+                    "options": {
+                        "main": "libs/feature-restaurant-orders/src/test.ts",
+                        "tsConfig": "libs/feature-restaurant-orders/tsconfig.spec.json",
+                        "karmaConfig": "libs/feature-restaurant-orders/karma.conf.js"
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "tsConfig": [
+                            "libs/feature-restaurant-orders/tsconfig.lib.json",
+                            "libs/feature-restaurant-orders/tsconfig.spec.json"
+                        ],
+                        "exclude": [
+                            "**/node_modules/**"
+                        ]
+                    }
+                }
+            }
         },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "libs/feature-restaurant-orders/tsconfig.lib.json",
-              "libs/feature-restaurant-orders/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        }
-      }
-    },
-    "feature-restaurant-dashboard": {
-      "root": "libs/feature-restaurant-dashboard",
-      "sourceRoot": "libs/feature-restaurant-dashboard/src",
-      "projectType": "library",
-      "prefix": "kmeal-nx",
-      "architect": {
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "libs/feature-restaurant-dashboard/src/test.ts",
-            "tsConfig": "libs/feature-restaurant-dashboard/tsconfig.spec.json",
-            "karmaConfig": "libs/feature-restaurant-dashboard/karma.conf.js"
-          }
+        "feature-restaurant-dashboard": {
+            "root": "libs/feature-restaurant-dashboard",
+            "sourceRoot": "libs/feature-restaurant-dashboard/src",
+            "projectType": "library",
+            "prefix": "kmeal-nx",
+            "architect": {
+                "test": {
+                    "builder": "@angular-devkit/build-angular:karma",
+                    "options": {
+                        "main": "libs/feature-restaurant-dashboard/src/test.ts",
+                        "tsConfig": "libs/feature-restaurant-dashboard/tsconfig.spec.json",
+                        "karmaConfig": "libs/feature-restaurant-dashboard/karma.conf.js"
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "tsConfig": [
+                            "libs/feature-restaurant-dashboard/tsconfig.lib.json",
+                            "libs/feature-restaurant-dashboard/tsconfig.spec.json"
+                        ],
+                        "exclude": [
+                            "**/node_modules/**"
+                        ]
+                    }
+                }
+            }
         },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "libs/feature-restaurant-dashboard/tsconfig.lib.json",
-              "libs/feature-restaurant-dashboard/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
+        "feature-restaurant-menu": {
+            "root": "libs/feature-restaurant-menu",
+            "sourceRoot": "libs/feature-restaurant-menu/src",
+            "projectType": "library",
+            "prefix": "kmeal-nx",
+            "architect": {
+                "test": {
+                    "builder": "@angular-devkit/build-angular:karma",
+                    "options": {
+                        "main": "libs/feature-restaurant-menu/src/test.ts",
+                        "tsConfig": "libs/feature-restaurant-menu/tsconfig.spec.json",
+                        "karmaConfig": "libs/feature-restaurant-menu/karma.conf.js"
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "tsConfig": [
+                            "libs/feature-restaurant-menu/tsconfig.lib.json",
+                            "libs/feature-restaurant-menu/tsconfig.spec.json"
+                        ],
+                        "exclude": [
+                            "**/node_modules/**"
+                        ]
+                    }
+                }
+            }
         }
-      }
     },
-    "feature-restaurant-menu": {
-      "root": "libs/feature-restaurant-menu",
-      "sourceRoot": "libs/feature-restaurant-menu/src",
-      "projectType": "library",
-      "prefix": "kmeal-nx",
-      "architect": {
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "libs/feature-restaurant-menu/src/test.ts",
-            "tsConfig": "libs/feature-restaurant-menu/tsconfig.spec.json",
-            "karmaConfig": "libs/feature-restaurant-menu/karma.conf.js"
-          }
+    "cli": {
+        "warnings": {
+            "typescriptMismatch": false,
+            "versionMismatch": false
         },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "libs/feature-restaurant-menu/tsconfig.lib.json",
-              "libs/feature-restaurant-menu/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        }
-      }
-    }
-  },
-  "cli": {
-    "warnings": {
-      "typescriptMismatch": false,
-      "versionMismatch": false
+        "defaultCollection": "@nrwl/schematics"
     },
-    "defaultCollection": "@nrwl/schematics"
-  },
-  "defaultProject": "web-kmeal"
+    "defaultProject": "web-kmeal"
 }

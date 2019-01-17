@@ -67,7 +67,7 @@ export class HomeComponent implements OnInit {
     }
 
     ngOnDestroy() {
-        this.querySubscription.unsubscribe();
+        // this.querySubscription.unsubscribe();
     }
 
     onSearch(type, cuisine) {

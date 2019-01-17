@@ -1,6 +1,5 @@
   
-import { Component ,ViewChild, OnInit} from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { Component ,ViewChild, OnInit, Input} from '@angular/core';
 import { Router } from '@angular/router';
 import { GooglePlaceDirective } from 'ngx-google-places-autocomplete';
 import { Apollo } from 'apollo-angular';
@@ -17,14 +16,15 @@ export class SearchBarComponent  implements OnInit{
         types: [],
         componentRestrictions: { country: 'USA' }
     };
+    geomery: any;
     
     userInput:string;
     isLoaded:boolean = true;
     querySubscription:Subscription;
     @ViewChild("placesRef") placesRef : GooglePlaceDirective;
+    @Input() searchOnBlur;
     
     constructor(
-        public dialogRef:MatDialog, 
         public router:Router,
         public apollo: Apollo) {}
 
@@ -41,13 +41,21 @@ export class SearchBarComponent  implements OnInit{
         console.log('on blur : ',this.userInput);
     }
 
-    handleAddressChange(e){
-        //this.dataService.searchInput = e.formatted_address;
-        this.search(e.geometry.location.lat(),e.geometry.location.lng(), 10);
+    findFood() {
+
     }
 
-    private search(lat, lng, radius){
-        // this.isLoaded = false;
-        // this.dataService.searchRestaurants(lat,lng, radius);
+    handleAddressChange(e){
+        //this.dataService.searchInput = e.formatted_address;
+        if(this.searchOnBlur){
+            
+        }
+        this.geomery = e.geomery;
+    }
+
+
+
+    private search(geometry: any){
+        this.search(geometry.location.lat(),geometry.location.lng(), 10);
     }
 }
