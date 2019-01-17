@@ -47,15 +47,16 @@ export class SearchBarComponent  implements OnInit{
 
     handleAddressChange(e){
         //this.dataService.searchInput = e.formatted_address;
-        if(this.searchOnBlur){
-            
-        }
+        // if(this.searchOnBlur){
+        //     this.search(e.geometry.location.lat(),e.geometry.location.lng(), 10);
+        // }
         this.geomery = e.geomery;
     }
 
 
 
-    private search(geometry: any){
-        this.search(geometry.location.lat(),geometry.location.lng(), 10);
+    private search(geometry){
+        // this.isLoaded = false;
+        // this.dataService.searchRestaurants(lat,lng, radius);
     }
 }
