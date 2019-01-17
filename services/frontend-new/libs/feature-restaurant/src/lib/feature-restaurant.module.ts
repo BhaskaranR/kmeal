@@ -1,16 +1,24 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { RouterModule } from "@angular/router";
+import { RouterModule, Routes } from "@angular/router";
 import { ResComponent } from "./restaurant/restaurant.component";
 import { FeatureCoreModule } from "@kmeal-nx/feature-core";
+import { UiModule } from "@kmeal-nx/ui";
+
+export const featureRestaurantRoutes : Routes = [{
+  path: ':id',
+  component: ResComponent
+},{
+  path:':id/photo',
+  component: ResComponent
+}]
+
 
 @NgModule({
   imports: [
     CommonModule,
     FeatureCoreModule,
-    RouterModule.forChild([
-      {path: '', pathMatch: 'full', component: ResComponent} 
-    ])
+    UiModule
   ],
   declarations:[ResComponent]
 })

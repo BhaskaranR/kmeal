@@ -4,9 +4,9 @@ import { Apollo } from 'apollo-angular';
 import { Router } from '@angular/router';
 import { MatSnackBar, MatDialog } from '@angular/material';
 import { imagesMapping } from './utils';
-import { KmealCategoriesGQL, GetRestaurantsNearByGQL } from '../generated/graphql';
+import { KmealCategoriesGQL, GetRestaurantsNearByGQL, KmealCategories, GetRestaurantsNearBy } from '../generated/graphql';
 import { map } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import {  combineLatest } from 'rxjs';
 import { DishDetailPopupComponent } from 'libs/ui/src/lib/dish-detail/dish-detail-popup.component';
 import { DishOrderComponent } from 'libs/ui/src/lib/dish-order/dish-order.component';
 
@@ -27,9 +27,11 @@ export class HomeComponent implements OnInit, OnDestroy {
         public dialog: MatDialog,
     ) {}
 
-    cuisines$: Observable<any[]>;
+    cuisines: KmealCategories.KmealCategories[];
 
-    restaurants$: Observable<any[]>;
+    restaurants: GetRestaurantsNearBy.GetRestaurantsNearby[];
+
+    isReady:boolean = false;
 
     cuisineConfig: NguCarouselConfig = {
         grid: { xs: 2, sm: 2, md: 4, lg: 6, all: 0 },
@@ -156,31 +158,61 @@ export class HomeComponent implements OnInit, OnDestroy {
     ];
 
     ngOnInit() {
+        this.loadUserProfile();
+    }
+
+    ngOnDestroy() {}
+
+    private loadUserProfile(){
+        const userProfile = window.localStorage.getItem("kmealUserProfile");
+
+        if (!!userProfile && userProfile['location']){
+            this.loadUserData(userProfile['location']['lat'], userProfile['location']['lng']);
+            return;
+        }
         
-        this.cuisines$ = this.kmealCategoriesGQL
+        if (!navigator.geolocation) {
+            this.loadUserData(40.7, 74.0);
+            return;
+        };
+
+        navigator.geolocation.getCurrentPosition((position) => {
+            this.loadUserData(position.coords.latitude, position.coords.longitude);
+        },(positionError) => {
+            this.loadUserData(40.7, 74.0);
+        });
+    }
+
+    private loadUserData(lat, lng){
+        const cuisinesObs = this.kmealCategoriesGQL
             .watch({}, {})
             .valueChanges
             .pipe(map(result => result.data.kmeal_categories.map(ca => {
                 ca['img'] = imagesMapping[ca['title'].toLowerCase()] || imagesMapping['japanese'];
                 return ca ;
             })));
-        
-        this.restaurants$ = this.getRestaurantsNearByGQL
+
+        const restaurantsObs = this.getRestaurantsNearByGQL
             .watch({
                 nearby:{
-                    lat:40.82319,
-                    long:-73.94181,
+                    cuisine:"italian",
+                    timeofoperation:"",
+                    lat:lat,
+                    long:lng,
                     radius:5
                 }
             })
             .valueChanges
             .pipe(map(result => result.data.getRestaurantsNearby));
-    }
 
-    ngOnDestroy() {
+        combineLatest(cuisinesObs, restaurantsObs).subscribe(([data1, data2])=>{
+            this.cuisines = data1;
+            this.restaurants = data2;
+            this.isReady = true;
+        })
         
     }
-
+    
     onSearchCuisine(cuisine) {
         console.log(cuisine);
         this.router.navigate(['./search'],{queryParams:{type:'CUISINE', cuisine:cuisine}});
@@ -193,16 +225,18 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
 
     openDishDetails(e){
-        const dialogRef = this.dialog.open(DishDetailPopupComponent, {
-            width: '650px',
-            data: e
-          });
+        const dialogRef = this.dialog.open(
+            DishDetailPopupComponent,
+            {
+                width: '650px',
+                data: e
+            });
       
-          dialogRef.afterClosed().subscribe(result => {
+        dialogRef.afterClosed().subscribe(result => {
             if (result == 'ORDER'){
                 this.orderDishNow();
             }
-          });
+        });
     }
 
     orderDishNow(){
@@ -239,9 +273,9 @@ export class HomeComponent implements OnInit, OnDestroy {
             data: data
           });
       
-          dialogRef.afterClosed().subscribe(result => {
+        dialogRef.afterClosed().subscribe(result => {
             console.log('closed', result);
-          });
+        });
     }
 
 

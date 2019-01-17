@@ -44,6 +44,8 @@ export class SearchComponent implements OnInit ,OnDestroy{
                     this.restaurants$ = this.getRestaurantsNearByGQL
                     .watch({
                         nearby:{
+                            cuisine:params.value,
+                            timeofoperation:"",
                             lat:60,
                             long:-70,
                             radius:10,
@@ -60,6 +62,8 @@ export class SearchComponent implements OnInit ,OnDestroy{
                     this.restaurants$ = this.getRestaurantsNearByGQL
                     .watch({
                         nearby:{
+                            cuisine:"",
+                            timeofoperation:"",
                             lat:parseFloat(params.lat),
                             long:parseFloat(params.lng),
                             radius:parseFloat(params.radius),

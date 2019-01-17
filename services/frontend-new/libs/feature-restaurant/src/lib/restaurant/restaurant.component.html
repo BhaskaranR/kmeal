@@ -10,15 +10,16 @@
 
 <br>
 <div fxLayout="row">
-    <div fxFlex="50%">
-        <button mat-button color="primary" [matMenuTriggerFor]="sortedBy">Sort By</button>
-        <mat-menu #sortedBy="matMenu">
-                <button mat-menu-item>Price Low to High</button>
-                <button mat-menu-item>Price High to Low</button>
-              </mat-menu>
+    <div fxFlex="20%">
+        
+              <button mat-button (click)="menuToggle.toggle()">Menu</button>
     </div>
-    <div fxFlex="50%" style="text-align: right">
-        <button mat-button (click)="menuToggle.toggle()">Menu</button>
+    <div fxFlex="50%" >
+            <button mat-button color="primary" [matMenuTriggerFor]="sortedBy">Sort By</button>
+        <mat-menu #sortedBy="matMenu">
+            <button mat-menu-item>Price Low to High</button>
+            <button mat-menu-item>Price High to Low</button>
+          </mat-menu>
     </div>
 </div>
 <hr style="margin-bottom:0;">
@@ -36,9 +37,13 @@
                 <h3 mat-subheader>Menu</h3>
                 <mat-list-item >
                     <h4 mat-line>Most Populate</h4>
+                    <br>
                     <h4 mat-line>Beverage</h4>
+                    <br>
                     <h4 mat-line>Entree</h4>
+                    <br>
                     <h4 mat-line>Kmeal Menu</h4>
+                    <br>
                     <h4 mat-line>Soup</h4>
                 </mat-list-item>
                 <mat-divider></mat-divider>
@@ -46,9 +51,11 @@
             </mat-list>
         </mat-sidenav>
 
-        <mat-grid-list [cols]="breakpoint" [rowHeight]="fit" (window:resize)="onResize($event)">
-            <mat-grid-tile *ngFor="let dish of dataService.trendingDishes">
-                <dish-card [dishDetails]="dish" (reRoute)="placeOrder($event)"></dish-card>
+        <mat-grid-list [cols]="breakpoint" rowHeight="500px" (window:resize)="onResize($event)">
+            <mat-grid-tile *ngFor="let dish of trendingDishes">
+                <dish-card [dishDetails]="dish" (onErrorEvent)="throwError($event)"
+                (onOpenDetailsEvent)="openDishDetails(dish)"
+                (onPlaceOrderEvent)="orderDishNow(dish)"></dish-card>
             </mat-grid-tile>
         </mat-grid-list>
 </mat-sidenav-container>

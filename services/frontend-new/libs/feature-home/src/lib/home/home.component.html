@@ -1,14 +1,15 @@
-<div *ngIf="!cuisines$ | async">
+<div *ngIf="!isReady">
     <div id="loading-wrapper">
         <div id="loading-text">LOADING</div>
         <div id="loading-content"></div>
     </div>
 </div>
 
-<div class="container-fluid" >
-    <div class="content-wrapper" *ngIf="cuisines$ | async as cuisines">
+<div class="container-fluid" *ngIf="isReady">
+    <div class="content-wrapper" >
         <h5>Search By Cuisine</h5>
         <ngu-carousel 
+            *ngIf="!!cuisines && cuisines.length > 0"
             #cuisinesCarousel 
             [inputs]="cuisineConfig" 
             [dataSource]="cuisines" >
@@ -24,6 +25,7 @@
             <button NguCarouselPrev class="arrowbtn arrowbtn-left" ></button>
             <button NguCarouselNext class="arrowbtn arrowbtn-right" ></button>
         </ngu-carousel>
+        <div *ngIf="!cuisines || cuisines.length == 0">No data</div>
     </div>
 
     
@@ -44,9 +46,10 @@
         </ngu-carousel>
     </div>
     
-    <div class="content-wrapper" *ngIf="restaurants$ | async as restaurants">
+    <div class="content-wrapper" >
         <h5 style="margin-left:30px">Nearby Restaurants</h5>
         <ngu-carousel 
+            *ngIf="!!restaurants && restaurants.length > 0"
             #restaurantsCarousel
             [inputs]="carConfig" 
             [dataSource]="restaurants" >
@@ -56,20 +59,23 @@
             <button NguCarouselPrev class="arrowbtn arrowbtn-left" ></button>
             <button NguCarouselNext class="arrowbtn arrowbtn-right" ></button>
         </ngu-carousel>
+        <div *ngIf="!restaurants || restaurants.length == 0">No Data</div>
     </div>
     
-    <div class="content-wrapper" *ngIf="restaurants$ | async as restaurants">
+    <div class="content-wrapper" >
         <h5>Order Again</h5>
         <ngu-carousel 
+        *ngIf="!!restaurants && restaurants.length > 0"
             #restaurantsCarousel
             [inputs]="carConfig" 
-            [dataSource]="restaurants" >
+            [dataSource]="restaurants$" >
             <ngu-tile *nguCarouselDef="let res; let i = index; let ani = animate">
                 <res-card [res]="res" (click)="restaurantDetails(res)" style="box-shadow:none; cursor:pointer"></res-card>
             </ngu-tile>
             <button NguCarouselPrev class="arrowbtn arrowbtn-left" ></button>
             <button NguCarouselNext class="arrowbtn arrowbtn-right" ></button>
         </ngu-carousel>
+        <div *ngIf="!restaurants || restaurants.length == 0">No Data</div>
     </div>
 </div>
 

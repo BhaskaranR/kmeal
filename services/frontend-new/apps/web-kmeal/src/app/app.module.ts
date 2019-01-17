@@ -11,6 +11,7 @@ import { FeatureNavigationBarModule } from '@kmeal-nx/feature-navigation-bar';
 import { SharedModule } from './app.shared';
 import { homeRoutes, FeatureHomeModule } from '@kmeal-nx/feature-home';
 import { FeatureSearchModule ,featureSearchRoutes} from '@kmeal-nx/feature-search';
+import {featureRestaurantRoutes, FeatureRestaurantModule} from '@kmeal-nx/feature-restaurant';
 import { ErrorComponent } from './error.component';
 
 @NgModule({
@@ -23,6 +24,7 @@ import { ErrorComponent } from './error.component';
     SharedModule,
     FeatureHomeModule,
     FeatureSearchModule,
+    FeatureRestaurantModule,
     FeatureNavigationBarModule,
     RouterModule.forRoot(
       [
@@ -40,8 +42,8 @@ import { ErrorComponent } from './error.component';
           children:featureSearchRoutes
         },
         {
-          path: 'restaurant:id', 
-          loadChildren: '@kmeal-nx/feature-restaurant#FeatureRestaurantModule'
+          path: 'restaurant', 
+          children:featureRestaurantRoutes,
         },
         {
           path: '**', 
