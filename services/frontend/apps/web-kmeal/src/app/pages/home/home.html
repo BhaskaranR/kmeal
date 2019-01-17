@@ -33,7 +33,11 @@
             [inputs]="carConfig" 
             [dataSource]="dataService.trendingDishes" >
             <ngu-tile *nguCarouselDef="let dish; let i = index; let ani = animate">
-                <dish-card [dishDetails] = "dish" (onError)="throwError($event)" (reRoute)="navigate($event)"></dish-card>
+                <dish-card [dishDetails] = "dish" 
+                            (onError)="throwError($event)" 
+                            (byRestaurantEvent)="byRestaurant(dish)"
+                            (openDetailsEvent)="openDishDetails(dish)"
+                            (orderNowEvent)="orderDishNow(dish)"></dish-card>
             </ngu-tile>
             <button NguCarouselPrev class="arrowbtn arrowbtn-left" ></button>
             <button NguCarouselNext class="arrowbtn arrowbtn-right" ></button>

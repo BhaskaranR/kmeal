@@ -1,0 +1,16 @@
+<mat-card class="mat-elevation-z0" >
+    <img mat-card-image [attr.src]="res.logo" style="height:160px">
+    <h4><small>{{res.name}}</small></h4>
+    <mat-card-subtitle>
+        <span>{{res.priceLevel}} </span>
+        <span style="margin-right:5px">{{ generateLables(res.description)}}</span>
+        <br>
+        <p><small>{{res.address}}</small>  </p>
+    </mat-card-subtitle>
+    <mat-chip-list>
+        <mat-chip>{{res.rating}} <mat-icon >star</mat-icon></mat-chip>
+        <mat-chip>{{res.distance}} ft</mat-chip>
+    </mat-chip-list>
+</mat-card>
+
+

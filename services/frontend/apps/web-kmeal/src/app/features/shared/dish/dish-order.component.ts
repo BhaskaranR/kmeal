@@ -1,5 +1,5 @@
-import { Component ,ChangeDetectionStrategy} from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { Component ,ChangeDetectionStrategy, Input} from '@angular/core';
+import { MatDialogRef } from '@angular/material';
 
 @Component({
   selector: 'dish-order',
@@ -9,7 +9,8 @@ import { MatDialog } from '@angular/material';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DishOrderComponent  {
-    constructor(public dialog: MatDialog){}
+    @Input() dish:{[key:string]:string};
+    constructor(public dialogRef: MatDialogRef<DishOrderComponent>) { }
     data:any = {
         name:'Chicken noodle',
         id:'hxusa2432nk',

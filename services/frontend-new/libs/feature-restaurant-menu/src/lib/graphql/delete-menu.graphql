@@ -1,0 +1,8 @@
+mutation delete_kmeal_item($where: kmeal_item_bool_exp!) {
+  delete_kmeal_item(where: $where) {
+    affected_rows
+    returning {
+      item_id
+    }
+  }
+}
