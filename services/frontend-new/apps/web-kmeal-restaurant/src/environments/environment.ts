@@ -3,7 +3,19 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  api_entry: 'https://kmeal-api.herokuapp.com/v1alpha1/graphql',
+  ws_api_entry: 'wss://kmeal-api.herokuapp.com/v1alpha1/graphql',
+  eos_network:  {
+    blockchain: "eos",
+    protocol: "http",
+    host: "jungle2.cryptolions.io",
+    port: 80,
+    // chainId: "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906" // EOS Main Net
+    chainId: "e70aaab8997e1dfce58fbfac80cbbb8fecec7b99cf982a9444273cbc64c41473" // Jungle
+  },
+  eos_endpoint : "http://jungle2.cryptolions.io:80",
+  eos_contract_name: "kmeal"
 };
 
 /*

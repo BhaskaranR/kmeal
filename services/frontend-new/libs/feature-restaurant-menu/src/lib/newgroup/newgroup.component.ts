@@ -14,6 +14,9 @@ import {
   UpdateKmealMenuBookSectionGQL,
   DeleteKmealMenuBookSection as delKmealMenuBookSection,
   DeleteKmealMenuBookSectionGQL,
+  ConflictAction,
+  KmealMenuBookConstraint,
+  KmealMenuBookUpdateColumn,
 } from '../generated/graphql';
 
 import { pluck, map } from "rxjs/operators";
@@ -119,7 +122,12 @@ export class NewgroupComponent {
         menu_book: this.menuBookForm.value.menubook,
         restaurant_id: 1,
         sort_order: this.menubooks.length + 1
-      }]
+      }], 
+      "on_conflict": {
+        "action": ConflictAction.Update,
+        "constraint": KmealMenuBookConstraint.MenuBookPkey,
+        "update_columns": [KmealMenuBookUpdateColumn.MenuBookId]
+      }
     }
     this.insertKmealMenuBookGQL.mutate(variables).pipe(pluck('data')).subscribe((mb: {
       menu_book_id: number

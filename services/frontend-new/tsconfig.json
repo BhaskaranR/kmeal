@@ -17,12 +17,9 @@
     ],
     "baseUrl": ".",
     "paths": {
-      "@kmeal-nx/feature-restaurant-menu": [
-        "libs/feature-restaurant-menu/src/index.ts"
-      ],
-      "@kmeal-nx/feature-restaurant-orders": [
-        "libs/feature-restaurant-orders/src/index.ts"
-      ],
+      "@kmeal-env/*": ["apps/web-kmeal/src/environments/*"],
+      "@kmeal-restaurant-env/*": ["apps/web-kmeal-restaurant/src/environments/*"],
+      "@env-api/environment": ["apps/api/src/environments/environment.ts"],
       "@kmeal-nx/feature-order": [
         "libs/feature-order/src/index.ts"
       ],
@@ -44,11 +41,14 @@
       "@kmeal-nx/feature-menu": [
         "libs/feature-menu/src/index.ts"
       ],
-      "@kmeal-nx/app-restaurant/feature-restaurant": [
-        "libs/app-restaurant/feature-restaurant/src/index.ts"
+      "@kmeal-nx/feature-restaurant-orders": [
+        "libs/feature-restaurant-orders/src/index.ts"
       ],
-      "@kmeal-nx/kmeal-ng-restaurant/feature-restaurant": [
-        "libs/kmeal-ng-restaurant/feature-restaurant/src/index.ts"
+      "@kmeal-nx/feature-restaurant-dashboard": [
+        "libs/feature-restaurant-dashboard/src/index.ts"
+      ],
+      "@kmeal-nx/feature-restaurant-menu": [
+        "libs/feature-restaurant-menu/src/index.ts"
       ],
       "@kmeal-nx/feature-restaurant": [
         "libs/feature-restaurant/src/index.ts"

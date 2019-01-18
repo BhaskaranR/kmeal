@@ -5,8 +5,8 @@ import { UiModule } from '@kmeal-nx/ui';
 import { CommonModule } from '@angular/common';
 import { NguCarouselModule } from '@ngu/carousel';
 import { FeatureCoreModule } from '@kmeal-nx/feature-core';
-import 'hammerjs';
-import { DishDetailPopupComponent } from 'libs/ui/src/lib/dish-detail/dish-detail-popup.component';
+import { Welcomepage } from './welcomepage/welcomepage';
+import { FeatureNavigationBarModule } from '@kmeal-nx/feature-navigation-bar';
 
 export const homeRoutes: Routes = [
   {
@@ -21,10 +21,11 @@ export const homeRoutes: Routes = [
     CommonModule,
     NguCarouselModule,
     FeatureCoreModule,
+    FeatureNavigationBarModule,
     UiModule,
   ],
-  declarations: [HomeComponent],
-  exports: [HomeComponent],
+  declarations: [HomeComponent, Welcomepage],
+  exports: [HomeComponent, Welcomepage],
   schemas: [
     NO_ERRORS_SCHEMA,
     CUSTOM_ELEMENTS_SCHEMA
