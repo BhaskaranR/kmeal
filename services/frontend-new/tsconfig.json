@@ -49,6 +49,18 @@
       ],
       "@kmeal-nx/feature-restaurant-menu": [
         "libs/feature-restaurant-menu/src/index.ts"
+      ],
+      "@kmeal-nx/feature-restaurant": [
+        "libs/feature-restaurant/src/index.ts"
+      ],
+      "@kmeal-nx/feature-navigation-bar": [
+        "libs/feature-navigation-bar/src/index.ts"
+      ],
+      "@kmeal-nx/feature-core": [
+        "libs/feature-core/src/index.ts"
+      ],
+      "@kmeal-nx/feature-search": [
+        "libs/feature-search/src/index.ts"
       ]
     }
   },

@@ -15,13 +15,12 @@ import {
 })
 export class RestaurantComponent {
   @Input() public res: any;
-  @Output() public reRoute = new EventEmitter<any>();
-  @Output() public onError = new EventEmitter<string>();
+  @Output() public onRestaurantDetailsEvent = new EventEmitter<any>();
+  @Output() public onErrorEvent = new EventEmitter<string>();
 
   constructor() {}
-  goToRestaurant(e) {
-    e.preventDefault();
-    this.reRoute.emit({ url: './restaurant', id: this.res.id });
+  onRestaurantDetails(e) {
+    this.onRestaurantDetailsEvent.emit(e);
   }
 
   generateLables(description) {
@@ -30,5 +29,9 @@ export class RestaurantComponent {
       result += la + ' , ';
     });
     return result;
+  }
+
+  onError(e){
+    this.onErrorEvent.emit(e);
   }
 }

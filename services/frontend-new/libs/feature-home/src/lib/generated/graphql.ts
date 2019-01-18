@@ -180,11 +180,15 @@ export interface VarcharComparisonExp {
 }
 
 export interface GetNearByInput {
+  cuisine: string;
+
   lat: number;
 
   long: number;
 
   radius: number;
+
+  timeofoperation: string;
 }
 /** ordering options when selecting data from "kmeal._block_number_txid" */
 export interface KmealBlockNumberTxidOrderBy {

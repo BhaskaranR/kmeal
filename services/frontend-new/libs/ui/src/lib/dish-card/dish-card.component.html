@@ -1,6 +1,6 @@
 <mat-card class="mat-elevation-z0">
-    <img mat-card-image (click)="openDetails()" src="https://teriyakiexperience.com/wp-content/uploads/2016/04/OUrfoodchicken2-3.png">
-    <button mat-raised-button style="border-radius: 999px; margin-bottom:15px" (click)="openDetails()"><small>More Details</small></button>
+    <br>
+    <img mat-card-image style="width:50%;margin-left:auto; margin-right:auto; display:block" (click)="openDetails()" style="cursor:pointer" src="https://teriyakiexperience.com/wp-content/uploads/2016/04/OUrfoodchicken2-3.png">
     <mat-card-title>${{dishDetails.currentPrice}} <small style="text-decoration: line-through;font-weight:300; margin-left:10px">  ${{dishDetails.orignalprice}}</small></mat-card-title>
     <mat-card-subtitle>{{dishDetails.name}}</mat-card-subtitle>
     <mat-card-content>
@@ -11,7 +11,9 @@
         </div>
         <br>
         <mat-card-subtitle style="height:60px">{{dishDetails.description}}</mat-card-subtitle>
-        <p><small>By <a href="" (click)="goToRestaurant($event)">{{dishDetails.restaurant}}</a></small></p>
+        <p><small>By <a href="/restaurant/{{dishDetails.id}}" >{{dishDetails.restaurant}}</a></small></p>
     </mat-card-content>
-    <mat-card-actions><button mat-stroked-button style="width:100%;"> + Order Now</button></mat-card-actions>
+    <mat-card-actions>
+        <button mat-stroked-button style="width:100%;" (click)="orderNow()"> + Order Now</button>
+    </mat-card-actions>
 </mat-card>

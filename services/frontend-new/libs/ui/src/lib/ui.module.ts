@@ -4,19 +4,18 @@ import { MatDialogModule, MatCardModule, MatProgressBarModule, MatChipsModule, M
 import { DishDetailPopupComponent } from './dish-detail/dish-detail-popup.component';
 import { DishCardComponent } from './dish-card/dish-card.component';
 import { RestaurantComponent } from './restaurant/restaurant.component';
+import { FeatureCoreModule } from '@kmeal-nx/feature-core';
+import { DishOrderComponent } from './dish-order/dish-order.component';
 
 
-const components = [DishDetailPopupComponent, DishCardComponent, RestaurantComponent]
+const components = [DishDetailPopupComponent, DishCardComponent, RestaurantComponent, DishOrderComponent]
 
 @NgModule({
-  declarations: [components],
+  declarations: components,
+  entryComponents:[DishOrderComponent,DishDetailPopupComponent],
   imports: [
-    MatCardModule, 
-    MatDialogModule, 
-    MatChipsModule,
-    MatIconModule,
-    MatProgressBarModule, 
+    FeatureCoreModule,
     CommonModule],
-  exports: [components]
+  exports: components
 })
 export class UiModule { }

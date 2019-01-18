@@ -1,48 +1,35 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { NgModule, NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { HomeComponent } from './home/home.component';
-import { SearchComponent } from './search/search.component';
 import { Routes, RouterModule } from '@angular/router';
-import { FlexLayoutModule } from '@angular/flex-layout';
+import { UiModule } from '@kmeal-nx/ui';
+import { CommonModule } from '@angular/common';
 import { NguCarouselModule } from '@ngu/carousel';
-import { MatCardModule, MatSelectModule, MatGridListModule, MatIconModule, MatSnackBarModule, MatProgressSpinnerModule } from '@angular/material';
-import { UiModule, SvgViewerModule } from '@kmeal-nx/ui';
-import { SearchBarComponent } from './search-bar/search-bar.component';
-import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
-import { FormsModule } from '@angular/forms';
+import { FeatureCoreModule } from '@kmeal-nx/feature-core';
 import { Welcomepage } from './welcomepage/welcomepage';
-
-
-const components = [HomeComponent, SearchComponent, SearchBarComponent, Welcomepage];
+import { FeatureNavigationBarModule } from '@kmeal-nx/feature-navigation-bar';
 
 export const homeRoutes: Routes = [
   {
     path: '',
     component: HomeComponent
-  },
-  {
-    path: 'search',
-    data: {},
-    component: SearchComponent
   }
 ];
 
+
 @NgModule({
   imports: [
-    CommonModule, 
-    FormsModule,
-    NguCarouselModule, 
-    MatCardModule, 
-    MatProgressSpinnerModule,
-    MatSelectModule,
-    MatGridListModule,
-    MatIconModule,
-    MatSnackBarModule,
-    FlexLayoutModule,
-    GooglePlaceModule, 
-    SvgViewerModule,
-    UiModule],
-  declarations: [components],
-  exports: [components]
+    CommonModule,
+    NguCarouselModule,
+    FeatureCoreModule,
+    FeatureNavigationBarModule,
+    UiModule,
+  ],
+  declarations: [HomeComponent, Welcomepage],
+  exports: [HomeComponent, Welcomepage],
+  schemas: [
+    NO_ERRORS_SCHEMA,
+    CUSTOM_ELEMENTS_SCHEMA
+  ],
+  entryComponents:[]
 })
 export class FeatureHomeModule {}

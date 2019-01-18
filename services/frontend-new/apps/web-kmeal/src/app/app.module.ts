@@ -4,42 +4,28 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
 import { NxModule } from '@nrwl/nx';
 import { ApiModule } from './graphql.module';
-import { HttpClientModule } from '@angular/common/http';
 import { APP_BASE_HREF } from '@angular/common';
 import { environment } from '../environments/environment';
-import { FooterComponent } from './footer/footer';
-
-
 import { RouterModule } from '@angular/router';
+import { FeatureNavigationBarModule } from '@kmeal-nx/feature-navigation-bar';
+import { SharedModule } from './app.shared';
 import { homeRoutes, FeatureHomeModule } from '@kmeal-nx/feature-home';
-import { FlexLayoutModule } from '@angular/flex-layout';
-import { NavBarComponent } from './nav/nav.component';
-
-import {
-  MatIconModule,
-  MatMenuModule,
-  MatBadgeModule,
-  MatSidenavModule,
-  MatListModule
-} from '@angular/material';
-import { ScatterModule, scatterRoutes } from '@kmeal-nx/scatter';
+import { FeatureSearchModule ,featureSearchRoutes} from '@kmeal-nx/feature-search';
+import {featureRestaurantRoutes, FeatureRestaurantModule} from '@kmeal-nx/feature-restaurant';
+import { ErrorComponent } from './error.component';
 
 @NgModule({
-  declarations: [AppComponent, NavBarComponent, FooterComponent],
+  declarations: [AppComponent, ErrorComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     NxModule.forRoot(),
     ApiModule,
-    HttpClientModule,
-    MatSidenavModule,
-    MatIconModule,
-    MatMenuModule,
-    MatBadgeModule,
-    MatListModule,
-    FlexLayoutModule,
+    SharedModule,
     FeatureHomeModule,
-    ScatterModule,
+    FeatureSearchModule,
+    FeatureRestaurantModule,
+    FeatureNavigationBarModule,
     RouterModule.forRoot(
       [
         {
@@ -49,24 +35,35 @@ import { ScatterModule, scatterRoutes } from '@kmeal-nx/scatter';
         },
         {
           path: 'home',
-          children: homeRoutes
+          children:homeRoutes
         },
         {
-          path: 'profile',
-          children: scatterRoutes
+          path: 'search',
+          children:featureSearchRoutes
         },
         {
-          path: 'menu',
-          loadChildren: '@kmeal-nx/feature-menu#FeatureMenuModule'
+          path: 'restaurant', 
+          children:featureRestaurantRoutes,
+        },
+        {
+          path: '**', 
+          component:ErrorComponent
         }
       ],
-      { paramsInheritanceStrategy: 'always' }
+      { 
+        paramsInheritanceStrategy: 'always',
+        enableTracing:false 
+      }
     )
   ],
   providers: [
     {
       provide: APP_BASE_HREF,
       useValue: '/'
+    },
+    {
+      provide: 'apiBase',
+      useValue: environment.api_entry
     }
   ],
   bootstrap: [AppComponent]

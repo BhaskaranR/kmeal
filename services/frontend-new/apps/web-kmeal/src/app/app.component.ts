@@ -3,6 +3,12 @@ import { MediaMatcher } from '@angular/cdk/layout';
 import { Router, ActivatedRoute } from '@angular/router';
 import { LocalStorage } from '@ngx-pwa/local-storage';
 
+interface Coordinate {
+  type:string,
+  lat:number,
+  lng:number,
+  radius:number
+}
 
 @Component({
   selector: 'kmeal-nx-root',
@@ -38,17 +44,25 @@ export class AppComponent {
     });
   }
 
-  ngOnInit(){
-    this.isHome = this.router.url === '/home';
-    console.log('???' , this.isHome, this.router.url);
-  }
 
   ngOnDestroy(): void {
     this.mobileQuery.removeListener(this._mobileQueryListener);
   }
 
-  private changeListener(){
-    return this.changeDetectorRef.detectChanges()
+  onAddressChange(e){
+    console.log('address changed : ',e);
+    let param : Coordinate = {
+      type:'ADDRESS',
+      lat:e.geometry.location.lat(),
+      lng:e.geometry.location.lng(),
+      radius:10
+    }
+    this.updateLocateStorage(param);
+    this.router.navigate(['/search'],{queryParams:param});
   }
 
+  private updateLocateStorage(param){
+    window.localStorage.setItem('address', param)
+  }
+  
 }

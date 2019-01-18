@@ -12,5 +12,11 @@
     "**/*.ts"
   
     , "../../libs/feature-menu/src/index.ts"
+
+    , "../../libs/app-restaurant/feature-restaurant/src/index.ts"
+
+    , "../../libs/kmeal-ng-restaurant/feature-restaurant/src/index.ts"
+
+    , "../../libs/feature-restaurant/src/index.ts"
 ]
 }

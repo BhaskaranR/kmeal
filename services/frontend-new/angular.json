@@ -543,6 +543,118 @@
                     }
                 }
             }
+        },
+        "feature-restaurant": {
+            "root": "libs/feature-restaurant",
+            "sourceRoot": "libs/feature-restaurant/src",
+            "projectType": "library",
+            "prefix": "kmeal-nx",
+            "architect": {
+                "test": {
+                    "builder": "@angular-devkit/build-angular:karma",
+                    "options": {
+                        "main": "libs/feature-restaurant/src/test.ts",
+                        "tsConfig": "libs/feature-restaurant/tsconfig.spec.json",
+                        "karmaConfig": "libs/feature-restaurant/karma.conf.js"
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "tsConfig": [
+                            "libs/feature-restaurant/tsconfig.lib.json",
+                            "libs/feature-restaurant/tsconfig.spec.json"
+                        ],
+                        "exclude": [
+                            "**/node_modules/**"
+                        ]
+                    }
+                }
+            }
+        },
+        "feature-navigation-bar": {
+            "root": "libs/feature-navigation-bar",
+            "sourceRoot": "libs/feature-navigation-bar/src",
+            "projectType": "library",
+            "prefix": "kmeal-nx",
+            "architect": {
+                "test": {
+                    "builder": "@angular-devkit/build-angular:karma",
+                    "options": {
+                        "main": "libs/feature-navigation-bar/src/test.ts",
+                        "tsConfig": "libs/feature-navigation-bar/tsconfig.spec.json",
+                        "karmaConfig": "libs/feature-navigation-bar/karma.conf.js"
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "tsConfig": [
+                            "libs/feature-navigation-bar/tsconfig.lib.json",
+                            "libs/feature-navigation-bar/tsconfig.spec.json"
+                        ],
+                        "exclude": [
+                            "**/node_modules/**"
+                        ]
+                    }
+                }
+            }
+        },
+        "feature-core": {
+            "root": "libs/feature-core",
+            "sourceRoot": "libs/feature-core/src",
+            "projectType": "library",
+            "prefix": "kmeal-nx",
+            "architect": {
+                "test": {
+                    "builder": "@angular-devkit/build-angular:karma",
+                    "options": {
+                        "main": "libs/feature-core/src/test.ts",
+                        "tsConfig": "libs/feature-core/tsconfig.spec.json",
+                        "karmaConfig": "libs/feature-core/karma.conf.js"
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "tsConfig": [
+                            "libs/feature-core/tsconfig.lib.json",
+                            "libs/feature-core/tsconfig.spec.json"
+                        ],
+                        "exclude": [
+                            "**/node_modules/**"
+                        ]
+                    }
+                }
+            }
+        },
+        "feature-search": {
+            "root": "libs/feature-search",
+            "sourceRoot": "libs/feature-search/src",
+            "projectType": "library",
+            "prefix": "kmeal-nx",
+            "architect": {
+                "test": {
+                    "builder": "@angular-devkit/build-angular:karma",
+                    "options": {
+                        "main": "libs/feature-search/src/test.ts",
+                        "tsConfig": "libs/feature-search/tsconfig.spec.json",
+                        "karmaConfig": "libs/feature-search/karma.conf.js"
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "tsConfig": [
+                            "libs/feature-search/tsconfig.lib.json",
+                            "libs/feature-search/tsconfig.spec.json"
+                        ],
+                        "exclude": [
+                            "**/node_modules/**"
+                        ]
+                    }
+                }
+            }
         }
     },
     "cli": {

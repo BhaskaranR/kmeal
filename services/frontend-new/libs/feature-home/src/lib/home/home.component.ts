@@ -1,14 +1,14 @@
-import { Component, ElementRef, ViewChild, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { NguCarouselConfig } from '@ngu/carousel';
 import { Apollo } from 'apollo-angular';
-//import { categoriesQuery } from "./home.queries";
 import { Router } from '@angular/router';
-import { MatSnackBar } from '@angular/material';
-import { delay, imagesMapping } from './utils';
-import { KmealCategoriesGQL } from '../generated/graphql';
-
+import { MatSnackBar, MatDialog } from '@angular/material';
+import { imagesMapping } from './utils';
+import { KmealCategoriesGQL, GetRestaurantsNearByGQL, KmealCategories, GetRestaurantsNearBy } from '../generated/graphql';
 import { map } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import {  combineLatest } from 'rxjs';
+import { DishDetailPopupComponent } from 'libs/ui/src/lib/dish-detail/dish-detail-popup.component';
+import { DishOrderComponent } from 'libs/ui/src/lib/dish-order/dish-order.component';
 
 @Component({
     selector: 'kmeal-nx-home',
@@ -16,18 +16,22 @@ import { Observable } from 'rxjs';
     templateUrl: './home.component.html',
     styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
+
     constructor(
         public apollo: Apollo,
         public router: Router,
         public snackBar: MatSnackBar,
-        private kmealCategoriesGQL: KmealCategoriesGQL
-    ) { }
+        private kmealCategoriesGQL: KmealCategoriesGQL,
+        private getRestaurantsNearByGQL:GetRestaurantsNearByGQL,
+        public dialog: MatDialog,
+    ) {}
 
-    cuisines$: Observable<{
-        title: string,
-        img: string
-    }[]>;
+    cuisines: KmealCategories.KmealCategories[];
+
+    restaurants: GetRestaurantsNearBy.GetRestaurantsNearby[];
+
+    isReady:boolean = false;
 
     cuisineConfig: NguCarouselConfig = {
         grid: { xs: 2, sm: 2, md: 4, lg: 6, all: 0 },
@@ -40,8 +44,7 @@ export class HomeComponent implements OnInit {
         animation: 'lazy'
     };
 
-    dishes: Array<any>;
-    restaurants: Array<any>;
+    
     carConfig: NguCarouselConfig = {
         grid: { xs: 1, sm: 2, md: 3, lg: 4, all: 0 },
         speed: 250,
@@ -53,27 +56,166 @@ export class HomeComponent implements OnInit {
         animation: 'lazy'
     };
 
-    isReady: boolean = false;
-    querySubscription: any;
+
+    trendingDishes = [
+        {
+            id:'321hdjsha',
+            name:'Chicken Biryani',
+            description:"Sautted Chicken with Fried rice, with special Indian Spcies",
+            lables:['Indian','Spicy','Chicken','Rice'],
+            restaurant:'Indian Diner',
+            currentPrice:13.88,
+            orignalprice:16.00,
+            ordersCount:12,
+            maxOrders:30,
+            rating:5,
+            expireTime:"02:00:00"
+        },{
+            id:'4372djakhx',
+            name:'Chicken Curry',
+            description:"Grilled Chicken in creamy curry sauce, served with choice of white rice or brown rice",
+            lables:['Indian','Spicy','Chicken','Rice','curry'],
+            restaurant:'Indian Diner',
+            currentPrice:13.88,
+            orignalprice:16.00,
+            ordersCount:12,
+            maxOrders:30,
+            rating:5,
+            expireTime:"02:00:00"
+        },{
+            id:'4372djakhx',
+            name:'Chicken Curry',
+            description:"Grilled Chicken in creamy curry sauce, served with choice of white rice or brown rice",
+            lables:['Indian','Spicy','Chicken','Rice','curry'],
+            restaurant:'Indian Diner',
+            currentPrice:13.88,
+            orignalprice:16.00,
+            ordersCount:12,
+            maxOrders:30,
+            rating:5,
+            expireTime:"02:00:00"
+        },{
+            id:'4372djakhx',
+            name:'Chicken Curry',
+            description:"Grilled Chicken in creamy curry sauce, served with choice of white rice or brown rice",
+            lables:['Indian','Spicy','Chicken','Rice','curry'],
+            restaurant:'Indian Diner',
+            currentPrice:13.88,
+            orignalprice:16.00,
+            ordersCount:12,
+            maxOrders:30,
+            rating:5,
+            expireTime:"02:00:00"
+        },{
+            id:'4372djakhx',
+            name:'Chicken Curry',
+            description:"Grilled Chicken in creamy curry sauce, served with choice of white rice or brown rice",
+            lables:['Indian','Spicy','Chicken','Rice','curry'],
+            restaurant:'Indian Diner',
+            currentPrice:13.88,
+            orignalprice:16.00,
+            ordersCount:12,
+            maxOrders:30,
+            rating:5,
+            expireTime:"02:00:00"
+        },{
+            id:'4372djakhx',
+            name:'Chicken Curry',
+            description:"Grilled Chicken in creamy curry sauce, served with choice of white rice or brown rice",
+            lables:['Indian','Spicy','Chicken','Rice','curry'],
+            restaurant:'Indian Diner',
+            currentPrice:13.88,
+            orignalprice:16.00,
+            ordersCount:12,
+            maxOrders:30,
+            rating:5,
+            expireTime:"02:00:00"
+        },{
+            id:'4372djakhx',
+            name:'Chicken Curry',
+            description:"Grilled Chicken in creamy curry sauce, served with choice of white rice or brown rice",
+            lables:['Indian','Spicy','Chicken','Rice','curry'],
+            restaurant:'Indian Diner',
+            currentPrice:13.88,
+            orignalprice:16.00,
+            ordersCount:12,
+            maxOrders:30,
+            rating:5,
+            expireTime:"02:00:00"
+        },{
+            id:'4372djakhx',
+            name:'Chicken Curry',
+            description:"Grilled Chicken in creamy curry sauce, served with choice of white rice or brown rice",
+            lables:['Indian','Spicy','Chicken','Rice','curry'],
+            restaurant:'Indian Diner',
+            currentPrice:13.88,
+            orignalprice:16.00,
+            ordersCount:12,
+            maxOrders:30,
+            rating:5,
+            expireTime:"02:00:00"
+        }
+    ];
+
     ngOnInit() {
-        this.cuisines$ = this.kmealCategoriesGQL.watch({}, {}).valueChanges.pipe(map(result => {
-            return result.data.kmeal_categories.map(ca => {
-            return {
-                title: ca['title'],
-                img: imagesMapping[ca['title'].toLowerCase()] || imagesMapping['indian']
-            };
-        })}))
-        this.populateData();
+        this.loadUserProfile();
     }
 
-    ngOnDestroy() {
-        // this.querySubscription.unsubscribe();
-    }
+    ngOnDestroy() {}
 
-    onSearch(type, cuisine) {
-        this.router.navigate(['./search'], {
-            queryParams: { type: type, value: cuisine }
+    private loadUserProfile(){
+        const userProfile = window.localStorage.getItem("kmealUserProfile");
+
+        if (!!userProfile && userProfile['location']){
+            this.loadUserData(userProfile['location']['lat'], userProfile['location']['lng']);
+            return;
+        }
+        
+        if (!navigator.geolocation) {
+            this.loadUserData(40.7, 74.0);
+            return;
+        };
+
+        navigator.geolocation.getCurrentPosition((position) => {
+            this.loadUserData(position.coords.latitude, position.coords.longitude);
+        },(positionError) => {
+            this.loadUserData(40.7, 74.0);
         });
+    }
+
+    private loadUserData(lat, lng){
+        const cuisinesObs = this.kmealCategoriesGQL
+            .watch({}, {})
+            .valueChanges
+            .pipe(map(result => result.data.kmeal_categories.map(ca => {
+                ca['img'] = imagesMapping[ca['title'].toLowerCase()] || imagesMapping['japanese'];
+                return ca ;
+            })));
+
+        const restaurantsObs = this.getRestaurantsNearByGQL
+            .watch({
+                nearby:{
+                    cuisine:"italian",
+                    timeofoperation:"",
+                    lat:lat,
+                    long:lng,
+                    radius:5
+                }
+            })
+            .valueChanges
+            .pipe(map(result => result.data.getRestaurantsNearby));
+
+        combineLatest(cuisinesObs, restaurantsObs).subscribe(([data1, data2])=>{
+            this.cuisines = data1;
+            this.restaurants = data2;
+            this.isReady = true;
+        })
+        
+    }
+    
+    onSearchCuisine(cuisine) {
+        console.log(cuisine);
+        this.router.navigate(['./search'],{queryParams:{type:'CUISINE', cuisine:cuisine}});
     }
 
     throwError(msg) {
@@ -82,335 +224,63 @@ export class HomeComponent implements OnInit {
         });
     }
 
-    navigate(e) {
-        this.router.navigate([e.url], { queryParams: { value: e.id } });
-    }
-
-    populateData() {
-        this.dishes = [
+    openDishDetails(e){
+        const dialogRef = this.dialog.open(
+            DishDetailPopupComponent,
             {
-                id: '321hdjsha',
-                name: 'Chicken Biryani',
-                description:
-                    'Sautted Chicken with Fried rice, with special Indian Spcies',
-                lables: ['Indian', 'Spicy', 'Chicken', 'Rice'],
-                restaurant: 'Indian Diner',
-                currentPrice: 13.88,
-                orignalprice: 16.0,
-                ordersCount: 12,
-                maxOrders: 30,
-                rating: 5,
-                expireTime: '02:00:00'
-            },
-            {
-                id: '4372djakhx',
-                name: 'Chicken Curry',
-                description:
-                    'Grilled Chicken in creamy curry sauce, served with choice of white rice or brown rice',
-                lables: ['Indian', 'Spicy', 'Chicken', 'Rice', 'curry'],
-                restaurant: 'Indian Diner',
-                currentPrice: 13.88,
-                orignalprice: 16.0,
-                ordersCount: 12,
-                maxOrders: 30,
-                rating: 5,
-                expireTime: '02:00:00'
-            },
-            {
-                id: '4372djakhx',
-                name: 'Chicken Curry',
-                description:
-                    'Grilled Chicken in creamy curry sauce, served with choice of white rice or brown rice',
-                lables: ['Indian', 'Spicy', 'Chicken', 'Rice', 'curry'],
-                restaurant: 'Indian Diner',
-                currentPrice: 13.88,
-                orignalprice: 16.0,
-                ordersCount: 12,
-                maxOrders: 30,
-                rating: 5,
-                expireTime: '02:00:00'
-            },
-            {
-                id: '4372djakhx',
-                name: 'Chicken Curry',
-                description:
-                    'Grilled Chicken in creamy curry sauce, served with choice of white rice or brown rice',
-                lables: ['Indian', 'Spicy', 'Chicken', 'Rice', 'curry'],
-                restaurant: 'Indian Diner',
-                currentPrice: 13.88,
-                orignalprice: 16.0,
-                ordersCount: 12,
-                maxOrders: 30,
-                rating: 5,
-                expireTime: '02:00:00'
-            },
-            {
-                id: '4372djakhx',
-                name: 'Chicken Curry',
-                description:
-                    'Grilled Chicken in creamy curry sauce, served with choice of white rice or brown rice',
-                lables: ['Indian', 'Spicy', 'Chicken', 'Rice', 'curry'],
-                restaurant: 'Indian Diner',
-                currentPrice: 13.88,
-                orignalprice: 16.0,
-                ordersCount: 12,
-                maxOrders: 30,
-                rating: 5,
-                expireTime: '02:00:00'
-            },
-            {
-                id: '4372djakhx',
-                name: 'Chicken Curry',
-                description:
-                    'Grilled Chicken in creamy curry sauce, served with choice of white rice or brown rice',
-                lables: ['Indian', 'Spicy', 'Chicken', 'Rice', 'curry'],
-                restaurant: 'Indian Diner',
-                currentPrice: 13.88,
-                orignalprice: 16.0,
-                ordersCount: 12,
-                maxOrders: 30,
-                rating: 5,
-                expireTime: '02:00:00'
-            },
-            {
-                id: '4372djakhx',
-                name: 'Chicken Curry',
-                description:
-                    'Grilled Chicken in creamy curry sauce, served with choice of white rice or brown rice',
-                lables: ['Indian', 'Spicy', 'Chicken', 'Rice', 'curry'],
-                restaurant: 'Indian Diner',
-                currentPrice: 13.88,
-                orignalprice: 16.0,
-                ordersCount: 12,
-                maxOrders: 30,
-                rating: 5,
-                expireTime: '02:00:00'
-            },
-            {
-                id: '4372djakhx',
-                name: 'Chicken Curry',
-                description:
-                    'Grilled Chicken in creamy curry sauce, served with choice of white rice or brown rice',
-                lables: ['Indian', 'Spicy', 'Chicken', 'Rice', 'curry'],
-                restaurant: 'Indian Diner',
-                currentPrice: 13.88,
-                orignalprice: 16.0,
-                ordersCount: 12,
-                maxOrders: 30,
-                rating: 5,
-                expireTime: '02:00:00'
+                width: '650px',
+                data: e
+            });
+      
+        dialogRef.afterClosed().subscribe(result => {
+            if (result == 'ORDER'){
+                this.orderDishNow();
             }
-        ];
-
-        this.restaurants = [
-            {
-                id: 'hudsan321',
-                restaurantName: 'Indian',
-                description: 'Authentic Indian Cuisine. Lunch and Dinner',
-                type: 'Indian',
-                address: {
-                    line: '19523 25th Ave',
-                    city: 'Queens',
-                    state: 'NY',
-                    zipcode: 11453
-                },
-                location: {
-                    long: 198,
-                    lat: 21
-                },
-                distance: '198ft',
-                lables: ['Indian', 'Spicy', 'Takeout', 'Lunch', 'Dinner'],
-                rating: 5,
-                priceLevel: '$$'
-            },
-            {
-                id: 'hudsan321',
-                restaurantName: 'American',
-                description: 'Authentic Indian Cuisine. Lunch and Dinner',
-                type: 'Indian',
-                address: {
-                    line: '19523 25th Ave',
-                    city: 'Queens',
-                    state: 'NY',
-                    zipcode: 11453
-                },
-                location: {
-                    long: 198,
-                    lat: 21
-                },
-                distance: '198ft',
-                lables: ['Indian', 'Spicy', 'Takeout', 'Lunch', 'Dinner'],
-                rating: 5,
-                priceLevel: '$$'
-            },
-            {
-                id: 'hudsan321',
-                restaurantName: 'Chinese',
-                description: 'Authentic Indian Cuisine. Lunch and Dinner',
-                type: 'Indian',
-                address: {
-                    line: '19523 25th Ave',
-                    city: 'Queens',
-                    state: 'NY',
-                    zipcode: 11453
-                },
-                location: {
-                    long: 198,
-                    lat: 21
-                },
-                distance: '198ft',
-                lables: ['Indian', 'Spicy', 'Takeout', 'Lunch', 'Dinner'],
-                rating: 5,
-                priceLevel: '$$'
-            },
-            {
-                id: 'hudsan321',
-                restaurantName: 'Japanese',
-                description: 'Authentic Indian Cuisine. Lunch and Dinner',
-                type: 'Indian',
-                address: {
-                    line: '19523 25th Ave',
-                    city: 'Queens',
-                    state: 'NY',
-                    zipcode: 11453
-                },
-                location: {
-                    long: 198,
-                    lat: 21
-                },
-                distance: '198ft',
-                lables: ['Indian', 'Spicy', 'Takeout', 'Lunch', 'Dinner'],
-                rating: 5,
-                priceLevel: '$$'
-            },
-            {
-                id: 'hudsan321',
-                restaurantName: 'South Indian',
-                description: 'Authentic Indian Cuisine. Lunch and Dinner',
-                type: 'Indian',
-                address: {
-                    line: '19523 25th Ave',
-                    city: 'Queens',
-                    state: 'NY',
-                    zipcode: 11453
-                },
-                location: {
-                    long: 198,
-                    lat: 21
-                },
-                distance: '198ft',
-                lables: ['Indian', 'Spicy', 'Takeout', 'Lunch', 'Dinner'],
-                rating: 5,
-                priceLevel: '$$'
-            },
-            {
-                id: 'hudsan321',
-                restaurantName: 'Filipino',
-                description: 'Authentic Indian Cuisine. Lunch and Dinner',
-                type: 'Indian',
-                address: {
-                    line: '19523 25th Ave',
-                    city: 'Queens',
-                    state: 'NY',
-                    zipcode: 11453
-                },
-                location: {
-                    long: 198,
-                    lat: 21
-                },
-                distance: '198ft',
-                lables: ['Indian', 'Spicy', 'Takeout', 'Lunch', 'Dinner'],
-                rating: 5,
-                priceLevel: '$$'
-            },
-            {
-                id: 'hudsan321',
-                restaurantName: 'Mexican',
-                description: 'Authentic Indian Cuisine. Lunch and Dinner',
-                type: 'Indian',
-                address: {
-                    line: '19523 25th Ave',
-                    city: 'Queens',
-                    state: 'NY',
-                    zipcode: 11453
-                },
-                location: {
-                    long: 198,
-                    lat: 21
-                },
-                distance: '198ft',
-                lables: ['Indian', 'Spicy', 'Takeout', 'Lunch', 'Dinner'],
-                rating: 5,
-                priceLevel: '$$'
-            },
-            {
-                id: 'hudsan321',
-                restaurantName: 'Halal',
-                description: 'Authentic Indian Cuisine. Lunch and Dinner',
-                type: 'Indian',
-                address: {
-                    line: '19523 25th Ave',
-                    city: 'Queens',
-                    state: 'NY',
-                    zipcode: 11453
-                },
-                location: {
-                    long: 198,
-                    lat: 21
-                },
-                distance: '198ft',
-                lables: ['Indian', 'Spicy', 'Takeout', 'Lunch', 'Dinner'],
-                rating: 5,
-                priceLevel: '$$'
-            },
-            {
-                id: 'hudsan321',
-                restaurantName: 'French',
-                description: 'Authentic Indian Cuisine. Lunch and Dinner',
-                type: 'Indian',
-                address: {
-                    line: '19523 25th Ave',
-                    city: 'Queens',
-                    state: 'NY',
-                    zipcode: 11453
-                },
-                location: {
-                    long: 198,
-                    lat: 21
-                },
-                distance: '198ft',
-                lables: ['Indian', 'Spicy', 'Takeout', 'Lunch', 'Dinner'],
-                rating: 5,
-                priceLevel: '$$'
-            },
-            {
-                id: 'hudsan321',
-                restaurantName: 'Italian',
-                description: 'Authentic Indian Cuisine. Lunch and Dinner',
-                type: 'Indian',
-                address: {
-                    line: '19523 25th Ave',
-                    city: 'Queens',
-                    state: 'NY',
-                    zipcode: 11453
-                },
-                location: {
-                    long: 198,
-                    lat: 21
-                },
-                distance: '198ft',
-                lables: ['Indian', 'Spicy', 'Takeout', 'Lunch', 'Dinner'],
-                rating: 5,
-                priceLevel: '$$'
-            }
-        ];
-
-        this.restaurants.forEach(val => {
-            val['img'] =
-                imagesMapping[val.restaurantName.toLowerCase()] ||
-                imagesMapping['japanese'];
         });
-
-        this.isReady = true;
     }
+
+    orderDishNow(){
+        let data = {
+            name:'Chicken noodle',
+            id:'hxusa2432nk',
+            specifications:[
+                {
+                    type:'number',
+                    inputs:'',
+                    name:'Quantity',
+                    value:null,
+                },{
+                    type:'select',
+                    inputs:['Mild','Medium','Extra Spicy'],
+                    value:null,
+                    name:'Spicy Level'
+                },{
+                    type:'multiple',
+                    inputs:['extra shrimp','extra chicken breast','salad'],
+                    name:'AddOn',
+                    value:null,
+                },{
+                    type:'string',
+                    inputs:'',
+                    name:'Other Instructions',
+                    value:null
+                }
+            ]
+        }
+
+        const dialogRef = this.dialog.open(DishOrderComponent, {
+            width: '650px',
+            data: data
+          });
+      
+        dialogRef.afterClosed().subscribe(result => {
+            console.log('closed', result);
+        });
+    }
+
+
+    restaurantDetails(res){
+        this.router.navigate(['./restaurant:' + res.restaurant_id]);
+    }
+    
 }

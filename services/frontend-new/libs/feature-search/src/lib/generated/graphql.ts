@@ -180,11 +180,15 @@ export interface VarcharComparisonExp {
 }
 
 export interface GetNearByInput {
+  cuisine: string;
+
   lat: number;
 
   long: number;
 
   radius: number;
+
+  timeofoperation: string;
 }
 /** ordering options when selecting data from "kmeal._block_number_txid" */
 export interface KmealBlockNumberTxidOrderBy {
@@ -3375,3 +3379,94 @@ export type _Float8 = any;
 export type _Bool = any;
 
 export type _Text = any;
+
+// ====================================================
+// Documents
+// ====================================================
+
+export namespace GetRestaurantsNearBy {
+  export type Variables = {
+    nearby?: GetNearByInput | null;
+  };
+
+  export type Query = {
+    __typename?: "Query";
+
+    getRestaurantsNearby: (GetRestaurantsNearby | null)[] | null;
+  };
+
+  export type GetRestaurantsNearby = {
+    __typename?: "Restaurant";
+
+    address: string | null;
+
+    description: string | null;
+
+    distance: number | null;
+
+    isactive: string | null;
+
+    latitude: number | null;
+
+    longitude: number | null;
+
+    logo: string | null;
+
+    name: string | null;
+
+    owner: string | null;
+
+    phone: string | null;
+
+    restaurant_id: number;
+
+    timeofoperation: string | null;
+
+    yelp_id: number | null;
+
+    rating: number | null;
+  };
+}
+
+// ====================================================
+// START: Apollo Angular template
+// ====================================================
+
+import { Injectable } from "@angular/core";
+import * as Apollo from "apollo-angular";
+
+import gql from "graphql-tag";
+
+// ====================================================
+// Apollo Services
+// ====================================================
+
+@Injectable({
+  providedIn: "root"
+})
+export class GetRestaurantsNearByGQL extends Apollo.Query<GetRestaurantsNearBy.Query, GetRestaurantsNearBy.Variables> {
+  document: any = gql`
+    query getRestaurantsNearBy($nearby: GetNearByInput) {
+      getRestaurantsNearby(nearby: $nearby) {
+        address
+        description
+        distance
+        isactive
+        latitude
+        longitude
+        logo
+        name
+        owner
+        phone
+        restaurant_id
+        timeofoperation
+        yelp_id
+        rating
+      }
+    }
+  `;
+}
+
+// ====================================================
+// END: Apollo Angular template
+// ====================================================
