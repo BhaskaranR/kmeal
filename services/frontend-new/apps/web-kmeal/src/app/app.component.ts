@@ -18,7 +18,7 @@ interface Coordinate {
 export class AppComponent {
   title = 'kmeal';
 
-  isAddressSet = false;
+  isAddressSet = true;
   mobileQuery: MediaQueryList;
   isHome:boolean = false;
   private _mobileQueryListener: () => void;
