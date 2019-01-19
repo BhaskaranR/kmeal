@@ -21,11 +21,11 @@
                     </div>
                 </div>
                 <div cdkDropList class="list" (cdkDropListDropped)="drop($event)">
-                    <div class="box" *ngFor="let item of menubook" cdkDrag>
+                    <div class="box" *ngFor="let item of menubooks" cdkDrag>
                         <div class="handle" cdkDragHandle>
                             <mat-icon>menu</mat-icon>
                         </div>
-                        <div>{{item}}</div>
+                        <div>{{item.menu_book}}</div>
 
                         <div class="action">
                             <mat-icon>delete</mat-icon>
