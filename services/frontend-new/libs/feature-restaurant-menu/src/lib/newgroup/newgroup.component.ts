@@ -42,7 +42,7 @@ export class NewgroupComponent {
 
   menubooks: kmb.KmealMenuBook[] = []
 
-  sections: kmb.MenuBookSectionsBymenuBookId[] = [];
+  sections: kmb.MenuBookSectionsBymenuBook[] = [];
 
   constructor(private kmealMenuBookGQL: KmealMenuBookGQL,
     private insertKmealMenuBookGQL: InsertKmealMenuBookGQL,
@@ -63,7 +63,7 @@ export class NewgroupComponent {
         }
       }
     };
-    this.kmealMenuBookGQL.watch(variables, {}).valueChanges.pipe(pluck('data', 'KmealMenuBook'))
+    this.kmealMenuBookGQL.watch(variables, {}).valueChanges.pipe(pluck('data', 'kmeal_menu_book'))
       .subscribe((mg: kmb.KmealMenuBook[]) => {
         if (!mg) {
           return;
@@ -71,45 +71,45 @@ export class NewgroupComponent {
         this.menubooks = mg
         if (this.menubooks.length == 0) {
           this.selectedMenuBook = this.menubooks[0]
-          this.sections = this.selectedMenuBook.menuBookSectionsBymenuBookId
+          this.sections = this.selectedMenuBook.menuBookSectionsBymenuBook
         }
       });
   }
 
   dropMenubook(event: CdkDragDrop<kmb.KmealMenuBook[]>) {
-    moveItemInArray(this.menubooks, event.previousIndex, event.currentIndex);
-    const variables: updKmealMenuBook.Variables = {
-      "where": {
-        "menu_book_id": {
-          "_eq":  event.item["menu_book_id"]
-        },
-      },
-      "_set": {
-        "sort_order": event.currentIndex
-      }
-    }
-    this.updateKmealMenuBookGQL.mutate(variables).pipe(pluck('data')).subscribe((ms:
-      updKmealMenuBookSection.Returning) => {
+    // moveItemInArray(this.menubooks, event.previousIndex, event.currentIndex);
+    // const variables: updKmealMenuBook.Variables = {
+    //   "where": {
+    //     "menu_book_id": {
+    //       "_eq":  event.item["menu_book_id"]
+    //     },
+    //   },
+    //   "_set": {
+    //     "sort_order": event.currentIndex
+    //   }
+    // }
+    // this.updateKmealMenuBookGQL.mutate(variables).pipe(pluck('data')).subscribe((ms:
+    //   updKmealMenuBookSection.Returning) => {
       
-    })
+    // })
   }
 
   dropSections(event: CdkDragDrop<kmb.KmealMenuBook[]>) {
-    moveItemInArray(this.sections, event.previousIndex, event.currentIndex);
-    const variables: updKmealMenuBookSection.Variables = {
-      "where": {
-        "section_id": {
-          "_eq":  event.item["section_id"]
-        },
-      },
-      "_set": {
-        "sort_order": event.currentIndex
-      }
-    }
-    this.updateKmealMenuBookGQL.mutate(variables).pipe(pluck('data')).subscribe((ms:
-      updKmealMenuBookSection.Returning) => {
+    // moveItemInArray(this.sections, event.previousIndex, event.currentIndex);
+    // const variables: updKmealMenuBookSection.Variables = {
+    //   "where": {
+    //     "section_id": {
+    //       "_eq":  event.item["section_id"]
+    //     },
+    //   },
+    //   "_set": {
+    //     "sort_order": event.currentIndex
+    //   }
+    // }
+    // this.updateKmealMenuBookGQL.mutate(variables).pipe(pluck('data')).subscribe((ms:
+    //   updKmealMenuBookSection.Returning) => {
       
-    })
+    // })
   }
 
   onBookSubmit() {
@@ -120,20 +120,17 @@ export class NewgroupComponent {
     const variables: insKmealMenuBook.Variables = {
       objects: [{
         menu_book: this.menuBookForm.value.menubook,
-        restaurant_id: 1,
-        sort_order: this.menubooks.length + 1
+        restaurant_id: 1
       }], 
       "on_conflict": {
         "action": ConflictAction.Update,
         "constraint": KmealMenuBookConstraint.MenuBookPkey,
-        "update_columns": [KmealMenuBookUpdateColumn.MenuBookId]
+        "update_columns": [KmealMenuBookUpdateColumn.MenuBook]
       }
     }
-    this.insertKmealMenuBookGQL.mutate(variables).pipe(pluck('data')).subscribe((mb: {
-      menu_book_id: number
-      menu_book: string
-    }) => {
-      this.menubooks.push(<kmb.KmealMenuBook>mb)
+    this.insertKmealMenuBookGQL.mutate(variables).pipe(pluck('data', 'insert_kmeal_menu_book', 'returning')).subscribe((mb: insKmealMenuBook.KmealMenuBookInlineFragment[]) => {
+      const newgroup =  <kmb.KmealMenuBook>mb[0];
+      this.menubooks.push(newgroup);
     })
   }
 
@@ -145,8 +142,7 @@ export class NewgroupComponent {
     const variables: insKmealMenuBookSection.Variables = {
       objects: [{
         section_name: this.sectionsForm.value.section,
-        menu_book_id: this.selectedMenuBook.menu_book_id,
-        sort_order: this.menubooks.length + 1
+        menu_book: this.selectedMenuBook.menu_book
       }]
     }
     this.insertKmealMenuBookSectionGQL.mutate(variables).pipe(pluck('data')).subscribe((ms:

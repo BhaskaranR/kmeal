@@ -180,11 +180,15 @@ export interface VarcharComparisonExp {
 }
 
 export interface GetNearByInput {
+  cuisine: string;
+
   lat: number;
 
   long: number;
 
   radius: number;
+
+  timeofoperation: string;
 }
 /** ordering options when selecting data from "kmeal._block_number_txid" */
 export interface KmealBlockNumberTxidOrderBy {
@@ -548,9 +552,9 @@ export interface KmealItemSectionBoolExp {
 
   item_id?: IntegerComparisonExp | null;
 
-  menuBookSectionBysectionId?: KmealMenuBookSectionBoolExp | null;
+  menuBookSectionBysectionName?: KmealMenuBookSectionBoolExp | null;
 
-  section_id?: IntegerComparisonExp | null;
+  section_name?: VarcharComparisonExp | null;
 }
 /** Boolean expression to filter rows from the table "kmeal.menu_book_section". All fields are combined with a logical 'AND'. */
 export interface KmealMenuBookSectionBoolExp {
@@ -560,17 +564,13 @@ export interface KmealMenuBookSectionBoolExp {
 
   _or?: (KmealMenuBookSectionBoolExp | null)[] | null;
 
-  itemSectionsBysectionId?: KmealItemSectionBoolExp | null;
+  itemSectionsBysectionName?: KmealItemSectionBoolExp | null;
 
-  menuBookBymenuBookId?: KmealMenuBookBoolExp | null;
+  menuBookBymenuBook?: KmealMenuBookBoolExp | null;
 
-  menu_book_id?: IntegerComparisonExp | null;
-
-  section_id?: IntegerComparisonExp | null;
+  menu_book?: VarcharComparisonExp | null;
 
   section_name?: VarcharComparisonExp | null;
-
-  sort_order?: IntegerComparisonExp | null;
 }
 /** Boolean expression to filter rows from the table "kmeal.menu_book". All fields are combined with a logical 'AND'. */
 export interface KmealMenuBookBoolExp {
@@ -580,17 +580,13 @@ export interface KmealMenuBookBoolExp {
 
   _or?: (KmealMenuBookBoolExp | null)[] | null;
 
-  menuBookSectionsBymenuBookId?: KmealMenuBookSectionBoolExp | null;
+  menuBookSectionsBymenuBook?: KmealMenuBookSectionBoolExp | null;
 
   menu_book?: VarcharComparisonExp | null;
-
-  menu_book_id?: IntegerComparisonExp | null;
 
   restaurantByrestaurantId?: KmealRestaurantBoolExp | null;
 
   restaurant_id?: IntegerComparisonExp | null;
-
-  sort_order?: IntegerComparisonExp | null;
 }
 /** Boolean expression to filter rows from the table "kmeal.restaurant". All fields are combined with a logical 'AND'. */
 export interface KmealRestaurantBoolExp {
@@ -988,33 +984,25 @@ export interface KmealItemSectionOrderBy {
 
   item_id?: OrderBy | null;
 
-  menuBookSectionBysectionId?: KmealMenuBookSectionOrderBy | null;
+  menuBookSectionBysectionName?: KmealMenuBookSectionOrderBy | null;
 
-  section_id?: OrderBy | null;
+  section_name?: OrderBy | null;
 }
 /** ordering options when selecting data from "kmeal.menu_book_section" */
 export interface KmealMenuBookSectionOrderBy {
-  menuBookBymenuBookId?: KmealMenuBookOrderBy | null;
+  menuBookBymenuBook?: KmealMenuBookOrderBy | null;
 
-  menu_book_id?: OrderBy | null;
-
-  section_id?: OrderBy | null;
+  menu_book?: OrderBy | null;
 
   section_name?: OrderBy | null;
-
-  sort_order?: OrderBy | null;
 }
 /** ordering options when selecting data from "kmeal.menu_book" */
 export interface KmealMenuBookOrderBy {
   menu_book?: OrderBy | null;
 
-  menu_book_id?: OrderBy | null;
-
   restaurantByrestaurantId?: KmealRestaurantOrderBy | null;
 
   restaurant_id?: OrderBy | null;
-
-  sort_order?: OrderBy | null;
 }
 /** ordering options when selecting data from "kmeal.order" */
 export interface KmealOrderOrderBy {
@@ -1742,9 +1730,9 @@ export interface KmealItemSectionInsertInput {
 
   item_id?: number | null;
 
-  menuBookSectionBysectionId?: KmealMenuBookSectionObjRelInsertInput | null;
+  menuBookSectionBysectionName?: KmealMenuBookSectionObjRelInsertInput | null;
 
-  section_id?: number | null;
+  section_name?: string | null;
 }
 /** input type for inserting object relation for remote table "kmeal.menu_book_section" */
 export interface KmealMenuBookSectionObjRelInsertInput {
@@ -1754,17 +1742,13 @@ export interface KmealMenuBookSectionObjRelInsertInput {
 }
 /** input type for inserting data into table "kmeal.menu_book_section" */
 export interface KmealMenuBookSectionInsertInput {
-  itemSectionsBysectionId?: KmealItemSectionArrRelInsertInput | null;
+  itemSectionsBysectionName?: KmealItemSectionArrRelInsertInput | null;
 
-  menuBookBymenuBookId?: KmealMenuBookObjRelInsertInput | null;
+  menuBookBymenuBook?: KmealMenuBookObjRelInsertInput | null;
 
-  menu_book_id?: number | null;
-
-  section_id?: number | null;
+  menu_book?: string | null;
 
   section_name?: string | null;
-
-  sort_order?: number | null;
 }
 /** input type for inserting object relation for remote table "kmeal.menu_book" */
 export interface KmealMenuBookObjRelInsertInput {
@@ -1774,17 +1758,13 @@ export interface KmealMenuBookObjRelInsertInput {
 }
 /** input type for inserting data into table "kmeal.menu_book" */
 export interface KmealMenuBookInsertInput {
-  menuBookSectionsBymenuBookId?: KmealMenuBookSectionArrRelInsertInput | null;
+  menuBookSectionsBymenuBook?: KmealMenuBookSectionArrRelInsertInput | null;
 
   menu_book?: string | null;
-
-  menu_book_id?: number | null;
 
   restaurantByrestaurantId?: KmealRestaurantObjRelInsertInput | null;
 
   restaurant_id?: number | null;
-
-  sort_order?: number | null;
 }
 /** input type for inserting array relation for remote table "kmeal.menu_book_section" */
 export interface KmealMenuBookSectionArrRelInsertInput {
@@ -2383,14 +2363,12 @@ export interface KmealItemSetInput {
 /** input type for incrementing integer columne in table "kmeal.item_section" */
 export interface KmealItemSectionIncInput {
   item_id?: number | null;
-
-  section_id?: number | null;
 }
 /** input type for updating data in table "kmeal.item_section" */
 export interface KmealItemSectionSetInput {
   item_id?: number | null;
 
-  section_id?: number | null;
+  section_name?: string | null;
 }
 /** input type for incrementing integer columne in table "kmeal.item_types" */
 export interface KmealItemTypesIncInput {
@@ -2460,39 +2438,19 @@ export interface KmealListingItemsSetInput {
 }
 /** input type for incrementing integer columne in table "kmeal.menu_book" */
 export interface KmealMenuBookIncInput {
-  menu_book_id?: number | null;
-
   restaurant_id?: number | null;
-
-  sort_order?: number | null;
 }
 /** input type for updating data in table "kmeal.menu_book" */
 export interface KmealMenuBookSetInput {
   menu_book?: string | null;
 
-  menu_book_id?: number | null;
-
   restaurant_id?: number | null;
-
-  sort_order?: number | null;
-}
-/** input type for incrementing integer columne in table "kmeal.menu_book_section" */
-export interface KmealMenuBookSectionIncInput {
-  menu_book_id?: number | null;
-
-  section_id?: number | null;
-
-  sort_order?: number | null;
 }
 /** input type for updating data in table "kmeal.menu_book_section" */
 export interface KmealMenuBookSectionSetInput {
-  menu_book_id?: number | null;
-
-  section_id?: number | null;
+  menu_book?: string | null;
 
   section_name?: string | null;
-
-  sort_order?: number | null;
 }
 /** input type for incrementing integer columne in table "kmeal.order" */
 export interface KmealOrderIncInput {
@@ -2910,14 +2868,12 @@ export enum KmealListingItemSidesSelectColumn {
 /** select columns of table "kmeal.item_section" */
 export enum KmealItemSectionSelectColumn {
   ItemId = "item_id",
-  SectionId = "section_id"
+  SectionName = "section_name"
 }
 /** select columns of table "kmeal.menu_book_section" */
 export enum KmealMenuBookSectionSelectColumn {
-  MenuBookId = "menu_book_id",
-  SectionId = "section_id",
-  SectionName = "section_name",
-  SortOrder = "sort_order"
+  MenuBook = "menu_book",
+  SectionName = "section_name"
 }
 /** select columns of table "kmeal.item" */
 export enum KmealItemSelectColumn {
@@ -2948,9 +2904,7 @@ export enum KmealListingSelectColumn {
 /** select columns of table "kmeal.menu_book" */
 export enum KmealMenuBookSelectColumn {
   MenuBook = "menu_book",
-  MenuBookId = "menu_book_id",
-  RestaurantId = "restaurant_id",
-  SortOrder = "sort_order"
+  RestaurantId = "restaurant_id"
 }
 /** select columns of table "kmeal.order" */
 export enum KmealOrderSelectColumn {
@@ -3158,10 +3112,8 @@ export enum KmealMenuBookSectionConstraint {
 }
 /** update columns of table "kmeal.menu_book_section" */
 export enum KmealMenuBookSectionUpdateColumn {
-  MenuBookId = "menu_book_id",
-  SectionId = "section_id",
-  SectionName = "section_name",
-  SortOrder = "sort_order"
+  MenuBook = "menu_book",
+  SectionName = "section_name"
 }
 /** unique or primary key constraints on table "kmeal.item" */
 export enum KmealItemConstraint {
@@ -3204,9 +3156,7 @@ export enum KmealMenuBookConstraint {
 /** update columns of table "kmeal.menu_book" */
 export enum KmealMenuBookUpdateColumn {
   MenuBook = "menu_book",
-  MenuBookId = "menu_book_id",
-  RestaurantId = "restaurant_id",
-  SortOrder = "sort_order"
+  RestaurantId = "restaurant_id"
 }
 /** unique or primary key constraints on table "kmeal.order" */
 export enum KmealOrderConstraint {

@@ -1,9 +1,7 @@
-mutation update_kmeal_menu_book_section($where: kmeal_menu_book_section_bool_exp!, $_set: kmeal_menu_book_section_set_input, $_inc: kmeal_menu_book_section_inc_input) {
-  update_kmeal_menu_book_section(where: $where, _inc: $_inc) {
+mutation update_kmeal_menu_book_section($where: kmeal_menu_book_section_bool_exp!, $_set: kmeal_menu_book_section_set_input) {
+  update_kmeal_menu_book_section(where: $where, _set: $_set) {
     returning {
-      section_id
       section_name
-      menu_book_id
     }
   }
 }
