@@ -1,5 +1,4 @@
-.leftSidenavContent {
-    min-width: 280px;
-    overflow: hidden;
-    height:100%;
-}
+mat-sidenav-container {
+    width: 100% !important;
+    height: calc(100vh - 64px) !important;
+  }

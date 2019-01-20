@@ -1,10 +1,13 @@
 <div fxLayout="row"
-    fxLayoutAlign="left center"
+    fxLayoutAlign="start center"
     fxLayoutGap="10px"
     fxLayoutGap.xs="0"
     class="search-bar-container">
-    <div fxFlex="100%" fxLayout="row" fxFlexAlign="start center" class="search-bar-search">    
-        <mat-icon  fxFlex="40px" style="position:absolute; margin-top:12px;margin-left:15px">search</mat-icon>
+    <div fxFlex="100%" 
+        fxLayout="row" 
+        fxFlexAlign="start center" 
+        class="search-bar-search">    
+        <mat-icon  fxFlex="40px" style="position:absolute; margin-top:6px;margin-left:15px">search</mat-icon>
         <input fxFlex="100%" 
             ngx-google-places-autocomplete 
             [(ngModel)]="userInput" 
