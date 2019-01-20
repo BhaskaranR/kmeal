@@ -201,6 +201,9 @@ export class NewgroupComponent {
       }
     }
     this.deleteKmealMenuBookGQL.mutate(variables).pipe(pluck('data', 'delete_kmeal_menu_book', 'returning')).subscribe((mb: string[]) => {
+      if (mb.length == 0) {
+        this.openSnackBar("not deleted, make sure you don't have sections associated with this section", "");  
+      }
       const indx = this.menubooks.findIndex((mb) => mb.menu_book_id == ev.menu_book_id)
       this.menubooks.splice(indx, 1);
       this.openSnackBar("deleted", "");
@@ -216,6 +219,9 @@ export class NewgroupComponent {
       }
     }
     this.deleteKmealMenuBookSectionGQL.mutate(variables).pipe(pluck('data', 'delete_kmeal_menu_book_section', 'returning')).subscribe((mb: string[]) => {
+      if (mb.length == 0) {
+        this.openSnackBar("not deleted, make sure you don't have menu items associated with this section", "");  
+      }
       const indx = this.sections.findIndex((s) => s.section_id == ev.section_id)
       this.sections.splice(indx, 1);
       this.openSnackBar("deleted", "");
