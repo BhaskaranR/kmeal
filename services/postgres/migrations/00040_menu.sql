@@ -18,6 +18,9 @@ CREATE TABLE IF NOT EXISTS kmeal."item" (
   "item_name" varchar(50) NOT NULL,
   "description" TEXT NOT NULL,
   "photo" varchar(50) NOT NULL,
+  "spicy_level"  INTEGER,
+  "vegetarian" INTEGER, -- vegan, vegetarian
+  "cooking_time" INTEGER, -- time in minutes
   "restaurant_id" INTEGER NOT NULL REFERENCES kmeal.restaurant(restaurant_id),
   "created_at" TIMESTAMP NOT NULL,
   "created_block" BIGINT NOT NULL,

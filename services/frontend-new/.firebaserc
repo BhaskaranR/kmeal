@@ -1,0 +1,6 @@
+{
+  "projects": {
+    "web.kmeal-prod": "web-kmeal",
+    "web.kmeal-restaurant-prod": "web-kmeal-restaurant"
+  }
+}
