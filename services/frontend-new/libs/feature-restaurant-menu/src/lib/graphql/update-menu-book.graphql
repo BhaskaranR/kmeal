@@ -1,7 +1,9 @@
 mutation update_kmeal_menu_book($where: kmeal_menu_book_bool_exp!, $_set: kmeal_menu_book_set_input, $_inc: kmeal_menu_book_inc_input) {
   update_kmeal_menu_book(where: $where, _set: $_set, _inc: $_inc) {
     returning {
+      menu_book_id
       menu_book
+      sort_order
     }
   }
 }

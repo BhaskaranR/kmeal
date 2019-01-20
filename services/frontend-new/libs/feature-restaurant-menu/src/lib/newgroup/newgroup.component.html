@@ -20,14 +20,17 @@
                         </div>
                     </div>
                 </div>
-                <div cdkDropList class="list" (cdkDropListDropped)="drop($event)">
+
+                <div cdkDropList class="list" cdkSelection (cdkDropListDropped)="dropMenubook($event)">
                     <div class="box" *ngFor="let item of menubooks" cdkDrag>
+                        <a class="component-list-item" (click)="onSelectionChange(item)">
+                            {{item.menu_book}}
+
+                        </a>
                         <div class="handle" cdkDragHandle>
                             <mat-icon>menu</mat-icon>
                         </div>
-                        <div>{{item.menu_book}}</div>
-
-                        <div class="action">
+                        <div class="action" (click)="deleteMenuGroup(item)">
                             <mat-icon>delete</mat-icon>
                         </div>
                     </div>
@@ -39,7 +42,11 @@
             <div class="container">
                 <div class="header-section">
                     <div class="header-headline">
-                        <h1 class="mat-h2">Sections for {{selectedMenuBook}}</h1>
+                        <h1 class="mat-h2" *ngIf="selectedMenuBook;else default">Sections for
+                            {{selectedMenuBook.menu_book}}</h1>
+                        <ng-template #default>
+                            <h1 class="mat-h2">Sections for</h1>
+                        </ng-template>
                         <h2> Add section title</h2>
                     </div>
                     <div class="row">
@@ -56,14 +63,16 @@
                     </div>
                 </div>
 
-                <div cdkDropList class="list" (cdkDropListDropped)="drop($event)">
+                <div cdkDropList class="list" (cdkDropListDropped)="dropSections($event)">
                     <div class="box" *ngFor="let item of sections" cdkDrag>
+                        <a class="component-list-item" (click)="onSelectionChange(item)">
+                            {{item.section_name}}
+                        </a>
                         <div class="handle" cdkDragHandle>
                             <mat-icon>menu</mat-icon>
                         </div>
-                        <div>{{item}}</div>
 
-                        <div class="action">
+                        <div class="action" (click)="deleteMenuSection(item)">
                             <mat-icon>delete</mat-icon>
                         </div>
                     </div>

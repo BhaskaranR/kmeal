@@ -23,8 +23,8 @@ $margin-promotion-sections: 15px;
     color: rgba(0, 0, 0, 0.87);
     display: flex;
     flex-direction: column;
-    align-items: center;
-    text-align: center;
+    align-items: base-line;
+    text-align: base-line;
     justify-content: space-between;
     box-sizing: border-box;
     background: white;
@@ -37,7 +37,7 @@ $margin-promotion-sections: 15px;
 
 .handle {
     position: absolute;
-    left: 10px;
+    right: 60px;
     color: #ccc;
     cursor: move;
     width: 24px;
@@ -48,7 +48,7 @@ $margin-promotion-sections: 15px;
     position: absolute;
     right: 10px;
     color: #ccc;
-    cursor: move;
+    cursor: default;
     width: 24px;
     height: 24px;
 }
@@ -139,4 +139,17 @@ $margin-promotion-sections: 15px;
 
 .full-width {
     width: 100%;
+}
+
+
+.component-list-item {
+    display: inline-block;
+    width: 260px;
+    &,
+    &:active,
+    &:hover,
+    &:focus {
+        text-decoration: none;
+        cursor: pointer;
+    }
 }
