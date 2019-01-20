@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NewmenuComponent } from './newmenu/newmenu.component';
-import { MatInputModule, MatButtonModule, MatSelectModule, MatRadioModule, MatCardModule, MatGridListModule, MatMenuModule, MatIconModule, MatSnackBarModule, MatListModule, MatCheckboxModule } from '@angular/material';
+import { MatInputModule, MatButtonModule, MatSelectModule, MatRadioModule, MatCardModule, MatGridListModule, MatMenuModule, MatIconModule, MatSnackBarModule, MatListModule, MatCheckboxModule, MatSliderModule, MatSidenavModule } from '@angular/material';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 import { LayoutModule } from '@angular/cdk/layout';
@@ -11,18 +10,21 @@ import { HomeComponent } from './home/home.component';
 import { NewlistingComponent } from './newlisting/newlisting.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { CdkSelectionModule } from '@kmeal-nx/ui';
+import { CreateNewMenuComponent } from './create-newmenu/createnewmenu.component';
 
 
 
 export const restaurantMenuRoutes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'newmenu', component: NewmenuComponent },
+  { path: 'newmenu', component: CreateNewMenuComponent },
   { path: 'newgroup', component: NewgroupComponent },
   { path: 'newlisting', component: NewlistingComponent }
 ]
 
 @NgModule({
-  imports: [CommonModule, MatInputModule, MatButtonModule, MatSelectModule, MatRadioModule,    
+  imports: [CommonModule, MatInputModule, MatButtonModule, MatSelectModule, MatRadioModule, 
+    MatSliderModule,
+    MatSidenavModule,   
     MatCheckboxModule,
     MatCardModule, ReactiveFormsModule,
     MatSnackBarModule,
@@ -30,6 +32,6 @@ export const restaurantMenuRoutes: Routes = [
     CdkSelectionModule,
     DragDropModule,
     RouterModule.forChild(restaurantMenuRoutes)],
-  declarations: [NewmenuComponent, HomeComponent, NewgroupComponent, NewlistingComponent]
+  declarations: [CreateNewMenuComponent, HomeComponent, NewgroupComponent, NewlistingComponent]
 })
 export class FeatureRestaurantMenuModule { }

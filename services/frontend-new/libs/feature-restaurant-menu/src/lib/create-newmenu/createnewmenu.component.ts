@@ -3,10 +3,10 @@ import { FormBuilder, Validators } from "@angular/forms";
 
 @Component({
   selector: "kmeal-nx-newmenu",
-  templateUrl: "./newmenu.component.html",
-  styleUrls: ["./newmenu.component.scss"]
+  templateUrl: "./createnewmenu.component.html",
+  styleUrls: ["./createnewmenu.component.scss"]
 })
-export class NewmenuComponent {
+export class CreateNewMenuComponent {
   menuForm = this.fb.group({
     company: null,
     itemName: [null, Validators.required],
