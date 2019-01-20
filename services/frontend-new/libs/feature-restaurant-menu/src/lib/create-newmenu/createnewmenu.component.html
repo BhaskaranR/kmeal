@@ -1,0 +1,65 @@
+
+<mat-drawer-container class="drawer-container">
+    <mat-drawer #start2 opened mode="side">
+        <form [formGroup]="menuForm" novalidate (ngSubmit)="onSubmit()">
+            <mat-card class="menu-card">
+              <mat-card-header>
+                <mat-card-title>Create new Menu</mat-card-title>
+              </mat-card-header>
+              <mat-card-content>
+                <div class="row">
+                  <div class="col">
+                    <mat-form-field class="full-width">
+                      <input matInput placeholder="title" formControlName="itemName">
+                      <mat-error *ngIf="menuForm.controls['itemName'].hasError('required')">
+                        Title is <strong>required</strong>
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                      <button mat-raised-button color="primary" type="button">Add photo</button>
+                    </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                        <mat-slider [min]="1" [max]="3" color="warn" value="1" formControlName="spicy_level" thumbLabel aria-label="spiceness level"></mat-slider>
+                  </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                      <mat-radio-group formControlName="vegetarian">
+                        <mat-radio-button value="1">Vegan</mat-radio-button>
+                        <mat-radio-button value="2">Vegetarian</mat-radio-button>
+                        <mat-radio-button value="3">Other</mat-radio-button>
+                      </mat-radio-group>
+                    </div>
+                  </div>
+              </mat-card-content>
+              <mat-card-actions>
+                <button mat-raised-button color="primary" type="submit">Submit</button>
+              </mat-card-actions>
+            </mat-card>
+          </form>          
+    </mat-drawer>
+  
+    <div class="drawer-content">
+      <!-- <button mat-button (click)="start2.toggle()">Toggle Start Side Drawer</button> -->
+
+      <mat-card>
+          <mat-card-header>
+              <mat-card-title>Header title</mat-card-title>
+          </mat-card-header>
+          <img mat-card-image src="https://material.angularjs.org/latest/img/washedout.png">
+          <mat-card-content>
+              <p>Here is some content</p>
+          </mat-card-content>
+          <mat-card-actions align="end">
+              <button mat-button>LIKE</button>
+              <button mat-button>SHARE</button>
+          </mat-card-actions>
+      </mat-card>
+    </div>
+  </mat-drawer-container>
+
