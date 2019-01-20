@@ -1,13 +1,16 @@
 
 CREATE TABLE IF NOT EXISTS kmeal."menu_book" (
-  "menu_book" PRIMARY KEY,
+  "menu_book_id" SERIAL PRIMARY KEY,
   "restaurant_id" INTEGER NOT NULL REFERENCES kmeal.restaurant("restaurant_id"),
+  "menu_book" VARCHAR(100) NOT NULL,
   "sort_order" INTEGER NOT NULL
 );
 
 CREATE TABLE  kmeal."menu_book_section" (
-  "section_name" VARCHAR(100) PRIMARY KEY,
-  "menu_book"  VARCHAR(100)  NOT NULL REFERENCES kmeal.menu_book("menu_book")
+  "section_id" SERIAL PRIMARY KEY,
+  "section_name" VARCHAR(100) NOT NULL,
+  "menu_book_id"  INTEGER NOT NULL REFERENCES kmeal.menu_book("menu_book_id"),
+  "sort_order" INTEGER NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS kmeal."item" (
@@ -15,6 +18,9 @@ CREATE TABLE IF NOT EXISTS kmeal."item" (
   "item_name" varchar(50) NOT NULL,
   "description" TEXT NOT NULL,
   "photo" varchar(50) NOT NULL,
+  "spicy_level"  INTEGER,
+  "vegetarian" INTEGER, -- vegan, vegetarian
+  "cooking_time" INTEGER, -- time in minutes
   "restaurant_id" INTEGER NOT NULL REFERENCES kmeal.restaurant(restaurant_id),
   "created_at" TIMESTAMP NOT NULL,
   "created_block" BIGINT NOT NULL,
@@ -25,7 +31,7 @@ CREATE TABLE IF NOT EXISTS kmeal."item" (
 
 CREATE TABLE IF NOT EXISTS kmeal."item_section" (
   "item_id" INTEGER NOT NULL REFERENCES kmeal.item("item_id"),
-  "section_name" VARCHAR(100) NOT NULL REFERENCES kmeal.menu_book_section (section_name)
+  "section_id" INTEGER NOT NULL REFERENCES kmeal.menu_book_section (section_id)
 );
 
 CREATE TABLE IF NOT EXISTS kmeal."item_types" (
