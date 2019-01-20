@@ -1,7 +1,7 @@
 mutation delete_kmeal_menu_book($where: kmeal_menu_book_bool_exp!) {
   delete_kmeal_menu_book(where: $where) {
     returning {
-      menu_book
+      menu_book_id
     }
   }
 }

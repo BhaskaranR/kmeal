@@ -4,19 +4,28 @@
 </div>
 
 <ng-template #app>
-    <kmeal-nx-nav-bar (toggleSidenavEvent)="snav.toggle($event)"></kmeal-nx-nav-bar>
-    <mat-sidenav-container>
-        <mat-sidenav #snav [mode]="(mobileQuery.matches && !isHome) ? 'over' : (mobileQuery.matches) ? 'over':'side'" [fixedInViewport]="mobileQuery.matches" opened="true" style="background: #F3F3F3;" class="shadow_right" autosize>
+    
+    <mat-toolbar class="mat-elevation-z6" >
+        <kmeal-nx-nav-bar (toggleSidenavEvent)="snav.toggle($event)" style="width:100%"></kmeal-nx-nav-bar>
+    </mat-toolbar>
+    <mat-sidenav-container >
+        
+        <mat-sidenav #snav 
+            [mode]="(mobileQuery.matches && !isHome) ? 'over' : (mobileQuery.matches) ? 'over':'side'" 
+            [fixedInViewport]="true" [fixedTopGap]="64" opened style="width:300px">
             <div class="leftSidenavContent" fxLayout="column" fxFlexFill>
                 <mat-list fxFlex="100%">
-                    <h3 mat-subheader>Folders</h3>
                     <mat-list-item>
-                        <mat-icon mat-list-icon>settings</mat-icon>
-                        <p mat-line> Settings</p>
+                        <mat-icon mat-list-icon>history</mat-icon>
+                        <p mat-line> Orders </p>
+                    </mat-list-item>
+                    <mat-list-item>
+                        <mat-icon mat-list-icon>contact_support</mat-icon>
+                        <p mat-line> Help </p>
                     </mat-list-item>
                     <mat-list-item>
                         <mat-icon mat-list-icon>settings</mat-icon>
-                        <p mat-line> Some other settings</p>
+                        <p mat-line> Settings </p>
                     </mat-list-item>
                     <mat-divider></mat-divider>
                     <h3 mat-subheader>Notes</h3>
@@ -35,5 +44,4 @@
             </div>
         </mat-sidenav-content>
     </mat-sidenav-container>
-    <kmeal-nx-footer-bar></kmeal-nx-footer-bar>
 </ng-template>

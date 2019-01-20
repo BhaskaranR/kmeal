@@ -28,7 +28,7 @@
         "help": "./node_modules/.bin/nx help",
         "build-prod.web.kmeal": "ng build --prod web-kmeal",
         "build-prod.web-restaurant": "ng build --prod web-kmeal-restaurant",
-        "deploy.web.kmeal.prod": "ng build --prod web-kmeal && rm -rf firebase.json && cp firebase.kmeal.json firebase.json || true && firebase use web.kmeal-prod && firebase deploy || true",
+        "deploy.web.kmeal.prod": "rm -rf firebase.json && cp firebase.kmeal.json firebase.json || true && firebase use web.kmeal-prod && firebase deploy || true",
         "deploy.web.kmeal-restaurant.prod": "ng build --prod web-kmeal-restaurant && rm -rf firebase.json && cp firebase.kmeal-restaurant.json firebase.json || true && firebase use web.kmeal-restaurant-prod && firebase deploy || true",
         "gen-apollo-angular": "gql-gen --config codegen-client.js",
         "postinstall": "node patch.js"
