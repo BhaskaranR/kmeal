@@ -1,6 +1,6 @@
 <div class="container" fxlayout="row" fxLayoutAlign="start center" fxLayoutGap="10px" fxLayoutGap.xs="0" class="app-home-nav">
     <div fxFlex="20px" fxFlex.sm="20px" fxFlex.xs="20px" fxFlexOrder="1">
-        <mat-icon (click)="toggleSideNav()">menu</mat-icon>
+        <button mat-icon-button (click)="toggleSideNav()" ><mat-icon >menu</mat-icon></button>
     </div>
     <div fxFlex="200px" fxHide.sm="true" fxHide.xs="true" fxFlexOrder="2">
         <a routerLink="/home"><img style="display:inline-block;width:120px;height:127px;margin-top:8px" src="https://mir-s3-cdn-cf.behance.net/project_modules/disp/76ab2e19585305.562dce0bcf645.png" alt=""></a>
@@ -18,8 +18,8 @@
                     <button mat-menu-item>Log Out</button>
                 </mat-menu> -->
         </div>
-        <!-- <mat-icon matBadge="15" matBadgeColor="warn" routerLink="/shaopping-cart">shopping_cart</mat-icon>
-            <mat-icon matBadge="15" matBadgeColor="warn">help</mat-icon> -->
+        <mat-icon matBadge="15" matBadgeColor="warn" routerLink="/shaopping-cart">shopping_cart</mat-icon>
+         <!--   <mat-icon matBadge="15" matBadgeColor="warn">help</mat-icon> -->
     </div>
 
 </div>

@@ -30,6 +30,9 @@
                             "apps/web-kmeal/src/assets"
                         ],
                         "styles": [
+                            {
+                                "input":"apps/web-kmeal/src/scss/_base-theme.scss"
+                            },
                             "apps/web-kmeal/src/styles.scss"
                         ],
                         "scripts": []

@@ -14,8 +14,10 @@ import { DishOrderComponent } from 'libs/ui/src/lib/dish-order/dish-order.compon
 })
 export class ResComponent implements OnInit, OnDestroy{
     breakpoint:number;
+    isReady:boolean = true;
     mobileQuery: MediaQueryList;
     routeParamSub:any;
+    menu:Array<string> = ['KMeal','Soup','Entry','Seafood','Baverage']
     trendingDishes = [
         {
             id:'321hdjsha',

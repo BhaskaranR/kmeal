@@ -50,7 +50,7 @@
 
     <div class="content-wrapper">
         <h5>Order Again</h5>
-        <ngu-carousel *ngIf="!!restaurants && restaurants.length > 0" #restaurantsCarousel [inputs]="carConfig" [dataSource]="restaurants$">
+        <ngu-carousel *ngIf="!!restaurants && restaurants.length > 0" #restaurantsCarousel [inputs]="carConfig" [dataSource]="restaurants">
             <ngu-tile *nguCarouselDef="let res; let i = index; let ani = animate">
                 <res-card [res]="res" (click)="restaurantDetails(res)" style="box-shadow:none; cursor:pointer"></res-card>
             </ngu-tile>

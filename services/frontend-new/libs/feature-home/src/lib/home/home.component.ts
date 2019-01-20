@@ -9,6 +9,7 @@ import { map } from 'rxjs/operators';
 import {  combineLatest } from 'rxjs';
 import { DishDetailPopupComponent } from 'libs/ui/src/lib/dish-detail/dish-detail-popup.component';
 import { DishOrderComponent } from 'libs/ui/src/lib/dish-order/dish-order.component';
+import { LocalStorage } from '@ngx-pwa/local-storage';
 
 @Component({
     selector: 'kmeal-nx-home',
@@ -25,6 +26,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         private kmealCategoriesGQL: KmealCategoriesGQL,
         private getRestaurantsNearByGQL:GetRestaurantsNearByGQL,
         public dialog: MatDialog,
+        protected localStorage: LocalStorage,
     ) {}
 
     cuisines: KmealCategories.KmealCategories[];
@@ -164,22 +166,22 @@ export class HomeComponent implements OnInit, OnDestroy {
     ngOnDestroy() {}
 
     private loadUserProfile(){
-        const userProfile = window.localStorage.getItem("kmealUserProfile");
+        const userProfile = this.localStorage.getItem("kmealUserProfile");
 
         if (!!userProfile && userProfile['location']){
-            this.loadUserData(userProfile['location']['lat'], userProfile['location']['lng']);
+            this.loadUserData(40.710237, -74.007810);
             return;
         }
         
         if (!navigator.geolocation) {
-            this.loadUserData(40.7, 74.0);
+            this.loadUserData(40.710237, -74.007810);
             return;
         };
 
         navigator.geolocation.getCurrentPosition((position) => {
-            this.loadUserData(position.coords.latitude, position.coords.longitude);
+            this.loadUserData(40.710237, -74.007810);
         },(positionError) => {
-            this.loadUserData(40.7, 74.0);
+            this.loadUserData(40.710237, -74.007810);
         });
     }
 
@@ -195,11 +197,11 @@ export class HomeComponent implements OnInit, OnDestroy {
         const restaurantsObs = this.getRestaurantsNearByGQL
             .watch({
                 nearby:{
-                    cuisine:"italian",
-                    timeofoperation:"",
-                    lat:lat,
-                    long:lng,
-                    radius:5
+                    cuisine:"japanese",
+                    timeofoperation: "REGULAR",
+                    lat: lat,
+                    long: lng,
+                    radius:10
                 }
             })
             .valueChanges
@@ -214,8 +216,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
     
     onSearchCuisine(cuisine) {
-        console.log(cuisine);
-        this.router.navigate(['./search'],{queryParams:{type:'CUISINE', cuisine:cuisine}});
+        this.router.navigate(['./search'],{queryParams:{type:'CUISINE', value:cuisine.toLowerCase()}});
     }
 
     throwError(msg) {
@@ -280,7 +281,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
 
     restaurantDetails(res){
-        this.router.navigate(['./restaurant:' + res.restaurant_id]);
+        this.router.navigate(['./restaurant/' + res.restaurant_id]);
     }
     
 }

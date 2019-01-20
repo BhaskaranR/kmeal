@@ -16,11 +16,8 @@ interface Coordinate {
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'kmeal';
-
-  isAddressSet = false;
+  isAddressSet = true;
   mobileQuery: MediaQueryList;
-  isHome:boolean = false;
   private _mobileQueryListener: () => void;
   
   constructor(
@@ -34,13 +31,10 @@ export class AppComponent {
     this._mobileQueryListener = ()=> changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
     this.localStorage.getItem<string>('address').subscribe((address) => {
-      console.log(address);
+      console.log("try to load address : ",address);
       if (address) {
         this.isAddressSet = true;
       }
-    });
-    activatedRoute.url.subscribe(url =>{
-      
     });
   }
 
@@ -50,7 +44,6 @@ export class AppComponent {
   }
 
   onAddressChange(e){
-    console.log('address changed : ',e);
     let param : Coordinate = {
       type:'ADDRESS',
       lat:e.geometry.location.lat(),
@@ -62,7 +55,7 @@ export class AppComponent {
   }
 
   private updateLocateStorage(param){
-    window.localStorage.setItem('address', param)
+    this.localStorage.setItem('address', param)
   }
   
 }

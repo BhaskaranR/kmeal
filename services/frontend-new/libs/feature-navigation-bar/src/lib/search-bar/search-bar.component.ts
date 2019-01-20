@@ -1,9 +1,6 @@
 import { Component ,ViewChild, OnInit, EventEmitter,Output, Input} from '@angular/core';
-import { MatDialog } from '@angular/material';
-import { Router } from '@angular/router';
 import { GooglePlaceDirective } from 'ngx-google-places-autocomplete';
-import { Apollo } from 'apollo-angular';
-import { Subscription } from 'rxjs';
+
 
 @Component({
   selector: 'kmeal-nx-search-bar',
