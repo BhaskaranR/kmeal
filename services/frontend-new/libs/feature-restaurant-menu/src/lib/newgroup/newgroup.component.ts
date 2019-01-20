@@ -203,6 +203,7 @@ export class NewgroupComponent {
     this.deleteKmealMenuBookGQL.mutate(variables).pipe(pluck('data', 'delete_kmeal_menu_book', 'returning')).subscribe((mb: string[]) => {
       const indx = this.menubooks.findIndex((mb) => mb.menu_book_id == ev.menu_book_id)
       this.menubooks.splice(indx, 1);
+      this.openSnackBar("deleted", "");
     })
   }
 
@@ -217,6 +218,7 @@ export class NewgroupComponent {
     this.deleteKmealMenuBookSectionGQL.mutate(variables).pipe(pluck('data', 'delete_kmeal_menu_book_section', 'returning')).subscribe((mb: string[]) => {
       const indx = this.sections.findIndex((s) => s.section_id == ev.section_id)
       this.sections.splice(indx, 1);
+      this.openSnackBar("deleted", "");
     })
   }
 
