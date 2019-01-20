@@ -1,4 +1,3 @@
-
 <div *ngIf="!isReady">
     <div id="loading-wrapper">
         <div id="loading-text">LOADING</div>
@@ -6,22 +5,35 @@
     </div>
 </div>
 
-
 <div *ngIf="isReady" style="padding:25px;">
-    <br>
-    <br>
-    <div fxLayout="row">
+    <div fxLayout="row" fxLayoutAlign="left center">
         <div fxFlex="50%">
-            <h4>Results : {{type}}</h4>
+            {{restaurants.length}} results | Search by "{{type}}"
         </div>
-        <div fxFlex="50%" style="text-align: right">
-            Filter <mat-icon (click)="isFilterOpen = !isFilterOpen" style="margin-top:20px">filter_list</mat-icon>
+        <div fxFlex="50%" 
+            fxLayout="row" 
+            fxLayoutAlign="end center"
+            fxLayoutGap="2px">
+            <button mat-button  [matMenuTriggerFor]="sortedBy">Sort by</button>
+            <mat-menu #sortedBy="matMenu">
+                <button mat-menu-item>Price Low to High</button>
+                <button mat-menu-item>Price High to Low</button>
+            </mat-menu>
+
+            <div>
+                <button mat-button color="primary" (click)="isFilterOpen = !isFilterOpen">Filter</button>
+            </div>
+
+            <div fxLayout="row"  fxLayoutAlign="start center" fxLayoutGap="15px">
+                <div style="padding-left:15px"> View :</div> 
+                <mat-icon title="Grid">apps</mat-icon> 
+                <div>|</div> 
+                <mat-icon title="List">list</mat-icon>
+            </div>
         </div>
     </div>
-        
+    <hr>  
     <div *ngIf="isFilterOpen">
-            <br>
-            <br>
         <form action="">
             <mat-form-field style="margin-right:15px">
                 <mat-select placeholder="Cuisine" [value]="'Asian'">
@@ -68,9 +80,11 @@
         </form>
     </div>
         
-    <mat-grid-list [cols]="breakpoint"  (window:resize)="onResize($event)">
-        <mat-grid-tile *ngFor="let res of restaurants$ | async">
-            <res-card [res]="res" (onRestaurantDetailsEvent)="restaurantDetails($event)" (onErrorEvent)="throwError($vent)"></res-card>
+    <mat-grid-list [cols]="breakpoint"  (window:resize)="onResize($event)" *ngIf="restaurants.length > 0">
+        <mat-grid-tile *ngFor="let res of restaurants ">
+            <res-card [res]="res" (click)="restaurantDetails(res)" (onErrorEvent)="throwError($vent)"></res-card>
         </mat-grid-tile>
     </mat-grid-list>
+
+    <div *ngIf="restaurants.length  ==  0">No Results</div>
 </div>

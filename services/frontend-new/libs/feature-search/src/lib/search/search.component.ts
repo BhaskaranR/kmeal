@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy} from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
-import { Observable , of} from "rxjs";
-import { map, switchMap , catchError} from "rxjs/operators";
+import { map, switchMap } from "rxjs/operators";
 import { GetRestaurantsNearByGQL } from "../generated/graphql";
 import { MatSnackBar } from "@angular/material";
 
@@ -17,16 +16,18 @@ import { MatSnackBar } from "@angular/material";
 export class SearchComponent implements OnInit ,OnDestroy{
 
     breakpoint:number = 4;
-    restaurants$:Observable<any>;
+    restaurants:Array<any>;
     routeParamSub:any;
     type:string;
     isFilterOpen:boolean = false;
     isReady:boolean = false;
+    sortedBy:string = "Relevant";
 
     constructor(
         public route:ActivatedRoute,
         public snackBar: MatSnackBar,
-        private getRestaurantsNearByGQL:GetRestaurantsNearByGQL){};
+        private getRestaurantsNearByGQL:GetRestaurantsNearByGQL,
+        public router: Router){};
     
     
     ngOnInit() {
@@ -40,29 +41,29 @@ export class SearchComponent implements OnInit ,OnDestroy{
                 } 
 
                 if (params.type === 'CUISINE'){
-                    this.type = params.cuisine;
-                    this.restaurants$ = this.getRestaurantsNearByGQL
+                    this.type = "Cuisine : " + params.value;
+                    const res = this.getRestaurantsNearByGQL
                     .watch({
                         nearby:{
                             cuisine:params.value,
-                            timeofoperation:"",
-                            lat:60,
-                            long:-70,
-                            radius:10,
+                            timeofoperation: "REGULAR",
+                            lat: 40.710237,
+                            long: -74.007810,
+                            radius:10
                         }
                     })
                     .valueChanges
                     .pipe(map(result => result.data.getRestaurantsNearby));
-                    return this.restaurants$
+                    return res
                 }
 
                 
                 if (params.type == 'ADDRESS') {
                     this.type = 'Near By';
-                    this.restaurants$ = this.getRestaurantsNearByGQL
+                    const res  = this.getRestaurantsNearByGQL
                     .watch({
                         nearby:{
-                            cuisine:"",
+                            cuisine:"Italian",
                             timeofoperation:"",
                             lat:parseFloat(params.lat),
                             long:parseFloat(params.lng),
@@ -71,15 +72,17 @@ export class SearchComponent implements OnInit ,OnDestroy{
                     })
                     .valueChanges
                     .pipe(map(result => result.data.getRestaurantsNearby));
-                    return this.restaurants$
+                    return res;
                 }
-            }), catchError(err => {
-                this.throwError(err);
-                return of([]);
-            }))
+            })
+        )
             .subscribe(params => {
-                console.log(params);
+                console.log("got search results : ", params);
+                this.restaurants = params;
                 this.isReady = true;
+            }, (err)=>{
+                console.log('ERROR');
+                this.throwError(err);
             });
         }
     
@@ -95,14 +98,14 @@ export class SearchComponent implements OnInit ,OnDestroy{
         this.routeParamSub.unsubscribe();
     }
 
-    restaurantDetails(e){
-        console.log('restaurant detail : ', e);
-    }
-
     throwError(msg) {
         this.snackBar.open(msg, '', {
             duration: 10000,
             panelClass: ['red-snackbar']
         });
+    }
+
+    restaurantDetails(res){
+        this.router.navigate(['./restaurant/' + res.restaurant_id]);
     }
 }
