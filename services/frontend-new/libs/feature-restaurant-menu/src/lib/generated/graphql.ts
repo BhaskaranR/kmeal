@@ -506,19 +506,11 @@ export interface KmealListingItemSidesBoolExp {
 export interface KmealItemBoolExp {
   _and?: (KmealItemBoolExp | null)[] | null;
 
-  _dmx_created_at?: TimestampComparisonExp | null;
-
   _not?: KmealItemBoolExp | null;
 
   _or?: (KmealItemBoolExp | null)[] | null;
 
-  created_at?: TimestampComparisonExp | null;
-
-  created_block?: BigintComparisonExp | null;
-
-  created_eosacc?: TextComparisonExp | null;
-
-  created_trx?: TextComparisonExp | null;
+  cooking_time?: IntegerComparisonExp | null;
 
   description?: TextComparisonExp | null;
 
@@ -541,6 +533,10 @@ export interface KmealItemBoolExp {
   restaurant_id?: IntegerComparisonExp | null;
 
   sort_order?: IntegerComparisonExp | null;
+
+  spicy_level?: IntegerComparisonExp | null;
+
+  vegetarian?: IntegerComparisonExp | null;
 }
 /** Boolean expression to filter rows from the table "kmeal.item_section". All fields are combined with a logical 'AND'. */
 export interface KmealItemSectionBoolExp {
@@ -966,15 +962,7 @@ export interface KmealListingItemSidesOrderBy {
 }
 /** ordering options when selecting data from "kmeal.item" */
 export interface KmealItemOrderBy {
-  _dmx_created_at?: OrderBy | null;
-
-  created_at?: OrderBy | null;
-
-  created_block?: OrderBy | null;
-
-  created_eosacc?: OrderBy | null;
-
-  created_trx?: OrderBy | null;
+  cooking_time?: OrderBy | null;
 
   description?: OrderBy | null;
 
@@ -989,6 +977,10 @@ export interface KmealItemOrderBy {
   restaurant_id?: OrderBy | null;
 
   sort_order?: OrderBy | null;
+
+  spicy_level?: OrderBy | null;
+
+  vegetarian?: OrderBy | null;
 }
 /** ordering options when selecting data from "kmeal.item_section" */
 export interface KmealItemSectionOrderBy {
@@ -1710,15 +1702,7 @@ export interface KmealItemObjRelInsertInput {
 }
 /** input type for inserting data into table "kmeal.item" */
 export interface KmealItemInsertInput {
-  _dmx_created_at?: Timestamp | null;
-
-  created_at?: Timestamp | null;
-
-  created_block?: Bigint | null;
-
-  created_eosacc?: string | null;
-
-  created_trx?: string | null;
+  cooking_time?: number | null;
 
   description?: string | null;
 
@@ -1741,6 +1725,10 @@ export interface KmealItemInsertInput {
   restaurant_id?: number | null;
 
   sort_order?: number | null;
+
+  spicy_level?: number | null;
+
+  vegetarian?: number | null;
 }
 /** input type for inserting array relation for remote table "kmeal.item_section" */
 export interface KmealItemSectionArrRelInsertInput {
@@ -2362,25 +2350,21 @@ export interface KmealDporderSetInput {
 }
 /** input type for incrementing integer columne in table "kmeal.item" */
 export interface KmealItemIncInput {
-  created_block?: Bigint | null;
+  cooking_time?: number | null;
 
   item_id?: number | null;
 
   restaurant_id?: number | null;
 
   sort_order?: number | null;
+
+  spicy_level?: number | null;
+
+  vegetarian?: number | null;
 }
 /** input type for updating data in table "kmeal.item" */
 export interface KmealItemSetInput {
-  _dmx_created_at?: Timestamp | null;
-
-  created_at?: Timestamp | null;
-
-  created_block?: Bigint | null;
-
-  created_eosacc?: string | null;
-
-  created_trx?: string | null;
+  cooking_time?: number | null;
 
   description?: string | null;
 
@@ -2393,6 +2377,10 @@ export interface KmealItemSetInput {
   restaurant_id?: number | null;
 
   sort_order?: number | null;
+
+  spicy_level?: number | null;
+
+  vegetarian?: number | null;
 }
 /** input type for incrementing integer columne in table "kmeal.item_section" */
 export interface KmealItemSectionIncInput {
@@ -2935,17 +2923,15 @@ export enum KmealMenuBookSectionSelectColumn {
 }
 /** select columns of table "kmeal.item" */
 export enum KmealItemSelectColumn {
-  _DmxCreatedAt = "_dmx_created_at",
-  CreatedAt = "created_at",
-  CreatedBlock = "created_block",
-  CreatedEosacc = "created_eosacc",
-  CreatedTrx = "created_trx",
+  CookingTime = "cooking_time",
   Description = "description",
   ItemId = "item_id",
   ItemName = "item_name",
   Photo = "photo",
   RestaurantId = "restaurant_id",
-  SortOrder = "sort_order"
+  SortOrder = "sort_order",
+  SpicyLevel = "spicy_level",
+  Vegetarian = "vegetarian"
 }
 /** select columns of table "kmeal.listing" */
 export enum KmealListingSelectColumn {
@@ -3184,17 +3170,15 @@ export enum KmealItemConstraint {
 }
 /** update columns of table "kmeal.item" */
 export enum KmealItemUpdateColumn {
-  _DmxCreatedAt = "_dmx_created_at",
-  CreatedAt = "created_at",
-  CreatedBlock = "created_block",
-  CreatedEosacc = "created_eosacc",
-  CreatedTrx = "created_trx",
+  CookingTime = "cooking_time",
   Description = "description",
   ItemId = "item_id",
   ItemName = "item_name",
   Photo = "photo",
   RestaurantId = "restaurant_id",
-  SortOrder = "sort_order"
+  SortOrder = "sort_order",
+  SpicyLevel = "spicy_level",
+  Vegetarian = "vegetarian"
 }
 /** unique or primary key constraints on table "kmeal.listing" */
 export enum KmealListingConstraint {
@@ -3416,7 +3400,7 @@ export namespace DeleteKmealMenuBook {
   export type Returning = {
     __typename?: "kmeal_menu_book";
 
-    menu_book: string;
+    menu_book_id: number;
   };
 }
 
@@ -3699,7 +3683,7 @@ export class DeleteKmealMenuBookGQL extends Apollo.Mutation<DeleteKmealMenuBook.
     mutation delete_kmeal_menu_book($where: kmeal_menu_book_bool_exp!) {
       delete_kmeal_menu_book(where: $where) {
         returning {
-          menu_book
+          menu_book_id
         }
       }
     }
