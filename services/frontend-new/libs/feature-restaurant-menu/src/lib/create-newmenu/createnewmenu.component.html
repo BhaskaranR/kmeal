@@ -14,7 +14,7 @@
       <span>Preview</span>
     </mat-toolbar>
   </ng-template>
-  <mat-drawer #start2 opened mode="side">
+  <mat-drawer #start2 [opened]="!formSubmitted" mode="side">
     <form [formGroup]="menuForm" novalidate (ngSubmit)="onSubmit()">
       <mat-card class="menu-card">
         <mat-card-header>

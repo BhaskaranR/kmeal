@@ -92,6 +92,6 @@ export class CreateNewMenuComponent {
   }
 
   deletemenu() {
-
+    
   }
 }
