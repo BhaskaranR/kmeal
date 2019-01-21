@@ -52,6 +52,7 @@
         "@ngrx/router-store": "6.1.0",
         "@ngrx/store": "6.1.0",
         "@ngu/carousel": "^1.5.4",
+        "@ngx-pwa/local-storage": "7",
         "@nrwl/nx": "7.0.2",
         "apollo-angular": "^1.5.0",
         "apollo-angular-link-http": "^1.3.1",
@@ -62,6 +63,7 @@
         "apollo-link-ws": "^1.0.12",
         "core-js": "^2.5.4",
         "eosjs": "^16.0.9",
+        "firebase": "^5.8.0",
         "graphql": "^0.13.2",
         "graphql-code-generator": "0.14.5",
         "graphql-codegen-typescript-apollo-angular": "0.14.5",
@@ -78,8 +80,7 @@
         "scatterjs-core": "^2.3.8",
         "scatterjs-plugin-eosjs": "^1.3.10",
         "subscriptions-transport-ws": "^0.9.15",
-        "zone.js": "^0.8.26",
-        "@ngx-pwa/local-storage": "7"
+        "zone.js": "^0.8.26"
     },
     "devDependencies": {
         "@angular-devkit/build-angular": "~0.10.0",
