@@ -2,3 +2,7 @@ mat-sidenav-container {
     width: 100% !important;
     height: calc(100vh - 64px) !important;
   }
+
+.main-content{
+  min-height: calc(100vh - 94px) !important;
+}

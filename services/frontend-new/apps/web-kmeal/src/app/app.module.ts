@@ -13,6 +13,8 @@ import { homeRoutes, FeatureHomeModule } from '@kmeal-nx/feature-home';
 import { FeatureSearchModule ,featureSearchRoutes} from '@kmeal-nx/feature-search';
 import {featureRestaurantRoutes, FeatureRestaurantModule} from '@kmeal-nx/feature-restaurant';
 import { ErrorComponent } from './error.component';
+import { FeatureOrderModule } from '@kmeal-nx/feature-order';
+import { CheckoutComponent } from 'libs/feature-order/src/lib/checkout/checkout.component';
 
 @NgModule({
   declarations: [AppComponent, ErrorComponent],
@@ -26,6 +28,7 @@ import { ErrorComponent } from './error.component';
     FeatureSearchModule,
     FeatureRestaurantModule,
     FeatureNavigationBarModule,
+    FeatureOrderModule,
     RouterModule.forRoot(
       [
         {
@@ -44,6 +47,10 @@ import { ErrorComponent } from './error.component';
         {
           path: 'restaurant', 
           children:featureRestaurantRoutes,
+        },
+        {
+          path: 'checkout', 
+          component:CheckoutComponent
         },
         {
           path: '**', 
