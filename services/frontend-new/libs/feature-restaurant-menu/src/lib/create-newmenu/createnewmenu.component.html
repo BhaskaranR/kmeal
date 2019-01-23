@@ -51,7 +51,7 @@
                 <mat-form-field class="full-width">
                   <mat-label>Select menu book</mat-label>
 
-                  <mat-select [(value)]="selectedMenuBook" required="true" formControlName="book_id">
+                  <mat-select [(value)]="selectedMenuBook"  formControlName="book_id">
                     <mat-option *ngFor="let item of menubooks" [value]="item">
                       {{ item.menu_book }}
                     </mat-option>
@@ -63,7 +63,7 @@
               <div class="col">
                 <mat-form-field class="full-width">
                   <mat-label>Select section</mat-label>
-                  <mat-select formControlName="section_id" matNativeControl required="true">
+                  <mat-select formControlName="section_id" matNativeControl >
                     <mat-option *ngFor="let item of selectedMenuBook?.menuBookSectionsBymenuBookId" [value]="item.section_id">
                       {{ item.section_name }}
                     </mat-option>
@@ -91,7 +91,7 @@
               <div class="col">
                 <mat-label>Spice level</mat-label>
                 <br>
-                <mat-slider [min]="1" class="full-width" [max]="3" [tickInterval]="1" color="warn" value="1"
+                <mat-slider [min]="0" class="full-width" [max]="3" [tickInterval]="1" color="warn" value="0"
                   formControlName="spicy_level" thumbLabel aria-label="spiceness level">
                 </mat-slider>
               </div>
@@ -118,18 +118,15 @@
   </mat-drawer>
 
   <div class="drawer-content">
-
-    <mat-card class="mat-card-flat">
-      <mat-card-header>
-        <mat-card-title>{{menuForm}}</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <p>Here is some content</p>
-      </mat-card-content>
-      <mat-card-actions align="end">
-        <button mat-button>LIKE</button>
-        <button mat-button>SHARE</button>
-      </mat-card-actions>
+  <mat-card class="mat-card-flat drawer-content-mat-card">
+      <mat-card-title-group>
+        <mat-card-title>{{itemName}}</mat-card-title>
+        <mat-card-subtitle>
+            {{description}}
+        </mat-card-subtitle>
+        <mat-card-subtitle> {{spicyLevel}} {{vegetarian}}</mat-card-subtitle>
+        <img mat-card-lg-image>
+      </mat-card-title-group>
     </mat-card>
   </div>
 </mat-drawer-container>

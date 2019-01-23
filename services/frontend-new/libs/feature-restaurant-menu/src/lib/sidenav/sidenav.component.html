@@ -1,0 +1,30 @@
+<mat-sidenav-container class="sidenav-container">
+    <mat-sidenav #drawer class="sidenav" fixedInViewport="true" [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+        [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="!(isHandset$ | async)">
+        <div class="leftSidenavContent">
+            <mat-nav-list>
+                <mat-list-item routerLink="newgroup">
+                    <mat-icon mat-list-icon>book</mat-icon>
+                    <p mat-line> Menu Book</p>
+                </mat-list-item>
+                <mat-list-item routerLink="newmenu">
+                        <mat-icon mat-list-icon>restaurant_menu</mat-icon>
+                        <p mat-line> New menu</p>
+                    </mat-list-item>
+                <mat-list-item routerLink="fillmenubook">
+                    <mat-icon mat-list-icon> format_list_numbered  </mat-icon>
+                    <p mat-line> Fill menu book</p>
+                </mat-list-item>
+                <mat-list-item routerLink="newlisting">
+                    <mat-icon mat-list-icon>attach_money </mat-icon>
+                    <p mat-line> Pricing menu </p>
+                </mat-list-item>
+            </mat-nav-list>
+        </div>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <div class="main-content">
+            <router-outlet></router-outlet>
+        </div>
+    </mat-sidenav-content>
+</mat-sidenav-container>

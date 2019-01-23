@@ -40,15 +40,15 @@ import { ScatterModule, scatterRoutes } from '@kmeal-nx/scatter';
       [
         {
           path: "",
-          redirectTo: "/home",
+          redirectTo: "/dashboard",
           pathMatch: "full"
         },
         {
-          path: "home",
+          path: "dashboard",
           loadChildren: "@kmeal-nx/feature-restaurant-dashboard#FeatureRestaurantDashboardModule"
         },
         { path: "orders", loadChildren: "@kmeal-nx/feature-restaurant-orders#FeatureRestaurantOrdersModule" },
-        { path: 'menu', loadChildren: '@kmeal-nx/feature-restaurant-menu#FeatureRestaurantMenuModule' },
+        { path: 'menus', loadChildren: '@kmeal-nx/feature-restaurant-menu#FeatureRestaurantMenuModule' },
         {
           path: 'profile',
           children: scatterRoutes

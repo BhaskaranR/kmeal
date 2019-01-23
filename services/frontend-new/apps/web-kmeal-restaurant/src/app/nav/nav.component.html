@@ -1,3 +1,25 @@
+<!-- TODO: figure out if the <nav> should go inside of a <header> element. -->
+<nav class="navbar-header" [class.is-next-version]="isNextVersion">
+    <a mat-button class="button" routerLink="/" aria-label="Kmeal restaurant">
+        <!-- <img class="angular-logo"
+            src="../../../assets/img/homepage/angular-white-transparent.svg"
+            alt="angular"> -->
+        <span>KMEAL</span>
+    </a>
+    <a mat-button class="navbar-hide-small button" *ngFor="let key of sectionKeys" [routerLink]="key">{{sections[key].name}}</a>
+    <div class="flex-spacer"></div>
+
+    <a mat-icon-button class="button navbar-show-small" routerLink="/profile" *ngIf="!scatter.logged">LOGIN</a>
+    <div class="button navbar-show-small" *ngIf="scatter.logged">
+        <mat-icon [matMenuTriggerFor]="menu" style="margin-top:5px">person</mat-icon>
+    </div>
+</nav>
+<nav class="navbar navbar-show-small">
+    <a mat-button class="navbar-link" *ngFor="let key of sectionKeys" [routerLink]="key">{{sections[key].name}}</a>
+</nav>
+
+<!--    
+
 <div class="container" fxlayout="row" fxLayoutAlign="start center" fxLayoutGap="10px" fxLayoutGap.xs="0" class="kmeal-nx-home-nav">
     <div fxFlex="20px" fxFlex.sm="20px" fxFlex.xs="20px" fxFlexOrder="1">
         <mat-icon (click)="toggleSideNav()">menu</mat-icon>
@@ -14,4 +36,4 @@
             <mat-icon [matMenuTriggerFor]="menu" style="margin-top:5px">person</mat-icon>
         </div>
     </div>
-</div>
+</div> -->
