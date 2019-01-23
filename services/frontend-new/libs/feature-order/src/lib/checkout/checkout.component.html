@@ -4,26 +4,28 @@
     <div fxFlex="1 1 70%">
         <br>
         <div fxLayut="row"
-            fxLayoutGap="15px">
+            fxLayoutGap="30px">
             <div fxFlex="1 1 50%">
                 <mat-card >
-                    <mat-card-header>
-                        <mat-card-title>How it works</mat-card-title>
-                    </mat-card-header>
                     <mat-card-content>
-                        <h4>1. Place Your Order</h4>
+                        <mat-card-subtitle>1. Place Your Order</mat-card-subtitle>
+                        <mat-form-field>
+                            <mat-select [(value)]="visa">
+                              <mat-option>None</mat-option>
+                              <mat-option value="visa"><mat-icon>credit_card</mat-icon> VISA ****2998</mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                        <button mat-button style="margin-left:10px"><small>Add Promo Code</small></button>
+                        <mat-divider></mat-divider>
+                        <br><br>
+                        <mat-card-subtitle>2. Wait for Confirmation Email</mat-card-subtitle>
                         <p>
                         The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
                         A small
                         </p>
                         <mat-divider></mat-divider>
-                        <h4>2. Wait for Confirmation Email</h4>
-                        <p>
-                        The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
-                        A small
-                        </p>
-                        <mat-divider></mat-divider>
-                        <h4>3. Pick up your order at the restaurant you ordered from</h4>
+                        <br>
+                        <mat-card-subtitle>3. Pick up your order</mat-card-subtitle>
                         <p>
                         The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
                         A small
@@ -32,10 +34,50 @@
                 </mat-card>
             </div>
             <div fxFlex="1 1 50%">
-                    <h6> Your Orders </h6>
-                    <ul>
-                        <li>Items</li>
-                    </ul>
+                <mat-list>
+                    <h3 mat-subheader>Orders Summary</h3>
+                    <br>
+                    <mat-list-item (click)="changeOrder()">
+                        <div style="display: inline-block; width:20%">1</div>
+                        <div style="display: inline-block; width:60%">
+                            <span>Chicken Curry</span><br>
+                            <span>Medium Spicy, add Chicken, Red Curry</span>
+                        </div>
+                        <div style="display: inline-block; width:20%; text-align: right">$12.23</div>
+
+                    </mat-list-item>
+                    <mat-list-item (click)="changeOrder()">
+                            <div style="display: inline-block; width:20%">1</div>
+                            <div style="display: inline-block; width:60%">
+                                <span>Chicken Curry</span><br>
+                                <span>Medium Spicy, add Chicken, Red Curry</span>
+                            </div>
+                            <div style="display: inline-block; width:20%; text-align: right">$12.23</div>
+                    </mat-list-item>
+                   
+                </mat-list>
+
+                <div>
+                    <mat-form-field style="width:100%">
+                        <input matInput placeholder="Additional Note" value="" style="width:100%">
+                    </mat-form-field>
+                </div>
+                <div fxLayout="row">
+                    <div fxFlex="50%">Subtotal</div>
+                    <div fxFlex="50%" style="text-align: right">$98.00</div>
+                </div>
+                <div fxLayout="row">
+                        <div fxFlex="50%">tax</div>
+                        <div fxFlex="50%" style="text-align: right">$98.00</div>
+                    </div>
+                    <div fxLayout="row">
+                            <div fxFlex="50%">Total</div>
+                            <div fxFlex="50%" style="text-align: right">$98.00</div>
+                        </div>
+
+            <br>
+            <br>
+                <button mat-flat-button color="warn" style="width:100%">PLACE ORDER</button>
             </div>
                 
         </div>
