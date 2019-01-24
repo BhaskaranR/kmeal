@@ -1,84 +1,61 @@
-<div class="homepage-promo">
-    <div class="homepage-row">
-        <form [formGroup]="menuBookForm" novalidate (ngSubmit)="onBookSubmit()">
-            <div class="container">
-                <div class="header-section">
-                    <div class="header-headline">
-                        <h1 class="mat-h2">Menu Book</h1>
-                        <h2> Add menu book title</h2>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <mat-form-field class="full-width">
-                                <input matInput placeholder="book name"  required="true" formControlName="menubook">
-                            </mat-form-field>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <button mat-raised-button color="primary" type="submit">Create New Menubook</button>
-                        </div>
-                    </div>
-                </div>
+<form [formGroup]="pricingForm">
+    <mat-vertical-stepper #linearVerticalStepper="matVerticalStepper" [linear]="!isNonLinear">
+      <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
+        <ng-template matStepLabel>Menu book details</ng-template>
+        <div class="row">
+            <div class="col">
+              <mat-form-field class="full-width">
+                <mat-label>Select menu book</mat-label>
 
-                <div cdkDropList class="list" cdkSelection (cdkDropListDropped)="dropMenubook($event)">
-                    <div class="box" *ngFor="let item of menubooks" cdkDrag>
-                        <a class="component-list-item" (click)="onSelectionChange(item)">
-                            {{item.menu_book}}
-
-                        </a>
-                        <div class="handle" cdkDragHandle>
-                            <mat-icon>menu</mat-icon>
-                        </div>
-                        <div class="action" (click)="deleteMenuGroup(item)">
-                            <mat-icon>delete</mat-icon>
-                        </div>
-                    </div>
-                </div>
+                <mat-select [(value)]="selectedMenuBook"  formControlName="book_id">
+                  <mat-option *ngFor="let item of menubooks" [value]="item">
+                    {{ item.menu_book }}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="pricingForm.controls['book_id'].hasError('required')">
+                    menu book is <strong>required</strong>
+                </mat-error>
+              </mat-form-field>
             </div>
-        </form>
-        <div class="seperator"></div>
-        <form [formGroup]="sectionsForm" novalidate (ngSubmit)="onSectionsSubmit()">
-            <div class="container">
-                <div class="header-section">
-                    <div class="header-headline">
-                        <h1 class="mat-h2" *ngIf="selectedMenuBook;else default">Sections for
-                            {{selectedMenuBook.menu_book}}</h1>
-                        <ng-template #default>
-                            <h1 class="mat-h2">Sections for</h1>
-                        </ng-template>
-                        <h2> Add section title</h2>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <mat-form-field class="full-width">
-                                <input matInput placeholder="section name"  required="true" formControlName="section">
-                            </mat-form-field>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <button mat-raised-button color="primary" type="submit">Create New Section</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div cdkDropList class="list" (cdkDropListDropped)="dropSections($event)">
-                    <div class="box" *ngFor="let item of sections" cdkDrag>
-                        <a class="component-list-item" (click)="onSelectionChange(item)">
-                            {{item.section_name}}
-                        </a>
-                        <div class="handle" cdkDragHandle>
-                            <mat-icon>menu</mat-icon>
-                        </div>
-
-                        <div class="action" (click)="deleteMenuSection(item)">
-                            <mat-icon>delete</mat-icon>
-                        </div>
-                    </div>
-                </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <mat-form-field class="full-width">
+                <mat-label>Select section</mat-label>
+                <mat-select formControlName="section_id" >
+                  <mat-option *ngFor="let item of selectedMenuBook?.menuBookSectionsBymenuBookId" [value]="item.section_id">
+                    {{ item.section_name }}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="pricingForm.controls['section_id'].hasError('required')">
+                    section is <strong>required</strong>
+                </mat-error>
+              </mat-form-field>
             </div>
-        </form>
-    </div>
-    
-</div>
+          </div>
+        <div>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </mat-step>
+  
+      <mat-step formGroupName="1" [stepControl]="formArray?.get([1])" optional>
+        <ng-template matStepLabel>
+          <div>Select a menu item</div>
+          <mat-action-list>
+              <button mat-list-item *ngFor="let item of items" (click)="listItemSelected(item.item_id)">
+                  <img mat-list-avatar [src]="item.photo" alt="Image of {{item.photo}}">
+                  <h4 mat-line>{{item.item_name}}</h4>
+                  <p mat-line  class="secondary-text"> {{item.description}} </p>
+              </button>
+          </mat-action-list>
+      </mat-step>
+  
+      <mat-step>
+        <ng-template matStepLabel>Enter pricing information</ng-template>
+        <div>
+          <button mat-button  color="primary" type="submit">Submit</button>
+          <button type="button" mat-button (click)="linearVerticalStepper.reset()">Reset</button>
+        </div>
+      </mat-step>
+    </mat-vertical-stepper>
+  </form>

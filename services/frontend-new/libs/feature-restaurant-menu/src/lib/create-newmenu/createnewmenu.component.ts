@@ -40,7 +40,7 @@ export class CreateNewMenuComponent {
     spicy_level: 0,
     vegetarian: 3,
     cooking_time: null,
-    book_id: [null, Validators.required],
+    book_id: null,
     section_id: null
   });
 

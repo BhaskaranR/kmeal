@@ -9,7 +9,7 @@
     <a mat-button class="navbar-hide-small button" *ngFor="let key of sectionKeys" [routerLink]="key">{{sections[key].name}}</a>
     <div class="flex-spacer"></div>
 
-    <a mat-icon-button class="button navbar-show-small" routerLink="/profile" *ngIf="!scatter.logged">LOGIN</a>
+    <a mat-icon-button class="button navbar-hide-small" routerLink="/profile" *ngIf="!scatter.logged">LOGIN</a>
     <div class="button navbar-show-small" *ngIf="scatter.logged">
         <mat-icon [matMenuTriggerFor]="menu" style="margin-top:5px">person</mat-icon>
     </div>

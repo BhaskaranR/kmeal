@@ -44,6 +44,7 @@ CREATE TABLE IF NOT EXISTS kmeal."item_types" (
 CREATE TABLE IF NOT EXISTS kmeal."listing" (
   "listing_id" INTEGER NOT NULL PRIMARY KEY,
   "restaurant_id" INTEGER NOT NULL,
+  "item_id" INTEGER  NOT NULL REFERENCES kmeal.item("item_id")
   "list_price" DECIMAL NOT NULL,
   "list_type" CHAR(1) DEFAULT 'R' NOT NULL,
   "isactive" BOOLEAN NOT NULL,
@@ -69,12 +70,6 @@ CREATE TABLE IF NOT EXISTS kmeal."dplisting" (
 
 ALTER TABLE ONLY kmeal."dplisting"
   ADD CONSTRAINT dplisting_listing_id_fkey FOREIGN KEY ("listing_id") ;
-
-CREATE TABLE IF NOT EXISTS kmeal."listing_items" (
-  "listing_id" INTEGER NOT NULL REFERENCES kmeal.listing("listing_id"),
-  "item_id" INTEGER  NOT NULL REFERENCES kmeal.item("item_id")
-);
-
 CREATE TABLE IF NOT EXISTS kmeal."listing_item_sides" (
   "listing_id" INTEGER NOT NULL REFERENCES kmeal.listing("listing_id"),
   "item_id" INTEGER  NOT NULL REFERENCES kmeal.item("item_id"),
