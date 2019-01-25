@@ -36,17 +36,26 @@ CREATE TABLE IF NOT EXISTS kmeal."item_section" (
 
 CREATE TABLE IF NOT EXISTS kmeal."item_types" (
   "item_id" INTEGER  NOT NULL REFERENCES kmeal.item("item_id"),
-  "item_type" TEXT  NOT NULL
+  "item_type" VARCHAR(50)  NOT NULL
 );
 
 
  -- list type regular, dynamically priced, combo menu
 CREATE TABLE IF NOT EXISTS kmeal."listing" (
   "listing_id" INTEGER NOT NULL PRIMARY KEY,
-  "restaurant_id" INTEGER NOT NULL,
+  "restaurant_id" INTEGER NOT NULL REFERENCES kmeal.restaurant(restaurant_id),
   "item_id" INTEGER  NOT NULL REFERENCES kmeal.item("item_id")
   "list_price" DECIMAL NOT NULL,
   "list_type" CHAR(1) DEFAULT 'R' NOT NULL,
+  "min_price" DECIMAL,
+  "quantity" INTEGER,
+  "start_date" DATE,
+  "end_date" DATE,
+  "start_time" TIMESTAMP,
+  "end_time" TIMESTAMP,
+  "isrecurring" CHAR(1),
+  "sliding_rate" INTEGER,
+  "status" INTEGER NOT NULL
   "isactive" BOOLEAN NOT NULL,
   "created_at" TIMESTAMP NOT NULL,
   "created_block" BIGINT NOT NULL,
@@ -55,23 +64,10 @@ CREATE TABLE IF NOT EXISTS kmeal."listing" (
   "_dmx_created_at" TIMESTAMP DEFAULT current_timestamp NOT NULL
 );
 
-ALTER TABLE ONLY kmeal."listing"
-  ADD CONSTRAINT restaurant_list_id_fkey FOREIGN KEY ("restaurant_id") REFERENCES kmeal.restaurant(restaurant_id);
-
-CREATE TABLE IF NOT EXISTS kmeal."dplisting" (
-  "listing_id" INTEGER NOT NULL PRIMARY KEY,
-  "min_price" DECIMAL NOT NULL,
-  "quantity" INTEGER NOT NULL,
-  "start" INTEGER NOT NULL,
-  "duration" INTEGER NOT NULL,
-  "sliding_rate" INTEGER NOT NULL,
-  "status" INTEGER NOT NULL
-);
-
-ALTER TABLE ONLY kmeal."dplisting"
-  ADD CONSTRAINT dplisting_listing_id_fkey FOREIGN KEY ("listing_id") ;
 CREATE TABLE IF NOT EXISTS kmeal."listing_item_sides" (
   "listing_id" INTEGER NOT NULL REFERENCES kmeal.listing("listing_id"),
   "item_id" INTEGER  NOT NULL REFERENCES kmeal.item("item_id"),
+  "group" VARCHAR(50),
+  "max_selection" INTEGER ,
   "list_price" DECIMAL NOT NULL
 );

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatInputModule, MatButtonModule, MatSelectModule, MatRadioModule, MatCardModule, MatGridListModule, MatMenuModule, MatIconModule, MatSnackBarModule, MatListModule, MatCheckboxModule, MatSliderModule, MatSidenavModule, MatToolbarModule, MatExpansionModule, MatStepperModule } from '@angular/material';
+import { MatInputModule, MatButtonModule, MatSelectModule, MatRadioModule, MatCardModule, MatGridListModule, MatMenuModule, MatIconModule, MatSnackBarModule, MatListModule, MatCheckboxModule, MatSliderModule, MatSidenavModule, MatToolbarModule, MatExpansionModule, MatStepperModule, MatButtonToggleModule } from '@angular/material';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 import { LayoutModule } from '@angular/cdk/layout';
@@ -32,6 +32,7 @@ export const restaurantMenuRoutes: Routes = [
     MatSidenavModule,   
     MatStepperModule,
     MatCheckboxModule,
+    MatButtonToggleModule,
     MatListModule,
     MatSidenavModule,
     MatToolbarModule,

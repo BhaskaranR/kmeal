@@ -1,61 +1,126 @@
+<!-- <div class="homepage-promo">
+  <div class="homepage-row"> -->
 <form [formGroup]="pricingForm">
-    <mat-vertical-stepper #linearVerticalStepper="matVerticalStepper" [linear]="!isNonLinear">
-      <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
-        <ng-template matStepLabel>Menu book details</ng-template>
-        <div class="row">
-            <div class="col">
-              <mat-form-field class="full-width">
-                <mat-label>Select menu book</mat-label>
+  <mat-vertical-stepper class="stepper" #linearVerticalStepper="matVerticalStepper" formArrayName="formArray" [linear]="!isNonLinear">
+    <mat-step formGroupName="0" required [stepControl]="formArray?.get([0])">
+      <ng-template matStepLabel>Menu book details</ng-template>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Select menu book</mat-label>
 
-                <mat-select [(value)]="selectedMenuBook"  formControlName="book_id">
-                  <mat-option *ngFor="let item of menubooks" [value]="item">
-                    {{ item.menu_book }}
-                  </mat-option>
-                </mat-select>
-                <mat-error *ngIf="pricingForm.controls['book_id'].hasError('required')">
-                    menu book is <strong>required</strong>
-                </mat-error>
-              </mat-form-field>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col">
-              <mat-form-field class="full-width">
-                <mat-label>Select section</mat-label>
-                <mat-select formControlName="section_id" >
-                  <mat-option *ngFor="let item of selectedMenuBook?.menuBookSectionsBymenuBookId" [value]="item.section_id">
-                    {{ item.section_name }}
-                  </mat-option>
-                </mat-select>
-                <mat-error *ngIf="pricingForm.controls['section_id'].hasError('required')">
-                    section is <strong>required</strong>
-                </mat-error>
-              </mat-form-field>
-            </div>
-          </div>
-        <div>
-          <button mat-button matStepperNext>Next</button>
+            <mat-select [(value)]="selectedMenuBook" formControlName="book_id">
+              <mat-option *ngFor="let item of menubooks" [value]="item">
+                {{ item.menu_book }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="formArray?.get([0]).controls['book_id'].hasError('required')">
+              menu book is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
         </div>
-      </mat-step>
-  
-      <mat-step formGroupName="1" [stepControl]="formArray?.get([1])" optional>
-        <ng-template matStepLabel>
-          <div>Select a menu item</div>
-          <mat-action-list>
-              <button mat-list-item *ngFor="let item of items" (click)="listItemSelected(item.item_id)">
-                  <img mat-list-avatar [src]="item.photo" alt="Image of {{item.photo}}">
-                  <h4 mat-line>{{item.item_name}}</h4>
-                  <p mat-line  class="secondary-text"> {{item.description}} </p>
-              </button>
-          </mat-action-list>
-      </mat-step>
-  
-      <mat-step>
-        <ng-template matStepLabel>Enter pricing information</ng-template>
-        <div>
-          <button mat-button  color="primary" type="submit">Submit</button>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Select section</mat-label>
+            <mat-select formControlName="section_id" [(value)]="selectedSection" (selectionChange)="stepper.next()">
+              <mat-option *ngFor="let item of selectedMenuBook?.menuBookSectionsBymenuBookId" [value]="item">
+                {{ item.section_name }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="formArray?.get([0]).controls['section_id'].hasError('required')">
+              section is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-step>
+
+    <mat-step formGroupName="1" required [stepControl]="formArray?.get([1])">
+      <ng-template matStepLabel>Select a menu item</ng-template>
+      <mat-action-list>
+        <button mat-list-item *ngFor="let item of selectedSection?.itemSectionsBysectionId" (click)="listItemSelected(item.itemByitemId.item_id)">
+          <!-- <img mat-list-avatar [src]="item.photo" alt="Image of {{item.photo}}"> -->
+          <h4 mat-line>{{item.itemByitemId.item_name}}</h4>
+          <p mat-line class="secondary-text"> {{item.itemByitemId.description}} </p>
+        </button>
+      </mat-action-list>
+    </mat-step>
+
+    <mat-step formGroupName="2" [stepControl]="formArray?.get([2])">
+      <ng-template matStepLabel>Enter pricing information</ng-template>
+      <div class="row">
+        <div class="col">
+          <mat-button-toggle-group style="margin-bottom:20px;" appearance="legacy" (change)="priceTypeChanged($event)"
+            name="pricingType" aria-label="Pricing Type">
+            <mat-button-toggle value="regular">Regular</mat-button-toggle>
+            <mat-button-toggle value="dynamic">Dynamic</mat-button-toggle>
+          </mat-button-toggle-group>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field>
+            <input matInput formControlName="list_price" type="number" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01"
+              required placeholder="List price">
+            <span matPrefix>$&nbsp;</span>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row" *ngIf="pricetype == 'dynamic'">
+        <div class="col">
+          <mat-form-field>
+            <input matInput formControlName="min_price" type="number" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01"
+              required placeholder="Minimum price">
+            <span matPrefix>$&nbsp;</span>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row" *ngIf="pricetype == 'dynamic'">
+        <div class="col">
+          <mat-form-field>
+            <input matInput formControlName="quantity" type="number" step="1" required placeholder="Maximum Qty">
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row" *ngIf="pricetype == 'dynamic'">
+        <div class="col">
+          <mat-form-field>
+            <input matInput formControlName="sliding_rate" type="number" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01"
+              required placeholder="Sliding rate">
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row" *ngIf="pricetype == 'dynamic'">
+        <div class="col">
+          <mat-form-field>
+            <input matInput formControlName="start" type="number" step="1" required placeholder="Start Time">
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-slide-toggle checked="true" labelPosition="after" formControlName="isactive"></mat-slide-toggle>
+          Active
+          </mat-slide-toggle>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <button mat-button color="primary" type="submit">Submit</button>
           <button type="button" mat-button (click)="linearVerticalStepper.reset()">Reset</button>
         </div>
-      </mat-step>
-    </mat-vertical-stepper>
-  </form>
+      </div>
+    </mat-step>
+  </mat-vertical-stepper>
+</form>
+<!-- </div>
+</div> -->
