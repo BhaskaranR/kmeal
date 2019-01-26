@@ -41,10 +41,10 @@ CREATE TABLE IF NOT EXISTS kmeal."item_types" (
 
 
  -- list type regular, dynamically priced, combo menu
-CREATE TABLE IF NOT EXISTS kmeal."listing" (
+CREATE TABLE  IF NOT EXISTS  kmeal."listing" (
   "listing_id" SERIAL PRIMARY KEY,
   "restaurant_id" INTEGER NOT NULL REFERENCES kmeal.restaurant(restaurant_id),
-  "item_id" INTEGER  NOT NULL REFERENCES kmeal.item("item_id")
+  "item_id" INTEGER  NOT NULL REFERENCES kmeal.item("item_id"),
   "list_price" DECIMAL NOT NULL,
   "list_type" CHAR(1) DEFAULT 'R' NOT NULL,
   "min_price" DECIMAL,
