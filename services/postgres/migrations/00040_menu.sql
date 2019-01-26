@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS kmeal."item_types" (
 
  -- list type regular, dynamically priced, combo menu
 CREATE TABLE IF NOT EXISTS kmeal."listing" (
-  "listing_id" INTEGER NOT NULL PRIMARY KEY,
+  "listing_id" SERIAL PRIMARY KEY,
   "restaurant_id" INTEGER NOT NULL REFERENCES kmeal.restaurant(restaurant_id),
   "item_id" INTEGER  NOT NULL REFERENCES kmeal.item("item_id")
   "list_price" DECIMAL NOT NULL,
@@ -51,17 +51,16 @@ CREATE TABLE IF NOT EXISTS kmeal."listing" (
   "quantity" INTEGER,
   "start_date" DATE,
   "end_date" DATE,
-  "start_time" TIMESTAMP,
-  "end_time" TIMESTAMP,
+  "start_time" VARCHAR(10),
+  "end_time" VARCHAR(10),
   "isrecurring" CHAR(1),
   "sliding_rate" DECIMAL,
-  "status" INTEGER NOT NULL
   "isactive" BOOLEAN NOT NULL,
-  "created_at" TIMESTAMP NOT NULL,
-  "created_block" BIGINT NOT NULL,
-  "created_trx" TEXT NOT NULL,
-  "created_eosacc" TEXT NOT NULL,
-  "_dmx_created_at" TIMESTAMP DEFAULT current_timestamp NOT NULL
+  "created_at" TIMESTAMP,
+  "created_block" BIGINT,
+  "created_trx" TEXT,
+  "created_eosacc" TEXT,
+  "_dmx_created_at" TIMESTAMP DEFAULT current_timestamp
 );
 
 CREATE TABLE IF NOT EXISTS kmeal."listing_item_sides" (
