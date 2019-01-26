@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS kmeal."listing" (
   "start_time" TIMESTAMP,
   "end_time" TIMESTAMP,
   "isrecurring" CHAR(1),
-  "sliding_rate" INTEGER,
+  "sliding_rate" DECIMAL,
   "status" INTEGER NOT NULL
   "isactive" BOOLEAN NOT NULL,
   "created_at" TIMESTAMP NOT NULL,
