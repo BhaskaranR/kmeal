@@ -43,8 +43,7 @@ export class NewlistingComponent implements OnInit {
         "start_time": [null, Validators.required],
         "end_date": [null, Validators.required],
         "end_time": [null, Validators.required],
-        "sliding_rate": [null, Validators.required],
-        "status": [null, Validators.required]
+        "sliding_rate": [null, Validators.required]
       }),
     ])
   });
@@ -57,14 +56,17 @@ export class NewlistingComponent implements OnInit {
     "start_time": [null, Validators.required],
     "end_date": [null, Validators.required],
     "end_time": [null, Validators.required],
-    "sliding_rate": [null, Validators.required],
-    "status": [null, Validators.required],
+    "sliding_rate": [.05, Validators.required]
   };
 
   constructor(private fb: FormBuilder,
     private kmealMenuBookItemsSectionGQL: KmealBookSectionItemsGQL,
     private insertKmealListingGQL: InsertKmealListingGQL
   ) { }
+
+  formatLabel(value: number | null) {
+    return value + "%";
+  }
 
   ngOnInit() {
     const variables = {
@@ -74,7 +76,6 @@ export class NewlistingComponent implements OnInit {
         }
       }
     };
-
     this.kmealMenuBookItemsSectionGQL.watch(variables, {
       fetchPolicy: 'network-only'
     }
@@ -116,24 +117,24 @@ export class NewlistingComponent implements OnInit {
     if (!this.pricingForm.valid) {
       return;
     }
-    console.log(this.pricingForm.value);
+    const valArr = this.pricingForm.value.formArray;
 
     const variables: insKmealListing.Variables = {
       "objects": [
         {
-          "item_id": this.pricingForm.value[1].item_id,
-          "list_price": this.pricingForm.value[2].list_price,
+          "item_id": valArr[1].item_id,
+          "list_price": valArr[2].list_price,
           "restaurant_id": 1,
-          "list_type": this.pricingForm.value[2].list_type,
-          "min_price": this.pricingForm.value[2].min_price,
-          "sliding_rate": this.pricingForm.value[2].sliding_rate,
-          "quantity": this.pricingForm.value[2].quantity,
-          "isactive": this.pricingForm.value[2].isactive,
-          "start_date": this.pricingForm.value[2].start_date,
-          "start_time": this.pricingForm.value[2].start_time,
-          "end_date": this.pricingForm.value[2].end_date,
-          "end_time": this.pricingForm.value[2].end_time,
-          "isrecurring": this.pricingForm.value[2].isrecurring,
+          "list_type": valArr[2].list_type,
+          "min_price": valArr[2].min_price,
+          "sliding_rate": valArr[2].sliding_rate,
+          "quantity": valArr[2].quantity,
+          "isactive": valArr[2].isactive,
+          "start_date": valArr[2].start_date,
+          "start_time": valArr[2].start_time,
+          "end_date": valArr[2].end_date,
+          "end_time": valArr[2].end_time,
+          "isrecurring": valArr[2].isrecurring,
           "listingItemSidessBylistingId": {
             "data": [{
               "group":"",
