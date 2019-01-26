@@ -1,7 +1,7 @@
 <!-- <div class="homepage-promo">
   <div class="homepage-row"> -->
 <form [formGroup]="pricingForm" (ngSubmit)="onSubmit()">
-  <mat-vertical-stepper class="stepper" #linearVerticalStepper="matVerticalStepper" formArrayName="formArray" [linear]="!isNonLinear">
+  <mat-vertical-stepper class="stepper" #linearVerticalStepper="matVerticalStepper" formArrayName="formArray"  [linear]="!isNonLinear">
     <mat-step formGroupName="0" required [stepControl]="formArray?.get([0])">
       <ng-template matStepLabel>Menu book details</ng-template>
       <mat-card class="pricing-card mat-card-flat">
@@ -16,9 +16,9 @@
                     {{ item.menu_book }}
                   </mat-option>
                 </mat-select>
-                <mat-error *ngIf="formArray?.get([0]).controls['book_id'].hasError('required')">
+                <!-- <mat-error *ngIf="formArray?.get([0]).controls['book_id'].hasError('required')">
                   menu book is <strong>required</strong>
-                </mat-error>
+                </mat-error> -->
               </mat-form-field>
             </div>
           </div>
@@ -31,9 +31,9 @@
                     {{ item.section_name }}
                   </mat-option>
                 </mat-select>
-                <mat-error *ngIf="formArray?.get([0]).controls['section_id'].hasError('required')">
+                <!-- <mat-error *ngIf="formArray?.get([0]).controls['section_id'].hasError('required')">
                   section is <strong>required</strong>
-                </mat-error>
+                </mat-error> -->
               </mat-form-field>
             </div>
           </div>

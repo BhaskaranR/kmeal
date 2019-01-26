@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, Validators, FormArray, FormGroup } from '@angular/forms';
+import { FormBuilder, Validators, FormArray, FormGroup, AbstractControl } from '@angular/forms';
 import {
   KmealBookSectionItems as kmb, KmealBookSectionItemsGQL, InsertKmealListingGQL,
   InsertKmealListing as insKmealListing,
@@ -19,10 +19,18 @@ import { InsertKmealListing } from '../generated/graphql';
 export class NewlistingComponent implements OnInit {
 
   menubooks: kmb.KmealMenuBook[] = [];
+
+  isNonLinear = false;
+
+  isNonEditable = false;
   pricetype = 'Regular';
   @ViewChild('linearVerticalStepper') stepper: MatStepper;
   selectedMenuBook: kmb.KmealMenuBook;
   selectedSection: any;
+
+
+  /** Returns a FormArray with the name 'formArray'. */
+  get formArray(): AbstractControl | null { return this.pricingForm.get('formArray'); }
 
   pricingForm = this.fb.group({
     formArray: this.fb.array([
