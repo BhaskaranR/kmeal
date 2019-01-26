@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS kmeal."order" (
   "order_id" INTEGER  NOT NULL PRIMARY KEY,
-  "buyer" CHAR(12) NOT NULL,
-  "restaurant_id" INTEGER NOT NULL,
+  "buyer" CHAR(12) NOT NULL  REFERENCES kmeal.account(owner),
+  "restaurant_id" INTEGER NOT NULL REFERENCES kmeal.restaurant(restaurant_id),
   "price" TEXT NOT NULL,
   "instructions" TEXT,
   "created_at" TIMESTAMP NOT NULL,
@@ -10,14 +10,6 @@ CREATE TABLE IF NOT EXISTS kmeal."order" (
   "created_eosacc" TEXT NOT NULL,
   "_dmx_created_at" TIMESTAMP DEFAULT current_timestamp NOT NULL
 );
-
-ALTER TABLE ONLY kmeal."order"
-  ADD CONSTRAINT order_buyer_id_fkey FOREIGN KEY ("buyer") REFERENCES kmeal.account(owner);
-
-
-ALTER TABLE ONLY kmeal."order"
-  ADD CONSTRAINT order_restaurant_id_id_fkey FOREIGN KEY ("restaurant_id") REFERENCES kmeal.restaurant(restaurant_id);
-
 
 CREATE TABLE IF NOT EXISTS kmeal."order_status" (
   "order_id" INTEGER  NOT NULL PRIMARY KEY,
