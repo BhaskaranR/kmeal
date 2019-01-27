@@ -51,7 +51,7 @@
                 <mat-form-field class="full-width">
                   <mat-label>Select menu book</mat-label>
 
-                  <mat-select [(value)]="selectedMenuBook"   (click)="onSelectionChange(item)" formControlName="book_id">
+                  <mat-select [(value)]="selectedMenuBook"   formControlName="book_id">
                     <mat-option *ngFor="let item of menubooks" [value]="item">
                       {{ item.menu_book }}
                     </mat-option>
