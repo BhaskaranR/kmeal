@@ -6,9 +6,11 @@ import { DishCardComponent } from './dish-card/dish-card.component';
 import { RestaurantComponent } from './restaurant/restaurant.component';
 import { FeatureCoreModule } from '@kmeal-nx/feature-core';
 import { DishOrderComponent } from './dish-order/dish-order.component';
+import { DishCardTwoComponent } from './dish-card2/dish-card2.component';
+import { DealTimerDirective } from './dish-card2/deal-timer.directive';
 
 
-const components = [DishDetailPopupComponent, DishCardComponent, RestaurantComponent, DishOrderComponent]
+const components = [DealTimerDirective,DishDetailPopupComponent, DishCardTwoComponent,DishCardComponent, RestaurantComponent, DishOrderComponent]
 
 @NgModule({
   declarations: components,

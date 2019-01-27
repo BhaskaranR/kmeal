@@ -15,25 +15,21 @@
     </div>
 </div>
 
-<div fxLayout="row" 
-    fxLayoutAlign="start center" 
-    style="padding-left:25px; padding-right:25px; padding-top:25px">
-    <div fxFlex="80%">
-         <a *ngFor="let m of menu" style="margin-right:30px; cursor:pointer">{{m}} </a> 
-    </div>
-    <div fxFlex="20%"
-        fxLayout="row"
-        fxLayoutAlign="end center">
-        <button mat-button>More..</button>
-    </div>
-</div>
+<mat-tab-group *ngIf="isReady">
+    <mat-tab *ngFor="let sec of book.menuBookSectionsBymenuBookId; let index = index" 
+            [label]="sec.section_name">
+            <br>
+            <mat-grid-list [cols]="breakpoint" rowHeight="3:2" (window:resize)="onResize($event)" >
+                    <mat-grid-tile *ngFor="let dish of sec.itemSectionsBysectionId">
+                        <dish-card2 [data]="dish.itemByitemId" style="width:calc(100% - 60px); height:100%"></dish-card2>
+                    </mat-grid-tile>
+            </mat-grid-list>
 
-<hr>
+            <p style="text-align:center; margin-top:200px" *ngIf="!sec.itemSectionsBysectionId || sec.itemSectionsBysectionId.length == 0">No Dishes Available</p>
+    </mat-tab>
+</mat-tab-group>
 
-<mat-grid-list [cols]="breakpoint" rowHeight="500px" (window:resize)="onResize($event)">
-    <mat-grid-tile *ngFor="let dish of dishes">
-        <dish-card2 [dishDetails]="dish" (onErrorEvent)="throwError($event)"
-        (onOpenDetailsEvent)="openDishDetails(dish)"
-        (onPlaceOrderEvent)="orderDishNow(dish)"></dish-card2>
-    </mat-grid-tile>
-</mat-grid-list>
+
+
+
+

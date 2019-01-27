@@ -3304,16 +3304,70 @@ export type _Text = any;
 
 export namespace KmealListing {
   export type Variables = {
-    where?: KmealListingBoolExp | null;
+    menuBookWhere?: KmealMenuBookBoolExp | null;
+    menuBookOrderby?: KmealMenuBookOrderBy[] | null;
+    menuBookSectionsOrderby?: KmealMenuBookSectionOrderBy[] | null;
+    itemSectionsOrderby?: KmealItemSectionOrderBy[] | null;
+    listingWhere?: KmealListingBoolExp | null;
   };
 
   export type Query = {
     __typename?: "Query";
 
-    kmeal_listing: KmealListing[];
+    kmeal_menu_book: KmealMenuBook[];
   };
 
-  export type KmealListing = {
+  export type KmealMenuBook = {
+    __typename?: "kmeal_menu_book";
+
+    menu_book: string;
+
+    menu_book_id: number;
+
+    sort_order: number;
+
+    menuBookSectionsBymenuBookId: MenuBookSectionsBymenuBookId[];
+  };
+
+  export type MenuBookSectionsBymenuBookId = {
+    __typename?: "kmeal_menu_book_section";
+
+    section_id: number;
+
+    section_name: string;
+
+    itemSectionsBysectionId: ItemSectionsBysectionId[];
+  };
+
+  export type ItemSectionsBysectionId = {
+    __typename?: "kmeal_item_section";
+
+    itemByitemId: ItemByitemId;
+  };
+
+  export type ItemByitemId = {
+    __typename?: "kmeal_item";
+
+    item_id: number;
+
+    item_name: string;
+
+    description: string;
+
+    spicy_level: number | null;
+
+    vegetarian: number | null;
+
+    photo: string;
+
+    sort_order: number;
+
+    cooking_time: number | null;
+
+    listingsByitemId: ListingsByitemId[];
+  };
+
+  export type ListingsByitemId = {
     __typename?: "kmeal_listing";
 
     listing_id: number;
@@ -3336,57 +3390,7 @@ export namespace KmealListing {
 
     end_time: string | null;
 
-    itemByitemId: ItemByitemId;
-
     listingItemSidessBylistingId: ListingItemSidessBylistingId[];
-  };
-
-  export type ItemByitemId = {
-    __typename?: "kmeal_item";
-
-    item_id: number;
-
-    item_name: string;
-
-    description: string;
-
-    photo: string;
-
-    spicy_level: number | null;
-
-    vegetarian: number | null;
-
-    itemSectionsByitemId: ItemSectionsByitemId[];
-  };
-
-  export type ItemSectionsByitemId = {
-    __typename?: "kmeal_item_section";
-
-    section_id: number;
-
-    menuBookSectionBysectionId: MenuBookSectionBysectionId;
-  };
-
-  export type MenuBookSectionBysectionId = {
-    __typename?: "kmeal_menu_book_section";
-
-    section_id: number;
-
-    section_name: string;
-
-    sort_order: number;
-
-    menuBookBymenuBookId: MenuBookBymenuBookId;
-  };
-
-  export type MenuBookBymenuBookId = {
-    __typename?: "kmeal_menu_book";
-
-    menu_book_id: number;
-
-    menu_book: string;
-
-    sort_order: number;
   };
 
   export type ListingItemSidessBylistingId = {
@@ -3401,24 +3405,6 @@ export namespace KmealListing {
     group: string | null;
 
     max_selection: number | null;
-
-    itemByitemId: _ItemByitemId;
-  };
-
-  export type _ItemByitemId = {
-    __typename?: "kmeal_item";
-
-    item_id: number;
-
-    item_name: string;
-
-    description: string;
-
-    photo: string;
-
-    spicy_level: number | null;
-
-    vegetarian: number | null;
   };
 }
 
@@ -3440,52 +3426,50 @@ import gql from "graphql-tag";
 })
 export class KmealListingGQL extends Apollo.Query<KmealListing.Query, KmealListing.Variables> {
   document: any = gql`
-    query kmeal_listing($where: kmeal_listing_bool_exp) {
-      kmeal_listing(where: $where) {
-        listing_id
-        list_price
-        list_type
-        min_price
-        quantity
-        sliding_rate
-        start_date
-        start_time
-        end_date
-        end_time
-        itemByitemId {
-          item_id
-          item_name
-          description
-          photo
-          spicy_level
-          vegetarian
-          itemSectionsByitemId {
-            section_id
-            menuBookSectionBysectionId {
-              section_id
-              section_name
+    query kmeal_listing(
+      $menuBookWhere: kmeal_menu_book_bool_exp
+      $menuBookOrderby: [kmeal_menu_book_order_by!]
+      $menuBookSectionsOrderby: [kmeal_menu_book_section_order_by!]
+      $itemSectionsOrderby: [kmeal_item_section_order_by!]
+      $listingWhere: kmeal_listing_bool_exp
+    ) {
+      kmeal_menu_book(where: $menuBookWhere, order_by: $menuBookOrderby) {
+        menu_book
+        menu_book_id
+        sort_order
+        menuBookSectionsBymenuBookId(order_by: $menuBookSectionsOrderby) {
+          section_id
+          section_name
+          itemSectionsBysectionId(order_by: $itemSectionsOrderby) {
+            itemByitemId {
+              item_id
+              item_name
+              description
+              spicy_level
+              vegetarian
+              photo
               sort_order
-              menuBookBymenuBookId {
-                menu_book_id
-                menu_book
-                sort_order
+              cooking_time
+              listingsByitemId(where: $listingWhere) {
+                listing_id
+                list_price
+                list_type
+                min_price
+                quantity
+                sliding_rate
+                start_date
+                start_time
+                end_date
+                end_time
+                listingItemSidessBylistingId {
+                  item_id
+                  listing_id
+                  list_price
+                  group
+                  max_selection
+                }
               }
             }
-          }
-        }
-        listingItemSidessBylistingId {
-          item_id
-          listing_id
-          list_price
-          group
-          max_selection
-          itemByitemId {
-            item_id
-            item_name
-            description
-            photo
-            spicy_level
-            vegetarian
           }
         }
       }

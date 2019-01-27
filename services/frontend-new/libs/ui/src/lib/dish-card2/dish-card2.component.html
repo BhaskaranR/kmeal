@@ -1,17 +1,21 @@
-<mat-card class="example-card">
-    <mat-card-header>
-        <div mat-card-avatar class="example-header-image"></div>
-        <mat-card-title>{{data.name}}</mat-card-title>
-        <mat-card-subtitle>{{data.spicyLevel}}</mat-card-subtitle>
-    </mat-card-header>
-    <img mat-card-image src="{{data.image}}" alt="Photo of a Shiba Inu">
+<mat-card class="mat-card-flat" style="width:100%">
+    <mat-card-title-group>
+        <mat-card-title>{{data.item_name}}</mat-card-title>
+        <mat-card-subtitle>{{data.description}}</mat-card-subtitle>
+    </mat-card-title-group>
     <mat-card-content>
-        <p>
-        {{data.description}}
-        </p>
+        <mat-progress-bar color="primary" mode="determinate" value="60"></mat-progress-bar>
+        <div fxLayout="row">
+            <div fxFlex="40%"><small>42%</small></div>
+            <div fxFlex="60%" style="text-align:right"><small>Deal ends in <span [dealTimer]="'6:00 pm'"></span></small></div>
+        </div>
+        <mat-chip-list>
+            <mat-basic-chip color="warn">{{data.spicy_level}}</mat-basic-chip>
+            <mat-basic-chip color="warn">{{ data.vegetarian == 1 ? 'Vegetarian' : 'None Vegetairan' }}</mat-basic-chip>
+        </mat-chip-list>
     </mat-card-content>
+
     <mat-card-actions>
-        <button mat-button>Order</button>
-        <button mat-button>Cancel</button>
-    </mat-card-actions>
+        <button mat-button>LIKE</button>
+      </mat-card-actions>
 </mat-card>

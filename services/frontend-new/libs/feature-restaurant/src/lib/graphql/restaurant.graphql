@@ -1,49 +1,45 @@
-query kmeal_listing($where: kmeal_listing_bool_exp) {
- kmeal_listing(where: $where) {
-   listing_id
-   list_price
-   list_type
-   min_price
-   quantity
-   sliding_rate
-   start_date
-   start_time
-   end_date
-   end_time
-   itemByitemId {
-     item_id
-     item_name
-     description
-     photo
-     spicy_level
-     vegetarian
-     itemSectionsByitemId {
-       section_id
-       menuBookSectionBysectionId {
-         section_id
-         section_name
+query kmeal_listing($menuBookWhere: kmeal_menu_book_bool_exp,
+         $menuBookOrderby: [kmeal_menu_book_order_by!],
+ $menuBookSectionsOrderby: [kmeal_menu_book_section_order_by!],
+ $itemSectionsOrderby: [kmeal_item_section_order_by!],
+ $listingWhere: kmeal_listing_bool_exp) {
+ kmeal_menu_book (where: $menuBookWhere, order_by: $menuBookOrderby) {
+   menu_book
+   menu_book_id
+   sort_order
+   menuBookSectionsBymenuBookId (order_by: $menuBookSectionsOrderby) {
+     section_id
+     section_name
+     itemSectionsBysectionId (order_by: $itemSectionsOrderby) {
+       itemByitemId  {
+         item_id
+         item_name
+         description
+         spicy_level
+         vegetarian
+         photo
          sort_order
-         menuBookBymenuBookId {
-           menu_book_id
-           menu_book
-           sort_order
+         cooking_time
+         listingsByitemId(where: $listingWhere) {
+           listing_id
+           list_price
+           list_type
+           min_price
+           quantity
+           sliding_rate
+           start_date
+           start_time
+           end_date
+           end_time
+           listingItemSidessBylistingId {
+             item_id
+             listing_id
+             list_price
+             group
+             max_selection
+           }
          }
        }
-     }
-   }
-   listingItemSidessBylistingId {
-     item_id
-     listing_id
-     list_price
-     group
-     max_selection
-     itemByitemId {
-       item_id
-       item_name
-       description
-       photo
-       spicy_level
-       vegetarian
      }
    }
  }

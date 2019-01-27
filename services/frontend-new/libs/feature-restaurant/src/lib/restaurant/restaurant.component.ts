@@ -1,124 +1,27 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef} from "@angular/core";
 import { MediaMatcher } from "@angular/cdk/layout";
-import { Observable } from "apollo-link";
-import { Router, ActivatedRoute, ParamMap } from "@angular/router";
-import {  map } from "rxjs/operators";
+import { ActivatedRoute } from "@angular/router";
+import { pluck } from "rxjs/operators";
 import { MatDialog, MatSnackBar } from "@angular/material";
 import { DishDetailPopupComponent } from 'libs/ui/src/lib/dish-detail/dish-detail-popup.component';
 import { DishOrderComponent } from 'libs/ui/src/lib/dish-order/dish-order.component';
-import { KmealListingGQL } from "../generated/graphql";
+import { KmealListingGQL, OrderBy } from "../generated/graphql";
 
 @Component({
     selector: "kmeal-nx-restaurant",
     moduleId: module.id,
     templateUrl: "./restaurant.component.html",
+    styleUrls:['./restaurant.component.scss']
 })
 export class ResComponent implements OnInit, OnDestroy{
     breakpoint:number;
-    isReady:boolean = true;
+    isReady:boolean = false;
     mobileQuery: MediaQueryList;
+    book:any;
     routeParamSub:any;
-    menu:Array<string> = ['KMeal','Soup','Entry','Seafood','Baverage'];
+    menu:Array<string> ;
     dishes:any[];
-    trendingDishes = [
-        {
-            id:'321hdjsha',
-            name:'Chicken Biryani',
-            description:"Sautted Chicken with Fried rice, with special Indian Spcies",
-            lables:['Indian','Spicy','Chicken','Rice'],
-            restaurant:'Indian Diner',
-            currentPrice:13.88,
-            orignalprice:16.00,
-            ordersCount:12,
-            maxOrders:30,
-            rating:5,
-            expireTime:"02:00:00"
-        },{
-            id:'4372djakhx',
-            name:'Chicken Curry',
-            description:"Grilled Chicken in creamy curry sauce, served with choice of white rice or brown rice",
-            lables:['Indian','Spicy','Chicken','Rice','curry'],
-            restaurant:'Indian Diner',
-            currentPrice:13.88,
-            orignalprice:16.00,
-            ordersCount:12,
-            maxOrders:30,
-            rating:5,
-            expireTime:"02:00:00"
-        },{
-            id:'4372djakhx',
-            name:'Chicken Curry',
-            description:"Grilled Chicken in creamy curry sauce, served with choice of white rice or brown rice",
-            lables:['Indian','Spicy','Chicken','Rice','curry'],
-            restaurant:'Indian Diner',
-            currentPrice:13.88,
-            orignalprice:16.00,
-            ordersCount:12,
-            maxOrders:30,
-            rating:5,
-            expireTime:"02:00:00"
-        },{
-            id:'4372djakhx',
-            name:'Chicken Curry',
-            description:"Grilled Chicken in creamy curry sauce, served with choice of white rice or brown rice",
-            lables:['Indian','Spicy','Chicken','Rice','curry'],
-            restaurant:'Indian Diner',
-            currentPrice:13.88,
-            orignalprice:16.00,
-            ordersCount:12,
-            maxOrders:30,
-            rating:5,
-            expireTime:"02:00:00"
-        },{
-            id:'4372djakhx',
-            name:'Chicken Curry',
-            description:"Grilled Chicken in creamy curry sauce, served with choice of white rice or brown rice",
-            lables:['Indian','Spicy','Chicken','Rice','curry'],
-            restaurant:'Indian Diner',
-            currentPrice:13.88,
-            orignalprice:16.00,
-            ordersCount:12,
-            maxOrders:30,
-            rating:5,
-            expireTime:"02:00:00"
-        },{
-            id:'4372djakhx',
-            name:'Chicken Curry',
-            description:"Grilled Chicken in creamy curry sauce, served with choice of white rice or brown rice",
-            lables:['Indian','Spicy','Chicken','Rice','curry'],
-            restaurant:'Indian Diner',
-            currentPrice:13.88,
-            orignalprice:16.00,
-            ordersCount:12,
-            maxOrders:30,
-            rating:5,
-            expireTime:"02:00:00"
-        },{
-            id:'4372djakhx',
-            name:'Chicken Curry',
-            description:"Grilled Chicken in creamy curry sauce, served with choice of white rice or brown rice",
-            lables:['Indian','Spicy','Chicken','Rice','curry'],
-            restaurant:'Indian Diner',
-            currentPrice:13.88,
-            orignalprice:16.00,
-            ordersCount:12,
-            maxOrders:30,
-            rating:5,
-            expireTime:"02:00:00"
-        },{
-            id:'4372djakhx',
-            name:'Chicken Curry',
-            description:"Grilled Chicken in creamy curry sauce, served with choice of white rice or brown rice",
-            lables:['Indian','Spicy','Chicken','Rice','curry'],
-            restaurant:'Indian Diner',
-            currentPrice:13.88,
-            orignalprice:16.00,
-            ordersCount:12,
-            maxOrders:30,
-            rating:5,
-            expireTime:"02:00:00"
-        }
-    ];
+
 
     private _mobileQueryListener: () => void;
     constructor(
@@ -135,46 +38,63 @@ export class ResComponent implements OnInit, OnDestroy{
 
     ngOnDestroy(): void {
         this.mobileQuery.removeListener(this._mobileQueryListener);
+        this.kmealListListner();
+        this.routeParamSub();
     }
 
     ngOnInit(){
         this.breakpoint = this.generateBreakpoint(window.innerWidth);
-        this.routeParamSub =  this.route.paramMap.pipe(
-            map(params => params['params'].id)
-        ).subscribe(params => {
-            this.loadRestaurantDetails(params,true);
+        this.routeParamSub =  this.route.paramMap
+        .pipe(pluck('params','id'))
+        .subscribe(params => {
+            this.loadRestaurantDetails(this.getQuery(params,true));
         })
     }
 
-    loadRestaurantDetails(id,isActive){
-        this.kmealListingGQL.watch({
-            where:{
-                "restaurant_id":{
-                    "_eq":1
-                },
-                "_and":[{
-                    "isactive":{
-                        "_eq":isActive
-                    }
-                }]
-            }
-        })
+    kmealListListner:any;
+    loadRestaurantDetails(query){
+        this.kmealListListner = this.kmealListingGQL.watch(query)
         .valueChanges
-        .pipe(map(result => result.data))
+        .pipe(pluck("data","kmeal_menu_book"))
         .subscribe((result) =>{
-            console.log(result);
-            this.dishes = result.kmeal_listing;
+            this.book = result[0];
+            this.isReady = true;
         })
+    }
+
+    private getQuery(id, isActive){
+        return {
+            "menuBookWhere": {
+              "restaurant_id": {
+                "_eq": id
+              }
+            },
+            "menuBookOrderby": [
+              {"sort_order": OrderBy.Asc}
+            ],
+            "menuBookSectionsOrderby": [
+              {"sort_order":  OrderBy.Asc}
+            ],
+            "itemSectionsOrderby":  [
+              {"itemByitemId": {
+                "sort_order":  OrderBy.Asc
+              }}
+            ],
+            "listingWhere":  {
+              "isactive": {
+                "_eq": isActive
+              }
+            }
+           }
     }
 
     onResize(event) {
         this.breakpoint = this.generateBreakpoint(event.target.innerWidth);
-      }
+    }
   
     private generateBreakpoint(width){
         return (width <= 959 ) ? 1: (width <= 1279) ? 2: 4;
     }
-
 
     openDishDetails(e){
         const dialogRef = this.dialog.open(
