@@ -7,12 +7,25 @@
   </div>
 </header>
 
-
 <div class="homepage-promo">
   <div class="homepage-row">
     <div class="component-list-category">
         <a  class="component-list-item"
             [routerLink]="'newgroup'">
+            <mat-card>
+            <mat-card-header class="component-list-card-header">
+                <mat-card-title class="component-list-card-title">Add menu book</mat-card-title>
+                <div class="component-list-icon-spacer"></div>
+                <div class="component-list-item-icon">
+                </div>
+            </mat-card-header>
+            <mat-card-content class="component-list-card-summary">
+                Create a new menu book
+            </mat-card-content>
+            </mat-card>
+        </a>
+        <a  class="component-list-item"
+            [routerLink]="'newsection'">
             <mat-card>
             <mat-card-header class="component-list-card-header">
                 <mat-card-title class="component-list-card-title">Add section</mat-card-title>
@@ -36,7 +49,7 @@
             </mat-card-header>
 
             <mat-card-content class="component-list-card-summary">
-                Add your favorite dishes to the menu book
+                Add your dishes to the menu book
             </mat-card-content>
             </mat-card>
         </a>
