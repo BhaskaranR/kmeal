@@ -6,6 +6,7 @@ import {  map } from "rxjs/operators";
 import { MatDialog, MatSnackBar } from "@angular/material";
 import { DishDetailPopupComponent } from 'libs/ui/src/lib/dish-detail/dish-detail-popup.component';
 import { DishOrderComponent } from 'libs/ui/src/lib/dish-order/dish-order.component';
+import { KmealListingGQL } from "../generated/graphql";
 
 @Component({
     selector: "kmeal-nx-restaurant",
@@ -17,7 +18,8 @@ export class ResComponent implements OnInit, OnDestroy{
     isReady:boolean = true;
     mobileQuery: MediaQueryList;
     routeParamSub:any;
-    menu:Array<string> = ['KMeal','Soup','Entry','Seafood','Baverage']
+    menu:Array<string> = ['KMeal','Soup','Entry','Seafood','Baverage'];
+    dishes:any[];
     trendingDishes = [
         {
             id:'321hdjsha',
@@ -124,6 +126,7 @@ export class ResComponent implements OnInit, OnDestroy{
         public route:ActivatedRoute,
         media: MediaMatcher,
         public dialog: MatDialog,
+        private kmealListingGQL:KmealListingGQL,
         public snackBar: MatSnackBar) {
         this.mobileQuery = media.matchMedia('(max-width: 600px)');
         this._mobileQueryListener = () => changeDetectorRef.detectChanges();
@@ -139,7 +142,28 @@ export class ResComponent implements OnInit, OnDestroy{
         this.routeParamSub =  this.route.paramMap.pipe(
             map(params => params['params'].id)
         ).subscribe(params => {
-            console.log(params);
+            this.loadRestaurantDetails(params,true);
+        })
+    }
+
+    loadRestaurantDetails(id,isActive){
+        this.kmealListingGQL.watch({
+            where:{
+                "restaurant_id":{
+                    "_eq":1
+                },
+                "_and":[{
+                    "isactive":{
+                        "_eq":isActive
+                    }
+                }]
+            }
+        })
+        .valueChanges
+        .pipe(map(result => result.data))
+        .subscribe((result) =>{
+            console.log(result);
+            this.dishes = result.kmeal_listing;
         })
     }
 

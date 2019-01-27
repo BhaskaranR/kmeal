@@ -414,6 +414,8 @@ export interface KmealDporderBoolExp {
 
   listing_id?: IntegerComparisonExp | null;
 
+  orderByorderId?: KmealOrderBoolExp | null;
+
   order_id?: IntegerComparisonExp | null;
 
   restaurantByrestaurantId?: KmealRestaurantBoolExp | null;
@@ -438,59 +440,15 @@ export interface KmealListingBoolExp {
 
   created_trx?: TextComparisonExp | null;
 
-  dplistingsBylistingId?: KmealDplistingBoolExp | null;
-
   dpordersBylistingId?: KmealDporderBoolExp | null;
+
+  end_date?: DateComparisonExp | null;
+
+  end_time?: VarcharComparisonExp | null;
 
   isactive?: BooleanComparisonExp | null;
 
-  list_price?: NumericComparisonExp | null;
-
-  list_type?: BpcharComparisonExp | null;
-
-  listingItemSidessBylistingId?: KmealListingItemSidesBoolExp | null;
-
-  listingItemssBylistingId?: KmealListingItemsBoolExp | null;
-
-  listing_id?: IntegerComparisonExp | null;
-
-  orderDetailsBylistingId?: KmealOrderDetailBoolExp | null;
-
-  restaurantByrestaurantId?: KmealRestaurantBoolExp | null;
-
-  restaurant_id?: IntegerComparisonExp | null;
-}
-/** Boolean expression to filter rows from the table "kmeal.dplisting". All fields are combined with a logical 'AND'. */
-export interface KmealDplistingBoolExp {
-  _and?: (KmealDplistingBoolExp | null)[] | null;
-
-  _not?: KmealDplistingBoolExp | null;
-
-  _or?: (KmealDplistingBoolExp | null)[] | null;
-
-  duration?: IntegerComparisonExp | null;
-
-  listingBylistingId?: KmealListingBoolExp | null;
-
-  listing_id?: IntegerComparisonExp | null;
-
-  min_price?: NumericComparisonExp | null;
-
-  quantity?: IntegerComparisonExp | null;
-
-  sliding_rate?: IntegerComparisonExp | null;
-
-  start?: IntegerComparisonExp | null;
-
-  status?: IntegerComparisonExp | null;
-}
-/** Boolean expression to filter rows from the table "kmeal.listing_item_sides". All fields are combined with a logical 'AND'. */
-export interface KmealListingItemSidesBoolExp {
-  _and?: (KmealListingItemSidesBoolExp | null)[] | null;
-
-  _not?: KmealListingItemSidesBoolExp | null;
-
-  _or?: (KmealListingItemSidesBoolExp | null)[] | null;
+  isrecurring?: BpcharComparisonExp | null;
 
   itemByitemId?: KmealItemBoolExp | null;
 
@@ -498,9 +456,47 @@ export interface KmealListingItemSidesBoolExp {
 
   list_price?: NumericComparisonExp | null;
 
-  listingBylistingId?: KmealListingBoolExp | null;
+  list_type?: BpcharComparisonExp | null;
+
+  listingItemSidessBylistingId?: KmealListingItemSidesBoolExp | null;
 
   listing_id?: IntegerComparisonExp | null;
+
+  min_price?: NumericComparisonExp | null;
+
+  orderDetailsBylistingId?: KmealOrderDetailBoolExp | null;
+
+  quantity?: IntegerComparisonExp | null;
+
+  restaurantByrestaurantId?: KmealRestaurantBoolExp | null;
+
+  restaurant_id?: IntegerComparisonExp | null;
+
+  sliding_rate?: NumericComparisonExp | null;
+
+  start_date?: DateComparisonExp | null;
+
+  start_time?: VarcharComparisonExp | null;
+}
+/** expression to compare columns of type date. All fields are combined with logical 'AND'. */
+export interface DateComparisonExp {
+  _eq?: Date | null;
+
+  _gt?: Date | null;
+
+  _gte?: Date | null;
+
+  _in?: (Date | null)[] | null;
+
+  _is_null?: boolean | null;
+
+  _lt?: Date | null;
+
+  _lte?: Date | null;
+
+  _neq?: Date | null;
+
+  _nin?: (Date | null)[] | null;
 }
 /** Boolean expression to filter rows from the table "kmeal.item". All fields are combined with a logical 'AND'. */
 export interface KmealItemBoolExp {
@@ -524,7 +520,7 @@ export interface KmealItemBoolExp {
 
   listingItemSidessByitemId?: KmealListingItemSidesBoolExp | null;
 
-  listingItemssByitemId?: KmealListingItemsBoolExp | null;
+  listingsByitemId?: KmealListingBoolExp | null;
 
   photo?: VarcharComparisonExp | null;
 
@@ -716,6 +712,8 @@ export interface KmealOrderBoolExp {
 
   created_trx?: TextComparisonExp | null;
 
+  dpordersByorderId?: KmealDporderBoolExp | null;
+
   instructions?: TextComparisonExp | null;
 
   orderDetailsByorderId?: KmealOrderDetailBoolExp | null;
@@ -816,21 +814,27 @@ export interface KmealItemTypesBoolExp {
 
   item_type?: TextComparisonExp | null;
 }
-/** Boolean expression to filter rows from the table "kmeal.listing_items". All fields are combined with a logical 'AND'. */
-export interface KmealListingItemsBoolExp {
-  _and?: (KmealListingItemsBoolExp | null)[] | null;
+/** Boolean expression to filter rows from the table "kmeal.listing_item_sides". All fields are combined with a logical 'AND'. */
+export interface KmealListingItemSidesBoolExp {
+  _and?: (KmealListingItemSidesBoolExp | null)[] | null;
 
-  _not?: KmealListingItemsBoolExp | null;
+  _not?: KmealListingItemSidesBoolExp | null;
 
-  _or?: (KmealListingItemsBoolExp | null)[] | null;
+  _or?: (KmealListingItemSidesBoolExp | null)[] | null;
+
+  group?: VarcharComparisonExp | null;
 
   itemByitemId?: KmealItemBoolExp | null;
 
   item_id?: IntegerComparisonExp | null;
 
+  list_price?: NumericComparisonExp | null;
+
   listingBylistingId?: KmealListingBoolExp | null;
 
   listing_id?: IntegerComparisonExp | null;
+
+  max_selection?: IntegerComparisonExp | null;
 }
 /** ordering options when selecting data from "kmeal.dporder" */
 export interface KmealDporderOrderBy {
@@ -858,6 +862,8 @@ export interface KmealDporderOrderBy {
 
   listing_id?: OrderBy | null;
 
+  orderByorderId?: KmealOrderOrderBy | null;
+
   order_id?: OrderBy | null;
 
   restaurantByrestaurantId?: KmealRestaurantOrderBy | null;
@@ -876,7 +882,17 @@ export interface KmealListingOrderBy {
 
   created_trx?: OrderBy | null;
 
+  end_date?: OrderBy | null;
+
+  end_time?: OrderBy | null;
+
   isactive?: OrderBy | null;
+
+  isrecurring?: OrderBy | null;
+
+  itemByitemId?: KmealItemOrderBy | null;
+
+  item_id?: OrderBy | null;
 
   list_price?: OrderBy | null;
 
@@ -884,9 +900,41 @@ export interface KmealListingOrderBy {
 
   listing_id?: OrderBy | null;
 
+  min_price?: OrderBy | null;
+
+  quantity?: OrderBy | null;
+
   restaurantByrestaurantId?: KmealRestaurantOrderBy | null;
 
   restaurant_id?: OrderBy | null;
+
+  sliding_rate?: OrderBy | null;
+
+  start_date?: OrderBy | null;
+
+  start_time?: OrderBy | null;
+}
+/** ordering options when selecting data from "kmeal.item" */
+export interface KmealItemOrderBy {
+  cooking_time?: OrderBy | null;
+
+  description?: OrderBy | null;
+
+  item_id?: OrderBy | null;
+
+  item_name?: OrderBy | null;
+
+  photo?: OrderBy | null;
+
+  restaurantByrestaurantId?: KmealRestaurantOrderBy | null;
+
+  restaurant_id?: OrderBy | null;
+
+  sort_order?: OrderBy | null;
+
+  spicy_level?: OrderBy | null;
+
+  vegetarian?: OrderBy | null;
 }
 /** ordering options when selecting data from "kmeal.restaurant" */
 export interface KmealRestaurantOrderBy {
@@ -930,57 +978,31 @@ export interface KmealRestaurantOrderBy {
 
   yelp_id?: OrderBy | null;
 }
-/** ordering options when selecting data from "kmeal.dplisting" */
-export interface KmealDplistingOrderBy {
-  duration?: OrderBy | null;
+/** ordering options when selecting data from "kmeal.order" */
+export interface KmealOrderOrderBy {
+  _dmx_created_at?: OrderBy | null;
 
-  listingBylistingId?: KmealListingOrderBy | null;
+  accountBybuyer?: KmealAccountOrderBy | null;
 
-  listing_id?: OrderBy | null;
+  buyer?: OrderBy | null;
 
-  min_price?: OrderBy | null;
+  created_at?: OrderBy | null;
 
-  quantity?: OrderBy | null;
+  created_block?: OrderBy | null;
 
-  sliding_rate?: OrderBy | null;
+  created_eosacc?: OrderBy | null;
 
-  start?: OrderBy | null;
+  created_trx?: OrderBy | null;
 
-  status?: OrderBy | null;
-}
-/** ordering options when selecting data from "kmeal.listing_item_sides" */
-export interface KmealListingItemSidesOrderBy {
-  itemByitemId?: KmealItemOrderBy | null;
+  instructions?: OrderBy | null;
 
-  item_id?: OrderBy | null;
+  order_id?: OrderBy | null;
 
-  list_price?: OrderBy | null;
-
-  listingBylistingId?: KmealListingOrderBy | null;
-
-  listing_id?: OrderBy | null;
-}
-/** ordering options when selecting data from "kmeal.item" */
-export interface KmealItemOrderBy {
-  cooking_time?: OrderBy | null;
-
-  description?: OrderBy | null;
-
-  item_id?: OrderBy | null;
-
-  item_name?: OrderBy | null;
-
-  photo?: OrderBy | null;
+  price?: OrderBy | null;
 
   restaurantByrestaurantId?: KmealRestaurantOrderBy | null;
 
   restaurant_id?: OrderBy | null;
-
-  sort_order?: OrderBy | null;
-
-  spicy_level?: OrderBy | null;
-
-  vegetarian?: OrderBy | null;
 }
 /** ordering options when selecting data from "kmeal.item_section" */
 export interface KmealItemSectionOrderBy {
@@ -1015,32 +1037,6 @@ export interface KmealMenuBookOrderBy {
   restaurant_id?: OrderBy | null;
 
   sort_order?: OrderBy | null;
-}
-/** ordering options when selecting data from "kmeal.order" */
-export interface KmealOrderOrderBy {
-  _dmx_created_at?: OrderBy | null;
-
-  accountBybuyer?: KmealAccountOrderBy | null;
-
-  buyer?: OrderBy | null;
-
-  created_at?: OrderBy | null;
-
-  created_block?: OrderBy | null;
-
-  created_eosacc?: OrderBy | null;
-
-  created_trx?: OrderBy | null;
-
-  instructions?: OrderBy | null;
-
-  order_id?: OrderBy | null;
-
-  price?: OrderBy | null;
-
-  restaurantByrestaurantId?: KmealRestaurantOrderBy | null;
-
-  restaurant_id?: OrderBy | null;
 }
 /** ordering options when selecting data from "kmeal.order_detail" */
 export interface KmealOrderDetailOrderBy {
@@ -1096,15 +1092,21 @@ export interface KmealItemTypesOrderBy {
 
   item_type?: OrderBy | null;
 }
-/** ordering options when selecting data from "kmeal.listing_items" */
-export interface KmealListingItemsOrderBy {
+/** ordering options when selecting data from "kmeal.listing_item_sides" */
+export interface KmealListingItemSidesOrderBy {
+  group?: OrderBy | null;
+
   itemByitemId?: KmealItemOrderBy | null;
 
   item_id?: OrderBy | null;
 
+  list_price?: OrderBy | null;
+
   listingBylistingId?: KmealListingOrderBy | null;
 
   listing_id?: OrderBy | null;
+
+  max_selection?: OrderBy | null;
 }
 /** ordering options when selecting data from "kmeal.categories" */
 export interface KmealCategoriesOrderBy {
@@ -1584,6 +1586,8 @@ export interface KmealDporderInsertInput {
 
   listing_id?: number | null;
 
+  orderByorderId?: KmealOrderObjRelInsertInput | null;
+
   order_id?: number | null;
 
   restaurantByrestaurantId?: KmealRestaurantObjRelInsertInput | null;
@@ -1623,11 +1627,19 @@ export interface KmealListingInsertInput {
 
   created_trx?: string | null;
 
-  dplistingsBylistingId?: KmealDplistingArrRelInsertInput | null;
-
   dpordersBylistingId?: KmealDporderArrRelInsertInput | null;
 
+  end_date?: Date | null;
+
+  end_time?: string | null;
+
   isactive?: boolean | null;
+
+  isrecurring?: Bpchar | null;
+
+  itemByitemId?: KmealItemObjRelInsertInput | null;
+
+  item_id?: number | null;
 
   list_price?: Numeric | null;
 
@@ -1635,64 +1647,23 @@ export interface KmealListingInsertInput {
 
   listingItemSidessBylistingId?: KmealListingItemSidesArrRelInsertInput | null;
 
-  listingItemssBylistingId?: KmealListingItemsArrRelInsertInput | null;
-
-  listing_id?: number | null;
-
-  orderDetailsBylistingId?: KmealOrderDetailArrRelInsertInput | null;
-
-  restaurantByrestaurantId?: KmealRestaurantObjRelInsertInput | null;
-
-  restaurant_id?: number | null;
-}
-/** input type for inserting array relation for remote table "kmeal.dplisting" */
-export interface KmealDplistingArrRelInsertInput {
-  data: KmealDplistingInsertInput[];
-
-  on_conflict?: KmealDplistingOnConflict | null;
-}
-/** input type for inserting data into table "kmeal.dplisting" */
-export interface KmealDplistingInsertInput {
-  duration?: number | null;
-
-  listingBylistingId?: KmealListingObjRelInsertInput | null;
-
   listing_id?: number | null;
 
   min_price?: Numeric | null;
 
+  orderDetailsBylistingId?: KmealOrderDetailArrRelInsertInput | null;
+
   quantity?: number | null;
 
-  sliding_rate?: number | null;
+  restaurantByrestaurantId?: KmealRestaurantObjRelInsertInput | null;
 
-  start?: number | null;
+  restaurant_id?: number | null;
 
-  status?: number | null;
-}
-/** on conflict condition type for table "kmeal.dplisting" */
-export interface KmealDplistingOnConflict {
-  /** action when conflict occurs (deprecated) */
-  action?: ConflictAction | null;
+  sliding_rate?: Numeric | null;
 
-  constraint: KmealDplistingConstraint;
+  start_date?: Date | null;
 
-  update_columns?: KmealDplistingUpdateColumn[] | null;
-}
-/** input type for inserting array relation for remote table "kmeal.listing_item_sides" */
-export interface KmealListingItemSidesArrRelInsertInput {
-  data: KmealListingItemSidesInsertInput[];
-}
-/** input type for inserting data into table "kmeal.listing_item_sides" */
-export interface KmealListingItemSidesInsertInput {
-  itemByitemId?: KmealItemObjRelInsertInput | null;
-
-  item_id?: number | null;
-
-  list_price?: Numeric | null;
-
-  listingBylistingId?: KmealListingObjRelInsertInput | null;
-
-  listing_id?: number | null;
+  start_time?: string | null;
 }
 /** input type for inserting object relation for remote table "kmeal.item" */
 export interface KmealItemObjRelInsertInput {
@@ -1716,7 +1687,7 @@ export interface KmealItemInsertInput {
 
   listingItemSidessByitemId?: KmealListingItemSidesArrRelInsertInput | null;
 
-  listingItemssByitemId?: KmealListingItemsArrRelInsertInput | null;
+  listingsByitemId?: KmealListingArrRelInsertInput | null;
 
   photo?: string | null;
 
@@ -1926,6 +1897,8 @@ export interface KmealOrderInsertInput {
 
   created_trx?: string | null;
 
+  dpordersByorderId?: KmealDporderArrRelInsertInput | null;
+
   instructions?: string | null;
 
   orderDetailsByorderId?: KmealOrderDetailArrRelInsertInput | null;
@@ -1945,8 +1918,6 @@ export interface KmealOrderInsertInput {
 /** input type for inserting array relation for remote table "kmeal.order_detail" */
 export interface KmealOrderDetailArrRelInsertInput {
   data: KmealOrderDetailInsertInput[];
-
-  on_conflict?: KmealOrderDetailOnConflict | null;
 }
 /** input type for inserting data into table "kmeal.order_detail" */
 export interface KmealOrderDetailInsertInput {
@@ -1980,15 +1951,6 @@ export interface KmealOrderOnConflict {
   constraint: KmealOrderConstraint;
 
   update_columns?: KmealOrderUpdateColumn[] | null;
-}
-/** on conflict condition type for table "kmeal.order_detail" */
-export interface KmealOrderDetailOnConflict {
-  /** action when conflict occurs (deprecated) */
-  action?: ConflictAction | null;
-
-  constraint: KmealOrderDetailConstraint;
-
-  update_columns?: KmealOrderDetailUpdateColumn[] | null;
 }
 /** input type for inserting array relation for remote table "kmeal.order_status" */
 export interface KmealOrderStatusArrRelInsertInput {
@@ -2073,19 +2035,25 @@ export interface KmealItemTypesInsertInput {
 
   item_type?: string | null;
 }
-/** input type for inserting array relation for remote table "kmeal.listing_items" */
-export interface KmealListingItemsArrRelInsertInput {
-  data: KmealListingItemsInsertInput[];
+/** input type for inserting array relation for remote table "kmeal.listing_item_sides" */
+export interface KmealListingItemSidesArrRelInsertInput {
+  data: KmealListingItemSidesInsertInput[];
 }
-/** input type for inserting data into table "kmeal.listing_items" */
-export interface KmealListingItemsInsertInput {
+/** input type for inserting data into table "kmeal.listing_item_sides" */
+export interface KmealListingItemSidesInsertInput {
+  group?: string | null;
+
   itemByitemId?: KmealItemObjRelInsertInput | null;
 
   item_id?: number | null;
 
+  list_price?: Numeric | null;
+
   listingBylistingId?: KmealListingObjRelInsertInput | null;
 
   listing_id?: number | null;
+
+  max_selection?: number | null;
 }
 /** on conflict condition type for table "kmeal.dporder" */
 export interface KmealDporderOnConflict {
@@ -2280,36 +2248,6 @@ export interface KmealCategoriesSetInput {
 
   title?: string | null;
 }
-/** input type for incrementing integer columne in table "kmeal.dplisting" */
-export interface KmealDplistingIncInput {
-  duration?: number | null;
-
-  listing_id?: number | null;
-
-  quantity?: number | null;
-
-  sliding_rate?: number | null;
-
-  start?: number | null;
-
-  status?: number | null;
-}
-/** input type for updating data in table "kmeal.dplisting" */
-export interface KmealDplistingSetInput {
-  duration?: number | null;
-
-  listing_id?: number | null;
-
-  min_price?: Numeric | null;
-
-  quantity?: number | null;
-
-  sliding_rate?: number | null;
-
-  start?: number | null;
-
-  status?: number | null;
-}
 /** input type for incrementing integer columne in table "kmeal.dporder" */
 export interface KmealDporderIncInput {
   created_block?: Bigint | null;
@@ -2408,7 +2346,11 @@ export interface KmealItemTypesSetInput {
 export interface KmealListingIncInput {
   created_block?: Bigint | null;
 
+  item_id?: number | null;
+
   listing_id?: number | null;
+
+  quantity?: number | null;
 
   restaurant_id?: number | null;
 }
@@ -2424,7 +2366,15 @@ export interface KmealListingSetInput {
 
   created_trx?: string | null;
 
+  end_date?: Date | null;
+
+  end_time?: string | null;
+
   isactive?: boolean | null;
+
+  isrecurring?: Bpchar | null;
+
+  item_id?: number | null;
 
   list_price?: Numeric | null;
 
@@ -2432,33 +2382,37 @@ export interface KmealListingSetInput {
 
   listing_id?: number | null;
 
+  min_price?: Numeric | null;
+
+  quantity?: number | null;
+
   restaurant_id?: number | null;
+
+  sliding_rate?: Numeric | null;
+
+  start_date?: Date | null;
+
+  start_time?: string | null;
 }
 /** input type for incrementing integer columne in table "kmeal.listing_item_sides" */
 export interface KmealListingItemSidesIncInput {
   item_id?: number | null;
 
   listing_id?: number | null;
+
+  max_selection?: number | null;
 }
 /** input type for updating data in table "kmeal.listing_item_sides" */
 export interface KmealListingItemSidesSetInput {
+  group?: string | null;
+
   item_id?: number | null;
 
   list_price?: Numeric | null;
 
   listing_id?: number | null;
-}
-/** input type for incrementing integer columne in table "kmeal.listing_items" */
-export interface KmealListingItemsIncInput {
-  item_id?: number | null;
 
-  listing_id?: number | null;
-}
-/** input type for updating data in table "kmeal.listing_items" */
-export interface KmealListingItemsSetInput {
-  item_id?: number | null;
-
-  listing_id?: number | null;
+  max_selection?: number | null;
 }
 /** input type for incrementing integer columne in table "kmeal.menu_book" */
 export interface KmealMenuBookIncInput {
@@ -2752,12 +2706,6 @@ export interface KmealCategoriesObjRelInsertInput {
 
   on_conflict?: KmealCategoriesOnConflict | null;
 }
-/** input type for inserting object relation for remote table "kmeal.dplisting" */
-export interface KmealDplistingObjRelInsertInput {
-  data: KmealDplistingInsertInput;
-
-  on_conflict?: KmealDplistingOnConflict | null;
-}
 /** input type for inserting object relation for remote table "kmeal.dporder" */
 export interface KmealDporderObjRelInsertInput {
   data: KmealDporderInsertInput;
@@ -2776,15 +2724,9 @@ export interface KmealItemTypesObjRelInsertInput {
 export interface KmealListingItemSidesObjRelInsertInput {
   data: KmealListingItemSidesInsertInput;
 }
-/** input type for inserting object relation for remote table "kmeal.listing_items" */
-export interface KmealListingItemsObjRelInsertInput {
-  data: KmealListingItemsInsertInput;
-}
 /** input type for inserting object relation for remote table "kmeal.order_detail" */
 export interface KmealOrderDetailObjRelInsertInput {
   data: KmealOrderDetailInsertInput;
-
-  on_conflict?: KmealOrderDetailOnConflict | null;
 }
 /** input type for inserting object relation for remote table "kmeal.order_status" */
 export interface KmealOrderStatusObjRelInsertInput {
@@ -2893,22 +2835,6 @@ export enum KmealDporderSelectColumn {
   OrderId = "order_id",
   RestaurantId = "restaurant_id"
 }
-/** select columns of table "kmeal.dplisting" */
-export enum KmealDplistingSelectColumn {
-  Duration = "duration",
-  ListingId = "listing_id",
-  MinPrice = "min_price",
-  Quantity = "quantity",
-  SlidingRate = "sliding_rate",
-  Start = "start",
-  Status = "status"
-}
-/** select columns of table "kmeal.listing_item_sides" */
-export enum KmealListingItemSidesSelectColumn {
-  ItemId = "item_id",
-  ListPrice = "list_price",
-  ListingId = "listing_id"
-}
 /** select columns of table "kmeal.item_section" */
 export enum KmealItemSectionSelectColumn {
   ItemId = "item_id",
@@ -2940,11 +2866,20 @@ export enum KmealListingSelectColumn {
   CreatedBlock = "created_block",
   CreatedEosacc = "created_eosacc",
   CreatedTrx = "created_trx",
+  EndDate = "end_date",
+  EndTime = "end_time",
   Isactive = "isactive",
+  Isrecurring = "isrecurring",
+  ItemId = "item_id",
   ListPrice = "list_price",
   ListType = "list_type",
   ListingId = "listing_id",
-  RestaurantId = "restaurant_id"
+  MinPrice = "min_price",
+  Quantity = "quantity",
+  RestaurantId = "restaurant_id",
+  SlidingRate = "sliding_rate",
+  StartDate = "start_date",
+  StartTime = "start_time"
 }
 /** select columns of table "kmeal.menu_book" */
 export enum KmealMenuBookSelectColumn {
@@ -2997,10 +2932,13 @@ export enum KmealItemTypesSelectColumn {
   ItemId = "item_id",
   ItemType = "item_type"
 }
-/** select columns of table "kmeal.listing_items" */
-export enum KmealListingItemsSelectColumn {
+/** select columns of table "kmeal.listing_item_sides" */
+export enum KmealListingItemSidesSelectColumn {
+  Group = "group",
   ItemId = "item_id",
-  ListingId = "listing_id"
+  ListPrice = "list_price",
+  ListingId = "listing_id",
+  MaxSelection = "max_selection"
 }
 /** select columns of table "kmeal.restaurant" */
 export enum KmealRestaurantSelectColumn {
@@ -3139,20 +3077,6 @@ export enum KmealAccountUpdateColumn {
   CreatedTrx = "created_trx",
   Owner = "owner"
 }
-/** unique or primary key constraints on table "kmeal.dplisting" */
-export enum KmealDplistingConstraint {
-  DplistingPkey = "dplisting_pkey"
-}
-/** update columns of table "kmeal.dplisting" */
-export enum KmealDplistingUpdateColumn {
-  Duration = "duration",
-  ListingId = "listing_id",
-  MinPrice = "min_price",
-  Quantity = "quantity",
-  SlidingRate = "sliding_rate",
-  Start = "start",
-  Status = "status"
-}
 /** unique or primary key constraints on table "kmeal.menu_book_section" */
 export enum KmealMenuBookSectionConstraint {
   MenuBookSectionPkey = "menu_book_section_pkey"
@@ -3191,11 +3115,20 @@ export enum KmealListingUpdateColumn {
   CreatedBlock = "created_block",
   CreatedEosacc = "created_eosacc",
   CreatedTrx = "created_trx",
+  EndDate = "end_date",
+  EndTime = "end_time",
   Isactive = "isactive",
+  Isrecurring = "isrecurring",
+  ItemId = "item_id",
   ListPrice = "list_price",
   ListType = "list_type",
   ListingId = "listing_id",
-  RestaurantId = "restaurant_id"
+  MinPrice = "min_price",
+  Quantity = "quantity",
+  RestaurantId = "restaurant_id",
+  SlidingRate = "sliding_rate",
+  StartDate = "start_date",
+  StartTime = "start_time"
 }
 /** unique or primary key constraints on table "kmeal.menu_book" */
 export enum KmealMenuBookConstraint {
@@ -3224,19 +3157,6 @@ export enum KmealOrderUpdateColumn {
   OrderId = "order_id",
   Price = "price",
   RestaurantId = "restaurant_id"
-}
-/** unique or primary key constraints on table "kmeal.order_detail" */
-export enum KmealOrderDetailConstraint {
-  OrderDetailPkey = "order_detail_pkey"
-}
-/** update columns of table "kmeal.order_detail" */
-export enum KmealOrderDetailUpdateColumn {
-  Instructions = "instructions",
-  ListingId = "listing_id",
-  ListingType = "listing_type",
-  OrderId = "order_id",
-  OrderedPrice = "ordered_price",
-  Qty = "qty"
 }
 /** unique or primary key constraints on table "kmeal.order_status" */
 export enum KmealOrderStatusConstraint {
@@ -3363,6 +3283,8 @@ export type Timestamp = any;
 export type Bpchar = any;
 
 export type Numeric = any;
+
+export type Date = any;
 
 export type Float8 = any;
 

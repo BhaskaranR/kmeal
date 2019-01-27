@@ -31,9 +31,9 @@
 <hr>
 
 <mat-grid-list [cols]="breakpoint" rowHeight="500px" (window:resize)="onResize($event)">
-    <mat-grid-tile *ngFor="let dish of trendingDishes">
-        <dish-card [dishDetails]="dish" (onErrorEvent)="throwError($event)"
+    <mat-grid-tile *ngFor="let dish of dishes">
+        <dish-card2 [dishDetails]="dish" (onErrorEvent)="throwError($event)"
         (onOpenDetailsEvent)="openDishDetails(dish)"
-        (onPlaceOrderEvent)="orderDishNow(dish)"></dish-card>
+        (onPlaceOrderEvent)="orderDishNow(dish)"></dish-card2>
     </mat-grid-tile>
 </mat-grid-list>
