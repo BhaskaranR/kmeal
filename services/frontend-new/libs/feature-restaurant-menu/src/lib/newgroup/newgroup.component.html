@@ -10,7 +10,7 @@
                     <div class="row">
                         <div class="col">
                             <mat-form-field class="full-width">
-                                <input matInput placeholder="book name"  required="true" formControlName="menubook">
+                                <input matInput placeholder="book name" required="true" formControlName="menubook">
                             </mat-form-field>
                         </div>
                     </div>
@@ -37,48 +37,5 @@
                 </div>
             </div>
         </form>
-        <div class="seperator"></div>
-        <form [formGroup]="sectionsForm" novalidate (ngSubmit)="onSectionsSubmit()">
-            <div class="container">
-                <div class="header-section">
-                    <div class="header-headline">
-                        <h1 class="mat-h2" *ngIf="selectedMenuBook;else default">Sections for
-                            {{selectedMenuBook.menu_book}}</h1>
-                        <ng-template #default>
-                            <h1 class="mat-h2">Sections for</h1>
-                        </ng-template>
-                        <h2> Add section title</h2>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <mat-form-field class="full-width">
-                                <input matInput placeholder="section name"  required="true" formControlName="section">
-                            </mat-form-field>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <button mat-raised-button color="primary" type="submit">Create New Section</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div cdkDropList class="list" (cdkDropListDropped)="dropSections($event)">
-                    <div class="box" *ngFor="let item of sections" cdkDrag>
-                        <a class="component-list-item" (click)="onSelectionChange(item)">
-                            {{item.section_name}}
-                        </a>
-                        <div class="handle" cdkDragHandle>
-                            <mat-icon>menu</mat-icon>
-                        </div>
-
-                        <div class="action" (click)="deleteMenuSection(item)">
-                            <mat-icon>delete</mat-icon>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </form>
     </div>
-    
 </div>

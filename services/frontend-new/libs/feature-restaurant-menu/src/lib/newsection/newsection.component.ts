@@ -27,11 +27,11 @@ import { MatSnackBar } from "@angular/material";
 import { KmealMenuBookSectionUpdateColumn } from '../../../../feature-profile/src/lib/generated/graphql';
 
 @Component({
-  selector: "kmeal-nx-newgroup",
-  templateUrl: "./newgroup.component.html",
-  styleUrls: ["./newgroup.component.scss"]
+  selector: "kmeal-nx-newsection",
+  templateUrl: "./newsection.component.html",
+  styleUrls: ["./newsection.component.scss"]
 })
-export class NewgroupComponent {
+export class NewsectionComponent {
   selectedMenuBook: kmb.KmealMenuBook;
 
   menuBookForm = this.fb.group({
@@ -51,7 +51,7 @@ export class NewgroupComponent {
     private updateKmealMenuBookGQL: UpdateKmealMenuBookGQL,
     private deleteKmealMenuBookGQL: DeleteKmealMenuBookGQL,
     private insertKmealMenuBookSectionGQL: InsertKmealMenuBookSectionGQL,
-    private updateKmealMenuBookSectionGQL: UpdateKmealMenuBookSectionGQL, 
+    private updateKmealMenuBookSectionGQL: UpdateKmealMenuBookSectionGQL,
     private deleteKmealMenuBookSectionGQL: DeleteKmealMenuBookSectionGQL,
     public snackBar: MatSnackBar,
     private fb: FormBuilder) {
@@ -78,72 +78,85 @@ export class NewgroupComponent {
       });
   }
 
-  dropMenubook(event: CdkDragDrop<kmb.KmealMenuBook[]>) {
-
-    moveItemInArray(this.menubooks, event.previousIndex, event.currentIndex);
+  dropSections(event: CdkDragDrop<kmb.KmealMenuBook[]>) {
+    moveItemInArray(this.selectedMenuBook.menuBookSectionsBymenuBookId, event.previousIndex, event.currentIndex);
 
     const objects = [];
-    for (let i = 0; i < this.menubooks.length; i++) {
+    for (let i = 0; i < this.sections.length; i++) {
       objects.push({
-        menu_book_id: this.menubooks[i].menu_book_id,
-        menu_book: this.menubooks[i].menu_book,
-        restaurant_id: 1,
+        section_id: this.sections[i].section_id,
+        section_name: this.sections[i].section_name,
+        menu_book_id: this.selectedMenuBook.menu_book_id,
         sort_order: i
       })
     }
 
-    const variables: insKmealMenuBook.Variables = {
+    const variables: insKmealMenuBookSection.Variables = {
       objects: objects,
       "on_conflict": {
         "action": ConflictAction.Update,
-        "constraint": KmealMenuBookConstraint.MenuBookPkey,
-        "update_columns": [KmealMenuBookUpdateColumn.SortOrder]
+        "constraint": KmealMenuBookSectionConstraint.MenuBookSectionPkey,
+        "update_columns": [KmealMenuBookSectionUpdateColumn.SortOrder]
       }
     }
-    this.insertKmealMenuBookGQL.mutate(variables).pipe(pluck('data', 'insert_kmeal_menu_book', 'returning')).subscribe((mb: insKmealMenuBook.KmealMenuBookInlineFragment[]) => {
+    this.insertKmealMenuBookSectionGQL.mutate(variables).pipe(pluck('data', 'insert_kmeal_menu_book_section', 'returning')).subscribe((ms:
+      insKmealMenuBookSection.InsertKmealMenuBookSection) => {
       this.openSnackBar("updated", "");
-    })
+    });
   }
 
-
-  onBookSubmit() {
-    if (!this.menuBookForm.valid) {
-      this.openSnackBar("Enter menu book", "");
+  onSectionsSubmit() {
+    if (!this.menubooks || this.menubooks.length == 0) {
+      this.openSnackBar("Create a menu book", "");
       return;
     }
-    const variables: insKmealMenuBook.Variables = {
+    if (!this.selectedMenuBook) {
+      this.openSnackBar("Select a menu book from the list", "");
+      return;
+    }
+    if (!this.sectionsForm.valid) {
+      this.openSnackBar("Enter menu sections", "");
+      return;
+    }
+    const variables: insKmealMenuBookSection.Variables = {
       objects: [{
-        menu_book: this.menuBookForm.value.menubook,
-        restaurant_id: 1,
-        sort_order: this.menubooks.length + 1
+        section_name: this.sectionsForm.value.section,
+        menu_book_id: this.selectedMenuBook.menu_book_id,
+        sort_order: this.sections.length + 1
       }],
       "on_conflict": {
         "action": ConflictAction.Update,
-        "constraint": KmealMenuBookConstraint.MenuBookPkey,
-        "update_columns": [KmealMenuBookUpdateColumn.MenuBook]
+        "constraint": KmealMenuBookSectionConstraint.MenuBookSectionPkey,
+        "update_columns": [KmealMenuBookSectionUpdateColumn.SectionName]
       }
     }
-    this.insertKmealMenuBookGQL.mutate(variables).pipe(pluck('data', 'insert_kmeal_menu_book', 'returning')).subscribe((mb: insKmealMenuBook.KmealMenuBookInlineFragment[]) => {
-      const newgroup = <kmb.KmealMenuBook>mb[0];
-      this.menubooks.push(newgroup);
-    })
+    this.insertKmealMenuBookSectionGQL.mutate(variables).pipe(pluck('data', 'insert_kmeal_menu_book_section', 'returning')).subscribe((ms:
+      insKmealMenuBookSection.InsertKmealMenuBookSection) => {
+        this.selectedMenuBook.menuBookSectionsBymenuBookId.push(<any>ms[0])
+    });
   }
 
- 
-  deleteMenuGroup(ev) {
-    const variables: delKmealMenuBook.Variables = {
+
+  // onSelectionChange(ev) {
+  //   this.selectedMenuBook = ev;
+  //   this.sections = this.selectedMenuBook.menuBookSectionsBymenuBookId;
+  // }
+
+
+  deleteMenuSection(ev) {
+    const variables: delKmealMenuBookSection.Variables = {
       "where": {
-        "menu_book_id": {
-          "_eq": ev.menu_book_id
+        "section_id": {
+          "_eq": ev.section_id
         }
       }
     }
-    this.deleteKmealMenuBookGQL.mutate(variables).pipe(pluck('data', 'delete_kmeal_menu_book', 'returning')).subscribe((mb: string[]) => {
+    this.deleteKmealMenuBookSectionGQL.mutate(variables).pipe(pluck('data', 'delete_kmeal_menu_book_section', 'returning')).subscribe((mb: string[]) => {
       if (mb.length == 0) {
-        this.openSnackBar("not deleted, make sure you don't have sections associated with this section", "");  
+        this.openSnackBar("not deleted, make sure you don't have menu items associated with this section", "");
       }
-      const indx = this.menubooks.findIndex((mb) => mb.menu_book_id == ev.menu_book_id)
-      this.menubooks.splice(indx, 1);
+      const indx = this.sections.findIndex((s) => s.section_id == ev.section_id)
+      this.sections.splice(indx, 1);
       this.openSnackBar("deleted", "");
     })
   }

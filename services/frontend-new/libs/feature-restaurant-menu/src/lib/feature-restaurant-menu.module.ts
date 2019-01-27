@@ -10,17 +10,19 @@ import { HomeComponent } from './home/home.component';
 import { NewlistingComponent } from './newlisting/newlisting.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { CdkSelectionModule } from '@kmeal-nx/ui';
-import { CreateNewMenuComponent } from './create-newmenu/createnewmenu.component';
+import { NewmenuComponent } from './newmenu/newmenu.component';
 import { FillmenubookComponent } from './fillmenubook/fillmenubook.component';
 import { MenuSidenavComponent } from './sidenav/sidenav.component';
-import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+import { NewsectionComponent } from './newsection/newsection.component';
 
 
 export const restaurantMenuRoutes: Routes = [
   {
     path: '', component: MenuSidenavComponent, children: [
       { path: '', component: HomeComponent },
-      { path: 'newmenu', component: CreateNewMenuComponent },
+      { path: 'newmenu', component: NewmenuComponent },
+      { path: 'newsection', component: NewsectionComponent },
       { path: 'newgroup', component: NewgroupComponent },
       { path: 'newlisting', component: NewlistingComponent },
       { path: 'fillmenubook', component: FillmenubookComponent }
@@ -32,7 +34,7 @@ export const restaurantMenuRoutes: Routes = [
   imports: [CommonModule, MatInputModule, MatButtonModule, MatSelectModule, MatRadioModule,
     NgxMaterialTimepickerModule.forRoot(),
     MatSliderModule,
-    MatNativeDateModule ,
+    MatNativeDateModule,
     MatSlideToggleModule,
     MatSidenavModule,
     MatDatepickerModule,
@@ -48,6 +50,6 @@ export const restaurantMenuRoutes: Routes = [
     CdkSelectionModule,
     DragDropModule,
     RouterModule.forChild(restaurantMenuRoutes)],
-  declarations: [MenuSidenavComponent, CreateNewMenuComponent, HomeComponent, NewgroupComponent, NewlistingComponent, FillmenubookComponent]
+  declarations: [MenuSidenavComponent, NewmenuComponent, HomeComponent, NewgroupComponent, NewlistingComponent, FillmenubookComponent, NewsectionComponent]
 })
 export class FeatureRestaurantMenuModule { }

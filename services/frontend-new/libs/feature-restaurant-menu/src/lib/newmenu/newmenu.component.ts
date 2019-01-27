@@ -11,10 +11,10 @@ import { pluck } from 'rxjs/operators';
 
 @Component({
   selector: "kmeal-nx-newmenu",
-  templateUrl: "./createnewmenu.component.html",
-  styleUrls: ["./createnewmenu.component.scss"]
+  templateUrl: "./newmenu.component.html",
+  styleUrls: ["./newmenu.component.scss"]
 })
-export class CreateNewMenuComponent {
+export class NewmenuComponent {
 
   selectedMenuBook: kmb.KmealMenuBook;
   formSubmitted = false;
