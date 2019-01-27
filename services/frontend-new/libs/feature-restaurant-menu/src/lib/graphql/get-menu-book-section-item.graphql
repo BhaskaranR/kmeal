@@ -1,0 +1,24 @@
+query kmeal_book_section_items($where: kmeal_menu_book_bool_exp) {
+  kmeal_menu_book(where: $where) {
+    menu_book_id
+    menu_book
+    sort_order
+    menuBookSectionsBymenuBookId {
+      section_id
+      section_name
+      sort_order
+      itemSectionsBysectionId {
+        item_id
+        itemByitemId {
+          item_id
+          item_name
+          photo
+          description
+          cooking_time
+          spicy_level
+          vegetarian
+        }
+      }
+    }
+  }
+ }

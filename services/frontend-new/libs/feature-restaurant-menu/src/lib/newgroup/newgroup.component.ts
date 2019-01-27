@@ -51,7 +51,7 @@ export class NewgroupComponent {
     private updateKmealMenuBookGQL: UpdateKmealMenuBookGQL,
     private deleteKmealMenuBookGQL: DeleteKmealMenuBookGQL,
     private insertKmealMenuBookSectionGQL: InsertKmealMenuBookSectionGQL,
-    private updateKmealMenuBookSectionGQL: UpdateKmealMenuBookSectionGQL,
+    private updateKmealMenuBookSectionGQL: UpdateKmealMenuBookSectionGQL, 
     private deleteKmealMenuBookSectionGQL: DeleteKmealMenuBookSectionGQL,
     public snackBar: MatSnackBar,
     private fb: FormBuilder) {
