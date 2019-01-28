@@ -13,7 +13,7 @@ import {
   UpdateKmealMenuBookSection as updKmealMenuBookSection,
   UpdateKmealMenuBookSectionGQL,
   DeleteKmealMenuBookSection as delKmealMenuBookSection,
-  DeleteKmealMenuBookSectionGQL,
+  DeleteKmealItemGQL,
   ConflictAction,
   KmealMenuBookConstraint,
   KmealMenuBookUpdateColumn,
@@ -51,7 +51,7 @@ export class NewsectionComponent {
     private deleteKmealMenuBookGQL: DeleteKmealMenuBookGQL,
     private insertKmealMenuBookSectionGQL: InsertKmealMenuBookSectionGQL,
     private updateKmealMenuBookSectionGQL: UpdateKmealMenuBookSectionGQL,
-    private deleteKmealMenuBookSectionGQL: DeleteKmealMenuBookSectionGQL,
+    private deleteKmealMenuBookSectionGQL: DeleteKmealItemGQL,
     public snackBar: MatSnackBar,
     private fb: FormBuilder) {
   }

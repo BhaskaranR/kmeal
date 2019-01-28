@@ -1,3 +1,70 @@
-<p>
-  fillmenubook works!
-</p>
+<div class="homepage-promo">
+  <div class="homepage-row">
+    <form [formGroup]="sectionsForm" novalidate  (ngSubmit)="onSubmit()">
+      <div class="container">
+        <div class="header-section">
+          <div class="header-headline">
+            <h1 class="mat-h2">Fill Menu Book</h1>
+          </div>
+          <div class="row">
+            <div class="col">
+              <mat-form-field class="full-width">
+                <mat-label>Select menu book</mat-label>
+                <mat-select [(value)]="selectedMenuBook" formControlName="book_id">
+                  <mat-option *ngFor="let item of menubooks" [value]="item">
+                    {{ item.menu_book }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <mat-form-field class="full-width">
+                <mat-label>Select section</mat-label>
+                <mat-select formControlName="section_id" (selectionChange)="sectionsSelectionChanged($event)" [(value)]="selectedSection" matNativeControl>
+                  <mat-option *ngFor="let item of selectedMenuBook?.menuBookSectionsBymenuBookId" [value]="item">
+                    {{ item.section_name }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <mat-form-field class="full-width">
+                <input matInput placeholder="Select Item" aria-label="Select Item" [matAutocomplete]="auto">
+                <mat-autocomplete #auto="matAutocomplete">
+                  <mat-option *ngFor="let item of items" [value]="item.item_name">
+                     <!-- <img class="option-img" aria-hidden [src]="item.photo" height="25"> -->
+                     <span>{{item.item_name}}</span> |
+                    <small>{{item.description}}</small> 
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <button mat-raised-button color="primary" type="submit">Add to section</button>
+            </div>
+          </div>
+        </div>
+
+        <div cdkDropList class="list" (cdkDropListDropped)="dropSections($event)">
+
+          <div class="box" *ngFor="let item of sectionItems" cdkDrag>
+            {{item.itemByitemId.item_name}}
+            <div class="handle" cdkDragHandle>
+              <mat-icon>menu</mat-icon>
+            </div>
+            <div class="action" (click)="deleteItemFromSection(item)">
+              <mat-icon>delete</mat-icon>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+</div>
