@@ -45,7 +45,8 @@ export class ResComponent implements OnInit, OnDestroy{
 
     ngOnInit(){
         this.breakpoint = this.generateBreakpoint(window.innerWidth);
-        this.routeParamSub =  this.route.paramMap
+        this.routeParamSub =  this.route
+        .queryParams
         .pipe(pluck('params','id'))
         .subscribe(params => {
             this.loadRestaurantDetails(this.getQuery(params,true));
@@ -58,7 +59,7 @@ export class ResComponent implements OnInit, OnDestroy{
         .valueChanges
         .pipe(pluck("data","kmeal_menu_book"))
         .subscribe((result: any[]) =>{
-            
+
             if (!result || result.length == 0){
                 this.throwError('Something went wrong');
                 return;

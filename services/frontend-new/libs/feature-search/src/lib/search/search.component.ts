@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy} from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
-import { map, switchMap } from "rxjs/operators";
+import { map, switchMap, pluck } from "rxjs/operators";
 import { GetRestaurantsNearByGQL } from "../generated/graphql";
 import { MatSnackBar } from "@angular/material";
 
@@ -42,37 +42,35 @@ export class SearchComponent implements OnInit ,OnDestroy{
 
                 if (params.type === 'CUISINE'){
                     this.type = "Cuisine : " + params.value;
-                    const res = this.getRestaurantsNearByGQL
-                    .watch({
-                        nearby:{
-                            cuisine:params.value,
-                            timeofoperation: "REGULAR",
-                            lat: 40.710237,
-                            long: -74.007810,
-                            radius:10
-                        }
-                    })
-                    .valueChanges
-                    .pipe(map(result => result.data.getRestaurantsNearby));
-                    return res
+                    return this.getRestaurantsNearByGQL
+                            .watch({
+                                nearby:{
+                                    cuisine:params.value,
+                                    timeofoperation: "REGULAR",
+                                    lat: 40.710237,
+                                    long: -74.007810,
+                                    radius:10
+                                }
+                            })
+                            .valueChanges
+                            .pipe(pluck('data','getRestaurantsNearby'));
                 }
 
                 
                 if (params.type == 'ADDRESS') {
                     this.type = 'Near By';
-                    const res  = this.getRestaurantsNearByGQL
-                    .watch({
-                        nearby:{
-                            cuisine:"Italian",
-                            timeofoperation:"",
-                            lat:parseFloat(params.lat),
-                            long:parseFloat(params.lng),
-                            radius:parseFloat(params.radius),
-                        }
-                    })
-                    .valueChanges
-                    .pipe(map(result => result.data.getRestaurantsNearby));
-                    return res;
+                    return this.getRestaurantsNearByGQL
+                            .watch({
+                                nearby:{
+                                    cuisine:"Italian",
+                                    timeofoperation:"",
+                                    lat:parseFloat(params.lat),
+                                    long:parseFloat(params.lng),
+                                    radius:parseFloat(params.radius),
+                                }
+                            })
+                            .valueChanges
+                            .pipe(pluck('data','getRestaurantsNearby'));
                 }
             })
         )
