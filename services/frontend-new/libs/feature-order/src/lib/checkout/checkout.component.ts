@@ -6,6 +6,11 @@ import { DishOrderComponent } from "libs/ui/src/lib/dish-order/dish-order.compon
 @Component({
   selector: "kmeal-nx-checkout",
   templateUrl: "./checkout.component.html",
+  styles:[`
+  .card-radio-group {
+    display: inline-flex;
+    flex-direction: row;
+  }`]
 })
 export class CheckoutComponent implements OnInit {
     @Input() data:any;
