@@ -18,6 +18,7 @@ export class ResComponent implements OnInit, OnDestroy{
     isReady:boolean = false;
     mobileQuery: MediaQueryList;
     book:any;
+    sections:any[];
     routeParamSub:any;
     menu:Array<string> ;
     dishes:any[];
@@ -38,8 +39,8 @@ export class ResComponent implements OnInit, OnDestroy{
 
     ngOnDestroy(): void {
         this.mobileQuery.removeListener(this._mobileQueryListener);
-        this.kmealListListner();
-        this.routeParamSub();
+        this.kmealListListner.unsubscribe();
+        this.routeParamSub.unsubscribe();
     }
 
     ngOnInit(){
@@ -56,9 +57,16 @@ export class ResComponent implements OnInit, OnDestroy{
         this.kmealListListner = this.kmealListingGQL.watch(query)
         .valueChanges
         .pipe(pluck("data","kmeal_menu_book"))
-        .subscribe((result) =>{
+        .subscribe((result: any[]) =>{
+            
+            if (!result || result.length == 0){
+                this.throwError('Something went wrong');
+                return;
+            }
             this.book = result[0];
+            this.sections = this.book.menuBookSectionsBymenuBookId;
             this.isReady = true;
+            console.log(result);
         })
     }
 

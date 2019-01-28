@@ -1,7 +1,7 @@
 import {Directive, ElementRef, Input, OnInit,ViewContainerRef, TemplateRef} from '@angular/core';
 
 @Directive({
-    selector:'dealTimer'
+    selector:'[dealTimer]'
 })
 export class DealTimerDirective implements OnInit{
     @Input() dealTimer:string;

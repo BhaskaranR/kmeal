@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { MatSnackBar, MatDialog } from '@angular/material';
 import { imagesMapping } from './utils';
 import { KmealCategoriesGQL, GetRestaurantsNearByGQL, KmealCategories, GetRestaurantsNearBy } from '../generated/graphql';
-import { map } from 'rxjs/operators';
+import { map, pluck } from 'rxjs/operators';
 import {  combineLatest } from 'rxjs';
 import { DishDetailPopupComponent } from 'libs/ui/src/lib/dish-detail/dish-detail-popup.component';
 import { DishOrderComponent } from 'libs/ui/src/lib/dish-order/dish-order.component';
@@ -187,7 +187,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     private loadUserData(lat, lng){
         const cuisinesObs = this.kmealCategoriesGQL
-            .watch({}, {})
+            .watch({})
             .valueChanges
             .pipe(map(result => result.data.kmeal_categories.map(ca => {
                 ca['img'] = imagesMapping[ca['title'].toLowerCase()] || imagesMapping['japanese'];
@@ -205,13 +205,16 @@ export class HomeComponent implements OnInit, OnDestroy {
                 }
             })
             .valueChanges
-            .pipe(map(result => result.data.getRestaurantsNearby));
+            .pipe(pluck('data','getRestaurantsNearby'));
 
-        combineLatest(cuisinesObs, restaurantsObs).subscribe(([data1, data2])=>{
+        const combined = combineLatest(cuisinesObs, restaurantsObs).subscribe(([data1, data2])=>{
             this.cuisines = data1;
-            this.restaurants = data2;
+            this.restaurants = data2 as any[];
             this.isReady = true;
-        })
+        });
+
+        combined.unsubscribe();
+
         
     }
     
