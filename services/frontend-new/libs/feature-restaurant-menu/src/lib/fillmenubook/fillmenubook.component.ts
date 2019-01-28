@@ -18,7 +18,7 @@ import {
 import { combineLatest } from 'rxjs';
 import { pluck, map } from "rxjs/operators";
 import { FormBuilder, Validators } from "@angular/forms";
-import { MatSnackBar, MatSelectChange } from "@angular/material";
+import { MatSnackBar, MatSelectChange, MatAutocompleteSelectedEvent } from "@angular/material";
 
 @Component({
   selector: 'kmeal-nx-fillmenubook',
@@ -37,6 +37,7 @@ export class FillmenubookComponent implements OnInit {
 
   menubooks: kmb.KmealMenuBook[] = [];
   items: ki.KmealItem[] = [];
+  selectedItemId: number;
 
   constructor(
     private kmealMenuBookItemsSectionGQL: KmealBookSectionItemsGQL,
@@ -74,7 +75,15 @@ export class FillmenubookComponent implements OnInit {
 
   dropSections(event: CdkDragDrop<ki.KmealItem[]>) {
     moveItemInArray(this.sectionItems, event.previousIndex, event.currentIndex);
-    this.submitItems();
+    const objects = [];
+    for (let i = 0; i < this.sectionItems.length; i++) {
+      objects.push({
+        "item_id":  this.sectionItems[i].item_id,
+        "section_id": this.selectedSection.section_id,
+        "sort_order": i
+      })
+    }
+    this.submitItems(objects, 'update');
   }
 
   sectionsSelectionChanged(ev: MatSelectChange) {
@@ -100,23 +109,26 @@ export class FillmenubookComponent implements OnInit {
     })
   }
 
+
+
+  newItemSelected(et: MatAutocompleteSelectedEvent) {
+    const indx = this.items.findIndex(i => i.item_name == et.option.value) ;
+    this.selectedItemId  = this.items[indx].item_id;
+  }
+
   onSubmit() {
     if (!this.sectionsForm.valid) {
       this.openSnackBar("Enter relevant details", "");
     }
-    this.submitItems();
+    const objects = [{
+        "item_id":  this.selectedItemId,
+        "section_id": this.selectedSection.section_id,
+        "sort_order": this.sectionItems.length + 1
+      }]
+    this.submitItems(objects, 'insert');
   }
 
-  submitItems() {
-    const objects = [];
-    for (let i = 0; i < this.sectionItems.length; i++) {
-      objects.push({
-        "item_id":  this.sectionItems[i].item_id,
-        "section_id": this.selectedSection.section_id,
-        "sort_order": i
-      })
-    }
-
+  submitItems(objects, optype) {
     const variables: insItemSection.Variables = {
       objects: objects,
       "on_conflict": {
@@ -128,6 +140,13 @@ export class FillmenubookComponent implements OnInit {
     
     this.insertItemSectionGQL.mutate(variables).pipe(pluck('data', 'insert_kmeal_item_section', 'returning')).subscribe((ms:
       insKmealMenuBookSection.InsertKmealMenuBookSection) => {
+        if (optype == 'insert') {
+          this.sectionItems.push(
+            {
+              itemByitemId : this.items.find( i => i.item_id == objects[0].item_id),
+              item_id: objects[0].item_id
+            })
+        }
       this.openSnackBar("updated", "");
     });
   }

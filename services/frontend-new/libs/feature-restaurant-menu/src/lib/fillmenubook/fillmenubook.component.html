@@ -34,7 +34,7 @@
             <div class="col">
               <mat-form-field class="full-width">
                 <input matInput placeholder="Select Item" aria-label="Select Item" [matAutocomplete]="auto">
-                <mat-autocomplete #auto="matAutocomplete">
+                <mat-autocomplete #auto="matAutocomplete" (optionSelected)="newItemSelected($event)">
                   <mat-option *ngFor="let item of items" [value]="item.item_name">
                      <!-- <img class="option-img" aria-hidden [src]="item.photo" height="25"> -->
                      <span>{{item.item_name}}</span> |
