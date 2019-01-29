@@ -13,7 +13,7 @@ import {
   UpdateKmealMenuBookSection as updKmealMenuBookSection,
   UpdateKmealMenuBookSectionGQL,
   DeleteKmealMenuBookSection as delKmealMenuBookSection,
-  DeleteKmealMenuBookSectionGQL,
+  DeleteKmealItemGQL,
   ConflictAction,
   KmealMenuBookConstraint,
   KmealMenuBookUpdateColumn,
@@ -44,15 +44,14 @@ export class NewsectionComponent {
 
   menubooks: kmb.KmealMenuBook[] = []
 
-  sections: kmb.MenuBookSectionsBymenuBookId[] = [];
-
+  
   constructor(private kmealMenuBookGQL: KmealMenuBookGQL,
     private insertKmealMenuBookGQL: InsertKmealMenuBookGQL,
     private updateKmealMenuBookGQL: UpdateKmealMenuBookGQL,
     private deleteKmealMenuBookGQL: DeleteKmealMenuBookGQL,
     private insertKmealMenuBookSectionGQL: InsertKmealMenuBookSectionGQL,
     private updateKmealMenuBookSectionGQL: UpdateKmealMenuBookSectionGQL,
-    private deleteKmealMenuBookSectionGQL: DeleteKmealMenuBookSectionGQL,
+    private deleteKmealMenuBookSectionGQL: DeleteKmealItemGQL,
     public snackBar: MatSnackBar,
     private fb: FormBuilder) {
   }
@@ -72,8 +71,7 @@ export class NewsectionComponent {
         }
         this.menubooks = mg
         if (this.menubooks.length == 0) {
-          this.selectedMenuBook = this.menubooks[0]
-          this.sections = this.selectedMenuBook.menuBookSectionsBymenuBookId
+          this.selectedMenuBook = this.menubooks[0];
         }
       });
   }
@@ -82,10 +80,10 @@ export class NewsectionComponent {
     moveItemInArray(this.selectedMenuBook.menuBookSectionsBymenuBookId, event.previousIndex, event.currentIndex);
 
     const objects = [];
-    for (let i = 0; i < this.sections.length; i++) {
+    for (let i = 0; i < this.selectedMenuBook.menuBookSectionsBymenuBookId.length; i++) {
       objects.push({
-        section_id: this.sections[i].section_id,
-        section_name: this.sections[i].section_name,
+        section_id: this.selectedMenuBook.menuBookSectionsBymenuBookId[i].section_id,
+        section_name: this.selectedMenuBook.menuBookSectionsBymenuBookId[i].section_name,
         menu_book_id: this.selectedMenuBook.menu_book_id,
         sort_order: i
       })
@@ -122,7 +120,7 @@ export class NewsectionComponent {
       objects: [{
         section_name: this.sectionsForm.value.section,
         menu_book_id: this.selectedMenuBook.menu_book_id,
-        sort_order: this.sections.length + 1
+        sort_order: this.selectedMenuBook.menuBookSectionsBymenuBookId.length + 1
       }],
       "on_conflict": {
         "action": ConflictAction.Update,
@@ -155,8 +153,8 @@ export class NewsectionComponent {
       if (mb.length == 0) {
         this.openSnackBar("not deleted, make sure you don't have menu items associated with this section", "");
       }
-      const indx = this.sections.findIndex((s) => s.section_id == ev.section_id)
-      this.sections.splice(indx, 1);
+      const indx = this.selectedMenuBook.menuBookSectionsBymenuBookId.findIndex((s) => s.section_id == ev.section_id)
+      this.selectedMenuBook.menuBookSectionsBymenuBookId.splice(indx, 1);
       this.openSnackBar("deleted", "");
     })
   }
