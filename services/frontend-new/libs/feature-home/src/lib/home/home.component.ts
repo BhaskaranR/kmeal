@@ -211,9 +211,8 @@ export class HomeComponent implements OnInit, OnDestroy {
             this.cuisines = data1;
             this.restaurants = data2 as any[];
             this.isReady = true;
-        });
-
-        combined.unsubscribe();
+            combined.unsubscribe();
+        });   
 
         
     }
