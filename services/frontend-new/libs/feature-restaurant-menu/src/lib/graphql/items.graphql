@@ -1,0 +1,11 @@
+query kmeal_item ($where : kmeal_item_bool_exp) {
+  kmeal_item (where: $where ) {
+    item_id
+    item_name
+    description
+    spicy_level
+    cooking_time
+    vegetarian
+    photo
+  }
+}

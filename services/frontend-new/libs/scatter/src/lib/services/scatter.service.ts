@@ -250,14 +250,14 @@ export class ScatterService {
         };
         //this.waitReady.then(() => console.log("ScatterService.setReady()"));
         // console.error("scatter interrumpido --------------------------------");
-        this.http.get<any>("assets/endpoints.json").toPromise().then((response) => {
-            this._networks = response;
-            for (var i in this._networks) {
-                this._networks_slugs.push(i);
-            }
-            this.setEndpoints();
-        });
-        this._account_queries = {};
+        // this.http.get<any>("assets/endpoints.json").toPromise().then((response) => {
+        //     this._networks = response;
+        //     for (var i in this._networks) {
+        //         this._networks_slugs.push(i);
+        //     }
+        //     this.setEndpoints();
+        // });
+        // this._account_queries = {};
     }
 
     setNetwork(name:string, index: number = 0) {

@@ -1,6 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatInputModule, MatButtonModule, MatSelectModule, MatRadioModule, MatCardModule, MatGridListModule, MatMenuModule, MatIconModule, MatSnackBarModule, MatListModule, MatCheckboxModule, MatSliderModule, MatSidenavModule, MatToolbarModule, MatExpansionModule, MatStepperModule, MatButtonToggleModule, MatDatepickerModule, MatSlideToggleModule, MatNativeDateModule } from '@angular/material';
+import { MatInputModule, MatButtonModule, MatSelectModule, MatRadioModule, 
+  MatCardModule, MatGridListModule, MatMenuModule, MatIconModule, MatSnackBarModule,
+   MatListModule, MatCheckboxModule, MatSliderModule, MatSidenavModule, MatToolbarModule, 
+    MatStepperModule, MatButtonToggleModule, MatDatepickerModule, MatSlideToggleModule, 
+    MatNativeDateModule, MatAutocompleteModule } from '@angular/material';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 import { LayoutModule } from '@angular/cdk/layout';
@@ -32,6 +36,8 @@ export const restaurantMenuRoutes: Routes = [
 
 @NgModule({
   imports: [CommonModule, MatInputModule, MatButtonModule, MatSelectModule, MatRadioModule,
+    //MatChipsModule,
+    MatAutocompleteModule,
     NgxMaterialTimepickerModule.forRoot(),
     MatSliderModule,
     MatNativeDateModule,

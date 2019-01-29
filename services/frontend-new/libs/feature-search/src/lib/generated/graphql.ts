@@ -549,6 +549,8 @@ export interface KmealItemSectionBoolExp {
   menuBookSectionBysectionId?: KmealMenuBookSectionBoolExp | null;
 
   section_id?: IntegerComparisonExp | null;
+
+  sort_order?: IntegerComparisonExp | null;
 }
 /** Boolean expression to filter rows from the table "kmeal.menu_book_section". All fields are combined with a logical 'AND'. */
 export interface KmealMenuBookSectionBoolExp {
@@ -1013,6 +1015,8 @@ export interface KmealItemSectionOrderBy {
   menuBookSectionBysectionId?: KmealMenuBookSectionOrderBy | null;
 
   section_id?: OrderBy | null;
+
+  sort_order?: OrderBy | null;
 }
 /** ordering options when selecting data from "kmeal.menu_book_section" */
 export interface KmealMenuBookSectionOrderBy {
@@ -1704,6 +1708,8 @@ export interface KmealItemInsertInput {
 /** input type for inserting array relation for remote table "kmeal.item_section" */
 export interface KmealItemSectionArrRelInsertInput {
   data: KmealItemSectionInsertInput[];
+
+  on_conflict?: KmealItemSectionOnConflict | null;
 }
 /** input type for inserting data into table "kmeal.item_section" */
 export interface KmealItemSectionInsertInput {
@@ -1714,6 +1720,8 @@ export interface KmealItemSectionInsertInput {
   menuBookSectionBysectionId?: KmealMenuBookSectionObjRelInsertInput | null;
 
   section_id?: number | null;
+
+  sort_order?: number | null;
 }
 /** input type for inserting object relation for remote table "kmeal.menu_book_section" */
 export interface KmealMenuBookSectionObjRelInsertInput {
@@ -2023,6 +2031,15 @@ export interface KmealRestaurantOnConflict {
 
   update_columns?: KmealRestaurantUpdateColumn[] | null;
 }
+/** on conflict condition type for table "kmeal.item_section" */
+export interface KmealItemSectionOnConflict {
+  /** action when conflict occurs (deprecated) */
+  action?: ConflictAction | null;
+
+  constraint: KmealItemSectionConstraint;
+
+  update_columns?: KmealItemSectionUpdateColumn[] | null;
+}
 /** input type for inserting array relation for remote table "kmeal.item_types" */
 export interface KmealItemTypesArrRelInsertInput {
   data: KmealItemTypesInsertInput[];
@@ -2325,12 +2342,16 @@ export interface KmealItemSectionIncInput {
   item_id?: number | null;
 
   section_id?: number | null;
+
+  sort_order?: number | null;
 }
 /** input type for updating data in table "kmeal.item_section" */
 export interface KmealItemSectionSetInput {
   item_id?: number | null;
 
   section_id?: number | null;
+
+  sort_order?: number | null;
 }
 /** input type for incrementing integer columne in table "kmeal.item_types" */
 export interface KmealItemTypesIncInput {
@@ -2715,6 +2736,8 @@ export interface KmealDporderObjRelInsertInput {
 /** input type for inserting object relation for remote table "kmeal.item_section" */
 export interface KmealItemSectionObjRelInsertInput {
   data: KmealItemSectionInsertInput;
+
+  on_conflict?: KmealItemSectionOnConflict | null;
 }
 /** input type for inserting object relation for remote table "kmeal.item_types" */
 export interface KmealItemTypesObjRelInsertInput {
@@ -2838,7 +2861,8 @@ export enum KmealDporderSelectColumn {
 /** select columns of table "kmeal.item_section" */
 export enum KmealItemSectionSelectColumn {
   ItemId = "item_id",
-  SectionId = "section_id"
+  SectionId = "section_id",
+  SortOrder = "sort_order"
 }
 /** select columns of table "kmeal.menu_book_section" */
 export enum KmealMenuBookSectionSelectColumn {
@@ -3203,6 +3227,16 @@ export enum KmealRestaurantUpdateColumn {
   RestaurantId = "restaurant_id",
   Timeofoperation = "timeofoperation",
   YelpId = "yelp_id"
+}
+/** unique or primary key constraints on table "kmeal.item_section" */
+export enum KmealItemSectionConstraint {
+  ItemSectionPkey = "item_section_pkey"
+}
+/** update columns of table "kmeal.item_section" */
+export enum KmealItemSectionUpdateColumn {
+  ItemId = "item_id",
+  SectionId = "section_id",
+  SortOrder = "sort_order"
 }
 /** unique or primary key constraints on table "kmeal.dporder" */
 export enum KmealDporderConstraint {
