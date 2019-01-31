@@ -2,7 +2,7 @@
     fxLayoutAlign="start center" 
     fxLayoutGap="10px" 
     fxLayoutGap.xs="0" >
-    <div fxFlex="40px" fxFlex.sm="20px" fxFlex.xs="20px" fxFlexOrder="1">
+    <div fxFlex="40px" fxFlex.sm="40px" fxFlex.xs="40px" fxFlexOrder="1">
         <button mat-icon-button (click)="toggleSideNav()" ><mat-icon >menu</mat-icon></button>
     </div>
     <div fxFlex="200px" fxHide.sm="true" fxHide.xs="true" fxFlexOrder="2">
@@ -17,7 +17,8 @@
         fxFlexOrder="4" 
         fxLayout="row" 
         fxLayoutAlign="end center" 
-        fxLayoutGap="20px">
+        fxLayoutGap="20px"
+        fxLayoutGap.xs="0px">
         <small><a routerLink="/profile" *ngIf="!scatter.logged">LOGIN</a></small>
         <div *ngIf="scatter.logged">
             <!-- <mat-icon [matMenuTriggerFor]="menu" [routerLink]="/profile/account" style="margin-top:5px">person</mat-icon> -->
