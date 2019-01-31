@@ -31,6 +31,7 @@ export class SearchComponent implements OnInit ,OnDestroy{
     
     
     ngOnInit() {
+        this.breakpoint = this.generateBreakpoint(window.innerWidth);
         this.routeParamSub = this.route
         .queryParams
         .pipe(

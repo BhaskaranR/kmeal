@@ -31,7 +31,6 @@ export class AppComponent {
     this._mobileQueryListener = ()=> changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
     this.localStorage.getItem<string>('address').subscribe((address) => {
-      console.log("try to load address : ",address);
       if (address) {
         this.isAddressSet = true;
       }

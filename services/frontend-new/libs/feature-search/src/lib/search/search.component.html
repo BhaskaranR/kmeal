@@ -7,14 +7,15 @@
 
 <div *ngIf="isReady">
     <div fxLayout="row" fxLayoutAlign="left center" style="padding:15px 20px 15px 20px">
-        <div fxFlex="50%">
+        <div fxFlex="50%" fxHide.xs="true">
             <div> {{restaurants.length}} results | <b>Search by "{{type}}"</b> </div>
         </div>
+        <div fxFlex="50%" fxShow.xs="true" fxHide.sm="true" fxHide.md="true" fxHide.lg="true">{{restaurants.length}} results</div>
         <div fxFlex="50%" 
             fxLayout="row" 
             fxLayoutAlign="end center"
             fxLayoutGap="2px">
-            <button mat-button  [matMenuTriggerFor]="sortedBy">Sort by</button>
+            <button mat-button fxHide.xs="true" [matMenuTriggerFor]="sortedBy">Sort by</button>
             <mat-menu #sortedBy="matMenu">
                 <button mat-menu-item>Price Low to High</button>
                 <button mat-menu-item>Price High to Low</button>
@@ -24,7 +25,7 @@
                 <button mat-button color="primary" (click)="isFilterOpen = !isFilterOpen">Filter</button>
             </div>
 
-            <div fxLayout="row"  fxLayoutAlign="start center" fxLayoutGap="15px">
+            <div fxLayout="row" fxHide.xs="true" fxLayoutAlign="start center" fxLayoutGap="15px">
                 <div style="padding-left:15px"> View :</div> 
                 <mat-icon title="Grid">apps</mat-icon> 
                 <div>|</div> 
