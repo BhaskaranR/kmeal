@@ -6,16 +6,16 @@
 </div>
 
 <div *ngIf="isReady">
-    <div fxLayout="row" fxLayoutAlign="left center" style="padding:15px 20px 15px 20px">
-        <div fxFlex="50%" fxHide.xs="true">
+    <div fxLayout="row" fxLayoutAlign="left center" class="to-align">
+        <div fxFlex="50%" fxHide.xs="true" fxHide.sm="true" fxShow.md="true" fxShow.lg="true" fxShow.xs="false">
             <div> {{restaurants.length}} results | <b>Search by "{{type}}"</b> </div>
         </div>
-        <div fxFlex="50%" fxShow.xs="true" fxHide.sm="true" fxHide.md="true" fxHide.lg="true">{{restaurants.length}} results</div>
+        <div fxFlex="50%" fxShow.xs="true" fxShow.sm="true" fxHide.md="true" fxHide.lg="true">{{restaurants.length}} results</div>
         <div fxFlex="50%" 
             fxLayout="row" 
             fxLayoutAlign="end center"
             fxLayoutGap="2px">
-            <button mat-button fxHide.xs="true" [matMenuTriggerFor]="sortedBy">Sort by</button>
+            <button mat-button fxHide.xs="true"  fxHide.sm="true" [matMenuTriggerFor]="sortedBy">Sort by</button>
             <mat-menu #sortedBy="matMenu">
                 <button mat-menu-item>Price Low to High</button>
                 <button mat-menu-item>Price High to Low</button>
@@ -24,17 +24,10 @@
             <div>
                 <button mat-button color="primary" (click)="isFilterOpen = !isFilterOpen">Filter</button>
             </div>
-
-            <div fxLayout="row" fxHide.xs="true" fxLayoutAlign="start center" fxLayoutGap="15px">
-                <div style="padding-left:15px"> View :</div> 
-                <mat-icon title="Grid">apps</mat-icon> 
-                <div>|</div> 
-                <mat-icon title="List">list</mat-icon>
-            </div>
         </div>
     </div>
     <mat-divider></mat-divider>
-    <div *ngIf="isFilterOpen" style="padding:15px 20px 15px 20px">
+    <div *ngIf="isFilterOpen" class="to-align">
         <form action="">
             <mat-form-field style="margin-right:15px">
                 <mat-select placeholder="Cuisine" [value]="'Asian'">
@@ -81,11 +74,13 @@
         </form>
     </div>
         
-    <mat-grid-list [cols]="breakpoint"  (window:resize)="onResize($event)" *ngIf="restaurants.length > 0">
+    <br>
+    <mat-grid-list [cols]="breakpoint" rowHeight="280px" (window:resize)="onResize($event)" *ngIf="restaurants.length > 0 && viewType == 'grid'" >
         <mat-grid-tile *ngFor="let res of restaurants ">
-            <res-card [res]="res" (click)="restaurantDetails(res)" (onErrorEvent)="throwError($vent)"></res-card>
+            <res-card [res]="res" (click)="restaurantDetails(res)" (onErrorEvent)="throwError($vent)" style="width:calc(100% - 40px); height:100%"></res-card>
         </mat-grid-tile>
     </mat-grid-list>
 
-    <div *ngIf="restaurants.length  ==  0" style="padding:15px 20px 15px 20px; text-align: center">No Results</div>
+
+    <div *ngIf="restaurants.length  ==  0" class="to-align" style=" text-align: center">No Results</div>
 </div>
