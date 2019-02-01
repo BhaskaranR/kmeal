@@ -1,15 +1,17 @@
-<mat-card class="mat-elevation-z0" >
-    <img mat-card-image [attr.src]="res.logo" style="height:160px">
-    <h4><small>{{res.name}}</small></h4>
-    <mat-card-subtitle>
+<mat-card class="mat-elevation-z0 res-card" [ngStyle]="{ 'background-image': 'linear-gradient( rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6) ), url(' + res.logo + ')'}">
+    <h5 style="height:35px"><small>{{res.name}}</small></h5>
+    <mat-card-subtitle style="height:70px;white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis;">
         <span>{{res.priceLevel}} </span>
         <span style="margin-right:5px">{{ generateLables(res.description)}}</span>
         <br>
         <p><small>{{res.address}}</small>  </p>
     </mat-card-subtitle>
+    <br>
     <mat-chip-list>
-        <mat-chip>{{res.rating}} <mat-icon >star</mat-icon></mat-chip>
-        <mat-chip>{{res.distance}} ft</mat-chip>
+        <mat-chip color="accent" selected>{{res.rating}} <mat-icon >star</mat-icon></mat-chip>
+        <mat-chip>{{res.distance.toFixed(2) }} ft</mat-chip>
     </mat-chip-list>
 </mat-card>
 

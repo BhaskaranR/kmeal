@@ -54,7 +54,7 @@ export class HomeComponent implements OnInit, OnDestroy {
             visible: false
         },
         touch: true,
-        loop: false,
+        loop: true,
         animation: 'lazy'
     };
 

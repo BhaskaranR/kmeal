@@ -11,6 +11,10 @@ import { MatSnackBar } from "@angular/material";
     styles:[`
     .red-snackbar{
         background-color:red;
+    }
+    
+    .to-align{
+        padding:15px 20px 15px 20px;
     }`]
 })
 export class SearchComponent implements OnInit ,OnDestroy{
@@ -22,6 +26,7 @@ export class SearchComponent implements OnInit ,OnDestroy{
     isFilterOpen:boolean = false;
     isReady:boolean = false;
     sortedBy:string = "Relevant";
+    viewType:string = 'grid';
 
     constructor(
         public route:ActivatedRoute,
@@ -106,5 +111,9 @@ export class SearchComponent implements OnInit ,OnDestroy{
 
     restaurantDetails(res){
         this.router.navigate(['./restaurant/' + res.restaurant_id]);
+    }
+
+    changeView(type){
+        this.viewType = type;
     }
 }

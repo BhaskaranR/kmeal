@@ -3,7 +3,8 @@ import {
   ChangeDetectionStrategy,
   Input,
   Output,
-  EventEmitter
+  EventEmitter,
+  OnInit
 } from '@angular/core';
 
 @Component({
@@ -13,12 +14,17 @@ import {
   styleUrls: ['./restaurant.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class RestaurantComponent {
+export class RestaurantComponent implements OnInit {
   @Input() public res: any;
   @Output() public onRestaurantDetailsEvent = new EventEmitter<any>();
   @Output() public onErrorEvent = new EventEmitter<string>();
 
   constructor() {}
+
+  ngOnInit(){
+    console.log(this.res);
+  }
+
   onRestaurantDetails(e) {
     this.onRestaurantDetailsEvent.emit(e);
   }
