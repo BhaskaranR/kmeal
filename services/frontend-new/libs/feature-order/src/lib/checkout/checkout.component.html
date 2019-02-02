@@ -4,79 +4,88 @@
 <form action="">
     <div fxLayout="row" 
         fxLayout.xs="column"
-        fxLayoutGap="10px"
+        fxLayout.sm="column"
+        fxLayoutGap="30px"
         style="width:80%; margin-left:auto; margin-right:auto" >
         
         <div fxFlex="33.33%">
             <h6><i>1. Choose an Payment Option</i></h6>
             <br>
-            <mat-form-field>
-                <mat-select required placeholder="Payment Method">
+            <mat-form-field appearance="fill" style="width:100%">
+                <mat-label>Payment Method</mat-label>
+                <mat-select required placeholder="Payment Method" [(ngModel)]="paymentOption" name="checkout-paymentmethod">
+                    <mat-option value="0">New Credit Card</mat-option>
                     <mat-option value="1"><mat-icon>credit_card</mat-icon> card  ***9819 </mat-option>
                     <mat-option value="2">EOS Token</mat-option>
                 </mat-select>
             </mat-form-field>
 
             <br>
+            <div *ngIf="paymentOption == 0" style="width:100%;overflow: hidden">
+                <mat-form-field appearance="fill" style="width:100%">
+                    <mat-label>Card Type</mat-label>
+                    <mat-select required placeholder="Card Type" require>
+                        <mat-option value="1">Visa</mat-option>
+                        <mat-option value="2">MasterCard</mat-option>
+                    </mat-select>
+                </mat-form-field>
 
-            <mat-form-field>
-                <mat-select required placeholder="Card Type">
-                    <mat-option value="1">Visa</mat-option>
-                    <mat-option value="2">MasterCard</mat-option>
-                </mat-select>
-            </mat-form-field>
+                <mat-form-field appearance="fill" style="width:100%">
+                    <mat-label>Card Number</mat-label>
+                    <input matInput placeholder="Card Number" required>
+                    <span matPrefix><mat-icon>credit_card</mat-icon></span>
+                </mat-form-field>
 
-            <br>
-                
-            <table style="width:100%" cellspacing="0">
-                <tr>
-                    <td style="width:50%"><mat-form-field >
-                      <input matInput placeholder="First name" required>
+                <div>
+                    <div style="display: inline-block;width:65%;">
+                            <mat-form-field appearance="fill" style="width:100%">
+                                <mat-label>Exp. Date</mat-label>
+                                <input matInput placeholder="MM/YY" required>
+                            </mat-form-field>
+                    </div>
+                    <div style="display: inline-block;width:35%;">
+                        <mat-form-field appearance="fill" style="width:100%">
+                            <mat-label>CVV</mat-label>
+                            <input matInput placeholder="123" required>
                         </mat-form-field>
-                    </td>
-                    <td><mat-form-field >
-                      <input matInput placeholder="Last Name" required>
-                    </mat-form-field></td>
-                </tr>
-            </table>
+                    </div>
+                </div>
 
-            <table style="width:100%" cellspacing="0">
-                <tr>
-                    <td style="width:50%"><mat-form-field >
-                        <input matInput placeholder="Email" required>
-                        </mat-form-field>
-                    </td>
-                    <td><mat-form-field >
-                        <input matInput placeholder="Phone #" required>
-                    </mat-form-field></td>
-                </tr>
-            </table>
-                
+                <mat-form-field appearance="fill" style="width:100%">
+                    <mat-label>Country</mat-label>
+                    <mat-select required placeholder="Card Type" require>
+                        <mat-option value="usa">United States</mat-option>
+                        <mat-option value="india">India</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" style="width:100%">
+                    <mat-label>Zip Code</mat-label>
+                    <input matInput placeholder="Phone #" required>
+                </mat-form-field>
                   
-            <mat-form-field >
-                <textarea matInput placeholder="Address" style="width:100%" ></textarea>
-            </mat-form-field>
-        
-                
-            <table  cellspacing="0">
-                <tr>
-                        <td><mat-form-field >
-                        <input matInput placeholder="City" style="width:30%">
-                        </mat-form-field></td>
-                        <td><mat-form-field >
-                        <input matInput placeholder="State" style="width:30%">
-                        </mat-form-field></td>
-                        <td><mat-form-field >
-                        <input matInput #postalCode maxlength="5" style="width:30%" placeholder="Postal Code" value="94043">
-                        <mat-hint align="end">{{postalCode.value.length}} / 5</mat-hint>
-                        </mat-form-field></td>
-                    </tr>
-            </table>
+                    
+                <div>
+                    <div style="display: inline-block;width:50%;">
+                            <mat-form-field appearance="fill" style="width:100%">
+                                <mat-label>First Name</mat-label>
+                                <input matInput placeholder="First Name" required>
+                            </mat-form-field>
+                    </div>
+                    <div style="display: inline-block;width:50%;">
+                        <mat-form-field appearance="fill" style="width:100%">
+                            <mat-label>Last Name</mat-label>
+                            <input matInput placeholder="Last Name" required>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <mat-checkbox style="margin-left:15px">Save this card</mat-checkbox>
+            </div>
         </div>
         <div fxFlex="33.33%">
             <h6><i>2. Wait for Your confirmation Email</i></h6>
             <br>
-            <p>Check your email , you should recieve an confirmation from the restaurant within 10 minutes.</p>
+            <p style="color:#979797">Check your email , you should recieve an confirmation from the restaurant within 10 minutes.</p>
             <br>
             <h6><i>3. Checkout Restaurant's location</i></h6>
             <p><a href="">Check it out</a></p>

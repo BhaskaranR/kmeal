@@ -75,7 +75,7 @@
     </div>
         
     <br>
-    <mat-grid-list [cols]="breakpoint" rowHeight="280px" (window:resize)="onResize($event)" *ngIf="restaurants.length > 0 && viewType == 'grid'" >
+    <mat-grid-list [cols]="breakpoint" rowHeight="240px" (window:resize)="onResize($event)" *ngIf="restaurants.length > 0 && viewType == 'grid'" >
         <mat-grid-tile *ngFor="let res of restaurants ">
             <res-card [res]="res" (click)="restaurantDetails(res)" (onErrorEvent)="throwError($vent)" style="width:calc(100% - 40px); height:100%"></res-card>
         </mat-grid-tile>

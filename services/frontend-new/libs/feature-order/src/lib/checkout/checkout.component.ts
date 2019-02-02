@@ -17,7 +17,8 @@ export class CheckoutComponent implements OnInit {
     subTotal:number ;
     tax:number;
     fee:number;
-    total:number
+    total:number;
+    paymentOption:number;
     constructor(public dialog: MatDialog,){}
 
     ngOnInit(){
