@@ -36,7 +36,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     isReady:boolean = false;
 
     cuisineConfig: NguCarouselConfig = {
-        grid: { xs: 2, sm: 2, md: 4, lg: 6, all: 0 },
+        grid: { xs: 2, sm: 2, md: 4, lg: 5, all: 0 },
         speed: 250,
         point: {
             visible: false

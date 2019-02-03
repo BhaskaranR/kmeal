@@ -10,10 +10,9 @@
         <h5>Search By Cuisine</h5>
         <ngu-carousel *ngIf="!!cuisines && cuisines.length > 0" #cuisinesCarousel [inputs]="cuisineConfig" [dataSource]="cuisines">
             <ngu-tile NguCarouselItem *nguCarouselDef="let cuisine; let i = index;">
-                <mat-card (click)="onSearchCuisine(cuisine.title)" style="box-shadow:none; cursor:pointer" [style.background-color]=" (i % 2 == 0) ? '#6e5432' : '#b28d5f'  ">
+                <mat-card (click)="onSearchCuisine(cuisine.title)" style="cursor:pointer" class="mat-card-flat" >
                     <img mat-card-image [attr.src]="cuisine.img" alt="" style="max-height:100px">
-
-                    <mat-card-subtitle style="color:white">
+                    <mat-card-subtitle >
                         {{cuisine.title}}
                     </mat-card-subtitle>
                 </mat-card>
