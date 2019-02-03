@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, OnInit, Input, OnDestroy } from "@angular/core";
 import { MatDialog } from "@angular/material";
 import { DishOrderComponent } from "libs/ui/src/lib/dish-order/dish-order.component";
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
@@ -12,27 +12,33 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
     flex-direction: row;
   }`]
 })
-export class CheckoutComponent implements OnInit {
+export class CheckoutComponent implements OnInit, OnDestroy {
     @Input() data:any;
     subTotal:number ;
     tax:number;
     fee:number;
     total:number;
     paymentOption:number;
-    theForm:FormGroup;
+    paymentForm:FormGroup;
+    orderForm:FormGroup;
     sub:any;
+    orderSub:any;
 
     constructor(public dialog: MatDialog,
         private fb:FormBuilder){
-            this.initForm();
         }
 
     ngOnInit(){
-   
+        this.initForm();
+    }
+
+    ngOnDestroy(){
+        this.sub.unsubscribe();
+        this.orderSub.unsubscribe();
     }
 
     private initForm(){
-        this.theForm = this.fb.group({
+        this.paymentForm = this.fb.group({
             'paymentMethod':[null,[
                 Validators.required,
             ]],
@@ -68,9 +74,17 @@ export class CheckoutComponent implements OnInit {
             ]]
         })
         
-        this.sub = this.theForm.valueChanges.subscribe((data)=>{
+        this.sub = this.paymentForm.valueChanges.subscribe((data)=>{
             console.log(data);
         });
+
+        this.orderForm = this.fb.group({
+            'test':'',
+        });
+
+        this.orderSub = this.orderForm.valueChanges.subscribe(data => {
+            console.log(data);
+        })
     }
 
     changeOrder(){

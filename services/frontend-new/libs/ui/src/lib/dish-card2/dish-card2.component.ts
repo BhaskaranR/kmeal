@@ -19,7 +19,7 @@ import { DishOrderComponent } from '../dish-order/dish-order.component';
   export class DishCardTwoComponent implements OnInit{
       isDynamic:boolean = true;
       defaultPhoto:string = 'https://www.kensfoodservice.com/img/fall-flavors/plate-with-salad.png';
-      
+      isActive:boolean = false;
       @Input() data:any;
       @Output() onClickEvent = new EventEmitter<any>();
       constructor(public dialog: MatDialog){}

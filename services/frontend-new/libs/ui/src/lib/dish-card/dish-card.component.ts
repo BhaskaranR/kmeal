@@ -20,6 +20,7 @@ export class DishCardComponent {
   @Output() public onOpenDetailsEvent: EventEmitter<string> = new EventEmitter();
   @Output() public onPlaceOrderEvent:EventEmitter<string> = new EventEmitter();
   @Output() public onErrorEvent = new EventEmitter<string>();
+  isActive:boolean = false;
 
   constructor(public dialog: MatDialog) {}
 
