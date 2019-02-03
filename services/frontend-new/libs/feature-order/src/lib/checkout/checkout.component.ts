@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from "@angular/core";
 import { MatDialog } from "@angular/material";
 import { DishOrderComponent } from "libs/ui/src/lib/dish-order/dish-order.component";
-
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: "kmeal-nx-checkout",
@@ -19,10 +19,58 @@ export class CheckoutComponent implements OnInit {
     fee:number;
     total:number;
     paymentOption:number;
-    constructor(public dialog: MatDialog,){}
+    theForm:FormGroup;
+    sub:any;
+
+    constructor(public dialog: MatDialog,
+        private fb:FormBuilder){
+            this.initForm();
+        }
 
     ngOnInit(){
-        console.log('checkout')
+   
+    }
+
+    private initForm(){
+        this.theForm = this.fb.group({
+            'paymentMethod':[null,[
+                Validators.required,
+            ]],
+            'cardType':[null,[
+                Validators.required,
+            ]],
+            'cardNumber':[null,[
+                Validators.required,
+                Validators.minLength(19)
+            ]],
+            'firstName':[null,[
+                Validators.required,
+            ]],
+            'lastName':[null,[
+                Validators.required,
+            ]],
+            'expDate':[null,[
+                Validators.required,
+            ]],
+            'cvv':[null,[
+                Validators.required,
+                Validators.minLength(3),
+            ]],
+            'country':[null,[
+                Validators.required,
+            ]],
+            'zipcode':[null,[
+                Validators.required,
+                Validators.minLength(5),
+            ]],
+            'saved':[false,[
+                Validators.required,
+            ]]
+        })
+        
+        this.sub = this.theForm.valueChanges.subscribe((data)=>{
+            console.log(data);
+        });
     }
 
     changeOrder(){
@@ -62,5 +110,9 @@ export class CheckoutComponent implements OnInit {
         dialogRef.afterClosed().subscribe(result => {
             console.log('closed', result);
         });
+    }
+
+    submitOrders(data){
+        console.log('submit ', data, this.theForm);
     }
 }

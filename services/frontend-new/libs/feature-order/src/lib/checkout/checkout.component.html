@@ -1,7 +1,8 @@
 <br>
 <br>
 <h1 style="text-align: center; margin-bottom:60px"><i>Express Checkout</i></h1>
-<form action="">
+<form action="" (ngSubmit)="submitOrders(theForm.value)" [formGroup]="theForm">
+    Value: {{theForm.value | json}}
     <div fxLayout="row" 
         fxLayout.xs="column"
         fxLayout.sm="column"
@@ -13,7 +14,7 @@
             <br>
             <mat-form-field appearance="fill" style="width:100%">
                 <mat-label>Payment Method</mat-label>
-                <mat-select required placeholder="Payment Method" [(ngModel)]="paymentOption" name="checkout-paymentmethod">
+                <mat-select placeholder="Payment Method"  name="paymentMethod" formControlName="paymentMethod" required>
                     <mat-option value="0">New Credit Card</mat-option>
                     <mat-option value="1"><mat-icon>credit_card</mat-icon> card  ***9819 </mat-option>
                     <mat-option value="2">EOS Token</mat-option>
@@ -21,39 +22,41 @@
             </mat-form-field>
 
             <br>
-            <div *ngIf="paymentOption == 0" style="width:100%;overflow: hidden">
+            <div *ngIf="theForm.controls.paymentMethod.value == 0" style="width:100%;overflow: hidden">
                 <mat-form-field appearance="fill" style="width:100%">
                     <mat-label>Card Type</mat-label>
-                    <mat-select required placeholder="Card Type" require>
-                        <mat-option value="1">Visa</mat-option>
-                        <mat-option value="2">MasterCard</mat-option>
+                    <mat-select placeholder="Card Type" required name="cardType" formControlName="cardType">
+                        <mat-option value="visa">Visa</mat-option>
+                        <mat-option value="masterCard">MasterCard</mat-option>
                     </mat-select>
                 </mat-form-field>
 
                 <mat-form-field appearance="fill" style="width:100%">
                     <mat-label>Card Number</mat-label>
-                    <input matInput placeholder="Card Number" required>
+                        <input matInput placeholder="Card Number" required name="cardNumber" formControlName="cardNumber">
                     <span matPrefix><mat-icon>credit_card</mat-icon></span>
                 </mat-form-field>
 
                 <div>
                     <div style="display: inline-block;width:65%;">
-                            <mat-form-field appearance="fill" style="width:100%">
-                                <mat-label>Exp. Date</mat-label>
-                                <input matInput placeholder="MM/YY" required>
-                            </mat-form-field>
+                        <mat-form-field appearance="fill" style="width:100%" >
+                            <mat-label>Exp. Date</mat-label>
+                            <input matInput placeholder="MM/YY" required name="expDate" formControlName="expDate">
+                            <mat-error *ngIf="theForm.controls.expDate.invalid">Exp Date is invalid</mat-error>
+                        </mat-form-field>
                     </div>
                     <div style="display: inline-block;width:35%;">
-                        <mat-form-field appearance="fill" style="width:100%">
+                        <mat-form-field appearance="fill" style="width:100%" >
                             <mat-label>CVV</mat-label>
-                            <input matInput placeholder="123" required>
+                            <input matInput placeholder="123" required name="cvv" formControlName="cvv">
+                            <mat-error *ngIf="theForm.controls.cvv.invalid">CVV is invalid</mat-error>
                         </mat-form-field>
                     </div>
                 </div>
 
                 <mat-form-field appearance="fill" style="width:100%">
                     <mat-label>Country</mat-label>
-                    <mat-select required placeholder="Card Type" require>
+                    <mat-select required placeholder="Card Type" require name="country" formControlName="country">
                         <mat-option value="usa">United States</mat-option>
                         <mat-option value="india">India</mat-option>
                     </mat-select>
@@ -61,7 +64,7 @@
 
                 <mat-form-field appearance="fill" style="width:100%">
                     <mat-label>Zip Code</mat-label>
-                    <input matInput placeholder="Phone #" required>
+                    <input matInput placeholder="Zip Code" required name="zipcode" formControlName="zipcode">
                 </mat-form-field>
                   
                     
@@ -69,17 +72,17 @@
                     <div style="display: inline-block;width:50%;">
                             <mat-form-field appearance="fill" style="width:100%">
                                 <mat-label>First Name</mat-label>
-                                <input matInput placeholder="First Name" required>
+                                <input matInput placeholder="First Name" required name="firstName" formControlName="firstName">
                             </mat-form-field>
                     </div>
                     <div style="display: inline-block;width:50%;">
                         <mat-form-field appearance="fill" style="width:100%">
                             <mat-label>Last Name</mat-label>
-                            <input matInput placeholder="Last Name" required>
+                            <input matInput placeholder="Last Name" required name="lastName" formControlName="lastName">
                         </mat-form-field>
                     </div>
                 </div>
-                <mat-checkbox style="margin-left:15px">Save this card</mat-checkbox>
+                <mat-checkbox style="margin-left:15px" name="saved" formControlName="saved">Save this card</mat-checkbox>
             </div>
         </div>
         <div fxFlex="33.33%">
@@ -131,7 +134,7 @@
                                                     </div>
                         </mat-card-content>
                         <mat-card-actions>
-                                <button mat-flat-button color="warn" style="width:100%">PLACE ORDER</button>
+                                <button mat-flat-button color="warn" type="submit" style="width:100%">PLACE ORDER</button>
                         </mat-card-actions>
                     </mat-card>
         </div>
