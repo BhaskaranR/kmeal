@@ -113,6 +113,6 @@ export class CheckoutComponent implements OnInit {
     }
 
     submitOrders(data){
-        console.log('submit ', data, this.theForm);
+        console.log('submit ', data);
     }
 }

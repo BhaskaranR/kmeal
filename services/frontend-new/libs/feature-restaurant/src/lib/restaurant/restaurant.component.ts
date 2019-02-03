@@ -102,7 +102,7 @@ export class ResComponent implements OnInit, OnDestroy{
     }
   
     private generateBreakpoint(width){
-        return (width <= 959 ) ? 1: (width <= 1279) ? 2: 4;
+        return (width <= 959 ) ? 1: (width <= 1279) ? 2: 3;
     }
 
     openDishDetails(e){

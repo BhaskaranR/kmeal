@@ -1,21 +1,33 @@
-<mat-card class="mat-card-flat" style="width:100%">
-    <mat-card-title-group>
-        <mat-card-title>{{data.item_name}}</mat-card-title>
-        <mat-card-subtitle>{{data.description}}</mat-card-subtitle>
-    </mat-card-title-group>
-    <mat-card-content>
-        <mat-progress-bar color="primary" mode="determinate" value="60"></mat-progress-bar>
-        <div fxLayout="row">
-            <div fxFlex="40%"><small>42%</small></div>
-            <div fxFlex="60%" style="text-align:right"><small>Deal ends in <span [dealTimer]="'6:00 pm 2019-01-26'">1111</span></small></div>
+<mat-card class="mat-card-flat" style="width:100%;cursor:pointer" *ngIf="isDynamic" (click)="onClick()">
+    <div fxLayout="row" fxLayoutGap="15px">
+        <div fxFlex="30%">
+            <img [attr.src]="defaultPhoto" alt="foto" style="width: 100%; margin-top:13px">
         </div>
-        <mat-chip-list>
-            <mat-basic-chip color="warn">{{data.spicy_level}}</mat-basic-chip>
-            <mat-basic-chip color="warn">{{ data.vegetarian == 1 ? 'Vegetarian' : 'None Vegetairan' }}</mat-basic-chip>
-        </mat-chip-list>
-    </mat-card-content>
+        <div fxFlex="70%">
+            <h6>{{data.item_name}}</h6>
+            <mat-card-subtitle>{{data.description}}</mat-card-subtitle>
+            <mat-card-content style="height:40px; margin-bottom:0">
+                <mat-progress-bar color="primary" mode="determinate" value="60"></mat-progress-bar>
+                <div fxLayout="row">
+                    <div fxFlex="40%"><small>42%</small></div>
+                    <div fxFlex="60%" style="text-align:right"><small>Deal ends in <span [dealTimer]="'6:00 pm 2019-02-06'">time</span> <mat-icon style="font-size:12px">help_outline</mat-icon></small></div>
+                </div>
+            </mat-card-content>
+            $14.99
+        </div>
+    </div>
+</mat-card>
 
-    <mat-card-actions>
-        <button mat-button>LIKE</button>
-      </mat-card-actions>
+<mat-card class="mat-card-flat" style="width:100%; cursor:pointer" *ngIf="!isDynamic" (click)="onClick()">
+    <div fxLayout="row" fxLayoutGap="15px">
+        <div fxFlex="30%">
+            <img [attr.src]="defaultPhoto" alt="foto" style="width: 100%; margin-top:13px">
+        </div>
+        <div fxFlex="70%">
+            <h6>{{data.item_name}}</h6>
+            <mat-card-subtitle>{{data.description}}</mat-card-subtitle>
+            <div style="height:40px"></div>
+            $14.88
+        </div>
+    </div>
 </mat-card>

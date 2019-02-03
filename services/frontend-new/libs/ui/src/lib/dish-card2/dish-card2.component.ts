@@ -6,6 +6,8 @@ import {
     Output,
     OnInit
   } from '@angular/core';
+import { MatDialog } from '@angular/material';
+import { DishOrderComponent } from '../dish-order/dish-order.component';
 
 
   @Component({
@@ -15,19 +17,30 @@ import {
     changeDetection: ChangeDetectionStrategy.OnPush
   })
   export class DishCardTwoComponent implements OnInit{
-      spiceLevelEnum : {[key:string]:string} = {
-        0:'Not Spicy',
-        1:'Mild Spicy',
-        2:'Medium Spicy',
-        3:'Spicy',
-        4:'Extra Spicy'
-      } ;
+      isDynamic:boolean = true;
+      defaultPhoto:string = 'https://www.kensfoodservice.com/img/fall-flavors/plate-with-salad.png';
       
       @Input() data:any;
       @Output() onClickEvent = new EventEmitter<any>();
-      constructor(){}
+      constructor(public dialog: MatDialog){}
 
       ngOnInit(){
-        console.log(this.data);
+        console.log(this.data, this.data.listingsByitemId);
+        this.isDynamic = this.data.listingsByitemId.length > 0  ? true: false;
       }
+
+      onClick(){
+          const dialogRef = this.dialog.open(DishOrderComponent, {
+              width: '650px',
+              data: this.data
+            });
+        
+          dialogRef.afterClosed().subscribe(result => {
+              console.log('closed', result);
+              if (result == 'order'){
+                this.onClickEvent.emit(this.data);
+              }
+          });
+        }
+      
   }

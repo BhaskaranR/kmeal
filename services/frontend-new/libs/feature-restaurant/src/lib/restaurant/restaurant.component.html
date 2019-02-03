@@ -15,14 +15,14 @@
     </div>
 </div>
 
-<div style="padding:15px 20px 15px 20px"> <small><a style="margin-right:10px">Home</a> &#62; <b style="margin-left:10px">Indian Dinner</b></small></div>
+<div style="padding:15px 20px 15px 20px"> <small><a style="margin-right:10px" href="/home">Home</a> &#62; <b style="margin-left:10px">Indian Dinner</b></small></div>
 <mat-divider></mat-divider>
 
 <mat-tab-group *ngIf="isReady && (!!sections && sections.length !== 0)">
     <mat-tab *ngFor="let sec of book.menuBookSectionsBymenuBookId; let index = index" 
             [label]="sec.section_name">
             <br>
-            <mat-grid-list [cols]="breakpoint" rowHeight="3:2" (window:resize)="onResize($event)" >
+            <mat-grid-list [cols]="breakpoint" rowHeight="3:1.4" (window:resize)="onResize($event)" >
                     <mat-grid-tile *ngFor="let dish of sec.itemSectionsBysectionId">
                         <dish-card2 [data]="dish.itemByitemId" style="width:calc(100% - 60px); height:100%"></dish-card2>
                     </mat-grid-tile>

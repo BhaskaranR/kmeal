@@ -14,8 +14,6 @@ export class DealTimerDirective implements OnInit, OnDestroy{
         private cdr: ChangeDetectorRef){}
 
     ngOnInit(){
-        console.log(this.ele);
-        this.cdr.markForCheck();
         this.intervalSub = interval(1000).subscribe(result =>{
             let startTime = moment();
             let endTime = moment('06:00 pm 2019-01-29');
@@ -24,8 +22,6 @@ export class DealTimerDirective implements OnInit, OnDestroy{
             if (!!this.ele.nativeElement.parentNode){
                 this.ele.nativeElement.innerHTML=  actualDiff;
             }
-
-            console.log(actualDiff);
         })
     }
 
