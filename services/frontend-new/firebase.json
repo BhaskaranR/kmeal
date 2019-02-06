@@ -20,7 +20,7 @@
           ]
         }
       ],
-      "public": "dist/apps/web-kmeal-restaurant",
+      "public": "dist/apps/web-kmeal",
       "cleanUrls": true,
       "trailingSlash": false,
       "rewrites": [

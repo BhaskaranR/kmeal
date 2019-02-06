@@ -10,20 +10,21 @@ import { ScatterService } from '../services/scatter.service';
 export class LoginComponent implements OnInit {
 
     constructor(
-        public scatter: ScatterService) {
+        public scatterService: ScatterService) {
     }
 
     ngOnInit() {
-        console.log("LoginComponet.this.scatter.network: ---> ", this.scatter.network);
+      //  console.log("LoginComponet.this.scatter.network: ---> ", this.scatter.network);
     }
 
     login() {
-        this.scatter.login().then((identity) => {
-            console.log("identity", identity);
-        });
+        if(!this.scatterService.scatter) return;
+        if(!this.scatterService.scatter.identity) 
+            return this.scatterService.scatter.getIdentity({accounts:[this.scatterService.selectedNetwork]});
+        else return this.scatterService.scatter.forgetIdentity()
     }
 
     logout() {
-        this.scatter.logout();
+        this.scatterService.scatter.forgetIdentity();
     }
 }

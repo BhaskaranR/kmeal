@@ -1,5 +1,5 @@
 import { BrowserModule } from "@angular/platform-browser";
-import { NgModule } from "@angular/core";
+import { NgModule, APP_INITIALIZER } from "@angular/core";
 
 import { AppComponent } from "./app.component";
 import { NxModule } from "@nrwl/nx";
@@ -18,7 +18,11 @@ import { HttpClientModule } from "@angular/common/http";
 import { Routes, RouterModule } from "@angular/router";
 import { NavBarComponent } from "./nav/nav.component";
 import { FlexLayoutModule } from "@angular/flex-layout";
-import { ScatterModule, scatterRoutes } from '@kmeal-nx/scatter';
+import { ScatterModule, scatterRoutes, ScatterService } from '@kmeal-nx/scatter';
+
+export function init_app(scatterService: ScatterService) {
+  return () => scatterService.initScatter('Kylin');
+}
 
 @NgModule({
   declarations: [AppComponent, NavBarComponent],
@@ -59,7 +63,10 @@ import { ScatterModule, scatterRoutes } from '@kmeal-nx/scatter';
     BrowserAnimationsModule,
     LayoutModule
   ],
-  providers: [],
+  providers: [
+
+    { provide: APP_INITIALIZER, useFactory: init_app, deps: [ScatterService], multi: true },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
