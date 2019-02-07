@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
 
 @Injectable()
-export class EosioTokenMathService {
+export class TokenMathService {
     
     constructor() {}
 
     add(num1: string, num2: string) {
-        console.assert(typeof num1 == "string", "ERROR: EosioTokenMathService.add() num1 is not a string. got: ", typeof num1, num1);
-        console.assert(typeof num2 == "string", "ERROR: EosioTokenMathService.add() num2 is not a string. got: ", typeof num2, num2);
+        console.assert(typeof num1 == "string", "ERROR: TokenMathService.add() num1 is not a string. got: ", typeof num1, num1);
+        console.assert(typeof num2 == "string", "ERROR: TokenMathService.add() num2 is not a string. got: ", typeof num2, num2);
         console.assert(num1.split(" ")[1] == num2.split(" ")[1],
-            "ERROR: EosioTokenMathService.add() you can't add two values of different Token Simbol: "
+            "ERROR: TokenMathService.add() you can't add two values of different Token Simbol: "
             + num1.split(" ")[1] + " !== " + num2.split(" ")[1]);
 
         var symbol = num2.split(" ")[1];

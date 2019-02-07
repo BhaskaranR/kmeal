@@ -1,5 +1,5 @@
 <!-- TODO: figure out if the <nav> should go inside of a <header> element. -->
-<nav class="navbar-header" >
+<nav class="navbar-header">
     <a mat-button class="button" routerLink="/" aria-label="Kmeal restaurant">
         <!-- <img class="angular-logo"
             src="../../../assets/img/homepage/angular-white-transparent.svg"
@@ -8,6 +8,17 @@
     </a>
     <a mat-button class="navbar-hide-small button" *ngFor="let key of sectionKeys" [routerLink]="key">{{sections[key].name}}</a>
     <div class="flex-spacer"></div>
+
+    <button mat-button [matMenuTriggerFor]="envPicker">
+        {{scatter.selectedNetwork?.name}}
+        <mat-icon>arrow_drop_down</mat-icon>
+    </button>
+    <mat-menu #envPicker="matMenu">
+        <button mat-menu-item *ngFor="let env of scatter.networks" (click)="onenvChanged(env)">
+                {{env.name}} 
+        </button>
+    </mat-menu>
+
 
     <a mat-icon-button class="button navbar-hide-small" routerLink="/profile" *ngIf="!scatter.logged">LOGIN</a>
     <div class="button navbar-show-small" *ngIf="scatter.logged">
