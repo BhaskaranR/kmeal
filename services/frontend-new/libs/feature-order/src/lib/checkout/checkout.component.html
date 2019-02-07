@@ -1,134 +1,165 @@
 <br>
 <br>
 <h1 style="text-align: center; margin-bottom:60px"><i>Express Checkout</i></h1>
-<div style="width:60%;margin: 0 auto">
-    <mat-vertical-stepper labelPosition="bottom" #stepper >
-        <mat-step [stepControl]="paymentForm" label="Choose your payment method">
-            <form [formGroup]="paymentForm">
-                <mat-form-field appearance="fill" style="width:100%">
-                    <mat-label>Payment Method</mat-label>
-                    <mat-select placeholder="Payment Method"  name="paymentMethod" formControlName="paymentMethod" required>
-                        <mat-option value="0">New Credit Card</mat-option>
-                        <mat-option value="1"><mat-icon>credit_card</mat-icon> card  ***9819 </mat-option>
-                        <mat-option value="2">EOS Token</mat-option>
-                    </mat-select>
-                </mat-form-field>
-        
-                <br>
-                <div *ngIf="paymentForm.controls.paymentMethod.value == 0" style="width:100%;overflow: hidden">
-                    <mat-form-field appearance="fill" style="width:100%">
-                        <mat-label>Card Type</mat-label>
-                        <mat-select placeholder="Card Type" required name="cardType" formControlName="cardType">
-                            <mat-option value="visa">Visa</mat-option>
-                            <mat-option value="masterCard">MasterCard</mat-option>
-                        </mat-select>
-                    </mat-form-field>
-    
-                    <mat-form-field appearance="fill" style="width:100%">
-                        <mat-label>Card Number</mat-label>
-                            <input matInput placeholder="Card Number" required name="cardNumber" formControlName="cardNumber">
-                        <span matPrefix><mat-icon>credit_card</mat-icon></span>
-                    </mat-form-field>
-    
-                    <div>
-                        <div style="display: inline-block;width:65%;">
-                            <mat-form-field appearance="fill" style="width:100%" >
-                                <mat-label>Exp. Date</mat-label>
-                                <input matInput placeholder="MM/YY" required name="expDate" formControlName="expDate">
-                                <mat-error *ngIf="paymentForm.controls.expDate.invalid">Exp Date is invalid</mat-error>
-                            </mat-form-field>
-                        </div>
-                        <div style="display: inline-block;width:35%;">
-                            <mat-form-field appearance="fill" style="width:100%" >
-                                <mat-label>CVV</mat-label>
-                                <input matInput placeholder="123" required name="cvv" formControlName="cvv">
-                                <mat-error *ngIf="paymentForm.controls.cvv.invalid">CVV is invalid</mat-error>
-                            </mat-form-field>
-                        </div>
-                    </div>
-    
-                    <mat-form-field appearance="fill" style="width:100%">
-                        <mat-label>Country</mat-label>
-                        <mat-select required placeholder="Card Type" require name="country" formControlName="country">
-                            <mat-option value="usa">United States</mat-option>
-                            <mat-option value="india">India</mat-option>
-                        </mat-select>
-                    </mat-form-field>
-    
-                    <mat-form-field appearance="fill" style="width:100%">
-                        <mat-label>Zip Code</mat-label>
-                        <input matInput placeholder="Zip Code" required name="zipcode" formControlName="zipcode">
-                    </mat-form-field>
-                        
-                        
-                    <div>
-                        <div style="display: inline-block;width:50%;">
-                                <mat-form-field appearance="fill" style="width:100%">
-                                    <mat-label>First Name</mat-label>
-                                    <input matInput placeholder="First Name" required name="firstName" formControlName="firstName">
-                                </mat-form-field>
-                        </div>
-                        <div style="display: inline-block;width:50%;">
-                            <mat-form-field appearance="fill" style="width:100%">
-                                <mat-label>Last Name</mat-label>
-                                <input matInput placeholder="Last Name" required name="lastName" formControlName="lastName">
-                            </mat-form-field>
-                        </div>
-                    </div>
-                    <mat-checkbox style="margin-left:15px" name="saved" formControlName="saved">Save this card</mat-checkbox>
-                </div>
-                <br>
-                <div>
-                    <button mat-button matStepperNext>Next</button>
-                </div>
-            </form>
-        </mat-step>
-        <mat-step [stepControl]="orderForm" label="Place Your Orders">
-            <form [formGroup]="orderForm">
-                <mat-card class="mat-card-flat">
-                    <mat-card-content>
-                        <div style="display: inline-block;width:80px">
-                            <img style="width:100%" src="https://www.foxrc.com/wp-content/themes/frc/static/images/plate1.png" alt="">
-                        </div>
-                        <div style="display: inline-block;width:calc(60% - 80px)">
-                            <h6 >Chicken Curry</h6>
-                            <p>Extra Chicken, medium spicy</p>
-                        </div>
-                        <div style="display: inline-block;width:calc(40% - 80px)">
-                                <div style="padding:10px 10px; border:1px solid lightgray; border-radius:5px">
-                                    <div style="display: inline-block; width:20%">+</div>
-                                    <div style="display: inline-block; width:60%; text-align: center">1</div>
-                                    <div style="display: inline-block;width:20%; text-align: right">-</div>
+<div fxLayout="row" fxLayout.sm="column" fxLayout.xs="column">
+    <div fxFlex="20%" fxFlex.sm="0" fxFlex.xs="0"></div>
+    <div fxFlex="60%" fxFlex.sm="100%" fxFlex.sm="100%">
+        <div>
+            <mat-vertical-stepper labelPosition="bottom" #stepper >
+                <mat-step [stepControl]="paymentForm" label="Choose your payment method">
+                    <br>
+                    <form [formGroup]="orderForm">
+                        <mat-card class="mat-card-flat">
+                            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
+                                <div fxFlex="80px">
+                                    <img style="width:100%" src="https://www.foxrc.com/wp-content/themes/frc/static/images/plate1.png" alt="">
                                 </div>
+                                <div fxFlex="65%">
+                                    <h6 style="margin-top:15px">Chicken Curry</h6>
+                                    <mat-card-subtitle>Extra Chicken, medium spicy</mat-card-subtitle>
+                                </div>
+                                <div fxFlex="20%">
+                                    <div style="padding:10px 10px; border:1px solid lightgray; border-radius:5px">
+                                        <div style="display: inline-block; width:20%">+</div>
+                                        <div style="display: inline-block; width:60%; text-align: center">1</div>
+                                        <div style="display: inline-block;width:20%; text-align: right">-</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
+                                    <div fxFlex="80px">
+                                        <img style="width:100%" src="https://www.foxrc.com/wp-content/themes/frc/static/images/plate1.png" alt="">
+                                    </div>
+                                    <div fxFlex="65%">
+                                        <h6 style="margin-top:15px">Chicken Curry</h6>
+                                        <mat-card-subtitle>Extra Chicken, medium spicy</mat-card-subtitle>
+                                    </div>
+                                    <div fxFlex="20%">
+                                        <div style="padding:10px 10px; border:1px solid lightgray; border-radius:5px">
+                                            <div style="display: inline-block; width:20%">+</div>
+                                            <div style="display: inline-block; width:60%; text-align: center">1</div>
+                                            <div style="display: inline-block;width:20%; text-align: right">-</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <br>
+                            <mat-divider></mat-divider>
+                            <br>
+                            <div fxLayout="column" fxLayoutGap="5px">
+                                <div>
+                                    <div style="display: inline-block; width:50%">Subtotal</div>
+                                    <div style="display: inline-block; width:50%; text-align: right">$98.00</div>
+                                </div>
+                                <div>
+                                    <div style="display: inline-block; width:50%">tax</div>
+                                    <div style="display: inline-block; width:50%; text-align: right">$98.00</div>
+                                </div>
+                                <div >
+                                    <div style="display: inline-block; width:50%">Total</div>
+                                    <div style="display: inline-block; width:50%; text-align: right">$98.00</div>
+                                </div>
+                            </div>
+                        </mat-card>
+                        <div>
+                            <button style="width:100%" mat-flat-button color="warn" matStepperNext>Place Orders</button>
                         </div>
-                    </mat-card-content>
-                    <div fxLayout="row">
-                        <div fxFlex="50%">Subtotal</div>
-                        <div fxFlex="50%" style="text-align: right">$98.00</div>
+                    </form>
+                </mat-step>
+                <mat-step [stepControl]="orderForm" label="Place Your Orders">
+                    <br>
+                    <form [formGroup]="paymentForm">
+                            <mat-form-field appearance="fill" style="width:100%">
+                                <mat-label>Payment Method</mat-label>
+                                <mat-select placeholder="Payment Method"  name="paymentMethod" formControlName="paymentMethod" required>
+                                    <mat-option value="0">New Credit Card</mat-option>
+                                    <mat-option value="1"><mat-icon>credit_card</mat-icon> card  ***9819 </mat-option>
+                                    <mat-option value="2">EOS Token</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                    
+                            <br>
+                            <div *ngIf="paymentForm.controls.paymentMethod.value == 0" style="width:100%;overflow: hidden">
+                                <mat-form-field appearance="fill" style="width:100%">
+                                    <mat-label>Card Type</mat-label>
+                                    <mat-select placeholder="Card Type" required name="cardType" formControlName="cardType">
+                                        <mat-option value="visa">Visa</mat-option>
+                                        <mat-option value="masterCard">MasterCard</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                
+                                <mat-form-field appearance="fill" style="width:100%">
+                                    <mat-label>Card Number</mat-label>
+                                        <input matInput placeholder="Card Number" required name="cardNumber" formControlName="cardNumber">
+                                    <span matPrefix><mat-icon>credit_card</mat-icon></span>
+                                </mat-form-field>
+                
+                                <div>
+                                    <div style="display: inline-block;width:65%;">
+                                        <mat-form-field appearance="fill" style="width:100%" >
+                                            <mat-label>Exp. Date</mat-label>
+                                            <input matInput placeholder="MM/YY" required name="expDate" formControlName="expDate">
+                                            <mat-error *ngIf="paymentForm.controls.expDate.invalid">Exp Date is invalid</mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                    <div style="display: inline-block;width:35%;">
+                                        <mat-form-field appearance="fill" style="width:100%" >
+                                            <mat-label>CVV</mat-label>
+                                            <input matInput placeholder="123" required name="cvv" formControlName="cvv">
+                                            <mat-error *ngIf="paymentForm.controls.cvv.invalid">CVV is invalid</mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                
+                                <mat-form-field appearance="fill" style="width:100%">
+                                    <mat-label>Country</mat-label>
+                                    <mat-select required placeholder="Card Type" require name="country" formControlName="country">
+                                        <mat-option value="usa">United States</mat-option>
+                                        <mat-option value="india">India</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                
+                                <mat-form-field appearance="fill" style="width:100%">
+                                    <mat-label>Zip Code</mat-label>
+                                    <input matInput placeholder="Zip Code" required name="zipcode" formControlName="zipcode">
+                                </mat-form-field>
+                                    
+                                    
+                                <div>
+                                    <div style="display: inline-block;width:50%;">
+                                            <mat-form-field appearance="fill" style="width:100%">
+                                                <mat-label>First Name</mat-label>
+                                                <input matInput placeholder="First Name" required name="firstName" formControlName="firstName">
+                                            </mat-form-field>
+                                    </div>
+                                    <div style="display: inline-block;width:50%;">
+                                        <mat-form-field appearance="fill" style="width:100%">
+                                            <mat-label>Last Name</mat-label>
+                                            <input matInput placeholder="Last Name" required name="lastName" formControlName="lastName">
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <mat-checkbox style="margin-left:15px" name="saved" formControlName="saved">Save this card</mat-checkbox>
+                            </div>
+                            <br>
+                            <div>
+                                <button mat-flat-button color="warn" matStepperNext>Submit</button>
+                            </div>
+                        </form>
+                </mat-step>
+                <mat-step label="Check Your Confirmation">
+                    <ng-template matStepLabel>Confirmation Email</ng-template>
+                    Wait for an confirmation email from your restaurant.
+                    <div>
+                        <button mat-button matStepperPrevious>Back</button>
                     </div>
-                    <div fxLayout="row">
-                        <div fxFlex="50%">tax</div>
-                        <div fxFlex="50%" style="text-align: right">$98.00</div>
-                    </div>
-                    <div fxLayout="row">
-                        <div fxFlex="50%">Total</div>
-                        <div fxFlex="50%" style="text-align: right">$98.00</div>
-                    </div>
-                </mat-card>
-                <div>
-                        <button mat-button matStepperNext>Next</button>
-                    </div>
-            </form>
-        </mat-step>
-        <mat-step label="Check Your Confirmation">
-            <ng-template matStepLabel>Done</ng-template>
-            You are now done.
-            <div>
-                <button mat-button matStepperPrevious>Back</button>
-            </div>
-        </mat-step>
-    </mat-vertical-stepper>
+                </mat-step>
+            </mat-vertical-stepper>
+        </div>
+    </div>
+    <div fxFlex="20%" fxFlex.sm="0" fxFlex.xs="0"></div>
 </div>
+
 
 
 
