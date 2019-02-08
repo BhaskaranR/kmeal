@@ -10,20 +10,28 @@
     <div class="flex-spacer"></div>
 
     <button mat-button [matMenuTriggerFor]="envPicker">
-        {{scatter.selectedNetwork?.name}}
+        {{scatterService.selectedNetwork?.name}}
         <mat-icon>arrow_drop_down</mat-icon>
     </button>
-    <mat-menu #envPicker="matMenu">
-        <button mat-menu-item *ngFor="let env of scatter.networks" (click)="onenvChanged(env)">
-                {{env.name}} 
+     <mat-menu #envPicker="matMenu">
+        <button mat-menu-item *ngFor="let env of scatterService.networks" (click)="onenvChanged(env)">
+            {{env.name}}
         </button>
     </mat-menu>
 
+    <figure class="action scatter" *ngIf="scatterService.scatter && scatterService.scatter.identity" >
+        <span class="name">{{scatterService.scatter.identity.accountName}}</span>
+        <span class="balance">{{scatterService.scatter.identity.balance}}</span>
+    </figure>
 
-    <a mat-icon-button class="button navbar-hide-small" routerLink="/profile" *ngIf="!scatter.logged">LOGIN</a>
+    <figure class="action scatter" *ngIf="scatterService.scatter && !scatterService.scatter.identity" (click)="login()">
+        <span>Login</span>
+    </figure>
+
+    <!-- <a mat-icon-button class="button navbar-hide-small" routerLink="/profile" *ngIf="!scatter.logged">LOGIN</a>
     <div class="button navbar-show-small" *ngIf="scatter.logged">
         <mat-icon [matMenuTriggerFor]="menu" style="margin-top:5px">person</mat-icon>
-    </div>
+    </div> -->
 </nav>
 <nav class="navbar navbar-show-small">
     <a mat-button class="navbar-link" *ngFor="let key of sectionKeys" [routerLink]="key">{{sections[key].name}}</a>
