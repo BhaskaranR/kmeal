@@ -2,37 +2,80 @@
     <mat-tab label="Current Orders"> 
         <br>
         <mat-card style="width:80%; margin-right:auto;margin-left:auto" class="mat-card-flat" (click) =" isDetailOpen = !isDetailOpen" [class.mat-elevation-z2]="isActive" (mouseenter) ="isActive = true"  (mouseleave) ="isActive = false">
-            <div feLayout="row" fxLayoutAlign="start center">
-                <div fxFlex="33.33%">
+            <div feLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+                <div fxFlex="80px">
                     Meal #1
                 </div>
-                <div fxFlex="33.33%">
-                    Some Description
+                <div fxFlex="80px">
+                    <img style="width:100%" src="https://www.foxrc.com/wp-content/themes/frc/static/images/plate1.png" alt="">
                 </div>
-                <div fxFlex="33.33%">
+                <div fxFlex="55%">
+                    Indian Dinner
+                    <mat-card-subtitle>some description</mat-card-subtitle>
+                    <a href=""><small>Detail</small></a>
+                </div>
+                <div fxFlex="15%" style="text-align: right">
                     $32.11
                 </div>
             </div>
 
             <div *ngIf="isDetailOpen">
-                <p>18:10:30 : Order Confirmed</p>
-                <p>20:30:30 : Order is ready to pick up</p>
+                <br>
+                <mat-card-subtitle style="margin-bottom: 10px">18:10:30 : Order Confirmed</mat-card-subtitle>
+                <mat-card-subtitle>20:30:30 : Order is ready to pick up</mat-card-subtitle>
             </div>
         </mat-card>
+        <br>
+        <mat-card style="width:80%; margin-right:auto;margin-left:auto" class="mat-card-flat" (click) =" isDetailOpen = !isDetailOpen" [class.mat-elevation-z2]="isActive" (mouseenter) ="isActive = true"  (mouseleave) ="isActive = false">
+                <div feLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+                    <div fxFlex="80px">
+                        Meal #1
+                    </div>
+                    <div fxFlex="80px">
+                        <img style="width:100%" src="https://www.foxrc.com/wp-content/themes/frc/static/images/plate1.png" alt="">
+                    </div>
+                    <div fxFlex="55%">
+                        Indian Dinner
+                        <mat-card-subtitle>some description</mat-card-subtitle>
+                        <a href=""><small>Detail</small></a>
+                    </div>
+                    <div fxFlex="15%" style="text-align: right">
+                        $32.11
+                    </div>
+                </div>
+    
+                <div *ngIf="isDetailOpen">
+                    <br>
+                    <mat-card-subtitle style="margin-bottom: 10px">18:10:30 : Order Confirmed</mat-card-subtitle>
+                    <mat-card-subtitle>20:30:30 : Order is ready to pick up</mat-card-subtitle>
+                </div>
+            </mat-card>
     </mat-tab>
     <mat-tab label="Previous Orders"> 
-        <mat-card style="width:80%; margin-left:auto; margin-right: auto">
-            <div fxLayout="row">
-                <div fxFlex="40px">
-                    <img src="" alt=" img">
-                </div>
-                <div fxFlex="70%">
-                    Indian Dinner
-                </div>
-                <div fxFlex="20%">
-                    <a href="">Details</a>
-                </div>
-            </div>
-        </mat-card>   
+        <br>
+            <mat-card style="width:80%; margin-right:auto;margin-left:auto" class="mat-card-flat" (click) =" isDetailOpen = !isDetailOpen" [class.mat-elevation-z2]="isActive" (mouseenter) ="isActive = true"  (mouseleave) ="isActive = false">
+                    <div feLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+                        <div fxFlex="80px">
+                            Meal #1
+                        </div>
+                        <div fxFlex="80px">
+                            <img style="width:100%" src="https://www.foxrc.com/wp-content/themes/frc/static/images/plate1.png" alt="">
+                        </div>
+                        <div fxFlex="55%">
+                            Indian Dinner
+                            <mat-card-subtitle>some description</mat-card-subtitle>
+                            <a href=""><small>Detail</small></a>
+                        </div>
+                        <div fxFlex="15%" style="text-align: right">
+                            $32.11
+                        </div>
+                    </div>
+        
+                    <div *ngIf="isDetailOpen">
+                        <br>
+                        <mat-card-subtitle style="margin-bottom: 10px">18:10:30 : Order Confirmed</mat-card-subtitle>
+                        <mat-card-subtitle>20:30:30 : Order is ready to pick up</mat-card-subtitle>
+                    </div>
+                </mat-card>  
     </mat-tab>
 </mat-tab-group>
