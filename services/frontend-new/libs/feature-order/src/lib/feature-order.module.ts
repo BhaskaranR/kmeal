@@ -6,9 +6,11 @@ import { CheckoutComponent } from './checkout/checkout.component';
 import { FeatureCoreModule } from '@kmeal-nx/feature-core';
 import { UiModule } from '@kmeal-nx/ui';
 import { ReactiveFormsModule } from '@angular/forms';
+import { OrderHistoryClientComponent } from './order-history-client/order-history.component';
+import {MatTreeModule} from '@angular/material';
 
 @NgModule({
-  imports: [CommonModule, FeatureCoreModule, UiModule, ReactiveFormsModule],
-  declarations: [CartComponent, OrderHistoryComponent, CheckoutComponent]
+  imports: [CommonModule, FeatureCoreModule, UiModule, ReactiveFormsModule, MatTreeModule],
+  declarations: [CartComponent, OrderHistoryComponent, CheckoutComponent, OrderHistoryClientComponent]
 })
 export class FeatureOrderModule {}

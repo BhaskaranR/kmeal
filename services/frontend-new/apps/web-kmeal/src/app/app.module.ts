@@ -15,6 +15,7 @@ import {featureRestaurantRoutes, FeatureRestaurantModule} from '@kmeal-nx/featur
 import { ErrorComponent } from './error.component';
 import { FeatureOrderModule } from '@kmeal-nx/feature-order';
 import { CheckoutComponent } from 'libs/feature-order/src/lib/checkout/checkout.component';
+import { OrderHistoryClientComponent } from 'libs/feature-order/src/lib/order-history-client/order-history.component';
 
 @NgModule({
   declarations: [AppComponent, ErrorComponent],
@@ -51,6 +52,10 @@ import { CheckoutComponent } from 'libs/feature-order/src/lib/checkout/checkout.
         {
           path: 'checkout', 
           component:CheckoutComponent
+        },
+        {
+          path: 'orders', 
+          component:OrderHistoryClientComponent
         },
         {
           path: '**', 
