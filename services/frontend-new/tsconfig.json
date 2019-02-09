@@ -50,6 +50,9 @@
       "@kmeal-nx/feature-restaurant-menu": [
         "libs/feature-restaurant-menu/src/index.ts"
       ],
+      "@kmeal-nx/feature-restaurant-profile": [
+        "libs/feature-restaurant-profile/src/index.ts"
+      ],
       "@kmeal-nx/feature-restaurant": [
         "libs/feature-restaurant/src/index.ts"
       ],

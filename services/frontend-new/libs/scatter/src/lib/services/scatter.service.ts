@@ -51,12 +51,9 @@ const success = (msg) => ({ type: RETURN_TYPES.SUCCESS, msg });
 @Injectable()
 export class ScatterService {
 
-
-
     selectedNetwork: Network;
     balance: '0.0000 KMEAL';
     networks: Network[] = [];
-    identity = null;
 
     scatter: ScatterJS;
     constructor(private http: HttpClient) {
@@ -130,6 +127,21 @@ export class ScatterService {
             console.log(e);
         }
     }
+
+    get identity(){
+        if(!this.scatter) return null;
+        return this.scatter.identity;
+    };
+
+    get account(){
+        if(!this.scatter || !this.scatter.identity) return;
+        return this.scatter.identity.accounts[0];
+    };
+    
+    get accountName(){
+        if(!this.account) return;
+        return this.account.name;
+    };
 
     async watchBalance() {
         const timeout = () => balanceTimeout = setTimeout(() => this.watchBalance(), 60000);

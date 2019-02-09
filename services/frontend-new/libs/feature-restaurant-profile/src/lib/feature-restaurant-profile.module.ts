@@ -9,4 +9,4 @@ import { ScatterModule } from '@kmeal-nx/scatter';
   declarations: [ProfileComponent],
   providers:[AccountService]
 })
-export class FeatureProfileModule {}
+export class FeatureRestaurantProfileModule {}
