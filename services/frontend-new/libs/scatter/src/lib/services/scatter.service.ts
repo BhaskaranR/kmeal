@@ -2,13 +2,13 @@ import { Injectable } from '@angular/core';
 import ScatterJS from 'scatterjs-core';
 import ScatterEOS from 'scatterjs-plugin-eosjs'
 import { Network } from 'scatterjs-core';
-import Eos from 'eosjs';
-console.log(Eos);
-import { HttpClient } from '@angular/common/http';
-import { BigNumber } from 'bignumber.js';
+import * as Eos from 'eosjs';
+
 let eos, reader, contract, balanceTimeout;
 
-export const code = 'kmeal';
+import { HttpClient } from '@angular/common/http';
+import { BigNumber } from 'bignumber.js';
+export const code = 'kmealadmin13';
 
 export const RETURN_TYPES = {
     ERROR: 0,
@@ -50,6 +50,7 @@ const success = (msg) => ({ type: RETURN_TYPES.SUCCESS, msg });
 
 @Injectable()
 export class ScatterService {
+
     selectedNetwork: Network;
     balance: '0.0000 KMEAL';
     networks: Network[] = [];
@@ -58,17 +59,23 @@ export class ScatterService {
     constructor(private http: HttpClient) {
     }
 
-    initScatter(network: string) {
-        this.loadNetworks(network);
+    async initScatter(network: string) {
+        await this.loadNetworks(network);
         ScatterJS.plugins(new ScatterEOS());
-        ScatterJS.connect('kmeal').then((connected: any) => {
-            this.scatter = ScatterJS;
-            if (!connected) {
-                window["scatter"] = null;
-                return;
-            }
-        })
+        const connected = await ScatterJS.scatter.connect('kmeal')
+        if (!connected) {
+            window["scatter"] = null;
+            return;
+        }
+
+        this.scatter = ScatterJS.scatter;
+        return await this.setSignatureProvider();
     }
+
+    setEos = () => {
+        reader = Eos({ httpEndpoint: this.selectedNetwork.fullhost(), chainId: this.selectedNetwork.chainId });
+        eos = Eos({ httpEndpoint: this.selectedNetwork.fullhost(), chainId: this.selectedNetwork.chainId });
+    };
 
     checkLogin = (resolve, cb) => {
         if (!this.scatter.identity) return resolve(errorMessage('Please log in with Scatter first.'));
@@ -77,33 +84,64 @@ export class ScatterService {
         cb(account, opts);
     };
 
-    // setEos = () => {
-    //     reader = Eos({ httpEndpoint: this.selectedNetwork.fullhost(), chainId: this.selectedNetwork.chainId });
-    //     eos = Eos({ httpEndpoint: this.selectedNetwork.fullhost(), chainId: this.selectedNetwork.chainId });
-    // }
 
     loadNetworks(network: string) {
-        this.http.get<any>("assets/endpoints.json").toPromise().then(async (networks) => {
-            this.networks = networks.map((n: any) => Network.fromJson(n))
-            await this.setNetwork(network);
+        return new Promise((resolve, reject) => {
+            this.http.get<any>("assets/endpoints.json").toPromise().then(async (networks) => {
+                this.networks = networks.map((n: any) => Network.fromJson(n))
+                this.setNetwork(network);
+                resolve();
+            }).catch((e) => reject(e));
         });
     }
 
-    async setNetwork(network) {
+    setNetwork(network) {
         this.selectedNetwork = this.networks.filter(n => n.name == network)[0];
-        //this.setEos();
-        await this.setSignatureProvider();
+        this.setEos();
+    }
+
+    async loginorlogout() {
+        if (!this.scatter) return;
+        if (!this.scatter.identity) {
+            const identity = await this.scatter.getIdentity({ accounts: [this.selectedNetwork] });
+            return await this.setSignatureProvider();
+        }
+        else {
+            this.scatter.forgetIdentity()
+            return await this.setSignatureProvider();
+        }
     }
 
     async setSignatureProvider() {
-        if (!this.scatter || !this.scatter.identity) {
-          //  this.setEos();
-            contract = null;
-            return false;
+        try {
+            if (!this.scatter || !this.scatter.identity) {
+                this.setEos();
+                contract = null;
+                return false;
+            }
+            eos = this.scatter.eos(this.selectedNetwork, Eos);
+            contract = await eos.contract(code, {requiredFields:{}});
+
         }
-        eos = this.scatter.eos(this.selectedNetwork, Eos);
-        contract = await eos.contract(code);
+        catch (e) {
+            console.log(e);
+        }
     }
+
+    get identity(){
+        if(!this.scatter) return null;
+        return this.scatter.identity;
+    };
+
+    get account(){
+        if(!this.scatter || !this.scatter.identity) return;
+        return this.scatter.identity.accounts[0];
+    };
+    
+    get accountName(){
+        if(!this.account) return;
+        return this.account.name;
+    };
 
     async watchBalance() {
         const timeout = () => balanceTimeout = setTimeout(() => this.watchBalance(), 60000);

@@ -18,7 +18,7 @@ import { HttpClientModule } from "@angular/common/http";
 import { Routes, RouterModule } from "@angular/router";
 import { NavBarComponent } from "./nav/nav.component";
 import { FlexLayoutModule } from "@angular/flex-layout";
-import { ScatterModule, scatterRoutes, ScatterService } from '@kmeal-nx/scatter';
+import { ScatterModule, ScatterService } from '@kmeal-nx/scatter';
 
 export function init_app(scatterService: ScatterService) {
   return () => scatterService.initScatter('Kylin');
@@ -51,12 +51,13 @@ export function init_app(scatterService: ScatterService) {
           path: "dashboard",
           loadChildren: "@kmeal-nx/feature-restaurant-dashboard#FeatureRestaurantDashboardModule"
         },
+        {
+          path: "profile",
+          loadChildren: "@kmeal-nx/feature-restaurant-profile#FeatureRestaurantProfileModule"
+        },
         { path: "orders", loadChildren: "@kmeal-nx/feature-restaurant-orders#FeatureRestaurantOrdersModule" },
         { path: 'menus', loadChildren: '@kmeal-nx/feature-restaurant-menu#FeatureRestaurantMenuModule' },
-        {
-          path: 'profile',
-          children: scatterRoutes
-        },
+      
       ],
       { paramsInheritanceStrategy: "always" }
     ),

@@ -19,15 +19,7 @@
         fxLayoutAlign="end center" 
         fxLayoutGap="20px"
         fxLayoutGap.xs="0px">
-        <small><a routerLink="/profile" *ngIf="!scatter.logged">LOGIN</a></small>
-        <div *ngIf="scatter.logged">
-            <!-- <mat-icon [matMenuTriggerFor]="menu" [routerLink]="/profile/account" style="margin-top:5px">person</mat-icon> -->
-            <!-- <mat-menu #menu="matMenu">
-                    <button mat-menu-item routerLink="/profile">Profile</button>
-                    <button mat-menu-item>Settings</button>
-                    <button mat-menu-item>Log Out</button>
-                </mat-menu> -->
-        </div>
+        
         <button mat-icon-button routerLink="/checkout" ><mat-icon>shopping_cart</mat-icon></button>
     </div>
 

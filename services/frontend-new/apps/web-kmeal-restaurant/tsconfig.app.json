@@ -13,6 +13,8 @@
   
     , "../../libs/feature-restaurant-orders/src/index.ts"
 
+    , "../../libs/feature-restaurant-profile/src/index.ts"
+
     , "../../libs/feature-restaurant-dashboard/src/index.ts"
 
     , "../../libs/feature-restaurant-menu/src/index.ts"

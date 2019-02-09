@@ -547,6 +547,34 @@
                 }
             }
         },
+        "feature-restaurant-profile": {
+            "root": "libs/feature-restaurant-profile",
+            "sourceRoot": "libs/feature-restaurant-profile/src",
+            "projectType": "library",
+            "prefix": "kmeal-nx",
+            "architect": {
+                "test": {
+                    "builder": "@angular-devkit/build-angular:karma",
+                    "options": {
+                        "main": "libs/feature-restaurant-profile/src/test.ts",
+                        "tsConfig": "libs/feature-restaurant-profile/tsconfig.spec.json",
+                        "karmaConfig": "libs/feature-restaurant-profile/karma.conf.js"
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "tsConfig": [
+                            "libs/feature-restaurant-profile/tsconfig.lib.json",
+                            "libs/feature-restaurant-profile/tsconfig.spec.json"
+                        ],
+                        "exclude": [
+                            "**/node_modules/**"
+                        ]
+                    }
+                }
+            }
+        },
         "feature-restaurant": {
             "root": "libs/feature-restaurant",
             "sourceRoot": "libs/feature-restaurant/src",
