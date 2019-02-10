@@ -8,7 +8,8 @@ import { MenuSidenavComponent } from './sidenav/sidenav.component';
 import { HomeComponent } from './home/home.component';
 import { WalletComponent } from './wallet/wallet.component';
 import { SendComponent } from './send/send.component';
-import { MatSidenavModule, MatListModule, MatCardModule, MatIconModule } from '@angular/material';
+import { MatSidenavModule, MatListModule, MatCardModule, MatIconModule, MatFormFieldModule, MatButtonModule, MatInputModule, MatRadioModule, MatSelectModule } from '@angular/material';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 export const profileRoutes: Routes = [
@@ -25,6 +26,13 @@ export const profileRoutes: Routes = [
 
 @NgModule({
   imports: [CommonModule, ScatterModule,
+    ReactiveFormsModule,
+    FormsModule,
+    MatFormFieldModule,
+    MatButtonModule,
+    MatInputModule,
+    MatRadioModule,
+    MatSelectModule,
     MatListModule,
     MatIconModule,
     MatCardModule,

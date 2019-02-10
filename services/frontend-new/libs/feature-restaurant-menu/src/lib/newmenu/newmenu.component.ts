@@ -130,7 +130,6 @@ export class NewmenuComponent {
         }
       }],
       "on_conflict": {
-        "action": ConflictAction.Update,
         "constraint": KmealItemConstraint.ItemPkey,
         "update_columns": [
           KmealItemUpdateColumn.ItemName

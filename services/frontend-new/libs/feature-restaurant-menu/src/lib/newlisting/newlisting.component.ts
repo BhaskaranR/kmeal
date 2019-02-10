@@ -151,7 +151,6 @@ export class NewlistingComponent implements OnInit {
           "isrecurring": valArr[2].isrecurring
         }],
       "on_conflict": {
-        "action": ConflictAction.Update,
         "constraint": KmealListingConstraint.ListingPkey,
         "update_columns": [
           KmealListingUpdateColumn.ListPrice,

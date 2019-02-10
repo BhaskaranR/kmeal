@@ -92,7 +92,6 @@ export class NewsectionComponent {
     const variables: insKmealMenuBookSection.Variables = {
       objects: objects,
       "on_conflict": {
-        "action": ConflictAction.Update,
         "constraint": KmealMenuBookSectionConstraint.MenuBookSectionPkey,
         "update_columns": [KmealMenuBookSectionUpdateColumn.SortOrder]
       }
@@ -123,7 +122,6 @@ export class NewsectionComponent {
         sort_order: this.selectedMenuBook.menuBookSectionsBymenuBookId.length + 1
       }],
       "on_conflict": {
-        "action": ConflictAction.Update,
         "constraint": KmealMenuBookSectionConstraint.MenuBookSectionPkey,
         "update_columns": [KmealMenuBookSectionUpdateColumn.SectionName]
       }

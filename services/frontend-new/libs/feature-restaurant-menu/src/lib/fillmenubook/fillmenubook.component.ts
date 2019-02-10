@@ -132,7 +132,6 @@ export class FillmenubookComponent implements OnInit {
     const variables: insItemSection.Variables = {
       objects: objects,
       "on_conflict": {
-        "action": ConflictAction.Update,
         "constraint": KmealItemSectionConstraint.ItemSectionPkey,
         "update_columns": [KmealItemSectionUpdateColumn.SortOrder]
       }
