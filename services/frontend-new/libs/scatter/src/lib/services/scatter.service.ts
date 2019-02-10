@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import ScatterJS from 'scatterjs-core';
-import ScatterEOS from 'scatterjs-plugin-eosjs'
+import ScatterEOS from 'scatterjs-plugin-eosjs';
+import ScatterLynx from 'scatterjs-plugin-lynx';
 import { Network } from 'scatterjs-core';
 import * as Eos from 'eosjs';
 
@@ -61,7 +62,7 @@ export class ScatterService {
 
     async initScatter(network: string) {
         await this.loadNetworks(network);
-        ScatterJS.plugins(new ScatterEOS());
+        ScatterJS.plugins(new ScatterEOS(), new ScatterLynx());
         const connected = await ScatterJS.scatter.connect('kmeal')
         if (!connected) {
             window["scatter"] = null;
