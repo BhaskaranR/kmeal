@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AccountService } from '../services/account.service';
 
 @Component({
-  selector: 'kmeal-nx-profile',
+  selector: 'kmeal-nx-restaurant-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss']
 })
