@@ -6287,7 +6287,7 @@ export namespace DeleteKmealMenuBook {
   };
 }
 
-export namespace DeleteKmealMenuBookSection {
+export namespace DeleteMenuSection {
   export type Variables = {
     where: KmealMenuBookSectionBoolExp;
   };
@@ -6734,12 +6734,9 @@ export class DeleteKmealMenuBookGQL extends Apollo.Mutation<DeleteKmealMenuBook.
 @Injectable({
   providedIn: "root"
 })
-export class DeleteKmealMenuBookSectionGQL extends Apollo.Mutation<
-  DeleteKmealMenuBookSection.Mutation,
-  DeleteKmealMenuBookSection.Variables
-> {
+export class DeleteMenuSectionGQL extends Apollo.Mutation<DeleteMenuSection.Mutation, DeleteMenuSection.Variables> {
   document: any = gql`
-    mutation delete_kmeal_menu_book_section($where: kmeal_menu_book_section_bool_exp!) {
+    mutation delete_menu_section($where: kmeal_menu_book_section_bool_exp!) {
       delete_kmeal_menu_book_section(where: $where) {
         returning {
           section_id

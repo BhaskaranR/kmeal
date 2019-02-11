@@ -2,29 +2,18 @@ import { Component } from "@angular/core";
 import { CdkDragDrop, moveItemInArray, CdkDrag } from '@angular/cdk/drag-drop';
 import {
   KmealMenuBookGQL, KmealMenuBook as kmb,
-  InsertKmealMenuBook as insKmealMenuBook,
-  InsertKmealMenuBookGQL,
-  UpdateKmealMenuBook as updKmealMenuBook,
-  UpdateKmealMenuBookGQL,
-  DeleteKmealMenuBook as delKmealMenuBook,
-  DeleteKmealMenuBookGQL,
   InsertKmealMenuBookSection as insKmealMenuBookSection,
   InsertKmealMenuBookSectionGQL,
-  UpdateKmealMenuBookSection as updKmealMenuBookSection,
-  UpdateKmealMenuBookSectionGQL,
-  DeleteKmealMenuBookSection as delKmealMenuBookSection,
-  DeleteKmealItemGQL,
-  ConflictAction,
-  KmealMenuBookConstraint,
-  KmealMenuBookUpdateColumn,
   KmealMenuBookSectionConstraint,
+  KmealMenuBookSectionUpdateColumn,
+  DeleteMenuSection, 
+  DeleteMenuSectionGQL
 } from '../generated/graphql';
 
 import { pluck, map } from "rxjs/operators";
 import { FormBuilder, Validators } from "@angular/forms";
-import { InsertKmealMenuBookSection, UpdateKmealMenuBookSection } from '../generated/graphql';
 import { MatSnackBar } from "@angular/material";
-import { KmealMenuBookSectionUpdateColumn } from '../../../../feature-profile/src/lib/generated/graphql';
+import { ScatterService } from "@kmeal-nx/scatter";
 
 @Component({
   selector: "kmeal-nx-newsection",
@@ -46,12 +35,9 @@ export class NewsectionComponent {
 
   
   constructor(private kmealMenuBookGQL: KmealMenuBookGQL,
-    private insertKmealMenuBookGQL: InsertKmealMenuBookGQL,
-    private updateKmealMenuBookGQL: UpdateKmealMenuBookGQL,
-    private deleteKmealMenuBookGQL: DeleteKmealMenuBookGQL,
     private insertKmealMenuBookSectionGQL: InsertKmealMenuBookSectionGQL,
-    private updateKmealMenuBookSectionGQL: UpdateKmealMenuBookSectionGQL,
-    private deleteKmealMenuBookSectionGQL: DeleteKmealItemGQL,
+    private deleteMenuSectionGQL: DeleteMenuSectionGQL,
+    private scatterService: ScatterService,
     public snackBar: MatSnackBar,
     private fb: FormBuilder) {
   }
@@ -60,7 +46,7 @@ export class NewsectionComponent {
     const variables = {
       "where": {
         "restaurant_id": {
-          "_eq": 1
+          "_eq": this.scatterService.restaurant_id
         }
       }
     };
@@ -133,21 +119,15 @@ export class NewsectionComponent {
   }
 
 
-  // onSelectionChange(ev) {
-  //   this.selectedMenuBook = ev;
-  //   this.sections = this.selectedMenuBook.menuBookSectionsBymenuBookId;
-  // }
-
-
   deleteMenuSection(ev) {
-    const variables: delKmealMenuBookSection.Variables = {
+    const variables: DeleteMenuSection.Variables = {
       "where": {
         "section_id": {
           "_eq": ev.section_id
         }
       }
     }
-    this.deleteKmealMenuBookSectionGQL.mutate(variables).pipe(pluck('data', 'delete_kmeal_menu_book_section', 'returning')).subscribe((mb: string[]) => {
+    this.deleteMenuSectionGQL.mutate(variables).pipe(pluck('data', 'delete_kmeal_menu_book_section', 'returning')).subscribe((mb: string[]) => {
       if (mb.length == 0) {
         this.openSnackBar("not deleted, make sure you don't have menu items associated with this section", "");
       }

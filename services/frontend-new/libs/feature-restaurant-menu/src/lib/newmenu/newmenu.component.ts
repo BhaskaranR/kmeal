@@ -8,6 +8,7 @@ import {
   KmealItemUpdateColumn
 } from '../generated/graphql';
 import { pluck } from 'rxjs/operators';
+import { ScatterService } from "@kmeal-nx/scatter";
 
 @Component({
   selector: "kmeal-nx-newmenu",
@@ -46,6 +47,7 @@ export class NewmenuComponent {
 
   constructor(private fb: FormBuilder,
     private insertKmealItemGQL: InsertKmealItemGQL,
+    private scatterService: ScatterService,
     private kmealMenuBookGQL: KmealMenuBookGQL) { }
 
   get itemName() {
@@ -78,7 +80,7 @@ export class NewmenuComponent {
     const variables = {
       "where": {
         "restaurant_id": {
-          "_eq": 1
+          "_eq": this.scatterService.restaurant_id
         }
       }
     };
@@ -119,7 +121,7 @@ export class NewmenuComponent {
         //item_id: ,
         "item_name": this.menuForm.get("itemName").value,
         "photo": this.menuForm.get("photo").value ==  null ? 'na':  this.menuForm.get("photo").value  ,
-        "restaurant_id": 1,
+        "restaurant_id": this.scatterService.restaurant_id,
         "sort_order":  1,
         "spicy_level": this.menuForm.get("spicy_level").value,
         "vegetarian": this.menuForm.get("vegetarian").value,

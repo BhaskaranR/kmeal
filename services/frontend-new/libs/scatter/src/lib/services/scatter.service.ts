@@ -51,7 +51,7 @@ const success = (msg) => ({ type: RETURN_TYPES.SUCCESS, msg });
 
 @Injectable()
 export class ScatterService {
-
+    restaurant_id = 1;
     selectedNetwork: Network;
     balance: '0.0000 KMEAL';
     networks: Network[] = [];

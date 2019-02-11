@@ -10,6 +10,7 @@ import {
 import { pluck } from 'rxjs/operators';
 import { MatStepper, MatButtonToggleChange, MatSnackBar } from '@angular/material';
 import { InsertKmealListing } from '../generated/graphql';
+import { ScatterService } from '@kmeal-nx/scatter';
 
 @Component({
   selector: 'kmeal-nx-newlisting',
@@ -78,6 +79,7 @@ export class NewlistingComponent implements OnInit {
   constructor(private fb: FormBuilder,
     private kmealMenuBookItemsSectionGQL: KmealBookSectionItemsGQL,
     public snackBar: MatSnackBar,
+    private scatterService: ScatterService,
     private insertKmealListingGQL: InsertKmealListingGQL
   ) { }
 
@@ -89,7 +91,7 @@ export class NewlistingComponent implements OnInit {
     const variables = {
       "where": {
         "restaurant_id": {
-          "_eq": 1
+          "_eq": this.scatterService.restaurant_id
         }
       }
     };
@@ -138,7 +140,7 @@ export class NewlistingComponent implements OnInit {
         {
           "item_id": valArr[1].item_id,
           "list_price": valArr[2].list_price,
-          "restaurant_id": 1,
+          "restaurant_id": this.scatterService.restaurant_id,
           "list_type": valArr[2].list_type,
           "min_price": valArr[2].min_price,
           "sliding_rate": valArr[2].sliding_rate,
