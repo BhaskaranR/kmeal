@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import ScatterJS from 'scatterjs-core';
-import ScatterEOS from 'scatterjs-plugin-eosjs'
+import ScatterEOS from 'scatterjs-plugin-eosjs';
+import ScatterLynx from 'scatterjs-plugin-lynx';
 import { Network } from 'scatterjs-core';
 import * as Eos from 'eosjs';
 
@@ -50,7 +51,7 @@ const success = (msg) => ({ type: RETURN_TYPES.SUCCESS, msg });
 
 @Injectable()
 export class ScatterService {
-
+    restaurant_id = 1;
     selectedNetwork: Network;
     balance: '0.0000 KMEAL';
     networks: Network[] = [];
@@ -61,7 +62,7 @@ export class ScatterService {
 
     async initScatter(network: string) {
         await this.loadNetworks(network);
-        ScatterJS.plugins(new ScatterEOS());
+        ScatterJS.plugins(new ScatterEOS(), new ScatterLynx());
         const connected = await ScatterJS.scatter.connect('kmeal')
         if (!connected) {
             window["scatter"] = null;

@@ -24,7 +24,7 @@
            {{scatterService.accountName}}
         </button>
         <mat-menu #account="matMenu">
-            <button mat-menu-item>
+            <button mat-menu-item (click)="logout()">
                 View Account
             </button>
             <button mat-menu-item (click)="logout()">

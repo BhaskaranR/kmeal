@@ -1,0 +1,79 @@
+<div>wallet works!</div>
+<!-- <div class="container-fluid" style="height: 100%; overflow:hidden;">
+    <div class="clr-row flex-items-xs-between" style="height: 100%;">
+        <ng-container *ngIf="aService.selected.getValue().name">
+            <div class="clr-col-md-10 text-center flex-column animate" style="padding: 39px;">
+                <div class="balance" style="color: #b0b0b7">
+                    BALANCE
+                    <ng-container *ngIf="aService.activeChain.name === 'EOS MAINNET'">
+                        ${{fullBalance * aService.usd_rate | number: '1.2-2'}}
+                    </ng-container>
+                </div>
+                <div class="eos">{{fullBalance | number: '1.2-4'}} {{aService.activeChain['symbol']}}</div>
+                <div class="infos">
+                    <span style="padding-right: 15px">
+                        <fa-icon [icon]="['far', 'lock']"></fa-icon>&nbsp;Staked {{staked | number: '1.0-4'}}
+                        {{aService.activeChain['symbol']}}
+                    </span>
+                    |
+                    <span style="padding-left: 15px">
+                        <fa-icon [icon]="['far', 'lock-open']"></fa-icon>&nbsp;Unstaked {{unstaked | number: '1.0-4'}}
+                        {{aService.activeChain['symbol']}}
+                    </span>
+                </div>
+            </div>
+        </ng-container>
+
+        <div class="clr-col-md-2 tokens-panel">
+            <div class="clr-row flex-items-xs-between tokens-panel-header" style="padding-bottom: 10px;">
+                <div class="clr-col-12">
+                    <h3 class="gray">All tokens</h3>
+                    <ng-container *ngIf="aService.totalAssetsSum !== 0">
+                        <div *ngIf="aService.activeChain.name === 'EOS MAINNET'" style="font-size: 16px;">Total:
+                            ${{ (aService.totalAssetsSum) + (fullBalance * aService.usd_rate) | number:
+                            '1.2-2'}}
+                        </div>
+                        <div *ngIf="aService.activeChain.name !== 'EOS MAINNET'" style="font-size: 16px;">Total:
+                            {{ fullBalance | number: '1.2-2'}}
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+            <div class="clr-row" style="height: 100%; opacity: 0.85" *ngIf="aService.loading">
+                <div class="clr-col-lg-12 text-center flex-column animate" style="padding: 39px; align-items: center;">
+                    <ng-container>
+
+                        <fa-layers class="mt-2 mb-1">
+                            <fa-icon [icon]="['far', 'spinner']" [spin]="true" size="2x" style="color:#0094d2;"></fa-icon>
+                        </fa-layers>
+                        <br>
+
+                        <div style="color:#0094d2; padding-left: 17px; font-size: 18px; margin-top: 10px">LOADING...
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+            <div class="tokens-panel-body">
+                <ul>
+                    <li class="tokens-pad">
+                        <h5 class="gray mt-0">{{aService.activeChain['symbol']}}</h5>
+                        <div style="color: #2e7db2;">{{fullBalance}}</div>
+                        <span *ngIf="aService.usd_rate !== null && aService.activeChain.name === 'EOS MAINNET'" style="color: #696969">
+                            ${{(fullBalance * aService.usd_rate) | number:'1.2-2'}} @{{aService.usd_rate | number:
+                            '1.2-2'}}
+                        </span>
+                    </li>
+                    <li *ngFor="let token of aService.tokens" class="tokens-pad">
+                        <h5 class="gray mt-0" pTooltip="Contract: {{token.contract}}">{{token.name}}</h5>
+                        <div style="color: #2e7db2;">{{token.balance}}</div>
+                        <ng-container *ngIf="token.balance">
+                            <span *ngIf="token.price !== null" style="color: #696969">
+                                ${{(token.balance * token.price) | number:'1.2-2'}} @{{token.price | number: '1.2-2'}}
+                            </span>
+                        </ng-container>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div> -->

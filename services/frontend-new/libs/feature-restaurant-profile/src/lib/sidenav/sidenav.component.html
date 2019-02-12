@@ -1,0 +1,26 @@
+<mat-sidenav-container class="sidenav-container">
+    <mat-sidenav #drawer class="sidenav" fixedInViewport="true" [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+        [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="!(isHandset$ | async)">
+        <div class="leftSidenavContent">
+            <mat-nav-list>
+                <mat-list-item routerLink="profile">
+                    <mat-icon mat-list-icon>person</mat-icon>
+                    <p mat-line> Profile</p>
+                </mat-list-item>
+                <mat-list-item routerLink="wallet">
+                    <mat-icon mat-list-icon>account_balance_wallet</mat-icon>
+                    <p mat-line> Wallet </p>
+                </mat-list-item>
+                <mat-list-item routerLink="send">
+                    <mat-icon mat-list-icon>send</mat-icon>
+                    <p mat-line> Send </p>
+                </mat-list-item>
+            </mat-nav-list>
+        </div>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <div class="main-content">
+            <router-outlet></router-outlet>
+        </div>
+    </mat-sidenav-content>
+</mat-sidenav-container>
