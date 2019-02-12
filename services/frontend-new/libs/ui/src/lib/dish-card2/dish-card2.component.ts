@@ -20,13 +20,15 @@ import { DishOrderComponent } from '../dish-order/dish-order.component';
       isDynamic:boolean = true;
       defaultPhoto:string = 'https://www.kensfoodservice.com/img/fall-flavors/plate-with-salad.png';
       isActive:boolean = false;
+      price:number = 0;
       @Input() data:any;
       @Output() onClickEvent = new EventEmitter<any>();
       constructor(public dialog: MatDialog){}
 
       ngOnInit(){
         console.log(this.data, this.data.listingsByitemId);
-        this.isDynamic = this.data.listingsByitemId.length > 0  ? true: false;
+        this.isDynamic = this.data.listingsByitemId.length > 0  && this.data.listingsByitemId[0].list_type == 'd' ? true : false;
+        this.price = this.data.listingsByitemId[0].list_price.toFixed(2);
       }
 
       onClick(){
@@ -41,6 +43,5 @@ import { DishOrderComponent } from '../dish-order/dish-order.component';
                 this.onClickEvent.emit(this.data);
               }
           });
-        }
-      
+        }   
   }

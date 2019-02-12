@@ -44,11 +44,13 @@ export class ResComponent implements OnInit, OnDestroy{
     }
 
     ngOnInit(){
+        console.log('init restuanrats')
         this.breakpoint = this.generateBreakpoint(window.innerWidth);
         this.routeParamSub =  this.route
-        .queryParams
-        .pipe(pluck('params','id'))
+        .params
+        .pipe(pluck('id'))
         .subscribe(params => {
+            console.log(params);
             this.loadRestaurantDetails(this.getQuery(params,true));
         })
     }

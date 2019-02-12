@@ -13,7 +13,7 @@
                     <div fxFlex="60%" style="text-align:right"><small>Deal ends in <span [dealTimer]="'6:00 pm 2019-02-06'">time</span> <mat-icon style="font-size:12px">help_outline</mat-icon></small></div>
                 </div>
             </mat-card-content>
-            $14.99
+            {{price}}
         </div>
     </div>
 </mat-card>
@@ -25,9 +25,8 @@
         </div>
         <div fxFlex="70%">
             <h6>{{data.item_name}}</h6>
-            <mat-card-subtitle>{{data.description}}</mat-card-subtitle>
-            <div style="height:40px"></div>
-            $14.88
+            <mat-card-subtitle style="height:85px;overflow-y: hidden">{{data.description}}</mat-card-subtitle>
+            $ {{price}}
         </div>
     </div>
 </mat-card>

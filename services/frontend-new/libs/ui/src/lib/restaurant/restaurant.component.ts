@@ -23,7 +23,7 @@ export class RestaurantComponent implements OnInit {
   constructor() {}
 
   ngOnInit(){
-    console.log(this.res);
+
   }
 
   onRestaurantDetails(e) {
