@@ -115,6 +115,8 @@ export class NewsectionComponent {
     this.insertKmealMenuBookSectionGQL.mutate(variables).pipe(pluck('data', 'insert_kmeal_menu_book_section', 'returning')).subscribe((ms:
       insKmealMenuBookSection.InsertKmealMenuBookSection) => {
         this.selectedMenuBook.menuBookSectionsBymenuBookId.push(<any>ms[0])
+    }, (err) => {
+      this.openSnackBar("error in creating new section", '');
     });
   }
 

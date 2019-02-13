@@ -1,9 +1,36 @@
+.restaurant-details{
+  height:150px;
+  background-color: rgb(207, 102, 70); 
+  padding:25px; 
+  color:white;
+}
+
+
+.grid-container {
+  margin: 20px;
+}
+
+.dashboard-card {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  right: 15px;
+  bottom: 15px;
+}
+
+.more-button {
+  position: absolute;
+  top: 13px;
+  right: 10px;
+}
+
+
 .full-width {
   width: 100%;
 }
 
 .shipping-card {
-  min-width: 120px;
+  width: 600px;
   margin: 20px auto;
 }
 

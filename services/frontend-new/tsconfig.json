@@ -17,6 +17,7 @@
     ],
     "baseUrl": ".",
     "paths": {
+      "*": ["types/*"],
       "@kmeal-env/*": ["apps/web-kmeal/src/environments/*"],
       "@kmeal-restaurant-env/*": ["apps/web-kmeal-restaurant/src/environments/*"],
       "@env-api/environment": ["apps/api/src/environments/environment.ts"],

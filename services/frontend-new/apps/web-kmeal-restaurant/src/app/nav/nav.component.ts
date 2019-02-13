@@ -3,6 +3,7 @@ import { ScatterService } from "@kmeal-nx/scatter";
 import { SECTIONS, PROFILESECTION } from '../menu-items/menu-items';
 
 import { Network } from "scatterjs-core";
+import { Router, ActivatedRoute } from '@angular/router';
 
 const SECTIONS_KEYS = Object.keys(SECTIONS);
 
@@ -29,6 +30,8 @@ export class NavBarComponent implements OnInit {
   }
 
   constructor(
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
     public scatterService: ScatterService) { }
 
   ngOnInit() {
@@ -56,8 +59,11 @@ export class NavBarComponent implements OnInit {
     this._sectionKeys =[...this._sectionKeys, ...Object.keys(PROFILESECTION)]
   }
 
-  logout() {
-    this.scatterService.loginorlogout();
+  async logout() {
+    await this.scatterService.loginorlogout();
     this._sectionKeys.pop();
+    this.router.navigate([''])
+    
+    // this.router.goto
   }
 }

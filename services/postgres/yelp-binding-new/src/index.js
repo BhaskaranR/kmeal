@@ -39,7 +39,7 @@ const zipcodes = [
 ];
 
 
-const apiKey = process.env.YELP_API_KEY || 'PfsnzwxVpNLNj9T1YR6wsaO9BEqFUZts8NUW0DsDr1f_qjnCvi09qm6tJGf-8_pv9IqfGLp-0YOtfk0OmnLguQuNjutMMBvvXNrlxiREeUhNz7kEnV4s6XZJ9YYZXHYx';
+const apiKey = process.env.YELP_API_KEY || 'PfsnzwxVpNLNj9T1YR6wsaO9BEqFUZts8NUW0DsDr1f_qjnCvi09qm6tJGf-8_pv9IqfGLp-SPX7wo4D0seAWmLzmHmte9enzEjxPTrcVu2f14v9ZRuYm3bf4x6wgAoM0QRutiUmyBwjHhVaQYeZlJH05sPQLhdLJoJvyk4OYg_gfTGrt7L6vamyRXFou3UvcDxiXHYx';
 const yelp = new Yelp(apiKey);
 
 const typeDefs = importSchema('schemas/app.graphql');

@@ -8,8 +8,9 @@ import { MenuSidenavComponent } from './sidenav/sidenav.component';
 import { HomeComponent } from './home/home.component';
 import { WalletComponent } from './wallet/wallet.component';
 import { SendComponent } from './send/send.component';
-import { MatSidenavModule, MatListModule, MatCardModule, MatIconModule, MatFormFieldModule, MatButtonModule, MatInputModule, MatRadioModule, MatSelectModule } from '@angular/material';
+import { MatSidenavModule, MatListModule, MatCardModule, MatIconModule, MatFormFieldModule, MatButtonModule, MatInputModule, MatRadioModule, MatSelectModule, MatGridListModule, MatMenuModule } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 
 export const profileRoutes: Routes = [
@@ -27,6 +28,8 @@ export const profileRoutes: Routes = [
 @NgModule({
   imports: [CommonModule, ScatterModule,
     ReactiveFormsModule,
+    MatGridListModule,
+    MatIconModule,
     FormsModule,
     MatFormFieldModule,
     MatButtonModule,
@@ -36,8 +39,10 @@ export const profileRoutes: Routes = [
     MatListModule,
     MatIconModule,
     MatCardModule,
-  MatSidenavModule,
-  RouterModule.forChild(profileRoutes)],
+    MatMenuModule,
+    MatSidenavModule,
+    FlexLayoutModule,
+    RouterModule.forChild(profileRoutes)],
   declarations: [MenuSidenavComponent, ProfileComponent, WalletComponent, HomeComponent, SendComponent],
   providers: [AccountService]
 })
