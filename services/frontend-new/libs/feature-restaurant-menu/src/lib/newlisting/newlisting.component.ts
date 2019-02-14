@@ -28,7 +28,7 @@ export class NewlistingComponent implements OnInit {
   pricetype = 'Regular';
   @ViewChild('linearVerticalStepper') stepper: MatStepper;
   selectedMenuBook: kmb.KmealMenuBook;
-  selectedSection: kmb.ItemSectionsBysectionId;
+  selectedSection: any;
   priceHeader = "Enter pricing information";
 
   /** Returns a FormArray with the name 'formArray'. */
@@ -63,7 +63,7 @@ export class NewlistingComponent implements OnInit {
   });
 
   side = {
-    "item_id": [null, Validators.required],
+    "item_name": [null, Validators.required],
     "list_price": [null]
   };
 
@@ -79,7 +79,7 @@ export class NewlistingComponent implements OnInit {
 
   createItemGroup() {
     const itemGroup = (<FormArray>this.pricingForm.get("formArray")).controls[3] as FormGroup;
-    const groups = itemGroup.get("side_groups") as FormArray ;
+    const groups = itemGroup.get("side_groups") as FormArray;
     groups.push(this.fb.group({
       "max_selection": [null, Validators.required],
       "group": [null, Validators.required],
@@ -90,73 +90,73 @@ export class NewlistingComponent implements OnInit {
 
   createItemSide(indx) {
     const itemGroup = (<FormArray>this.pricingForm.get("formArray")).controls[3] as FormGroup;
-    const groups = itemGroup.get("side_groups") as FormArray ;
+    const groups = itemGroup.get("side_groups") as FormArray;
     const item = groups.controls[indx] as FormGroup;
     (<FormArray>item.get("sides")).push(this.fb.group(this.side))
   }
 
   deleteItemGroup(index) {
     const itemGroup = (<FormArray>this.pricingForm.get("formArray")).controls[3] as FormGroup;
-    const groups = itemGroup.get("side_groups") as FormArray ;
+    const groups = itemGroup.get("side_groups") as FormArray;
     groups.removeAt(index);
   }
 
   deleteItemSide(grpIndx, indx) {
     const itemGroup = (<FormArray>this.pricingForm.get("formArray")).controls[3] as FormGroup;
-    const groups = itemGroup.get("side_groups") as FormArray ;
+    const groups = itemGroup.get("side_groups") as FormArray;
     const item = groups[grpIndx] as FormGroup;
     (<FormArray>item.get("sides")).removeAt(indx);
   }
 
-  filteredStates: Observable<any[]>;
+  // filteredStates: Observable<any[]>;
 
-  states: any[] = [
-    {
-      name: 'Arkansas',
-      population: '2.978M',
-      // https://commons.wikimedia.org/wiki/File:Flag_of_Arkansas.svg
-      flag: 'https://upload.wikimedia.org/wikipedia/commons/9/9d/Flag_of_Arkansas.svg'
-    },
-    {
-      name: 'California',
-      population: '39.14M',
-      // https://commons.wikimedia.org/wiki/File:Flag_of_California.svg
-      flag: 'https://upload.wikimedia.org/wikipedia/commons/0/01/Flag_of_California.svg'
-    },
-    {
-      name: 'Florida',
-      population: '20.27M',
-      // https://commons.wikimedia.org/wiki/File:Flag_of_Florida.svg
-      flag: 'https://upload.wikimedia.org/wikipedia/commons/f/f7/Flag_of_Florida.svg'
-    },
-    {
-      name: 'Texas',
-      population: '27.47M',
-      // https://commons.wikimedia.org/wiki/File:Flag_of_Texas.svg
-      flag: 'https://upload.wikimedia.org/wikipedia/commons/f/f7/Flag_of_Texas.svg'
-    }
-  ];
-  stateCtrl = new FormControl();
+  // states: any[] = [
+  //   {
+  //     name: 'Arkansas',
+  //     population: '2.978M',
+  //     // https://commons.wikimedia.org/wiki/File:Flag_of_Arkansas.svg
+  //     flag: 'https://upload.wikimedia.org/wikipedia/commons/9/9d/Flag_of_Arkansas.svg'
+  //   },
+  //   {
+  //     name: 'California',
+  //     population: '39.14M',
+  //     // https://commons.wikimedia.org/wiki/File:Flag_of_California.svg
+  //     flag: 'https://upload.wikimedia.org/wikipedia/commons/0/01/Flag_of_California.svg'
+  //   },
+  //   {
+  //     name: 'Florida',
+  //     population: '20.27M',
+  //     // https://commons.wikimedia.org/wiki/File:Flag_of_Florida.svg
+  //     flag: 'https://upload.wikimedia.org/wikipedia/commons/f/f7/Flag_of_Florida.svg'
+  //   },
+  //   {
+  //     name: 'Texas',
+  //     population: '27.47M',
+  //     // https://commons.wikimedia.org/wiki/File:Flag_of_Texas.svg
+  //     flag: 'https://upload.wikimedia.org/wikipedia/commons/f/f7/Flag_of_Texas.svg'
+  //   }
+  // ];
+  // stateCtrl = new FormControl();
 
-  
+
   constructor(private fb: FormBuilder,
     private kmealMenuBookItemsSectionGQL: KmealBookSectionItemsGQL,
     public snackBar: MatSnackBar,
     private scatterService: ScatterService,
     private insertKmealListingGQL: InsertKmealListingGQL
   ) {
-    this.filteredStates = this.stateCtrl.valueChanges
-    .pipe(
-      startWith(''),
-      map(state => state ? this._filterStates(state) : this.states.slice())
-    );
-   }
-
-   private _filterStates(value: string) {
-    const filterValue = value.toLowerCase();
-
-    return this.states.filter(state => state.name.toLowerCase().indexOf(filterValue) === 0);
+    // this.filteredStates = this.stateCtrl.valueChanges
+    // .pipe(
+    //   startWith(''),
+    //   map(state => state ? this._filterStates(state) : this.states.slice())
+    // );
   }
+
+  //  private _filterStates(value: string) {
+  //   const filterValue = value.toLowerCase();
+
+  //   return this.states.filter(state => state.name.toLowerCase().indexOf(filterValue) === 0);
+  // }
 
   formatLabel(value: number | null) {
     return value + "%";
@@ -187,7 +187,7 @@ export class NewlistingComponent implements OnInit {
     this.stepper.next();
   }
 
-  priceSet(evt){
+  priceSet(evt) {
     this.stepper.next();
     evt.preventDefault();
   }
@@ -214,6 +214,8 @@ export class NewlistingComponent implements OnInit {
       return;
     }
     const valArr = this.pricingForm.value.formArray;
+    
+
     const variables: insKmealListing.Variables = {
       "objects": [
         {
@@ -247,15 +249,19 @@ export class NewlistingComponent implements OnInit {
       }
     }
     if (valArr.length == 4) {
-      const data = valArr[3].map((val) => {
-        return {
-          "group": val.group,
-          "list_price": val.list_price,
-          "max_selection": val.max_selection
-        }
-      })
-      variables.objects["listingItemSidessBylistingId"] = {
-        "data": data
+      const itemSides =[];
+       (<any[]>valArr[3].side_groups).forEach((grp) => {
+         grp.sides.forEach((side: { item_name: string; list_price: number; }) => 
+            itemSides.push({
+              "item_name": side.item_name,
+              "group": grp.group,
+              "list_price": side.list_price,
+              "max_selection": grp.max_selection
+            })
+        );
+      });
+      variables.objects[0]["listingItemSidessBylistingId"] = {
+        "data": itemSides
       }
     }
     this.insertKmealListingGQL.mutate(variables).pipe(pluck('data', 'insert_kmeal_listing', 'returning')).subscribe((items: insKmealListing.Returning[]) => {

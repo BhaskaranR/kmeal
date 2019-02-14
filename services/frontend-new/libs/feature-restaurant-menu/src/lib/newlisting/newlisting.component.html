@@ -11,7 +11,6 @@
             <div class="col">
               <mat-form-field class="full-width">
                 <mat-label>Select menu book</mat-label>
-
                 <mat-select [(value)]="selectedMenuBook" formControlName="book_id">
                   <mat-option *ngFor="let item of menubooks" [value]="item">
                     {{ item.menu_book }}
@@ -183,22 +182,24 @@
                 <mat-card-content>
                   <div class="row">
                     <div class="col">
-                      <mat-form-field class="full-width">
+                      <mat-form-field class="half-width">
                         <input matInput placeholder="Group name" required="true" formControlName="group">
                         <mat-error *ngIf="grp.controls['group'].hasError('required')">
                           Group name is <strong>required</strong>
                         </mat-error>
                       </mat-form-field>
                     </div>
+                  </div>
+                  <div class="row">
                     <div class="col">
-                        <mat-form-field class="full-width">
-                          <mat-label>Max Selection</mat-label>
-                          <input matInput type="number" required="true" formControlName="max_selection">
-                          <mat-error *ngIf="grp.controls['max_selection'].hasError('required')">
-                              Max selection is <strong>required</strong>
-                          </mat-error>
-                        </mat-form-field>
-                      </div>
+                      <mat-form-field class="half-width">
+                        <mat-label>Max Selection</mat-label>
+                        <input matInput type="number" required="true" formControlName="max_selection">
+                        <mat-error *ngIf="grp.controls['max_selection'].hasError('required')">
+                          Max selection is <strong>required</strong>
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
                   </div>
                   <div class="row">
                     <div class="col">
@@ -213,6 +214,12 @@
                     <div class="row" [formGroupName]="j">
                       <div class="col">
                         <mat-form-field class="full-width">
+                          <input matInput placeholder="name" required="true" formControlName="item_name">
+                          <mat-error *ngIf="side.controls['item_name'].hasError('required')">
+                              name is <strong>required</strong>
+                            </mat-error>
+                        </mat-form-field>
+                        <!-- <mat-form-field class="full-width">
                           <input matInput placeholder="Select Item" required="true" aria-label="State" [matAutocomplete]="auto">
                           <mat-autocomplete #auto="matAutocomplete">
                             <mat-option *ngFor="let state of filteredStates | async" [value]="state.name">
@@ -221,12 +228,12 @@
                               <small>Population: {{state.population}}</small>
                             </mat-option>
                           </mat-autocomplete>
-                        </mat-form-field>
+                        </mat-form-field> -->
                       </div>
                       <div class="col">
                         <mat-form-field class="full-width">
                           <input matInput formControlName="list_price" type="number"
-                            ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01"  placeholder="List price">
+                            ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01" placeholder="List price">
                           <span matPrefix>$&nbsp;</span>
                         </mat-form-field>
                       </div>
@@ -245,7 +252,7 @@
           </div>
         </mat-card-content>
         <mat-card-actions>
-          <button mat-raised-button color="primary" (click)="submit">Submit</button>
+          <button mat-raised-button color="primary" type="submit">Submit</button>
           <button type="button" mat-button (click)="linearVerticalStepper.reset()">Reset</button>
         </mat-card-actions>
       </mat-card>
