@@ -70,5 +70,5 @@ CREATE TABLE IF NOT EXISTS kmeal."listing_item_sides" (
   "item_name" VARCHAR(100)  NOT NULL,
   "group" VARCHAR(50),
   "max_selection" INTEGER ,
-  "list_price" DECIMAL NOT NULL
+  "list_price" DECIMAL
 );
