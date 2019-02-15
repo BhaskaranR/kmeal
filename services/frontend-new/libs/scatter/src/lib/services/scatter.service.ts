@@ -5,10 +5,11 @@ import ScatterLynx from 'scatterjs-plugin-lynx';
 import { Network } from 'scatterjs-core';
 import * as Eos from 'eosjs';
 
-let eos, reader, contract, balanceTimeout;
+export let eos,  reader, contract, balanceTimeout;
 
 import { HttpClient } from '@angular/common/http';
-//import { BigNumber } from 'bignumber.js';
+import { BigNumber } from 'bignumber.js';
+import { EOS } from '../../scatter';
 export const code = 'kmealadmin13';
 
 export const RETURN_TYPES = {
@@ -17,26 +18,26 @@ export const RETURN_TYPES = {
 };
 
 
-const formatRow = (result, model) => {
+export const formatRow = (result, model) => {
     result.rows = result.rows.map(model.fromJson);
     return result;
 };
-const getRowsOnly = result => result.rows;
-const getFirstOnly = result => result.rows.length ? getRowsOnly(result)[0] : null;
+export const getRowsOnly = result => result.rows;
+export const getFirstOnly = result => result.rows.length ? getRowsOnly(result)[0] : null;
 
-//const read = async ({ table, index, upper_bound = null, limit = 10, model = null, scope = code, firstOnly = false, rowsOnly = false, key_type = null, index_position = null }) => {
-  //  let additions = index !== null ? { lower_bound: index, upper_bound: upper_bound ? upper_bound : new BigNumber(index).plus(limit).toString() } : {};
-  //  if (key_type) additions = Object.assign({ key_type }, additions);
-  //  if (index_position) additions = Object.assign({ index_position }, additions);
-  //  return await reader.getTableRows(Object.assign({ json: true, code, scope, table, limit }, additions)).then(result => {
-   //     if (model) result = formatRow(result, model);
-   //     if (firstOnly) return getFirstOnly(result);
-   //     if (rowsOnly) return getRowsOnly(result);
-    //    return result;
-   // });
-//};
+export const read = async ({ table, index, upper_bound = null, limit = 10, model = null, scope = code, firstOnly = false, rowsOnly = false, key_type = null, index_position = null }) => {
+   let additions = index !== null ? { lower_bound: index, upper_bound: upper_bound ? upper_bound : new BigNumber(index).plus(limit).toString() } : {};
+   if (key_type) additions = Object.assign({ key_type }, additions);
+   if (index_position) additions = Object.assign({ index_position }, additions);
+   return await reader.getTableRows(Object.assign({ json: true, code, scope, table, limit }, additions)).then(result => {
+       if (model) result = formatRow(result, model);
+       if (firstOnly) return getFirstOnly(result);
+       if (rowsOnly) return getRowsOnly(result);
+       return result;
+   });
+};
 
-const errorMessage = (err) => {
+export const errorMessage = (err) => {
     const msg = typeof err === 'string'
         ? (() => {
             const j = JSON.parse(err);
@@ -47,7 +48,7 @@ const errorMessage = (err) => {
         : err.message;
     return { type: RETURN_TYPES.ERROR, msg }
 }
-const success = (msg) => ({ type: RETURN_TYPES.SUCCESS, msg });
+export const success = (msg) => ({ type: RETURN_TYPES.SUCCESS, msg });
 
 @Injectable()
 export class ScatterService {
@@ -72,6 +73,22 @@ export class ScatterService {
         this.scatter = ScatterJS.scatter;
         return await this.setSignatureProvider();
     }
+
+    get identity(){
+        if(!this.scatter) return null;
+        return this.scatter.identity;
+    };
+
+    get account(){
+        if(!this.scatter || !this.scatter.identity) return;
+        return this.scatter.identity.accounts[0];
+    };
+    
+    get accountName(){
+        if(!this.account) return;
+        return this.account.name;
+    };
+
 
     setEos = () => {
         reader = Eos({ httpEndpoint: this.selectedNetwork.fullhost(), chainId: this.selectedNetwork.chainId });
@@ -113,6 +130,10 @@ export class ScatterService {
         }
     }
 
+    /*****************************************/
+    /**               WRITE                 **/
+    /*****************************************/
+
     async setSignatureProvider() {
         try {
             if (!this.scatter || !this.scatter.identity) {
@@ -129,20 +150,12 @@ export class ScatterService {
         }
     }
 
-    get identity(){
-        if(!this.scatter) return null;
-        return this.scatter.identity;
-    };
+ 
 
-    get account(){
-        if(!this.scatter || !this.scatter.identity) return;
-        return this.scatter.identity.accounts[0];
-    };
-    
-    get accountName(){
-        if(!this.account) return;
-        return this.account.name;
-    };
+    /*****************************************/
+    /**               READ                  **/
+    /*****************************************/
+
 
     async watchBalance() {
         const timeout = () => balanceTimeout = setTimeout(() => this.watchBalance(), 60000);

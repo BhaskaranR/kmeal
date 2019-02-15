@@ -8,7 +8,7 @@ import { MenuSidenavComponent } from './sidenav/sidenav.component';
 import { HomeComponent } from './home/home.component';
 import { WalletComponent } from './wallet/wallet.component';
 import { SendComponent } from './send/send.component';
-import { MatSidenavModule, MatListModule, MatCardModule, MatIconModule, MatFormFieldModule, MatButtonModule, MatInputModule, MatRadioModule, MatSelectModule, MatGridListModule, MatMenuModule } from '@angular/material';
+import { MatSidenavModule, MatListModule, MatCardModule, MatIconModule, MatFormFieldModule, MatButtonModule, MatInputModule, MatRadioModule, MatSelectModule, MatGridListModule, MatMenuModule, MatAutocompleteModule, MatChipsModule } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
@@ -41,6 +41,8 @@ export const profileRoutes: Routes = [
     MatCardModule,
     MatMenuModule,
     MatSidenavModule,
+    MatAutocompleteModule,
+    MatChipsModule,
     FlexLayoutModule,
     RouterModule.forChild(profileRoutes)],
   declarations: [MenuSidenavComponent, ProfileComponent, WalletComponent, HomeComponent, SendComponent],

@@ -1,7 +1,5 @@
 <div class="grid-container">
-  <h1 class="mat-h1">
-    Profile Information</h1>
-  <mat-grid-list cols="1" rowHeight="720px">
+  <mat-grid-list cols="1" rowHeight="750px">
     <mat-grid-tile>
       <mat-card class="dashboard-card">
 
@@ -40,13 +38,12 @@
 
                 <div class="row">
                   <div class="col">
-                    <mat-form-field class="full-width">
-                      <span matPrefix>+1 &nbsp;</span>
-                      <input type="tel" matInput formControlName="phone" placeholder="Phone" required>
-                      <mat-error *ngIf="addressForm.controls['phone'].hasError('required')">
-                        Phone is <strong>required</strong>
-                      </mat-error>
-                    </mat-form-field>
+                      <mat-form-field class="full-width">
+                        <textarea matInput placeholder="Description" formControlName="description"></textarea>
+                        <mat-error *ngIf="addressForm.controls['description'].hasError('required')">
+                            Description is <strong>required</strong>
+                        </mat-error>
+                      </mat-form-field>
                   </div>
                 </div>
 
@@ -111,6 +108,29 @@
                       <mat-error *ngIf="addressForm.controls['phone'].hasError('required')">
                         Phone is <strong>required</strong>
                       </mat-error>
+                    </mat-form-field>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col">
+                    <mat-form-field class="chip-list">
+                      <mat-chip-list #chipList>
+                        <mat-chip *ngFor="let fruit of fruits" [selectable]="selectable" [removable]="removable"
+                          (removed)="remove(fruit)">
+                          {{fruit}}
+                          <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                        </mat-chip>
+                        <input placeholder="Pick cuisine..." #fruitInput [formControl]="fruitCtrl"
+                          [matAutocomplete]="auto" [matChipInputFor]="chipList"
+                          [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+                          (matChipInputTokenEnd)="add($event)">
+                      </mat-chip-list>
+                      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+                        <mat-option *ngFor="let fruit of filteredFruits | async" [value]="fruit">
+                          {{fruit}}
+                        </mat-option>
+                      </mat-autocomplete>
                     </mat-form-field>
                   </div>
                 </div>

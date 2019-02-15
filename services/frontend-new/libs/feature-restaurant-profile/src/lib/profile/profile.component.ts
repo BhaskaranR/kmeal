@@ -1,8 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormBuilder, Validators, FormControl } from '@angular/forms';
-import { ScatterService } from '@kmeal-nx/scatter';
 import { PhoneValidator } from '../validators/phone.validator';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, MatAutocomplete, MatAutocompleteSelectedEvent, MatChipInputEvent } from '@angular/material';
+import { AccountService } from '../services/account.service';
+import { Observable } from 'rxjs';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { startWith, map } from 'rxjs/operators';
+
 
 @Component({
   selector: 'kmeal-nx-profile',
@@ -10,6 +14,20 @@ import { MatSnackBar } from '@angular/material';
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent {
+
+  visible = true;
+  selectable = true;
+  removable = true;
+  addOnBlur = true;
+  separatorKeysCodes: number[] = [ENTER, COMMA];
+  fruitCtrl = new FormControl();
+  filteredFruits: Observable<string[]>;
+  fruits: string[] = ['Lemon'];
+  allFruits: string[] = ['Apple', 'Lemon', 'Lime', 'Orange', 'Strawberry'];
+
+  @ViewChild('fruitInput') fruitInput: ElementRef<HTMLInputElement>;
+  @ViewChild('auto') matAutocomplete: MatAutocomplete;
+
 
   country = new FormControl('US');
 
@@ -100,16 +118,62 @@ export class ProfileComponent {
     { name: 'Wyoming', abbreviation: 'WY' }
   ];
 
-  constructor(private fb: FormBuilder, 
+  constructor(private fb: FormBuilder,
     public snackBar: MatSnackBar,
-    private scatterService: ScatterService) { 
-      
-    }
+    private acctService: AccountService) {
+    this.filteredFruits = this.fruitCtrl.valueChanges.pipe(
+      startWith(null),
+      map((fruit: string | null) => fruit ? this._filter(fruit) : this.allFruits.slice()));
+  }
 
-  onSubmit() {
+  add(event: MatChipInputEvent): void {
+    // Add fruit only when MatAutocomplete is not open
+    // To make sure this does not conflict with OptionSelected Event
+    if (!this.matAutocomplete.isOpen) {
+      const input = event.input;
+      const value = event.value;
+
+      // Add our fruit
+      if ((value || '').trim()) {
+        this.fruits.push(value.trim());
+      }
+
+      // Reset the input value
+      if (input) {
+        input.value = '';
+      }
+
+      this.fruitCtrl.setValue(null);
+    }
+  }
+
+  remove(fruit: string): void {
+    const index = this.fruits.indexOf(fruit);
+
+    if (index >= 0) {
+      this.fruits.splice(index, 1);
+    }
+  }
+
+  selected(event: MatAutocompleteSelectedEvent): void {
+    this.fruits.push(event.option.viewValue);
+    this.fruitInput.nativeElement.value = '';
+    this.fruitCtrl.setValue(null);
+  }
+
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+
+    return this.allFruits.filter(fruit => fruit.toLowerCase().indexOf(filterValue) === 0);
+  }
+
+  async onSubmit() {
     if (!this.addressForm.valid) {
       this.openSnackBar("Invalid form", "");
+      return;
     }
+    await this.acctService.signup(this.addressForm.value);
+    this.openSnackBar("Profile updated", "");
   }
 
   openSnackBar(message: string, action: string) {
