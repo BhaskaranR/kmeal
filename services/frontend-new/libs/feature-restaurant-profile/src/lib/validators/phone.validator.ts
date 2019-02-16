@@ -21,7 +21,7 @@ export class PhoneValidator {
           const phoneUtil = libphonenumber.PhoneNumberUtil.getInstance();
           const phoneNumber = '' + phoneControl.value + '';
           const region = countryControl.value;
-          const pNumber = phoneUtil.parseAndKeepRawInput(phoneNumber, region.iso);
+          const pNumber = phoneUtil.parseAndKeepRawInput(phoneNumber, 'US');
           const isValidNumber = phoneUtil.isValidNumber(pNumber);
 
           if (isValidNumber) {

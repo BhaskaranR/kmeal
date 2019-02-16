@@ -988,8 +988,6 @@ export interface KmealItemBoolExp {
 
   item_name?: VarcharComparisonExp | null;
 
-  listingItemSidessByitemId?: KmealListingItemSidesBoolExp | null;
-
   listingsByitemId?: KmealListingBoolExp | null;
 
   photo?: VarcharComparisonExp | null;
@@ -1296,9 +1294,7 @@ export interface KmealListingItemSidesBoolExp {
 
   group?: VarcharComparisonExp | null;
 
-  itemByitemId?: KmealItemBoolExp | null;
-
-  item_id?: IntegerComparisonExp | null;
+  item_name?: VarcharComparisonExp | null;
 
   list_price?: NumericComparisonExp | null;
 
@@ -1405,8 +1401,6 @@ export interface KmealItemOrderBy {
   item_id?: OrderBy | null;
 
   item_name?: OrderBy | null;
-
-  listingItemSidessByitemId_aggregate?: KmealListingItemSidesAggregateOrderBy | null;
 
   listingsByitemId_aggregate?: KmealListingAggregateOrderBy | null;
 
@@ -1593,134 +1587,6 @@ export interface KmealItemTypesVarSampOrderBy {
 /** order by variance() on columns of table "kmeal.item_types" */
 export interface KmealItemTypesVarianceOrderBy {
   item_id?: OrderBy | null;
-}
-/** order by aggregate values of table "kmeal.listing_item_sides" */
-export interface KmealListingItemSidesAggregateOrderBy {
-  avg?: KmealListingItemSidesAvgOrderBy | null;
-
-  count?: OrderBy | null;
-
-  max?: KmealListingItemSidesMaxOrderBy | null;
-
-  min?: KmealListingItemSidesMinOrderBy | null;
-
-  stddev?: KmealListingItemSidesStddevOrderBy | null;
-
-  stddev_pop?: KmealListingItemSidesStddevPopOrderBy | null;
-
-  stddev_samp?: KmealListingItemSidesStddevSampOrderBy | null;
-
-  sum?: KmealListingItemSidesSumOrderBy | null;
-
-  var_pop?: KmealListingItemSidesVarPopOrderBy | null;
-
-  var_samp?: KmealListingItemSidesVarSampOrderBy | null;
-
-  variance?: KmealListingItemSidesVarianceOrderBy | null;
-}
-/** order by avg() on columns of table "kmeal.listing_item_sides" */
-export interface KmealListingItemSidesAvgOrderBy {
-  item_id?: OrderBy | null;
-
-  list_price?: OrderBy | null;
-
-  listing_id?: OrderBy | null;
-
-  max_selection?: OrderBy | null;
-}
-/** order by max() on columns of table "kmeal.listing_item_sides" */
-export interface KmealListingItemSidesMaxOrderBy {
-  group?: OrderBy | null;
-
-  item_id?: OrderBy | null;
-
-  list_price?: OrderBy | null;
-
-  listing_id?: OrderBy | null;
-
-  max_selection?: OrderBy | null;
-}
-/** order by min() on columns of table "kmeal.listing_item_sides" */
-export interface KmealListingItemSidesMinOrderBy {
-  group?: OrderBy | null;
-
-  item_id?: OrderBy | null;
-
-  list_price?: OrderBy | null;
-
-  listing_id?: OrderBy | null;
-
-  max_selection?: OrderBy | null;
-}
-/** order by stddev() on columns of table "kmeal.listing_item_sides" */
-export interface KmealListingItemSidesStddevOrderBy {
-  item_id?: OrderBy | null;
-
-  list_price?: OrderBy | null;
-
-  listing_id?: OrderBy | null;
-
-  max_selection?: OrderBy | null;
-}
-/** order by stddev_pop() on columns of table "kmeal.listing_item_sides" */
-export interface KmealListingItemSidesStddevPopOrderBy {
-  item_id?: OrderBy | null;
-
-  list_price?: OrderBy | null;
-
-  listing_id?: OrderBy | null;
-
-  max_selection?: OrderBy | null;
-}
-/** order by stddev_samp() on columns of table "kmeal.listing_item_sides" */
-export interface KmealListingItemSidesStddevSampOrderBy {
-  item_id?: OrderBy | null;
-
-  list_price?: OrderBy | null;
-
-  listing_id?: OrderBy | null;
-
-  max_selection?: OrderBy | null;
-}
-/** order by sum() on columns of table "kmeal.listing_item_sides" */
-export interface KmealListingItemSidesSumOrderBy {
-  item_id?: OrderBy | null;
-
-  list_price?: OrderBy | null;
-
-  listing_id?: OrderBy | null;
-
-  max_selection?: OrderBy | null;
-}
-/** order by var_pop() on columns of table "kmeal.listing_item_sides" */
-export interface KmealListingItemSidesVarPopOrderBy {
-  item_id?: OrderBy | null;
-
-  list_price?: OrderBy | null;
-
-  listing_id?: OrderBy | null;
-
-  max_selection?: OrderBy | null;
-}
-/** order by var_samp() on columns of table "kmeal.listing_item_sides" */
-export interface KmealListingItemSidesVarSampOrderBy {
-  item_id?: OrderBy | null;
-
-  list_price?: OrderBy | null;
-
-  listing_id?: OrderBy | null;
-
-  max_selection?: OrderBy | null;
-}
-/** order by variance() on columns of table "kmeal.listing_item_sides" */
-export interface KmealListingItemSidesVarianceOrderBy {
-  item_id?: OrderBy | null;
-
-  list_price?: OrderBy | null;
-
-  listing_id?: OrderBy | null;
-
-  max_selection?: OrderBy | null;
 }
 /** order by aggregate values of table "kmeal.listing" */
 export interface KmealListingAggregateOrderBy {
@@ -2356,6 +2222,118 @@ export interface KmealRestaurantCategoriesVarSampOrderBy {
 export interface KmealRestaurantCategoriesVarianceOrderBy {
   restaurant_id?: OrderBy | null;
 }
+/** order by aggregate values of table "kmeal.listing_item_sides" */
+export interface KmealListingItemSidesAggregateOrderBy {
+  avg?: KmealListingItemSidesAvgOrderBy | null;
+
+  count?: OrderBy | null;
+
+  max?: KmealListingItemSidesMaxOrderBy | null;
+
+  min?: KmealListingItemSidesMinOrderBy | null;
+
+  stddev?: KmealListingItemSidesStddevOrderBy | null;
+
+  stddev_pop?: KmealListingItemSidesStddevPopOrderBy | null;
+
+  stddev_samp?: KmealListingItemSidesStddevSampOrderBy | null;
+
+  sum?: KmealListingItemSidesSumOrderBy | null;
+
+  var_pop?: KmealListingItemSidesVarPopOrderBy | null;
+
+  var_samp?: KmealListingItemSidesVarSampOrderBy | null;
+
+  variance?: KmealListingItemSidesVarianceOrderBy | null;
+}
+/** order by avg() on columns of table "kmeal.listing_item_sides" */
+export interface KmealListingItemSidesAvgOrderBy {
+  list_price?: OrderBy | null;
+
+  listing_id?: OrderBy | null;
+
+  max_selection?: OrderBy | null;
+}
+/** order by max() on columns of table "kmeal.listing_item_sides" */
+export interface KmealListingItemSidesMaxOrderBy {
+  group?: OrderBy | null;
+
+  item_name?: OrderBy | null;
+
+  list_price?: OrderBy | null;
+
+  listing_id?: OrderBy | null;
+
+  max_selection?: OrderBy | null;
+}
+/** order by min() on columns of table "kmeal.listing_item_sides" */
+export interface KmealListingItemSidesMinOrderBy {
+  group?: OrderBy | null;
+
+  item_name?: OrderBy | null;
+
+  list_price?: OrderBy | null;
+
+  listing_id?: OrderBy | null;
+
+  max_selection?: OrderBy | null;
+}
+/** order by stddev() on columns of table "kmeal.listing_item_sides" */
+export interface KmealListingItemSidesStddevOrderBy {
+  list_price?: OrderBy | null;
+
+  listing_id?: OrderBy | null;
+
+  max_selection?: OrderBy | null;
+}
+/** order by stddev_pop() on columns of table "kmeal.listing_item_sides" */
+export interface KmealListingItemSidesStddevPopOrderBy {
+  list_price?: OrderBy | null;
+
+  listing_id?: OrderBy | null;
+
+  max_selection?: OrderBy | null;
+}
+/** order by stddev_samp() on columns of table "kmeal.listing_item_sides" */
+export interface KmealListingItemSidesStddevSampOrderBy {
+  list_price?: OrderBy | null;
+
+  listing_id?: OrderBy | null;
+
+  max_selection?: OrderBy | null;
+}
+/** order by sum() on columns of table "kmeal.listing_item_sides" */
+export interface KmealListingItemSidesSumOrderBy {
+  list_price?: OrderBy | null;
+
+  listing_id?: OrderBy | null;
+
+  max_selection?: OrderBy | null;
+}
+/** order by var_pop() on columns of table "kmeal.listing_item_sides" */
+export interface KmealListingItemSidesVarPopOrderBy {
+  list_price?: OrderBy | null;
+
+  listing_id?: OrderBy | null;
+
+  max_selection?: OrderBy | null;
+}
+/** order by var_samp() on columns of table "kmeal.listing_item_sides" */
+export interface KmealListingItemSidesVarSampOrderBy {
+  list_price?: OrderBy | null;
+
+  listing_id?: OrderBy | null;
+
+  max_selection?: OrderBy | null;
+}
+/** order by variance() on columns of table "kmeal.listing_item_sides" */
+export interface KmealListingItemSidesVarianceOrderBy {
+  list_price?: OrderBy | null;
+
+  listing_id?: OrderBy | null;
+
+  max_selection?: OrderBy | null;
+}
 /** order by aggregate values of table "kmeal.order_detail" */
 export interface KmealOrderDetailAggregateOrderBy {
   avg?: KmealOrderDetailAvgOrderBy | null;
@@ -2892,9 +2870,7 @@ export interface KmealItemTypesOrderBy {
 export interface KmealListingItemSidesOrderBy {
   group?: OrderBy | null;
 
-  itemByitemId?: KmealItemOrderBy | null;
-
-  item_id?: OrderBy | null;
+  item_name?: OrderBy | null;
 
   list_price?: OrderBy | null;
 
@@ -3652,8 +3628,6 @@ export interface KmealItemInsertInput {
 
   item_name?: string | null;
 
-  listingItemSidessByitemId?: KmealListingItemSidesArrRelInsertInput | null;
-
   listingsByitemId?: KmealListingArrRelInsertInput | null;
 
   photo?: string | null;
@@ -3996,9 +3970,7 @@ export interface KmealListingItemSidesArrRelInsertInput {
 export interface KmealListingItemSidesInsertInput {
   group?: string | null;
 
-  itemByitemId?: KmealItemObjRelInsertInput | null;
-
-  item_id?: number | null;
+  item_name?: string | null;
 
   list_price?: Numeric | null;
 
@@ -4338,8 +4310,6 @@ export interface KmealListingSetInput {
 }
 /** input type for incrementing integer columne in table "kmeal.listing_item_sides" */
 export interface KmealListingItemSidesIncInput {
-  item_id?: number | null;
-
   listing_id?: number | null;
 
   max_selection?: number | null;
@@ -4348,7 +4318,7 @@ export interface KmealListingItemSidesIncInput {
 export interface KmealListingItemSidesSetInput {
   group?: string | null;
 
-  item_id?: number | null;
+  item_name?: string | null;
 
   list_price?: Numeric | null;
 
@@ -5860,7 +5830,7 @@ export enum KmealItemTypesSelectColumn {
 /** select columns of table "kmeal.listing_item_sides" */
 export enum KmealListingItemSidesSelectColumn {
   Group = "group",
-  ItemId = "item_id",
+  ItemName = "item_name",
   ListPrice = "list_price",
   ListingId = "listing_id",
   MaxSelection = "max_selection"
@@ -6232,3 +6202,56 @@ export type _Float8 = any;
 export type _Bool = any;
 
 export type _Text = any;
+
+// ====================================================
+// Documents
+// ====================================================
+
+export namespace KmealCategories {
+  export type Variables = {};
+
+  export type Query = {
+    __typename?: "Query";
+
+    kmeal_categories: KmealCategories[];
+  };
+
+  export type KmealCategories = {
+    __typename?: "kmeal_categories";
+
+    title: string;
+
+    alias: string;
+  };
+}
+
+// ====================================================
+// START: Apollo Angular template
+// ====================================================
+
+import { Injectable } from "@angular/core";
+import * as Apollo from "apollo-angular";
+
+import gql from "graphql-tag";
+
+// ====================================================
+// Apollo Services
+// ====================================================
+
+@Injectable({
+  providedIn: "root"
+})
+export class KmealCategoriesGQL extends Apollo.Query<KmealCategories.Query, KmealCategories.Variables> {
+  document: any = gql`
+    query kmeal_categories {
+      kmeal_categories {
+        title
+        alias
+      }
+    }
+  `;
+}
+
+// ====================================================
+// END: Apollo Angular template
+// ====================================================

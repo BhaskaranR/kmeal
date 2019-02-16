@@ -32,7 +32,7 @@ query kmeal_listing($menuBookWhere: kmeal_menu_book_bool_exp,
            end_date
            end_time
            listingItemSidessBylistingId {
-             item_id
+             item_name
              listing_id
              list_price
              group

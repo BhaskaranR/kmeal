@@ -7,6 +7,9 @@ import { Observable } from 'rxjs';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { startWith, map } from 'rxjs/operators';
 
+import { KmealCategoriesGQL } from '@kmeal-nx/ui';
+
+
 
 @Component({
   selector: 'kmeal-nx-profile',
@@ -20,14 +23,16 @@ export class ProfileComponent {
   removable = true;
   addOnBlur = true;
   separatorKeysCodes: number[] = [ENTER, COMMA];
-  fruitCtrl = new FormControl();
-  filteredFruits: Observable<string[]>;
-  fruits: string[] = ['Lemon'];
-  allFruits: string[] = ['Apple', 'Lemon', 'Lime', 'Orange', 'Strawberry'];
+  filteredCategories: Observable<string[]>;
+  category: string[] = [];
+  allCategories: string[] = [];
 
   @ViewChild('fruitInput') fruitInput: ElementRef<HTMLInputElement>;
   @ViewChild('auto') matAutocomplete: MatAutocomplete;
-
+  cuisinesObs: Observable<{
+    alias: string,
+    title: string
+  }[]>;
 
   country = new FormControl('US');
 
@@ -39,7 +44,7 @@ export class ProfileComponent {
   });
 
   addressForm = this.fb.group({
-    name: null,
+    name:  [null, Validators.required],
     address: [null, Validators.required],
     address2: null,
     city: [null, Validators.required],
@@ -47,11 +52,11 @@ export class ProfileComponent {
     postalCode: [null, Validators.compose([
       Validators.required, Validators.minLength(5), Validators.maxLength(5)])
     ],
-    description: [null],
+    description:  [null, Validators.required],
     phone: this.phone,
-    logo: [null, Validators.required],
+    logo: null,
     timeofoperation: [null],
-    categories: [null]
+    categories: ['',  Validators.required]
   });
 
   hasUnitNumber = false;
@@ -120,10 +125,29 @@ export class ProfileComponent {
 
   constructor(private fb: FormBuilder,
     public snackBar: MatSnackBar,
+    private categoriesGQL: KmealCategoriesGQL,
     private acctService: AccountService) {
-    this.filteredFruits = this.fruitCtrl.valueChanges.pipe(
+
+    this.cuisinesObs = this.categoriesGQL
+      .watch({})
+      .valueChanges
+      .pipe(map(result => result.data.kmeal_categories.map(ca => {
+        return {
+          alias: ca.alias,
+          title: ca.title
+        };
+      })));
+
+    const combined = this.cuisinesObs.subscribe((data1) => {
+      this.allCategories = data1.map(d => d.alias);
+      combined.unsubscribe();
+    });
+    
+    this.filteredCategories = this.addressForm.get("categories").valueChanges.pipe(
       startWith(null),
-      map((fruit: string | null) => fruit ? this._filter(fruit) : this.allFruits.slice()));
+      map((fruit: string | null) => {
+        return fruit ? this._filter(fruit) : this.allCategories.slice()
+      }));
   }
 
   add(event: MatChipInputEvent): void {
@@ -135,7 +159,7 @@ export class ProfileComponent {
 
       // Add our fruit
       if ((value || '').trim()) {
-        this.fruits.push(value.trim());
+        this.category.push(value.trim());
       }
 
       // Reset the input value
@@ -143,31 +167,34 @@ export class ProfileComponent {
         input.value = '';
       }
 
-      this.fruitCtrl.setValue(null);
+      this.addressForm.get("categories").setValue(null);
     }
   }
 
   remove(fruit: string): void {
-    const index = this.fruits.indexOf(fruit);
+    const index = this.category.indexOf(fruit);
 
     if (index >= 0) {
-      this.fruits.splice(index, 1);
+      this.category.splice(index, 1);
     }
   }
 
   selected(event: MatAutocompleteSelectedEvent): void {
-    this.fruits.push(event.option.viewValue);
+    this.category.push(event.option.viewValue);
     this.fruitInput.nativeElement.value = '';
-    this.fruitCtrl.setValue(null);
+    this.addressForm.get("categories").setValue(null);
   }
 
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
 
-    return this.allFruits.filter(fruit => fruit.toLowerCase().indexOf(filterValue) === 0);
+    return this.allCategories.filter(fruit => fruit.toLowerCase().indexOf(filterValue) === 0);
   }
 
   async onSubmit() {
+    if (this.category && this.category.length) {
+      this.addressForm.get("categories").setValue(this.category.join(","));
+    }
     if (!this.addressForm.valid) {
       this.openSnackBar("Invalid form", "");
       return;
