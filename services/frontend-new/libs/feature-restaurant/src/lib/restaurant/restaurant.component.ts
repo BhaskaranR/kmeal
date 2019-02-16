@@ -19,6 +19,7 @@ export class ResComponent implements OnInit, OnDestroy{
     mobileQuery: MediaQueryList;
     book:any;
     sections:any[];
+    restaurantInfo:any;
     routeParamSub:any;
     menu:Array<string> ;
     dishes:any[];
@@ -68,8 +69,9 @@ export class ResComponent implements OnInit, OnDestroy{
             }
             this.book = result[0];
             this.sections = this.book.menuBookSectionsBymenuBookId;
+            this.restaurantInfo = this.book.restaurantByrestaurantId;
             this.isReady = true;
-            console.log(result);
+            console.log('found restaurant',result);
         })
     }
 

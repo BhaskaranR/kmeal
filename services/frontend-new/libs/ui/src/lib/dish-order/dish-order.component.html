@@ -1,8 +1,8 @@
-<form action="">
+<form action="" *ngIf="isReady">
     <mat-card class="mat-card-flat">
         <div fxLayout="row">
             <div fxFlex=78%>
-                <h5><b>{{data.item_name}}</b></h5>
+                <h5><b>{{options.name}}</b></h5>
                 <mat-card-subtitle>$14.99</mat-card-subtitle>
             </div>
             <div fxFlex="22%">
@@ -14,7 +14,7 @@
             </div>
         </div>
         <br>
-        <div *ngFor="let spe of options.specifications; let i = index">
+        <div *ngFor="let spe of options.options; let i = index">
             <div fxLayout="row">
                 <div fxFlex="50%">
                     <h6>{{spe.name}}</h6>

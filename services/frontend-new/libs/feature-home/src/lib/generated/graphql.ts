@@ -290,7 +290,477 @@ export interface KmealAccountOrderBy {
 
   created_trx?: OrderBy | null;
 
+  dpordersBybuyer_aggregate?: KmealDporderAggregateOrderBy | null;
+
+  ordersBybuyer_aggregate?: KmealOrderAggregateOrderBy | null;
+
   owner?: OrderBy | null;
+
+  restaurantsByowner_aggregate?: KmealRestaurantAggregateOrderBy | null;
+}
+/** order by aggregate values of table "kmeal.dporder" */
+export interface KmealDporderAggregateOrderBy {
+  avg?: KmealDporderAvgOrderBy | null;
+
+  count?: OrderBy | null;
+
+  max?: KmealDporderMaxOrderBy | null;
+
+  min?: KmealDporderMinOrderBy | null;
+
+  stddev?: KmealDporderStddevOrderBy | null;
+
+  stddev_pop?: KmealDporderStddevPopOrderBy | null;
+
+  stddev_samp?: KmealDporderStddevSampOrderBy | null;
+
+  sum?: KmealDporderSumOrderBy | null;
+
+  var_pop?: KmealDporderVarPopOrderBy | null;
+
+  var_samp?: KmealDporderVarSampOrderBy | null;
+
+  variance?: KmealDporderVarianceOrderBy | null;
+}
+/** order by avg() on columns of table "kmeal.dporder" */
+export interface KmealDporderAvgOrderBy {
+  created_block?: OrderBy | null;
+
+  dporder_id?: OrderBy | null;
+
+  listing_id?: OrderBy | null;
+
+  order_id?: OrderBy | null;
+
+  restaurant_id?: OrderBy | null;
+}
+/** order by max() on columns of table "kmeal.dporder" */
+export interface KmealDporderMaxOrderBy {
+  bid_price?: OrderBy | null;
+
+  buyer?: OrderBy | null;
+
+  created_block?: OrderBy | null;
+
+  created_eosacc?: OrderBy | null;
+
+  created_trx?: OrderBy | null;
+
+  dporder_id?: OrderBy | null;
+
+  instructions?: OrderBy | null;
+
+  listing_id?: OrderBy | null;
+
+  order_id?: OrderBy | null;
+
+  restaurant_id?: OrderBy | null;
+}
+/** order by min() on columns of table "kmeal.dporder" */
+export interface KmealDporderMinOrderBy {
+  bid_price?: OrderBy | null;
+
+  buyer?: OrderBy | null;
+
+  created_block?: OrderBy | null;
+
+  created_eosacc?: OrderBy | null;
+
+  created_trx?: OrderBy | null;
+
+  dporder_id?: OrderBy | null;
+
+  instructions?: OrderBy | null;
+
+  listing_id?: OrderBy | null;
+
+  order_id?: OrderBy | null;
+
+  restaurant_id?: OrderBy | null;
+}
+/** order by stddev() on columns of table "kmeal.dporder" */
+export interface KmealDporderStddevOrderBy {
+  created_block?: OrderBy | null;
+
+  dporder_id?: OrderBy | null;
+
+  listing_id?: OrderBy | null;
+
+  order_id?: OrderBy | null;
+
+  restaurant_id?: OrderBy | null;
+}
+/** order by stddev_pop() on columns of table "kmeal.dporder" */
+export interface KmealDporderStddevPopOrderBy {
+  created_block?: OrderBy | null;
+
+  dporder_id?: OrderBy | null;
+
+  listing_id?: OrderBy | null;
+
+  order_id?: OrderBy | null;
+
+  restaurant_id?: OrderBy | null;
+}
+/** order by stddev_samp() on columns of table "kmeal.dporder" */
+export interface KmealDporderStddevSampOrderBy {
+  created_block?: OrderBy | null;
+
+  dporder_id?: OrderBy | null;
+
+  listing_id?: OrderBy | null;
+
+  order_id?: OrderBy | null;
+
+  restaurant_id?: OrderBy | null;
+}
+/** order by sum() on columns of table "kmeal.dporder" */
+export interface KmealDporderSumOrderBy {
+  created_block?: OrderBy | null;
+
+  dporder_id?: OrderBy | null;
+
+  listing_id?: OrderBy | null;
+
+  order_id?: OrderBy | null;
+
+  restaurant_id?: OrderBy | null;
+}
+/** order by var_pop() on columns of table "kmeal.dporder" */
+export interface KmealDporderVarPopOrderBy {
+  created_block?: OrderBy | null;
+
+  dporder_id?: OrderBy | null;
+
+  listing_id?: OrderBy | null;
+
+  order_id?: OrderBy | null;
+
+  restaurant_id?: OrderBy | null;
+}
+/** order by var_samp() on columns of table "kmeal.dporder" */
+export interface KmealDporderVarSampOrderBy {
+  created_block?: OrderBy | null;
+
+  dporder_id?: OrderBy | null;
+
+  listing_id?: OrderBy | null;
+
+  order_id?: OrderBy | null;
+
+  restaurant_id?: OrderBy | null;
+}
+/** order by variance() on columns of table "kmeal.dporder" */
+export interface KmealDporderVarianceOrderBy {
+  created_block?: OrderBy | null;
+
+  dporder_id?: OrderBy | null;
+
+  listing_id?: OrderBy | null;
+
+  order_id?: OrderBy | null;
+
+  restaurant_id?: OrderBy | null;
+}
+/** order by aggregate values of table "kmeal.order" */
+export interface KmealOrderAggregateOrderBy {
+  avg?: KmealOrderAvgOrderBy | null;
+
+  count?: OrderBy | null;
+
+  max?: KmealOrderMaxOrderBy | null;
+
+  min?: KmealOrderMinOrderBy | null;
+
+  stddev?: KmealOrderStddevOrderBy | null;
+
+  stddev_pop?: KmealOrderStddevPopOrderBy | null;
+
+  stddev_samp?: KmealOrderStddevSampOrderBy | null;
+
+  sum?: KmealOrderSumOrderBy | null;
+
+  var_pop?: KmealOrderVarPopOrderBy | null;
+
+  var_samp?: KmealOrderVarSampOrderBy | null;
+
+  variance?: KmealOrderVarianceOrderBy | null;
+}
+/** order by avg() on columns of table "kmeal.order" */
+export interface KmealOrderAvgOrderBy {
+  created_block?: OrderBy | null;
+
+  order_id?: OrderBy | null;
+
+  restaurant_id?: OrderBy | null;
+}
+/** order by max() on columns of table "kmeal.order" */
+export interface KmealOrderMaxOrderBy {
+  created_block?: OrderBy | null;
+
+  created_eosacc?: OrderBy | null;
+
+  created_trx?: OrderBy | null;
+
+  instructions?: OrderBy | null;
+
+  order_id?: OrderBy | null;
+
+  price?: OrderBy | null;
+
+  restaurant_id?: OrderBy | null;
+}
+/** order by min() on columns of table "kmeal.order" */
+export interface KmealOrderMinOrderBy {
+  created_block?: OrderBy | null;
+
+  created_eosacc?: OrderBy | null;
+
+  created_trx?: OrderBy | null;
+
+  instructions?: OrderBy | null;
+
+  order_id?: OrderBy | null;
+
+  price?: OrderBy | null;
+
+  restaurant_id?: OrderBy | null;
+}
+/** order by stddev() on columns of table "kmeal.order" */
+export interface KmealOrderStddevOrderBy {
+  created_block?: OrderBy | null;
+
+  order_id?: OrderBy | null;
+
+  restaurant_id?: OrderBy | null;
+}
+/** order by stddev_pop() on columns of table "kmeal.order" */
+export interface KmealOrderStddevPopOrderBy {
+  created_block?: OrderBy | null;
+
+  order_id?: OrderBy | null;
+
+  restaurant_id?: OrderBy | null;
+}
+/** order by stddev_samp() on columns of table "kmeal.order" */
+export interface KmealOrderStddevSampOrderBy {
+  created_block?: OrderBy | null;
+
+  order_id?: OrderBy | null;
+
+  restaurant_id?: OrderBy | null;
+}
+/** order by sum() on columns of table "kmeal.order" */
+export interface KmealOrderSumOrderBy {
+  created_block?: OrderBy | null;
+
+  order_id?: OrderBy | null;
+
+  restaurant_id?: OrderBy | null;
+}
+/** order by var_pop() on columns of table "kmeal.order" */
+export interface KmealOrderVarPopOrderBy {
+  created_block?: OrderBy | null;
+
+  order_id?: OrderBy | null;
+
+  restaurant_id?: OrderBy | null;
+}
+/** order by var_samp() on columns of table "kmeal.order" */
+export interface KmealOrderVarSampOrderBy {
+  created_block?: OrderBy | null;
+
+  order_id?: OrderBy | null;
+
+  restaurant_id?: OrderBy | null;
+}
+/** order by variance() on columns of table "kmeal.order" */
+export interface KmealOrderVarianceOrderBy {
+  created_block?: OrderBy | null;
+
+  order_id?: OrderBy | null;
+
+  restaurant_id?: OrderBy | null;
+}
+/** order by aggregate values of table "kmeal.restaurant" */
+export interface KmealRestaurantAggregateOrderBy {
+  avg?: KmealRestaurantAvgOrderBy | null;
+
+  count?: OrderBy | null;
+
+  max?: KmealRestaurantMaxOrderBy | null;
+
+  min?: KmealRestaurantMinOrderBy | null;
+
+  stddev?: KmealRestaurantStddevOrderBy | null;
+
+  stddev_pop?: KmealRestaurantStddevPopOrderBy | null;
+
+  stddev_samp?: KmealRestaurantStddevSampOrderBy | null;
+
+  sum?: KmealRestaurantSumOrderBy | null;
+
+  var_pop?: KmealRestaurantVarPopOrderBy | null;
+
+  var_samp?: KmealRestaurantVarSampOrderBy | null;
+
+  variance?: KmealRestaurantVarianceOrderBy | null;
+}
+/** order by avg() on columns of table "kmeal.restaurant" */
+export interface KmealRestaurantAvgOrderBy {
+  created_block?: OrderBy | null;
+
+  latitude?: OrderBy | null;
+
+  longitude?: OrderBy | null;
+
+  rating?: OrderBy | null;
+
+  restaurant_id?: OrderBy | null;
+}
+/** order by max() on columns of table "kmeal.restaurant" */
+export interface KmealRestaurantMaxOrderBy {
+  address?: OrderBy | null;
+
+  created_block?: OrderBy | null;
+
+  created_eosacc?: OrderBy | null;
+
+  created_trx?: OrderBy | null;
+
+  description?: OrderBy | null;
+
+  latitude?: OrderBy | null;
+
+  logo?: OrderBy | null;
+
+  longitude?: OrderBy | null;
+
+  name?: OrderBy | null;
+
+  phone?: OrderBy | null;
+
+  rating?: OrderBy | null;
+
+  restaurant_id?: OrderBy | null;
+
+  timeofoperation?: OrderBy | null;
+
+  yelp_id?: OrderBy | null;
+}
+/** order by min() on columns of table "kmeal.restaurant" */
+export interface KmealRestaurantMinOrderBy {
+  address?: OrderBy | null;
+
+  created_block?: OrderBy | null;
+
+  created_eosacc?: OrderBy | null;
+
+  created_trx?: OrderBy | null;
+
+  description?: OrderBy | null;
+
+  latitude?: OrderBy | null;
+
+  logo?: OrderBy | null;
+
+  longitude?: OrderBy | null;
+
+  name?: OrderBy | null;
+
+  phone?: OrderBy | null;
+
+  rating?: OrderBy | null;
+
+  restaurant_id?: OrderBy | null;
+
+  timeofoperation?: OrderBy | null;
+
+  yelp_id?: OrderBy | null;
+}
+/** order by stddev() on columns of table "kmeal.restaurant" */
+export interface KmealRestaurantStddevOrderBy {
+  created_block?: OrderBy | null;
+
+  latitude?: OrderBy | null;
+
+  longitude?: OrderBy | null;
+
+  rating?: OrderBy | null;
+
+  restaurant_id?: OrderBy | null;
+}
+/** order by stddev_pop() on columns of table "kmeal.restaurant" */
+export interface KmealRestaurantStddevPopOrderBy {
+  created_block?: OrderBy | null;
+
+  latitude?: OrderBy | null;
+
+  longitude?: OrderBy | null;
+
+  rating?: OrderBy | null;
+
+  restaurant_id?: OrderBy | null;
+}
+/** order by stddev_samp() on columns of table "kmeal.restaurant" */
+export interface KmealRestaurantStddevSampOrderBy {
+  created_block?: OrderBy | null;
+
+  latitude?: OrderBy | null;
+
+  longitude?: OrderBy | null;
+
+  rating?: OrderBy | null;
+
+  restaurant_id?: OrderBy | null;
+}
+/** order by sum() on columns of table "kmeal.restaurant" */
+export interface KmealRestaurantSumOrderBy {
+  created_block?: OrderBy | null;
+
+  latitude?: OrderBy | null;
+
+  longitude?: OrderBy | null;
+
+  rating?: OrderBy | null;
+
+  restaurant_id?: OrderBy | null;
+}
+/** order by var_pop() on columns of table "kmeal.restaurant" */
+export interface KmealRestaurantVarPopOrderBy {
+  created_block?: OrderBy | null;
+
+  latitude?: OrderBy | null;
+
+  longitude?: OrderBy | null;
+
+  rating?: OrderBy | null;
+
+  restaurant_id?: OrderBy | null;
+}
+/** order by var_samp() on columns of table "kmeal.restaurant" */
+export interface KmealRestaurantVarSampOrderBy {
+  created_block?: OrderBy | null;
+
+  latitude?: OrderBy | null;
+
+  longitude?: OrderBy | null;
+
+  rating?: OrderBy | null;
+
+  restaurant_id?: OrderBy | null;
+}
+/** order by variance() on columns of table "kmeal.restaurant" */
+export interface KmealRestaurantVarianceOrderBy {
+  created_block?: OrderBy | null;
+
+  latitude?: OrderBy | null;
+
+  longitude?: OrderBy | null;
+
+  rating?: OrderBy | null;
+
+  restaurant_id?: OrderBy | null;
 }
 /** Boolean expression to filter rows from the table "kmeal.account". All fields are combined with a logical 'AND'. */
 export interface KmealAccountBoolExp {
@@ -517,8 +987,6 @@ export interface KmealItemBoolExp {
   item_id?: IntegerComparisonExp | null;
 
   item_name?: VarcharComparisonExp | null;
-
-  listingItemSidessByitemId?: KmealListingItemSidesBoolExp | null;
 
   listingsByitemId?: KmealListingBoolExp | null;
 
@@ -826,9 +1294,7 @@ export interface KmealListingItemSidesBoolExp {
 
   group?: VarcharComparisonExp | null;
 
-  itemByitemId?: KmealItemBoolExp | null;
-
-  item_id?: IntegerComparisonExp | null;
+  item_name?: VarcharComparisonExp | null;
 
   list_price?: NumericComparisonExp | null;
 
@@ -884,6 +1350,8 @@ export interface KmealListingOrderBy {
 
   created_trx?: OrderBy | null;
 
+  dpordersBylistingId_aggregate?: KmealDporderAggregateOrderBy | null;
+
   end_date?: OrderBy | null;
 
   end_time?: OrderBy | null;
@@ -900,9 +1368,13 @@ export interface KmealListingOrderBy {
 
   list_type?: OrderBy | null;
 
+  listingItemSidessBylistingId_aggregate?: KmealListingItemSidesAggregateOrderBy | null;
+
   listing_id?: OrderBy | null;
 
   min_price?: OrderBy | null;
+
+  orderDetailsBylistingId_aggregate?: KmealOrderDetailAggregateOrderBy | null;
 
   quantity?: OrderBy | null;
 
@@ -922,9 +1394,15 @@ export interface KmealItemOrderBy {
 
   description?: OrderBy | null;
 
+  itemSectionsByitemId_aggregate?: KmealItemSectionAggregateOrderBy | null;
+
+  itemTypessByitemId_aggregate?: KmealItemTypesAggregateOrderBy | null;
+
   item_id?: OrderBy | null;
 
   item_name?: OrderBy | null;
+
+  listingsByitemId_aggregate?: KmealListingAggregateOrderBy | null;
 
   photo?: OrderBy | null;
 
@@ -937,6 +1415,406 @@ export interface KmealItemOrderBy {
   spicy_level?: OrderBy | null;
 
   vegetarian?: OrderBy | null;
+}
+/** order by aggregate values of table "kmeal.item_section" */
+export interface KmealItemSectionAggregateOrderBy {
+  avg?: KmealItemSectionAvgOrderBy | null;
+
+  count?: OrderBy | null;
+
+  max?: KmealItemSectionMaxOrderBy | null;
+
+  min?: KmealItemSectionMinOrderBy | null;
+
+  stddev?: KmealItemSectionStddevOrderBy | null;
+
+  stddev_pop?: KmealItemSectionStddevPopOrderBy | null;
+
+  stddev_samp?: KmealItemSectionStddevSampOrderBy | null;
+
+  sum?: KmealItemSectionSumOrderBy | null;
+
+  var_pop?: KmealItemSectionVarPopOrderBy | null;
+
+  var_samp?: KmealItemSectionVarSampOrderBy | null;
+
+  variance?: KmealItemSectionVarianceOrderBy | null;
+}
+/** order by avg() on columns of table "kmeal.item_section" */
+export interface KmealItemSectionAvgOrderBy {
+  item_id?: OrderBy | null;
+
+  section_id?: OrderBy | null;
+
+  sort_order?: OrderBy | null;
+}
+/** order by max() on columns of table "kmeal.item_section" */
+export interface KmealItemSectionMaxOrderBy {
+  item_id?: OrderBy | null;
+
+  section_id?: OrderBy | null;
+
+  sort_order?: OrderBy | null;
+}
+/** order by min() on columns of table "kmeal.item_section" */
+export interface KmealItemSectionMinOrderBy {
+  item_id?: OrderBy | null;
+
+  section_id?: OrderBy | null;
+
+  sort_order?: OrderBy | null;
+}
+/** order by stddev() on columns of table "kmeal.item_section" */
+export interface KmealItemSectionStddevOrderBy {
+  item_id?: OrderBy | null;
+
+  section_id?: OrderBy | null;
+
+  sort_order?: OrderBy | null;
+}
+/** order by stddev_pop() on columns of table "kmeal.item_section" */
+export interface KmealItemSectionStddevPopOrderBy {
+  item_id?: OrderBy | null;
+
+  section_id?: OrderBy | null;
+
+  sort_order?: OrderBy | null;
+}
+/** order by stddev_samp() on columns of table "kmeal.item_section" */
+export interface KmealItemSectionStddevSampOrderBy {
+  item_id?: OrderBy | null;
+
+  section_id?: OrderBy | null;
+
+  sort_order?: OrderBy | null;
+}
+/** order by sum() on columns of table "kmeal.item_section" */
+export interface KmealItemSectionSumOrderBy {
+  item_id?: OrderBy | null;
+
+  section_id?: OrderBy | null;
+
+  sort_order?: OrderBy | null;
+}
+/** order by var_pop() on columns of table "kmeal.item_section" */
+export interface KmealItemSectionVarPopOrderBy {
+  item_id?: OrderBy | null;
+
+  section_id?: OrderBy | null;
+
+  sort_order?: OrderBy | null;
+}
+/** order by var_samp() on columns of table "kmeal.item_section" */
+export interface KmealItemSectionVarSampOrderBy {
+  item_id?: OrderBy | null;
+
+  section_id?: OrderBy | null;
+
+  sort_order?: OrderBy | null;
+}
+/** order by variance() on columns of table "kmeal.item_section" */
+export interface KmealItemSectionVarianceOrderBy {
+  item_id?: OrderBy | null;
+
+  section_id?: OrderBy | null;
+
+  sort_order?: OrderBy | null;
+}
+/** order by aggregate values of table "kmeal.item_types" */
+export interface KmealItemTypesAggregateOrderBy {
+  avg?: KmealItemTypesAvgOrderBy | null;
+
+  count?: OrderBy | null;
+
+  max?: KmealItemTypesMaxOrderBy | null;
+
+  min?: KmealItemTypesMinOrderBy | null;
+
+  stddev?: KmealItemTypesStddevOrderBy | null;
+
+  stddev_pop?: KmealItemTypesStddevPopOrderBy | null;
+
+  stddev_samp?: KmealItemTypesStddevSampOrderBy | null;
+
+  sum?: KmealItemTypesSumOrderBy | null;
+
+  var_pop?: KmealItemTypesVarPopOrderBy | null;
+
+  var_samp?: KmealItemTypesVarSampOrderBy | null;
+
+  variance?: KmealItemTypesVarianceOrderBy | null;
+}
+/** order by avg() on columns of table "kmeal.item_types" */
+export interface KmealItemTypesAvgOrderBy {
+  item_id?: OrderBy | null;
+}
+/** order by max() on columns of table "kmeal.item_types" */
+export interface KmealItemTypesMaxOrderBy {
+  item_id?: OrderBy | null;
+
+  item_type?: OrderBy | null;
+}
+/** order by min() on columns of table "kmeal.item_types" */
+export interface KmealItemTypesMinOrderBy {
+  item_id?: OrderBy | null;
+
+  item_type?: OrderBy | null;
+}
+/** order by stddev() on columns of table "kmeal.item_types" */
+export interface KmealItemTypesStddevOrderBy {
+  item_id?: OrderBy | null;
+}
+/** order by stddev_pop() on columns of table "kmeal.item_types" */
+export interface KmealItemTypesStddevPopOrderBy {
+  item_id?: OrderBy | null;
+}
+/** order by stddev_samp() on columns of table "kmeal.item_types" */
+export interface KmealItemTypesStddevSampOrderBy {
+  item_id?: OrderBy | null;
+}
+/** order by sum() on columns of table "kmeal.item_types" */
+export interface KmealItemTypesSumOrderBy {
+  item_id?: OrderBy | null;
+}
+/** order by var_pop() on columns of table "kmeal.item_types" */
+export interface KmealItemTypesVarPopOrderBy {
+  item_id?: OrderBy | null;
+}
+/** order by var_samp() on columns of table "kmeal.item_types" */
+export interface KmealItemTypesVarSampOrderBy {
+  item_id?: OrderBy | null;
+}
+/** order by variance() on columns of table "kmeal.item_types" */
+export interface KmealItemTypesVarianceOrderBy {
+  item_id?: OrderBy | null;
+}
+/** order by aggregate values of table "kmeal.listing" */
+export interface KmealListingAggregateOrderBy {
+  avg?: KmealListingAvgOrderBy | null;
+
+  count?: OrderBy | null;
+
+  max?: KmealListingMaxOrderBy | null;
+
+  min?: KmealListingMinOrderBy | null;
+
+  stddev?: KmealListingStddevOrderBy | null;
+
+  stddev_pop?: KmealListingStddevPopOrderBy | null;
+
+  stddev_samp?: KmealListingStddevSampOrderBy | null;
+
+  sum?: KmealListingSumOrderBy | null;
+
+  var_pop?: KmealListingVarPopOrderBy | null;
+
+  var_samp?: KmealListingVarSampOrderBy | null;
+
+  variance?: KmealListingVarianceOrderBy | null;
+}
+/** order by avg() on columns of table "kmeal.listing" */
+export interface KmealListingAvgOrderBy {
+  created_block?: OrderBy | null;
+
+  item_id?: OrderBy | null;
+
+  list_price?: OrderBy | null;
+
+  listing_id?: OrderBy | null;
+
+  min_price?: OrderBy | null;
+
+  quantity?: OrderBy | null;
+
+  restaurant_id?: OrderBy | null;
+
+  sliding_rate?: OrderBy | null;
+}
+/** order by max() on columns of table "kmeal.listing" */
+export interface KmealListingMaxOrderBy {
+  created_block?: OrderBy | null;
+
+  created_eosacc?: OrderBy | null;
+
+  created_trx?: OrderBy | null;
+
+  end_date?: OrderBy | null;
+
+  end_time?: OrderBy | null;
+
+  item_id?: OrderBy | null;
+
+  list_price?: OrderBy | null;
+
+  listing_id?: OrderBy | null;
+
+  min_price?: OrderBy | null;
+
+  quantity?: OrderBy | null;
+
+  restaurant_id?: OrderBy | null;
+
+  sliding_rate?: OrderBy | null;
+
+  start_date?: OrderBy | null;
+
+  start_time?: OrderBy | null;
+}
+/** order by min() on columns of table "kmeal.listing" */
+export interface KmealListingMinOrderBy {
+  created_block?: OrderBy | null;
+
+  created_eosacc?: OrderBy | null;
+
+  created_trx?: OrderBy | null;
+
+  end_date?: OrderBy | null;
+
+  end_time?: OrderBy | null;
+
+  item_id?: OrderBy | null;
+
+  list_price?: OrderBy | null;
+
+  listing_id?: OrderBy | null;
+
+  min_price?: OrderBy | null;
+
+  quantity?: OrderBy | null;
+
+  restaurant_id?: OrderBy | null;
+
+  sliding_rate?: OrderBy | null;
+
+  start_date?: OrderBy | null;
+
+  start_time?: OrderBy | null;
+}
+/** order by stddev() on columns of table "kmeal.listing" */
+export interface KmealListingStddevOrderBy {
+  created_block?: OrderBy | null;
+
+  item_id?: OrderBy | null;
+
+  list_price?: OrderBy | null;
+
+  listing_id?: OrderBy | null;
+
+  min_price?: OrderBy | null;
+
+  quantity?: OrderBy | null;
+
+  restaurant_id?: OrderBy | null;
+
+  sliding_rate?: OrderBy | null;
+}
+/** order by stddev_pop() on columns of table "kmeal.listing" */
+export interface KmealListingStddevPopOrderBy {
+  created_block?: OrderBy | null;
+
+  item_id?: OrderBy | null;
+
+  list_price?: OrderBy | null;
+
+  listing_id?: OrderBy | null;
+
+  min_price?: OrderBy | null;
+
+  quantity?: OrderBy | null;
+
+  restaurant_id?: OrderBy | null;
+
+  sliding_rate?: OrderBy | null;
+}
+/** order by stddev_samp() on columns of table "kmeal.listing" */
+export interface KmealListingStddevSampOrderBy {
+  created_block?: OrderBy | null;
+
+  item_id?: OrderBy | null;
+
+  list_price?: OrderBy | null;
+
+  listing_id?: OrderBy | null;
+
+  min_price?: OrderBy | null;
+
+  quantity?: OrderBy | null;
+
+  restaurant_id?: OrderBy | null;
+
+  sliding_rate?: OrderBy | null;
+}
+/** order by sum() on columns of table "kmeal.listing" */
+export interface KmealListingSumOrderBy {
+  created_block?: OrderBy | null;
+
+  item_id?: OrderBy | null;
+
+  list_price?: OrderBy | null;
+
+  listing_id?: OrderBy | null;
+
+  min_price?: OrderBy | null;
+
+  quantity?: OrderBy | null;
+
+  restaurant_id?: OrderBy | null;
+
+  sliding_rate?: OrderBy | null;
+}
+/** order by var_pop() on columns of table "kmeal.listing" */
+export interface KmealListingVarPopOrderBy {
+  created_block?: OrderBy | null;
+
+  item_id?: OrderBy | null;
+
+  list_price?: OrderBy | null;
+
+  listing_id?: OrderBy | null;
+
+  min_price?: OrderBy | null;
+
+  quantity?: OrderBy | null;
+
+  restaurant_id?: OrderBy | null;
+
+  sliding_rate?: OrderBy | null;
+}
+/** order by var_samp() on columns of table "kmeal.listing" */
+export interface KmealListingVarSampOrderBy {
+  created_block?: OrderBy | null;
+
+  item_id?: OrderBy | null;
+
+  list_price?: OrderBy | null;
+
+  listing_id?: OrderBy | null;
+
+  min_price?: OrderBy | null;
+
+  quantity?: OrderBy | null;
+
+  restaurant_id?: OrderBy | null;
+
+  sliding_rate?: OrderBy | null;
+}
+/** order by variance() on columns of table "kmeal.listing" */
+export interface KmealListingVarianceOrderBy {
+  created_block?: OrderBy | null;
+
+  item_id?: OrderBy | null;
+
+  list_price?: OrderBy | null;
+
+  listing_id?: OrderBy | null;
+
+  min_price?: OrderBy | null;
+
+  quantity?: OrderBy | null;
+
+  restaurant_id?: OrderBy | null;
+
+  sliding_rate?: OrderBy | null;
 }
 /** ordering options when selecting data from "kmeal.restaurant" */
 export interface KmealRestaurantOrderBy {
@@ -956,9 +1834,15 @@ export interface KmealRestaurantOrderBy {
 
   description?: OrderBy | null;
 
+  dpordersByrestaurantId_aggregate?: KmealDporderAggregateOrderBy | null;
+
   isactive?: OrderBy | null;
 
+  itemsByrestaurantId_aggregate?: KmealItemAggregateOrderBy | null;
+
   latitude?: OrderBy | null;
+
+  listingsByrestaurantId_aggregate?: KmealListingAggregateOrderBy | null;
 
   location?: OrderBy | null;
 
@@ -966,7 +1850,11 @@ export interface KmealRestaurantOrderBy {
 
   longitude?: OrderBy | null;
 
+  menuBooksByrestaurantId_aggregate?: KmealMenuBookAggregateOrderBy | null;
+
   name?: OrderBy | null;
+
+  ordersByrestaurantId_aggregate?: KmealOrderAggregateOrderBy | null;
 
   owner?: OrderBy | null;
 
@@ -974,11 +1862,605 @@ export interface KmealRestaurantOrderBy {
 
   rating?: OrderBy | null;
 
+  restaurantCategoriessByrestaurantId_aggregate?: KmealRestaurantCategoriesAggregateOrderBy | null;
+
   restaurant_id?: OrderBy | null;
 
   timeofoperation?: OrderBy | null;
 
   yelp_id?: OrderBy | null;
+}
+/** order by aggregate values of table "kmeal.item" */
+export interface KmealItemAggregateOrderBy {
+  avg?: KmealItemAvgOrderBy | null;
+
+  count?: OrderBy | null;
+
+  max?: KmealItemMaxOrderBy | null;
+
+  min?: KmealItemMinOrderBy | null;
+
+  stddev?: KmealItemStddevOrderBy | null;
+
+  stddev_pop?: KmealItemStddevPopOrderBy | null;
+
+  stddev_samp?: KmealItemStddevSampOrderBy | null;
+
+  sum?: KmealItemSumOrderBy | null;
+
+  var_pop?: KmealItemVarPopOrderBy | null;
+
+  var_samp?: KmealItemVarSampOrderBy | null;
+
+  variance?: KmealItemVarianceOrderBy | null;
+}
+/** order by avg() on columns of table "kmeal.item" */
+export interface KmealItemAvgOrderBy {
+  cooking_time?: OrderBy | null;
+
+  item_id?: OrderBy | null;
+
+  restaurant_id?: OrderBy | null;
+
+  sort_order?: OrderBy | null;
+
+  spicy_level?: OrderBy | null;
+
+  vegetarian?: OrderBy | null;
+}
+/** order by max() on columns of table "kmeal.item" */
+export interface KmealItemMaxOrderBy {
+  cooking_time?: OrderBy | null;
+
+  description?: OrderBy | null;
+
+  item_id?: OrderBy | null;
+
+  item_name?: OrderBy | null;
+
+  photo?: OrderBy | null;
+
+  restaurant_id?: OrderBy | null;
+
+  sort_order?: OrderBy | null;
+
+  spicy_level?: OrderBy | null;
+
+  vegetarian?: OrderBy | null;
+}
+/** order by min() on columns of table "kmeal.item" */
+export interface KmealItemMinOrderBy {
+  cooking_time?: OrderBy | null;
+
+  description?: OrderBy | null;
+
+  item_id?: OrderBy | null;
+
+  item_name?: OrderBy | null;
+
+  photo?: OrderBy | null;
+
+  restaurant_id?: OrderBy | null;
+
+  sort_order?: OrderBy | null;
+
+  spicy_level?: OrderBy | null;
+
+  vegetarian?: OrderBy | null;
+}
+/** order by stddev() on columns of table "kmeal.item" */
+export interface KmealItemStddevOrderBy {
+  cooking_time?: OrderBy | null;
+
+  item_id?: OrderBy | null;
+
+  restaurant_id?: OrderBy | null;
+
+  sort_order?: OrderBy | null;
+
+  spicy_level?: OrderBy | null;
+
+  vegetarian?: OrderBy | null;
+}
+/** order by stddev_pop() on columns of table "kmeal.item" */
+export interface KmealItemStddevPopOrderBy {
+  cooking_time?: OrderBy | null;
+
+  item_id?: OrderBy | null;
+
+  restaurant_id?: OrderBy | null;
+
+  sort_order?: OrderBy | null;
+
+  spicy_level?: OrderBy | null;
+
+  vegetarian?: OrderBy | null;
+}
+/** order by stddev_samp() on columns of table "kmeal.item" */
+export interface KmealItemStddevSampOrderBy {
+  cooking_time?: OrderBy | null;
+
+  item_id?: OrderBy | null;
+
+  restaurant_id?: OrderBy | null;
+
+  sort_order?: OrderBy | null;
+
+  spicy_level?: OrderBy | null;
+
+  vegetarian?: OrderBy | null;
+}
+/** order by sum() on columns of table "kmeal.item" */
+export interface KmealItemSumOrderBy {
+  cooking_time?: OrderBy | null;
+
+  item_id?: OrderBy | null;
+
+  restaurant_id?: OrderBy | null;
+
+  sort_order?: OrderBy | null;
+
+  spicy_level?: OrderBy | null;
+
+  vegetarian?: OrderBy | null;
+}
+/** order by var_pop() on columns of table "kmeal.item" */
+export interface KmealItemVarPopOrderBy {
+  cooking_time?: OrderBy | null;
+
+  item_id?: OrderBy | null;
+
+  restaurant_id?: OrderBy | null;
+
+  sort_order?: OrderBy | null;
+
+  spicy_level?: OrderBy | null;
+
+  vegetarian?: OrderBy | null;
+}
+/** order by var_samp() on columns of table "kmeal.item" */
+export interface KmealItemVarSampOrderBy {
+  cooking_time?: OrderBy | null;
+
+  item_id?: OrderBy | null;
+
+  restaurant_id?: OrderBy | null;
+
+  sort_order?: OrderBy | null;
+
+  spicy_level?: OrderBy | null;
+
+  vegetarian?: OrderBy | null;
+}
+/** order by variance() on columns of table "kmeal.item" */
+export interface KmealItemVarianceOrderBy {
+  cooking_time?: OrderBy | null;
+
+  item_id?: OrderBy | null;
+
+  restaurant_id?: OrderBy | null;
+
+  sort_order?: OrderBy | null;
+
+  spicy_level?: OrderBy | null;
+
+  vegetarian?: OrderBy | null;
+}
+/** order by aggregate values of table "kmeal.menu_book" */
+export interface KmealMenuBookAggregateOrderBy {
+  avg?: KmealMenuBookAvgOrderBy | null;
+
+  count?: OrderBy | null;
+
+  max?: KmealMenuBookMaxOrderBy | null;
+
+  min?: KmealMenuBookMinOrderBy | null;
+
+  stddev?: KmealMenuBookStddevOrderBy | null;
+
+  stddev_pop?: KmealMenuBookStddevPopOrderBy | null;
+
+  stddev_samp?: KmealMenuBookStddevSampOrderBy | null;
+
+  sum?: KmealMenuBookSumOrderBy | null;
+
+  var_pop?: KmealMenuBookVarPopOrderBy | null;
+
+  var_samp?: KmealMenuBookVarSampOrderBy | null;
+
+  variance?: KmealMenuBookVarianceOrderBy | null;
+}
+/** order by avg() on columns of table "kmeal.menu_book" */
+export interface KmealMenuBookAvgOrderBy {
+  menu_book_id?: OrderBy | null;
+
+  restaurant_id?: OrderBy | null;
+
+  sort_order?: OrderBy | null;
+}
+/** order by max() on columns of table "kmeal.menu_book" */
+export interface KmealMenuBookMaxOrderBy {
+  menu_book?: OrderBy | null;
+
+  menu_book_id?: OrderBy | null;
+
+  restaurant_id?: OrderBy | null;
+
+  sort_order?: OrderBy | null;
+}
+/** order by min() on columns of table "kmeal.menu_book" */
+export interface KmealMenuBookMinOrderBy {
+  menu_book?: OrderBy | null;
+
+  menu_book_id?: OrderBy | null;
+
+  restaurant_id?: OrderBy | null;
+
+  sort_order?: OrderBy | null;
+}
+/** order by stddev() on columns of table "kmeal.menu_book" */
+export interface KmealMenuBookStddevOrderBy {
+  menu_book_id?: OrderBy | null;
+
+  restaurant_id?: OrderBy | null;
+
+  sort_order?: OrderBy | null;
+}
+/** order by stddev_pop() on columns of table "kmeal.menu_book" */
+export interface KmealMenuBookStddevPopOrderBy {
+  menu_book_id?: OrderBy | null;
+
+  restaurant_id?: OrderBy | null;
+
+  sort_order?: OrderBy | null;
+}
+/** order by stddev_samp() on columns of table "kmeal.menu_book" */
+export interface KmealMenuBookStddevSampOrderBy {
+  menu_book_id?: OrderBy | null;
+
+  restaurant_id?: OrderBy | null;
+
+  sort_order?: OrderBy | null;
+}
+/** order by sum() on columns of table "kmeal.menu_book" */
+export interface KmealMenuBookSumOrderBy {
+  menu_book_id?: OrderBy | null;
+
+  restaurant_id?: OrderBy | null;
+
+  sort_order?: OrderBy | null;
+}
+/** order by var_pop() on columns of table "kmeal.menu_book" */
+export interface KmealMenuBookVarPopOrderBy {
+  menu_book_id?: OrderBy | null;
+
+  restaurant_id?: OrderBy | null;
+
+  sort_order?: OrderBy | null;
+}
+/** order by var_samp() on columns of table "kmeal.menu_book" */
+export interface KmealMenuBookVarSampOrderBy {
+  menu_book_id?: OrderBy | null;
+
+  restaurant_id?: OrderBy | null;
+
+  sort_order?: OrderBy | null;
+}
+/** order by variance() on columns of table "kmeal.menu_book" */
+export interface KmealMenuBookVarianceOrderBy {
+  menu_book_id?: OrderBy | null;
+
+  restaurant_id?: OrderBy | null;
+
+  sort_order?: OrderBy | null;
+}
+/** order by aggregate values of table "kmeal.restaurant_categories" */
+export interface KmealRestaurantCategoriesAggregateOrderBy {
+  avg?: KmealRestaurantCategoriesAvgOrderBy | null;
+
+  count?: OrderBy | null;
+
+  max?: KmealRestaurantCategoriesMaxOrderBy | null;
+
+  min?: KmealRestaurantCategoriesMinOrderBy | null;
+
+  stddev?: KmealRestaurantCategoriesStddevOrderBy | null;
+
+  stddev_pop?: KmealRestaurantCategoriesStddevPopOrderBy | null;
+
+  stddev_samp?: KmealRestaurantCategoriesStddevSampOrderBy | null;
+
+  sum?: KmealRestaurantCategoriesSumOrderBy | null;
+
+  var_pop?: KmealRestaurantCategoriesVarPopOrderBy | null;
+
+  var_samp?: KmealRestaurantCategoriesVarSampOrderBy | null;
+
+  variance?: KmealRestaurantCategoriesVarianceOrderBy | null;
+}
+/** order by avg() on columns of table "kmeal.restaurant_categories" */
+export interface KmealRestaurantCategoriesAvgOrderBy {
+  restaurant_id?: OrderBy | null;
+}
+/** order by max() on columns of table "kmeal.restaurant_categories" */
+export interface KmealRestaurantCategoriesMaxOrderBy {
+  category?: OrderBy | null;
+
+  restaurant_id?: OrderBy | null;
+}
+/** order by min() on columns of table "kmeal.restaurant_categories" */
+export interface KmealRestaurantCategoriesMinOrderBy {
+  category?: OrderBy | null;
+
+  restaurant_id?: OrderBy | null;
+}
+/** order by stddev() on columns of table "kmeal.restaurant_categories" */
+export interface KmealRestaurantCategoriesStddevOrderBy {
+  restaurant_id?: OrderBy | null;
+}
+/** order by stddev_pop() on columns of table "kmeal.restaurant_categories" */
+export interface KmealRestaurantCategoriesStddevPopOrderBy {
+  restaurant_id?: OrderBy | null;
+}
+/** order by stddev_samp() on columns of table "kmeal.restaurant_categories" */
+export interface KmealRestaurantCategoriesStddevSampOrderBy {
+  restaurant_id?: OrderBy | null;
+}
+/** order by sum() on columns of table "kmeal.restaurant_categories" */
+export interface KmealRestaurantCategoriesSumOrderBy {
+  restaurant_id?: OrderBy | null;
+}
+/** order by var_pop() on columns of table "kmeal.restaurant_categories" */
+export interface KmealRestaurantCategoriesVarPopOrderBy {
+  restaurant_id?: OrderBy | null;
+}
+/** order by var_samp() on columns of table "kmeal.restaurant_categories" */
+export interface KmealRestaurantCategoriesVarSampOrderBy {
+  restaurant_id?: OrderBy | null;
+}
+/** order by variance() on columns of table "kmeal.restaurant_categories" */
+export interface KmealRestaurantCategoriesVarianceOrderBy {
+  restaurant_id?: OrderBy | null;
+}
+/** order by aggregate values of table "kmeal.listing_item_sides" */
+export interface KmealListingItemSidesAggregateOrderBy {
+  avg?: KmealListingItemSidesAvgOrderBy | null;
+
+  count?: OrderBy | null;
+
+  max?: KmealListingItemSidesMaxOrderBy | null;
+
+  min?: KmealListingItemSidesMinOrderBy | null;
+
+  stddev?: KmealListingItemSidesStddevOrderBy | null;
+
+  stddev_pop?: KmealListingItemSidesStddevPopOrderBy | null;
+
+  stddev_samp?: KmealListingItemSidesStddevSampOrderBy | null;
+
+  sum?: KmealListingItemSidesSumOrderBy | null;
+
+  var_pop?: KmealListingItemSidesVarPopOrderBy | null;
+
+  var_samp?: KmealListingItemSidesVarSampOrderBy | null;
+
+  variance?: KmealListingItemSidesVarianceOrderBy | null;
+}
+/** order by avg() on columns of table "kmeal.listing_item_sides" */
+export interface KmealListingItemSidesAvgOrderBy {
+  list_price?: OrderBy | null;
+
+  listing_id?: OrderBy | null;
+
+  max_selection?: OrderBy | null;
+}
+/** order by max() on columns of table "kmeal.listing_item_sides" */
+export interface KmealListingItemSidesMaxOrderBy {
+  group?: OrderBy | null;
+
+  item_name?: OrderBy | null;
+
+  list_price?: OrderBy | null;
+
+  listing_id?: OrderBy | null;
+
+  max_selection?: OrderBy | null;
+}
+/** order by min() on columns of table "kmeal.listing_item_sides" */
+export interface KmealListingItemSidesMinOrderBy {
+  group?: OrderBy | null;
+
+  item_name?: OrderBy | null;
+
+  list_price?: OrderBy | null;
+
+  listing_id?: OrderBy | null;
+
+  max_selection?: OrderBy | null;
+}
+/** order by stddev() on columns of table "kmeal.listing_item_sides" */
+export interface KmealListingItemSidesStddevOrderBy {
+  list_price?: OrderBy | null;
+
+  listing_id?: OrderBy | null;
+
+  max_selection?: OrderBy | null;
+}
+/** order by stddev_pop() on columns of table "kmeal.listing_item_sides" */
+export interface KmealListingItemSidesStddevPopOrderBy {
+  list_price?: OrderBy | null;
+
+  listing_id?: OrderBy | null;
+
+  max_selection?: OrderBy | null;
+}
+/** order by stddev_samp() on columns of table "kmeal.listing_item_sides" */
+export interface KmealListingItemSidesStddevSampOrderBy {
+  list_price?: OrderBy | null;
+
+  listing_id?: OrderBy | null;
+
+  max_selection?: OrderBy | null;
+}
+/** order by sum() on columns of table "kmeal.listing_item_sides" */
+export interface KmealListingItemSidesSumOrderBy {
+  list_price?: OrderBy | null;
+
+  listing_id?: OrderBy | null;
+
+  max_selection?: OrderBy | null;
+}
+/** order by var_pop() on columns of table "kmeal.listing_item_sides" */
+export interface KmealListingItemSidesVarPopOrderBy {
+  list_price?: OrderBy | null;
+
+  listing_id?: OrderBy | null;
+
+  max_selection?: OrderBy | null;
+}
+/** order by var_samp() on columns of table "kmeal.listing_item_sides" */
+export interface KmealListingItemSidesVarSampOrderBy {
+  list_price?: OrderBy | null;
+
+  listing_id?: OrderBy | null;
+
+  max_selection?: OrderBy | null;
+}
+/** order by variance() on columns of table "kmeal.listing_item_sides" */
+export interface KmealListingItemSidesVarianceOrderBy {
+  list_price?: OrderBy | null;
+
+  listing_id?: OrderBy | null;
+
+  max_selection?: OrderBy | null;
+}
+/** order by aggregate values of table "kmeal.order_detail" */
+export interface KmealOrderDetailAggregateOrderBy {
+  avg?: KmealOrderDetailAvgOrderBy | null;
+
+  count?: OrderBy | null;
+
+  max?: KmealOrderDetailMaxOrderBy | null;
+
+  min?: KmealOrderDetailMinOrderBy | null;
+
+  stddev?: KmealOrderDetailStddevOrderBy | null;
+
+  stddev_pop?: KmealOrderDetailStddevPopOrderBy | null;
+
+  stddev_samp?: KmealOrderDetailStddevSampOrderBy | null;
+
+  sum?: KmealOrderDetailSumOrderBy | null;
+
+  var_pop?: KmealOrderDetailVarPopOrderBy | null;
+
+  var_samp?: KmealOrderDetailVarSampOrderBy | null;
+
+  variance?: KmealOrderDetailVarianceOrderBy | null;
+}
+/** order by avg() on columns of table "kmeal.order_detail" */
+export interface KmealOrderDetailAvgOrderBy {
+  listing_id?: OrderBy | null;
+
+  order_id?: OrderBy | null;
+
+  ordered_price?: OrderBy | null;
+
+  qty?: OrderBy | null;
+}
+/** order by max() on columns of table "kmeal.order_detail" */
+export interface KmealOrderDetailMaxOrderBy {
+  instructions?: OrderBy | null;
+
+  listing_id?: OrderBy | null;
+
+  order_id?: OrderBy | null;
+
+  ordered_price?: OrderBy | null;
+
+  qty?: OrderBy | null;
+}
+/** order by min() on columns of table "kmeal.order_detail" */
+export interface KmealOrderDetailMinOrderBy {
+  instructions?: OrderBy | null;
+
+  listing_id?: OrderBy | null;
+
+  order_id?: OrderBy | null;
+
+  ordered_price?: OrderBy | null;
+
+  qty?: OrderBy | null;
+}
+/** order by stddev() on columns of table "kmeal.order_detail" */
+export interface KmealOrderDetailStddevOrderBy {
+  listing_id?: OrderBy | null;
+
+  order_id?: OrderBy | null;
+
+  ordered_price?: OrderBy | null;
+
+  qty?: OrderBy | null;
+}
+/** order by stddev_pop() on columns of table "kmeal.order_detail" */
+export interface KmealOrderDetailStddevPopOrderBy {
+  listing_id?: OrderBy | null;
+
+  order_id?: OrderBy | null;
+
+  ordered_price?: OrderBy | null;
+
+  qty?: OrderBy | null;
+}
+/** order by stddev_samp() on columns of table "kmeal.order_detail" */
+export interface KmealOrderDetailStddevSampOrderBy {
+  listing_id?: OrderBy | null;
+
+  order_id?: OrderBy | null;
+
+  ordered_price?: OrderBy | null;
+
+  qty?: OrderBy | null;
+}
+/** order by sum() on columns of table "kmeal.order_detail" */
+export interface KmealOrderDetailSumOrderBy {
+  listing_id?: OrderBy | null;
+
+  order_id?: OrderBy | null;
+
+  ordered_price?: OrderBy | null;
+
+  qty?: OrderBy | null;
+}
+/** order by var_pop() on columns of table "kmeal.order_detail" */
+export interface KmealOrderDetailVarPopOrderBy {
+  listing_id?: OrderBy | null;
+
+  order_id?: OrderBy | null;
+
+  ordered_price?: OrderBy | null;
+
+  qty?: OrderBy | null;
+}
+/** order by var_samp() on columns of table "kmeal.order_detail" */
+export interface KmealOrderDetailVarSampOrderBy {
+  listing_id?: OrderBy | null;
+
+  order_id?: OrderBy | null;
+
+  ordered_price?: OrderBy | null;
+
+  qty?: OrderBy | null;
+}
+/** order by variance() on columns of table "kmeal.order_detail" */
+export interface KmealOrderDetailVarianceOrderBy {
+  listing_id?: OrderBy | null;
+
+  order_id?: OrderBy | null;
+
+  ordered_price?: OrderBy | null;
+
+  qty?: OrderBy | null;
 }
 /** ordering options when selecting data from "kmeal.order" */
 export interface KmealOrderOrderBy {
@@ -996,15 +2478,191 @@ export interface KmealOrderOrderBy {
 
   created_trx?: OrderBy | null;
 
+  dpordersByorderId_aggregate?: KmealDporderAggregateOrderBy | null;
+
   instructions?: OrderBy | null;
 
+  orderDetailsByorderId_aggregate?: KmealOrderDetailAggregateOrderBy | null;
+
+  orderStatussByorderId_aggregate?: KmealOrderStatusAggregateOrderBy | null;
+
   order_id?: OrderBy | null;
+
+  paymentsByorderId_aggregate?: KmealPaymentAggregateOrderBy | null;
 
   price?: OrderBy | null;
 
   restaurantByrestaurantId?: KmealRestaurantOrderBy | null;
 
   restaurant_id?: OrderBy | null;
+}
+/** order by aggregate values of table "kmeal.order_status" */
+export interface KmealOrderStatusAggregateOrderBy {
+  avg?: KmealOrderStatusAvgOrderBy | null;
+
+  count?: OrderBy | null;
+
+  max?: KmealOrderStatusMaxOrderBy | null;
+
+  min?: KmealOrderStatusMinOrderBy | null;
+
+  stddev?: KmealOrderStatusStddevOrderBy | null;
+
+  stddev_pop?: KmealOrderStatusStddevPopOrderBy | null;
+
+  stddev_samp?: KmealOrderStatusStddevSampOrderBy | null;
+
+  sum?: KmealOrderStatusSumOrderBy | null;
+
+  var_pop?: KmealOrderStatusVarPopOrderBy | null;
+
+  var_samp?: KmealOrderStatusVarSampOrderBy | null;
+
+  variance?: KmealOrderStatusVarianceOrderBy | null;
+}
+/** order by avg() on columns of table "kmeal.order_status" */
+export interface KmealOrderStatusAvgOrderBy {
+  order_id?: OrderBy | null;
+
+  order_status?: OrderBy | null;
+}
+/** order by max() on columns of table "kmeal.order_status" */
+export interface KmealOrderStatusMaxOrderBy {
+  order_id?: OrderBy | null;
+
+  order_status?: OrderBy | null;
+}
+/** order by min() on columns of table "kmeal.order_status" */
+export interface KmealOrderStatusMinOrderBy {
+  order_id?: OrderBy | null;
+
+  order_status?: OrderBy | null;
+}
+/** order by stddev() on columns of table "kmeal.order_status" */
+export interface KmealOrderStatusStddevOrderBy {
+  order_id?: OrderBy | null;
+
+  order_status?: OrderBy | null;
+}
+/** order by stddev_pop() on columns of table "kmeal.order_status" */
+export interface KmealOrderStatusStddevPopOrderBy {
+  order_id?: OrderBy | null;
+
+  order_status?: OrderBy | null;
+}
+/** order by stddev_samp() on columns of table "kmeal.order_status" */
+export interface KmealOrderStatusStddevSampOrderBy {
+  order_id?: OrderBy | null;
+
+  order_status?: OrderBy | null;
+}
+/** order by sum() on columns of table "kmeal.order_status" */
+export interface KmealOrderStatusSumOrderBy {
+  order_id?: OrderBy | null;
+
+  order_status?: OrderBy | null;
+}
+/** order by var_pop() on columns of table "kmeal.order_status" */
+export interface KmealOrderStatusVarPopOrderBy {
+  order_id?: OrderBy | null;
+
+  order_status?: OrderBy | null;
+}
+/** order by var_samp() on columns of table "kmeal.order_status" */
+export interface KmealOrderStatusVarSampOrderBy {
+  order_id?: OrderBy | null;
+
+  order_status?: OrderBy | null;
+}
+/** order by variance() on columns of table "kmeal.order_status" */
+export interface KmealOrderStatusVarianceOrderBy {
+  order_id?: OrderBy | null;
+
+  order_status?: OrderBy | null;
+}
+/** order by aggregate values of table "kmeal.payment" */
+export interface KmealPaymentAggregateOrderBy {
+  avg?: KmealPaymentAvgOrderBy | null;
+
+  count?: OrderBy | null;
+
+  max?: KmealPaymentMaxOrderBy | null;
+
+  min?: KmealPaymentMinOrderBy | null;
+
+  stddev?: KmealPaymentStddevOrderBy | null;
+
+  stddev_pop?: KmealPaymentStddevPopOrderBy | null;
+
+  stddev_samp?: KmealPaymentStddevSampOrderBy | null;
+
+  sum?: KmealPaymentSumOrderBy | null;
+
+  var_pop?: KmealPaymentVarPopOrderBy | null;
+
+  var_samp?: KmealPaymentVarSampOrderBy | null;
+
+  variance?: KmealPaymentVarianceOrderBy | null;
+}
+/** order by avg() on columns of table "kmeal.payment" */
+export interface KmealPaymentAvgOrderBy {
+  order_id?: OrderBy | null;
+
+  payment_id?: OrderBy | null;
+}
+/** order by max() on columns of table "kmeal.payment" */
+export interface KmealPaymentMaxOrderBy {
+  order_id?: OrderBy | null;
+
+  payment_id?: OrderBy | null;
+}
+/** order by min() on columns of table "kmeal.payment" */
+export interface KmealPaymentMinOrderBy {
+  order_id?: OrderBy | null;
+
+  payment_id?: OrderBy | null;
+}
+/** order by stddev() on columns of table "kmeal.payment" */
+export interface KmealPaymentStddevOrderBy {
+  order_id?: OrderBy | null;
+
+  payment_id?: OrderBy | null;
+}
+/** order by stddev_pop() on columns of table "kmeal.payment" */
+export interface KmealPaymentStddevPopOrderBy {
+  order_id?: OrderBy | null;
+
+  payment_id?: OrderBy | null;
+}
+/** order by stddev_samp() on columns of table "kmeal.payment" */
+export interface KmealPaymentStddevSampOrderBy {
+  order_id?: OrderBy | null;
+
+  payment_id?: OrderBy | null;
+}
+/** order by sum() on columns of table "kmeal.payment" */
+export interface KmealPaymentSumOrderBy {
+  order_id?: OrderBy | null;
+
+  payment_id?: OrderBy | null;
+}
+/** order by var_pop() on columns of table "kmeal.payment" */
+export interface KmealPaymentVarPopOrderBy {
+  order_id?: OrderBy | null;
+
+  payment_id?: OrderBy | null;
+}
+/** order by var_samp() on columns of table "kmeal.payment" */
+export interface KmealPaymentVarSampOrderBy {
+  order_id?: OrderBy | null;
+
+  payment_id?: OrderBy | null;
+}
+/** order by variance() on columns of table "kmeal.payment" */
+export interface KmealPaymentVarianceOrderBy {
+  order_id?: OrderBy | null;
+
+  payment_id?: OrderBy | null;
 }
 /** ordering options when selecting data from "kmeal.item_section" */
 export interface KmealItemSectionOrderBy {
@@ -1020,6 +2678,8 @@ export interface KmealItemSectionOrderBy {
 }
 /** ordering options when selecting data from "kmeal.menu_book_section" */
 export interface KmealMenuBookSectionOrderBy {
+  itemSectionsBysectionId_aggregate?: KmealItemSectionAggregateOrderBy | null;
+
   menuBookBymenuBookId?: KmealMenuBookOrderBy | null;
 
   menu_book_id?: OrderBy | null;
@@ -1032,6 +2692,8 @@ export interface KmealMenuBookSectionOrderBy {
 }
 /** ordering options when selecting data from "kmeal.menu_book" */
 export interface KmealMenuBookOrderBy {
+  menuBookSectionsBymenuBookId_aggregate?: KmealMenuBookSectionAggregateOrderBy | null;
+
   menu_book?: OrderBy | null;
 
   menu_book_id?: OrderBy | null;
@@ -1039,6 +2701,114 @@ export interface KmealMenuBookOrderBy {
   restaurantByrestaurantId?: KmealRestaurantOrderBy | null;
 
   restaurant_id?: OrderBy | null;
+
+  sort_order?: OrderBy | null;
+}
+/** order by aggregate values of table "kmeal.menu_book_section" */
+export interface KmealMenuBookSectionAggregateOrderBy {
+  avg?: KmealMenuBookSectionAvgOrderBy | null;
+
+  count?: OrderBy | null;
+
+  max?: KmealMenuBookSectionMaxOrderBy | null;
+
+  min?: KmealMenuBookSectionMinOrderBy | null;
+
+  stddev?: KmealMenuBookSectionStddevOrderBy | null;
+
+  stddev_pop?: KmealMenuBookSectionStddevPopOrderBy | null;
+
+  stddev_samp?: KmealMenuBookSectionStddevSampOrderBy | null;
+
+  sum?: KmealMenuBookSectionSumOrderBy | null;
+
+  var_pop?: KmealMenuBookSectionVarPopOrderBy | null;
+
+  var_samp?: KmealMenuBookSectionVarSampOrderBy | null;
+
+  variance?: KmealMenuBookSectionVarianceOrderBy | null;
+}
+/** order by avg() on columns of table "kmeal.menu_book_section" */
+export interface KmealMenuBookSectionAvgOrderBy {
+  menu_book_id?: OrderBy | null;
+
+  section_id?: OrderBy | null;
+
+  sort_order?: OrderBy | null;
+}
+/** order by max() on columns of table "kmeal.menu_book_section" */
+export interface KmealMenuBookSectionMaxOrderBy {
+  menu_book_id?: OrderBy | null;
+
+  section_id?: OrderBy | null;
+
+  section_name?: OrderBy | null;
+
+  sort_order?: OrderBy | null;
+}
+/** order by min() on columns of table "kmeal.menu_book_section" */
+export interface KmealMenuBookSectionMinOrderBy {
+  menu_book_id?: OrderBy | null;
+
+  section_id?: OrderBy | null;
+
+  section_name?: OrderBy | null;
+
+  sort_order?: OrderBy | null;
+}
+/** order by stddev() on columns of table "kmeal.menu_book_section" */
+export interface KmealMenuBookSectionStddevOrderBy {
+  menu_book_id?: OrderBy | null;
+
+  section_id?: OrderBy | null;
+
+  sort_order?: OrderBy | null;
+}
+/** order by stddev_pop() on columns of table "kmeal.menu_book_section" */
+export interface KmealMenuBookSectionStddevPopOrderBy {
+  menu_book_id?: OrderBy | null;
+
+  section_id?: OrderBy | null;
+
+  sort_order?: OrderBy | null;
+}
+/** order by stddev_samp() on columns of table "kmeal.menu_book_section" */
+export interface KmealMenuBookSectionStddevSampOrderBy {
+  menu_book_id?: OrderBy | null;
+
+  section_id?: OrderBy | null;
+
+  sort_order?: OrderBy | null;
+}
+/** order by sum() on columns of table "kmeal.menu_book_section" */
+export interface KmealMenuBookSectionSumOrderBy {
+  menu_book_id?: OrderBy | null;
+
+  section_id?: OrderBy | null;
+
+  sort_order?: OrderBy | null;
+}
+/** order by var_pop() on columns of table "kmeal.menu_book_section" */
+export interface KmealMenuBookSectionVarPopOrderBy {
+  menu_book_id?: OrderBy | null;
+
+  section_id?: OrderBy | null;
+
+  sort_order?: OrderBy | null;
+}
+/** order by var_samp() on columns of table "kmeal.menu_book_section" */
+export interface KmealMenuBookSectionVarSampOrderBy {
+  menu_book_id?: OrderBy | null;
+
+  section_id?: OrderBy | null;
+
+  sort_order?: OrderBy | null;
+}
+/** order by variance() on columns of table "kmeal.menu_book_section" */
+export interface KmealMenuBookSectionVarianceOrderBy {
+  menu_book_id?: OrderBy | null;
+
+  section_id?: OrderBy | null;
 
   sort_order?: OrderBy | null;
 }
@@ -1100,9 +2870,7 @@ export interface KmealItemTypesOrderBy {
 export interface KmealListingItemSidesOrderBy {
   group?: OrderBy | null;
 
-  itemByitemId?: KmealItemOrderBy | null;
-
-  item_id?: OrderBy | null;
+  item_name?: OrderBy | null;
 
   list_price?: OrderBy | null;
 
@@ -1269,6 +3037,28 @@ export interface GeometryComparisonExp {
   _neq?: Geometry | null;
 
   _nin?: (Geometry | null)[] | null;
+  /** does the column contain the given geometry value */
+  _st_contains?: Geometry | null;
+  /** does the column crosses the given geometry value */
+  _st_crosses?: Geometry | null;
+  /** is the column within a distance from a geometry value */
+  _st_d_within?: StDWithinInput | null;
+  /** is the column equal to given geometry value. Directionality is ignored */
+  _st_equals?: Geometry | null;
+  /** does the column spatially intersect the given geometry value */
+  _st_intersects?: Geometry | null;
+  /** does the column 'spatially overlap' (intersect but not completely contain) the given geometry value */
+  _st_overlaps?: Geometry | null;
+  /** does the column have atleast one point in common with the given geometry value */
+  _st_touches?: Geometry | null;
+  /** is the column contained in the given geometry value */
+  _st_within?: Geometry | null;
+}
+
+export interface StDWithinInput {
+  distance: number;
+
+  from: Geometry;
 }
 /** expression to compare columns of type _float8. All fields are combined with logical 'AND'. */
 export interface _Float8ComparisonExp {
@@ -1432,11 +3222,169 @@ export interface TopologyTopologyOrderBy {
 
   id?: OrderBy | null;
 
+  layersBytopologyId_aggregate?: TopologyLayerAggregateOrderBy | null;
+
   name?: OrderBy | null;
 
   precision?: OrderBy | null;
 
   srid?: OrderBy | null;
+}
+/** order by aggregate values of table "topology.layer" */
+export interface TopologyLayerAggregateOrderBy {
+  avg?: TopologyLayerAvgOrderBy | null;
+
+  count?: OrderBy | null;
+
+  max?: TopologyLayerMaxOrderBy | null;
+
+  min?: TopologyLayerMinOrderBy | null;
+
+  stddev?: TopologyLayerStddevOrderBy | null;
+
+  stddev_pop?: TopologyLayerStddevPopOrderBy | null;
+
+  stddev_samp?: TopologyLayerStddevSampOrderBy | null;
+
+  sum?: TopologyLayerSumOrderBy | null;
+
+  var_pop?: TopologyLayerVarPopOrderBy | null;
+
+  var_samp?: TopologyLayerVarSampOrderBy | null;
+
+  variance?: TopologyLayerVarianceOrderBy | null;
+}
+/** order by avg() on columns of table "topology.layer" */
+export interface TopologyLayerAvgOrderBy {
+  child_id?: OrderBy | null;
+
+  feature_type?: OrderBy | null;
+
+  layer_id?: OrderBy | null;
+
+  level?: OrderBy | null;
+
+  topology_id?: OrderBy | null;
+}
+/** order by max() on columns of table "topology.layer" */
+export interface TopologyLayerMaxOrderBy {
+  child_id?: OrderBy | null;
+
+  feature_column?: OrderBy | null;
+
+  feature_type?: OrderBy | null;
+
+  layer_id?: OrderBy | null;
+
+  level?: OrderBy | null;
+
+  schema_name?: OrderBy | null;
+
+  table_name?: OrderBy | null;
+
+  topology_id?: OrderBy | null;
+}
+/** order by min() on columns of table "topology.layer" */
+export interface TopologyLayerMinOrderBy {
+  child_id?: OrderBy | null;
+
+  feature_column?: OrderBy | null;
+
+  feature_type?: OrderBy | null;
+
+  layer_id?: OrderBy | null;
+
+  level?: OrderBy | null;
+
+  schema_name?: OrderBy | null;
+
+  table_name?: OrderBy | null;
+
+  topology_id?: OrderBy | null;
+}
+/** order by stddev() on columns of table "topology.layer" */
+export interface TopologyLayerStddevOrderBy {
+  child_id?: OrderBy | null;
+
+  feature_type?: OrderBy | null;
+
+  layer_id?: OrderBy | null;
+
+  level?: OrderBy | null;
+
+  topology_id?: OrderBy | null;
+}
+/** order by stddev_pop() on columns of table "topology.layer" */
+export interface TopologyLayerStddevPopOrderBy {
+  child_id?: OrderBy | null;
+
+  feature_type?: OrderBy | null;
+
+  layer_id?: OrderBy | null;
+
+  level?: OrderBy | null;
+
+  topology_id?: OrderBy | null;
+}
+/** order by stddev_samp() on columns of table "topology.layer" */
+export interface TopologyLayerStddevSampOrderBy {
+  child_id?: OrderBy | null;
+
+  feature_type?: OrderBy | null;
+
+  layer_id?: OrderBy | null;
+
+  level?: OrderBy | null;
+
+  topology_id?: OrderBy | null;
+}
+/** order by sum() on columns of table "topology.layer" */
+export interface TopologyLayerSumOrderBy {
+  child_id?: OrderBy | null;
+
+  feature_type?: OrderBy | null;
+
+  layer_id?: OrderBy | null;
+
+  level?: OrderBy | null;
+
+  topology_id?: OrderBy | null;
+}
+/** order by var_pop() on columns of table "topology.layer" */
+export interface TopologyLayerVarPopOrderBy {
+  child_id?: OrderBy | null;
+
+  feature_type?: OrderBy | null;
+
+  layer_id?: OrderBy | null;
+
+  level?: OrderBy | null;
+
+  topology_id?: OrderBy | null;
+}
+/** order by var_samp() on columns of table "topology.layer" */
+export interface TopologyLayerVarSampOrderBy {
+  child_id?: OrderBy | null;
+
+  feature_type?: OrderBy | null;
+
+  layer_id?: OrderBy | null;
+
+  level?: OrderBy | null;
+
+  topology_id?: OrderBy | null;
+}
+/** order by variance() on columns of table "topology.layer" */
+export interface TopologyLayerVarianceOrderBy {
+  child_id?: OrderBy | null;
+
+  feature_type?: OrderBy | null;
+
+  layer_id?: OrderBy | null;
+
+  level?: OrderBy | null;
+
+  topology_id?: OrderBy | null;
 }
 /** Boolean expression to filter rows from the table "topology.layer". All fields are combined with a logical 'AND'. */
 export interface TopologyLayerBoolExp {
@@ -1508,12 +3456,9 @@ export interface KmealBlockNumberTxidInsertInput {
 }
 /** on conflict condition type for table "kmeal._block_number_txid" */
 export interface KmealBlockNumberTxidOnConflict {
-  /** action when conflict occurs (deprecated) */
-  action?: ConflictAction | null;
-
   constraint: KmealBlockNumberTxidConstraint;
 
-  update_columns?: KmealBlockNumberTxidUpdateColumn[] | null;
+  update_columns: KmealBlockNumberTxidUpdateColumn[];
 }
 /** input type for inserting data into table "kmeal._index_state" */
 export interface KmealIndexStateInsertInput {
@@ -1527,12 +3472,9 @@ export interface KmealIndexStateInsertInput {
 }
 /** on conflict condition type for table "kmeal._index_state" */
 export interface KmealIndexStateOnConflict {
-  /** action when conflict occurs (deprecated) */
-  action?: ConflictAction | null;
-
   constraint: KmealIndexStateConstraint;
 
-  update_columns?: KmealIndexStateUpdateColumn[] | null;
+  update_columns: KmealIndexStateUpdateColumn[];
 }
 /** input type for inserting data into table "kmeal.account" */
 export interface KmealAccountInsertInput {
@@ -1606,12 +3548,9 @@ export interface KmealAccountObjRelInsertInput {
 }
 /** on conflict condition type for table "kmeal.account" */
 export interface KmealAccountOnConflict {
-  /** action when conflict occurs (deprecated) */
-  action?: ConflictAction | null;
-
   constraint: KmealAccountConstraint;
 
-  update_columns?: KmealAccountUpdateColumn[] | null;
+  update_columns: KmealAccountUpdateColumn[];
 }
 /** input type for inserting object relation for remote table "kmeal.listing" */
 export interface KmealListingObjRelInsertInput {
@@ -1688,8 +3627,6 @@ export interface KmealItemInsertInput {
   item_id?: number | null;
 
   item_name?: string | null;
-
-  listingItemSidessByitemId?: KmealListingItemSidesArrRelInsertInput | null;
 
   listingsByitemId?: KmealListingArrRelInsertInput | null;
 
@@ -1771,12 +3708,9 @@ export interface KmealMenuBookSectionArrRelInsertInput {
 }
 /** on conflict condition type for table "kmeal.menu_book_section" */
 export interface KmealMenuBookSectionOnConflict {
-  /** action when conflict occurs (deprecated) */
-  action?: ConflictAction | null;
-
   constraint: KmealMenuBookSectionConstraint;
 
-  update_columns?: KmealMenuBookSectionUpdateColumn[] | null;
+  update_columns: KmealMenuBookSectionUpdateColumn[];
 }
 /** input type for inserting object relation for remote table "kmeal.restaurant" */
 export interface KmealRestaurantObjRelInsertInput {
@@ -1846,12 +3780,9 @@ export interface KmealItemArrRelInsertInput {
 }
 /** on conflict condition type for table "kmeal.item" */
 export interface KmealItemOnConflict {
-  /** action when conflict occurs (deprecated) */
-  action?: ConflictAction | null;
-
   constraint: KmealItemConstraint;
 
-  update_columns?: KmealItemUpdateColumn[] | null;
+  update_columns: KmealItemUpdateColumn[];
 }
 /** input type for inserting array relation for remote table "kmeal.listing" */
 export interface KmealListingArrRelInsertInput {
@@ -1861,12 +3792,9 @@ export interface KmealListingArrRelInsertInput {
 }
 /** on conflict condition type for table "kmeal.listing" */
 export interface KmealListingOnConflict {
-  /** action when conflict occurs (deprecated) */
-  action?: ConflictAction | null;
-
   constraint: KmealListingConstraint;
 
-  update_columns?: KmealListingUpdateColumn[] | null;
+  update_columns: KmealListingUpdateColumn[];
 }
 /** input type for inserting array relation for remote table "kmeal.menu_book" */
 export interface KmealMenuBookArrRelInsertInput {
@@ -1876,12 +3804,9 @@ export interface KmealMenuBookArrRelInsertInput {
 }
 /** on conflict condition type for table "kmeal.menu_book" */
 export interface KmealMenuBookOnConflict {
-  /** action when conflict occurs (deprecated) */
-  action?: ConflictAction | null;
-
   constraint: KmealMenuBookConstraint;
 
-  update_columns?: KmealMenuBookUpdateColumn[] | null;
+  update_columns: KmealMenuBookUpdateColumn[];
 }
 /** input type for inserting array relation for remote table "kmeal.order" */
 export interface KmealOrderArrRelInsertInput {
@@ -1953,12 +3878,9 @@ export interface KmealOrderObjRelInsertInput {
 }
 /** on conflict condition type for table "kmeal.order" */
 export interface KmealOrderOnConflict {
-  /** action when conflict occurs (deprecated) */
-  action?: ConflictAction | null;
-
   constraint: KmealOrderConstraint;
 
-  update_columns?: KmealOrderUpdateColumn[] | null;
+  update_columns: KmealOrderUpdateColumn[];
 }
 /** input type for inserting array relation for remote table "kmeal.order_status" */
 export interface KmealOrderStatusArrRelInsertInput {
@@ -1978,12 +3900,9 @@ export interface KmealOrderStatusInsertInput {
 }
 /** on conflict condition type for table "kmeal.order_status" */
 export interface KmealOrderStatusOnConflict {
-  /** action when conflict occurs (deprecated) */
-  action?: ConflictAction | null;
-
   constraint: KmealOrderStatusConstraint;
 
-  update_columns?: KmealOrderStatusUpdateColumn[] | null;
+  update_columns: KmealOrderStatusUpdateColumn[];
 }
 /** input type for inserting array relation for remote table "kmeal.payment" */
 export interface KmealPaymentArrRelInsertInput {
@@ -2003,12 +3922,9 @@ export interface KmealPaymentInsertInput {
 }
 /** on conflict condition type for table "kmeal.payment" */
 export interface KmealPaymentOnConflict {
-  /** action when conflict occurs (deprecated) */
-  action?: ConflictAction | null;
-
   constraint: KmealPaymentConstraint;
 
-  update_columns?: KmealPaymentUpdateColumn[] | null;
+  update_columns: KmealPaymentUpdateColumn[];
 }
 /** input type for inserting array relation for remote table "kmeal.restaurant_categories" */
 export interface KmealRestaurantCategoriesArrRelInsertInput {
@@ -2024,21 +3940,15 @@ export interface KmealRestaurantCategoriesInsertInput {
 }
 /** on conflict condition type for table "kmeal.restaurant" */
 export interface KmealRestaurantOnConflict {
-  /** action when conflict occurs (deprecated) */
-  action?: ConflictAction | null;
-
   constraint: KmealRestaurantConstraint;
 
-  update_columns?: KmealRestaurantUpdateColumn[] | null;
+  update_columns: KmealRestaurantUpdateColumn[];
 }
 /** on conflict condition type for table "kmeal.item_section" */
 export interface KmealItemSectionOnConflict {
-  /** action when conflict occurs (deprecated) */
-  action?: ConflictAction | null;
-
   constraint: KmealItemSectionConstraint;
 
-  update_columns?: KmealItemSectionUpdateColumn[] | null;
+  update_columns: KmealItemSectionUpdateColumn[];
 }
 /** input type for inserting array relation for remote table "kmeal.item_types" */
 export interface KmealItemTypesArrRelInsertInput {
@@ -2060,9 +3970,7 @@ export interface KmealListingItemSidesArrRelInsertInput {
 export interface KmealListingItemSidesInsertInput {
   group?: string | null;
 
-  itemByitemId?: KmealItemObjRelInsertInput | null;
-
-  item_id?: number | null;
+  item_name?: string | null;
 
   list_price?: Numeric | null;
 
@@ -2074,12 +3982,9 @@ export interface KmealListingItemSidesInsertInput {
 }
 /** on conflict condition type for table "kmeal.dporder" */
 export interface KmealDporderOnConflict {
-  /** action when conflict occurs (deprecated) */
-  action?: ConflictAction | null;
-
   constraint: KmealDporderConstraint;
 
-  update_columns?: KmealDporderUpdateColumn[] | null;
+  update_columns: KmealDporderUpdateColumn[];
 }
 /** input type for inserting array relation for remote table "kmeal.restaurant" */
 export interface KmealRestaurantArrRelInsertInput {
@@ -2095,12 +4000,9 @@ export interface KmealCategoriesInsertInput {
 }
 /** on conflict condition type for table "kmeal.categories" */
 export interface KmealCategoriesOnConflict {
-  /** action when conflict occurs (deprecated) */
-  action?: ConflictAction | null;
-
   constraint: KmealCategoriesConstraint;
 
-  update_columns?: KmealCategoriesUpdateColumn[] | null;
+  update_columns: KmealCategoriesUpdateColumn[];
 }
 /** input type for inserting data into table "spatial_ref_sys" */
 export interface SpatialRefSysInsertInput {
@@ -2116,12 +4018,9 @@ export interface SpatialRefSysInsertInput {
 }
 /** on conflict condition type for table "spatial_ref_sys" */
 export interface SpatialRefSysOnConflict {
-  /** action when conflict occurs (deprecated) */
-  action?: ConflictAction | null;
-
   constraint: SpatialRefSysConstraint;
 
-  update_columns?: SpatialRefSysUpdateColumn[] | null;
+  update_columns: SpatialRefSysUpdateColumn[];
 }
 /** input type for inserting data into table "topology.layer" */
 export interface TopologyLayerInsertInput {
@@ -2171,21 +4070,15 @@ export interface TopologyLayerArrRelInsertInput {
 }
 /** on conflict condition type for table "topology.layer" */
 export interface TopologyLayerOnConflict {
-  /** action when conflict occurs (deprecated) */
-  action?: ConflictAction | null;
-
   constraint: TopologyLayerConstraint;
 
-  update_columns?: TopologyLayerUpdateColumn[] | null;
+  update_columns: TopologyLayerUpdateColumn[];
 }
 /** on conflict condition type for table "topology.topology" */
 export interface TopologyTopologyOnConflict {
-  /** action when conflict occurs (deprecated) */
-  action?: ConflictAction | null;
-
   constraint: TopologyTopologyConstraint;
 
-  update_columns?: TopologyTopologyUpdateColumn[] | null;
+  update_columns: TopologyTopologyUpdateColumn[];
 }
 /** input type for incrementing integer columne in table "geometry_columns" */
 export interface GeometryColumnsIncInput {
@@ -2417,8 +4310,6 @@ export interface KmealListingSetInput {
 }
 /** input type for incrementing integer columne in table "kmeal.listing_item_sides" */
 export interface KmealListingItemSidesIncInput {
-  item_id?: number | null;
-
   listing_id?: number | null;
 
   max_selection?: number | null;
@@ -2427,7 +4318,7 @@ export interface KmealListingItemSidesIncInput {
 export interface KmealListingItemSidesSetInput {
   group?: string | null;
 
-  item_id?: number | null;
+  item_name?: string | null;
 
   list_price?: Numeric | null;
 
@@ -2677,6 +4568,186 @@ export interface TopologyTopologySetInput {
 
   srid?: number | null;
 }
+/** order by aggregate values of table "geography_columns" */
+export interface GeographyColumnsAggregateOrderBy {
+  avg?: GeographyColumnsAvgOrderBy | null;
+
+  count?: OrderBy | null;
+
+  max?: GeographyColumnsMaxOrderBy | null;
+
+  min?: GeographyColumnsMinOrderBy | null;
+
+  stddev?: GeographyColumnsStddevOrderBy | null;
+
+  stddev_pop?: GeographyColumnsStddevPopOrderBy | null;
+
+  stddev_samp?: GeographyColumnsStddevSampOrderBy | null;
+
+  sum?: GeographyColumnsSumOrderBy | null;
+
+  var_pop?: GeographyColumnsVarPopOrderBy | null;
+
+  var_samp?: GeographyColumnsVarSampOrderBy | null;
+
+  variance?: GeographyColumnsVarianceOrderBy | null;
+}
+/** order by avg() on columns of table "geography_columns" */
+export interface GeographyColumnsAvgOrderBy {
+  coord_dimension?: OrderBy | null;
+
+  srid?: OrderBy | null;
+}
+/** order by max() on columns of table "geography_columns" */
+export interface GeographyColumnsMaxOrderBy {
+  coord_dimension?: OrderBy | null;
+
+  srid?: OrderBy | null;
+
+  type?: OrderBy | null;
+}
+/** order by min() on columns of table "geography_columns" */
+export interface GeographyColumnsMinOrderBy {
+  coord_dimension?: OrderBy | null;
+
+  srid?: OrderBy | null;
+
+  type?: OrderBy | null;
+}
+/** order by stddev() on columns of table "geography_columns" */
+export interface GeographyColumnsStddevOrderBy {
+  coord_dimension?: OrderBy | null;
+
+  srid?: OrderBy | null;
+}
+/** order by stddev_pop() on columns of table "geography_columns" */
+export interface GeographyColumnsStddevPopOrderBy {
+  coord_dimension?: OrderBy | null;
+
+  srid?: OrderBy | null;
+}
+/** order by stddev_samp() on columns of table "geography_columns" */
+export interface GeographyColumnsStddevSampOrderBy {
+  coord_dimension?: OrderBy | null;
+
+  srid?: OrderBy | null;
+}
+/** order by sum() on columns of table "geography_columns" */
+export interface GeographyColumnsSumOrderBy {
+  coord_dimension?: OrderBy | null;
+
+  srid?: OrderBy | null;
+}
+/** order by var_pop() on columns of table "geography_columns" */
+export interface GeographyColumnsVarPopOrderBy {
+  coord_dimension?: OrderBy | null;
+
+  srid?: OrderBy | null;
+}
+/** order by var_samp() on columns of table "geography_columns" */
+export interface GeographyColumnsVarSampOrderBy {
+  coord_dimension?: OrderBy | null;
+
+  srid?: OrderBy | null;
+}
+/** order by variance() on columns of table "geography_columns" */
+export interface GeographyColumnsVarianceOrderBy {
+  coord_dimension?: OrderBy | null;
+
+  srid?: OrderBy | null;
+}
+/** order by aggregate values of table "geometry_columns" */
+export interface GeometryColumnsAggregateOrderBy {
+  avg?: GeometryColumnsAvgOrderBy | null;
+
+  count?: OrderBy | null;
+
+  max?: GeometryColumnsMaxOrderBy | null;
+
+  min?: GeometryColumnsMinOrderBy | null;
+
+  stddev?: GeometryColumnsStddevOrderBy | null;
+
+  stddev_pop?: GeometryColumnsStddevPopOrderBy | null;
+
+  stddev_samp?: GeometryColumnsStddevSampOrderBy | null;
+
+  sum?: GeometryColumnsSumOrderBy | null;
+
+  var_pop?: GeometryColumnsVarPopOrderBy | null;
+
+  var_samp?: GeometryColumnsVarSampOrderBy | null;
+
+  variance?: GeometryColumnsVarianceOrderBy | null;
+}
+/** order by avg() on columns of table "geometry_columns" */
+export interface GeometryColumnsAvgOrderBy {
+  coord_dimension?: OrderBy | null;
+
+  srid?: OrderBy | null;
+}
+/** order by max() on columns of table "geometry_columns" */
+export interface GeometryColumnsMaxOrderBy {
+  coord_dimension?: OrderBy | null;
+
+  f_table_catalog?: OrderBy | null;
+
+  srid?: OrderBy | null;
+
+  type?: OrderBy | null;
+}
+/** order by min() on columns of table "geometry_columns" */
+export interface GeometryColumnsMinOrderBy {
+  coord_dimension?: OrderBy | null;
+
+  f_table_catalog?: OrderBy | null;
+
+  srid?: OrderBy | null;
+
+  type?: OrderBy | null;
+}
+/** order by stddev() on columns of table "geometry_columns" */
+export interface GeometryColumnsStddevOrderBy {
+  coord_dimension?: OrderBy | null;
+
+  srid?: OrderBy | null;
+}
+/** order by stddev_pop() on columns of table "geometry_columns" */
+export interface GeometryColumnsStddevPopOrderBy {
+  coord_dimension?: OrderBy | null;
+
+  srid?: OrderBy | null;
+}
+/** order by stddev_samp() on columns of table "geometry_columns" */
+export interface GeometryColumnsStddevSampOrderBy {
+  coord_dimension?: OrderBy | null;
+
+  srid?: OrderBy | null;
+}
+/** order by sum() on columns of table "geometry_columns" */
+export interface GeometryColumnsSumOrderBy {
+  coord_dimension?: OrderBy | null;
+
+  srid?: OrderBy | null;
+}
+/** order by var_pop() on columns of table "geometry_columns" */
+export interface GeometryColumnsVarPopOrderBy {
+  coord_dimension?: OrderBy | null;
+
+  srid?: OrderBy | null;
+}
+/** order by var_samp() on columns of table "geometry_columns" */
+export interface GeometryColumnsVarSampOrderBy {
+  coord_dimension?: OrderBy | null;
+
+  srid?: OrderBy | null;
+}
+/** order by variance() on columns of table "geometry_columns" */
+export interface GeometryColumnsVarianceOrderBy {
+  coord_dimension?: OrderBy | null;
+
+  srid?: OrderBy | null;
+}
 /** input type for inserting array relation for remote table "geometry_columns" */
 export interface GeometryColumnsArrRelInsertInput {
   data: GeometryColumnsInsertInput[];
@@ -2684,6 +4755,90 @@ export interface GeometryColumnsArrRelInsertInput {
 /** input type for inserting object relation for remote table "geometry_columns" */
 export interface GeometryColumnsObjRelInsertInput {
   data: GeometryColumnsInsertInput;
+}
+/** order by aggregate values of table "kmeal._block_number_txid" */
+export interface KmealBlockNumberTxidAggregateOrderBy {
+  avg?: KmealBlockNumberTxidAvgOrderBy | null;
+
+  count?: OrderBy | null;
+
+  max?: KmealBlockNumberTxidMaxOrderBy | null;
+
+  min?: KmealBlockNumberTxidMinOrderBy | null;
+
+  stddev?: KmealBlockNumberTxidStddevOrderBy | null;
+
+  stddev_pop?: KmealBlockNumberTxidStddevPopOrderBy | null;
+
+  stddev_samp?: KmealBlockNumberTxidStddevSampOrderBy | null;
+
+  sum?: KmealBlockNumberTxidSumOrderBy | null;
+
+  var_pop?: KmealBlockNumberTxidVarPopOrderBy | null;
+
+  var_samp?: KmealBlockNumberTxidVarSampOrderBy | null;
+
+  variance?: KmealBlockNumberTxidVarianceOrderBy | null;
+}
+/** order by avg() on columns of table "kmeal._block_number_txid" */
+export interface KmealBlockNumberTxidAvgOrderBy {
+  block_number?: OrderBy | null;
+
+  txid?: OrderBy | null;
+}
+/** order by max() on columns of table "kmeal._block_number_txid" */
+export interface KmealBlockNumberTxidMaxOrderBy {
+  block_number?: OrderBy | null;
+
+  txid?: OrderBy | null;
+}
+/** order by min() on columns of table "kmeal._block_number_txid" */
+export interface KmealBlockNumberTxidMinOrderBy {
+  block_number?: OrderBy | null;
+
+  txid?: OrderBy | null;
+}
+/** order by stddev() on columns of table "kmeal._block_number_txid" */
+export interface KmealBlockNumberTxidStddevOrderBy {
+  block_number?: OrderBy | null;
+
+  txid?: OrderBy | null;
+}
+/** order by stddev_pop() on columns of table "kmeal._block_number_txid" */
+export interface KmealBlockNumberTxidStddevPopOrderBy {
+  block_number?: OrderBy | null;
+
+  txid?: OrderBy | null;
+}
+/** order by stddev_samp() on columns of table "kmeal._block_number_txid" */
+export interface KmealBlockNumberTxidStddevSampOrderBy {
+  block_number?: OrderBy | null;
+
+  txid?: OrderBy | null;
+}
+/** order by sum() on columns of table "kmeal._block_number_txid" */
+export interface KmealBlockNumberTxidSumOrderBy {
+  block_number?: OrderBy | null;
+
+  txid?: OrderBy | null;
+}
+/** order by var_pop() on columns of table "kmeal._block_number_txid" */
+export interface KmealBlockNumberTxidVarPopOrderBy {
+  block_number?: OrderBy | null;
+
+  txid?: OrderBy | null;
+}
+/** order by var_samp() on columns of table "kmeal._block_number_txid" */
+export interface KmealBlockNumberTxidVarSampOrderBy {
+  block_number?: OrderBy | null;
+
+  txid?: OrderBy | null;
+}
+/** order by variance() on columns of table "kmeal._block_number_txid" */
+export interface KmealBlockNumberTxidVarianceOrderBy {
+  block_number?: OrderBy | null;
+
+  txid?: OrderBy | null;
 }
 /** input type for inserting array relation for remote table "kmeal._block_number_txid" */
 export interface KmealBlockNumberTxidArrRelInsertInput {
@@ -2697,6 +4852,94 @@ export interface KmealBlockNumberTxidObjRelInsertInput {
 
   on_conflict?: KmealBlockNumberTxidOnConflict | null;
 }
+/** order by aggregate values of table "kmeal._index_state" */
+export interface KmealIndexStateAggregateOrderBy {
+  avg?: KmealIndexStateAvgOrderBy | null;
+
+  count?: OrderBy | null;
+
+  max?: KmealIndexStateMaxOrderBy | null;
+
+  min?: KmealIndexStateMinOrderBy | null;
+
+  stddev?: KmealIndexStateStddevOrderBy | null;
+
+  stddev_pop?: KmealIndexStateStddevPopOrderBy | null;
+
+  stddev_samp?: KmealIndexStateStddevSampOrderBy | null;
+
+  sum?: KmealIndexStateSumOrderBy | null;
+
+  var_pop?: KmealIndexStateVarPopOrderBy | null;
+
+  var_samp?: KmealIndexStateVarSampOrderBy | null;
+
+  variance?: KmealIndexStateVarianceOrderBy | null;
+}
+/** order by avg() on columns of table "kmeal._index_state" */
+export interface KmealIndexStateAvgOrderBy {
+  block_number?: OrderBy | null;
+
+  id?: OrderBy | null;
+}
+/** order by max() on columns of table "kmeal._index_state" */
+export interface KmealIndexStateMaxOrderBy {
+  block_hash?: OrderBy | null;
+
+  block_number?: OrderBy | null;
+
+  id?: OrderBy | null;
+}
+/** order by min() on columns of table "kmeal._index_state" */
+export interface KmealIndexStateMinOrderBy {
+  block_hash?: OrderBy | null;
+
+  block_number?: OrderBy | null;
+
+  id?: OrderBy | null;
+}
+/** order by stddev() on columns of table "kmeal._index_state" */
+export interface KmealIndexStateStddevOrderBy {
+  block_number?: OrderBy | null;
+
+  id?: OrderBy | null;
+}
+/** order by stddev_pop() on columns of table "kmeal._index_state" */
+export interface KmealIndexStateStddevPopOrderBy {
+  block_number?: OrderBy | null;
+
+  id?: OrderBy | null;
+}
+/** order by stddev_samp() on columns of table "kmeal._index_state" */
+export interface KmealIndexStateStddevSampOrderBy {
+  block_number?: OrderBy | null;
+
+  id?: OrderBy | null;
+}
+/** order by sum() on columns of table "kmeal._index_state" */
+export interface KmealIndexStateSumOrderBy {
+  block_number?: OrderBy | null;
+
+  id?: OrderBy | null;
+}
+/** order by var_pop() on columns of table "kmeal._index_state" */
+export interface KmealIndexStateVarPopOrderBy {
+  block_number?: OrderBy | null;
+
+  id?: OrderBy | null;
+}
+/** order by var_samp() on columns of table "kmeal._index_state" */
+export interface KmealIndexStateVarSampOrderBy {
+  block_number?: OrderBy | null;
+
+  id?: OrderBy | null;
+}
+/** order by variance() on columns of table "kmeal._index_state" */
+export interface KmealIndexStateVarianceOrderBy {
+  block_number?: OrderBy | null;
+
+  id?: OrderBy | null;
+}
 /** input type for inserting array relation for remote table "kmeal._index_state" */
 export interface KmealIndexStateArrRelInsertInput {
   data: KmealIndexStateInsertInput[];
@@ -2709,11 +4952,123 @@ export interface KmealIndexStateObjRelInsertInput {
 
   on_conflict?: KmealIndexStateOnConflict | null;
 }
+/** order by aggregate values of table "kmeal.account" */
+export interface KmealAccountAggregateOrderBy {
+  avg?: KmealAccountAvgOrderBy | null;
+
+  count?: OrderBy | null;
+
+  max?: KmealAccountMaxOrderBy | null;
+
+  min?: KmealAccountMinOrderBy | null;
+
+  stddev?: KmealAccountStddevOrderBy | null;
+
+  stddev_pop?: KmealAccountStddevPopOrderBy | null;
+
+  stddev_samp?: KmealAccountStddevSampOrderBy | null;
+
+  sum?: KmealAccountSumOrderBy | null;
+
+  var_pop?: KmealAccountVarPopOrderBy | null;
+
+  var_samp?: KmealAccountVarSampOrderBy | null;
+
+  variance?: KmealAccountVarianceOrderBy | null;
+}
+/** order by avg() on columns of table "kmeal.account" */
+export interface KmealAccountAvgOrderBy {
+  balance?: OrderBy | null;
+
+  created_block?: OrderBy | null;
+}
+/** order by max() on columns of table "kmeal.account" */
+export interface KmealAccountMaxOrderBy {
+  balance?: OrderBy | null;
+
+  created_block?: OrderBy | null;
+
+  created_eosacc?: OrderBy | null;
+
+  created_trx?: OrderBy | null;
+}
+/** order by min() on columns of table "kmeal.account" */
+export interface KmealAccountMinOrderBy {
+  balance?: OrderBy | null;
+
+  created_block?: OrderBy | null;
+
+  created_eosacc?: OrderBy | null;
+
+  created_trx?: OrderBy | null;
+}
+/** order by stddev() on columns of table "kmeal.account" */
+export interface KmealAccountStddevOrderBy {
+  balance?: OrderBy | null;
+
+  created_block?: OrderBy | null;
+}
+/** order by stddev_pop() on columns of table "kmeal.account" */
+export interface KmealAccountStddevPopOrderBy {
+  balance?: OrderBy | null;
+
+  created_block?: OrderBy | null;
+}
+/** order by stddev_samp() on columns of table "kmeal.account" */
+export interface KmealAccountStddevSampOrderBy {
+  balance?: OrderBy | null;
+
+  created_block?: OrderBy | null;
+}
+/** order by sum() on columns of table "kmeal.account" */
+export interface KmealAccountSumOrderBy {
+  balance?: OrderBy | null;
+
+  created_block?: OrderBy | null;
+}
+/** order by var_pop() on columns of table "kmeal.account" */
+export interface KmealAccountVarPopOrderBy {
+  balance?: OrderBy | null;
+
+  created_block?: OrderBy | null;
+}
+/** order by var_samp() on columns of table "kmeal.account" */
+export interface KmealAccountVarSampOrderBy {
+  balance?: OrderBy | null;
+
+  created_block?: OrderBy | null;
+}
+/** order by variance() on columns of table "kmeal.account" */
+export interface KmealAccountVarianceOrderBy {
+  balance?: OrderBy | null;
+
+  created_block?: OrderBy | null;
+}
 /** input type for inserting array relation for remote table "kmeal.account" */
 export interface KmealAccountArrRelInsertInput {
   data: KmealAccountInsertInput[];
 
   on_conflict?: KmealAccountOnConflict | null;
+}
+/** order by aggregate values of table "kmeal.categories" */
+export interface KmealCategoriesAggregateOrderBy {
+  count?: OrderBy | null;
+
+  max?: KmealCategoriesMaxOrderBy | null;
+
+  min?: KmealCategoriesMinOrderBy | null;
+}
+/** order by max() on columns of table "kmeal.categories" */
+export interface KmealCategoriesMaxOrderBy {
+  alias?: OrderBy | null;
+
+  title?: OrderBy | null;
+}
+/** order by min() on columns of table "kmeal.categories" */
+export interface KmealCategoriesMinOrderBy {
+  alias?: OrderBy | null;
+
+  title?: OrderBy | null;
 }
 /** input type for inserting array relation for remote table "kmeal.categories" */
 export interface KmealCategoriesArrRelInsertInput {
@@ -2767,6 +5122,414 @@ export interface KmealPaymentObjRelInsertInput {
 export interface KmealRestaurantCategoriesObjRelInsertInput {
   data: KmealRestaurantCategoriesInsertInput;
 }
+/** order by aggregate values of table "kmeal.restaurant_location" */
+export interface KmealRestaurantLocationAggregateOrderBy {
+  avg?: KmealRestaurantLocationAvgOrderBy | null;
+
+  count?: OrderBy | null;
+
+  max?: KmealRestaurantLocationMaxOrderBy | null;
+
+  min?: KmealRestaurantLocationMinOrderBy | null;
+
+  stddev?: KmealRestaurantLocationStddevOrderBy | null;
+
+  stddev_pop?: KmealRestaurantLocationStddevPopOrderBy | null;
+
+  stddev_samp?: KmealRestaurantLocationStddevSampOrderBy | null;
+
+  sum?: KmealRestaurantLocationSumOrderBy | null;
+
+  var_pop?: KmealRestaurantLocationVarPopOrderBy | null;
+
+  var_samp?: KmealRestaurantLocationVarSampOrderBy | null;
+
+  variance?: KmealRestaurantLocationVarianceOrderBy | null;
+}
+/** order by avg() on columns of table "kmeal.restaurant_location" */
+export interface KmealRestaurantLocationAvgOrderBy {
+  distance?: OrderBy | null;
+}
+/** order by max() on columns of table "kmeal.restaurant_location" */
+export interface KmealRestaurantLocationMaxOrderBy {
+  address?: OrderBy | null;
+
+  description?: OrderBy | null;
+
+  distance?: OrderBy | null;
+
+  logo?: OrderBy | null;
+
+  name?: OrderBy | null;
+
+  phone?: OrderBy | null;
+}
+/** order by min() on columns of table "kmeal.restaurant_location" */
+export interface KmealRestaurantLocationMinOrderBy {
+  address?: OrderBy | null;
+
+  description?: OrderBy | null;
+
+  distance?: OrderBy | null;
+
+  logo?: OrderBy | null;
+
+  name?: OrderBy | null;
+
+  phone?: OrderBy | null;
+}
+/** order by stddev() on columns of table "kmeal.restaurant_location" */
+export interface KmealRestaurantLocationStddevOrderBy {
+  distance?: OrderBy | null;
+}
+/** order by stddev_pop() on columns of table "kmeal.restaurant_location" */
+export interface KmealRestaurantLocationStddevPopOrderBy {
+  distance?: OrderBy | null;
+}
+/** order by stddev_samp() on columns of table "kmeal.restaurant_location" */
+export interface KmealRestaurantLocationStddevSampOrderBy {
+  distance?: OrderBy | null;
+}
+/** order by sum() on columns of table "kmeal.restaurant_location" */
+export interface KmealRestaurantLocationSumOrderBy {
+  distance?: OrderBy | null;
+}
+/** order by var_pop() on columns of table "kmeal.restaurant_location" */
+export interface KmealRestaurantLocationVarPopOrderBy {
+  distance?: OrderBy | null;
+}
+/** order by var_samp() on columns of table "kmeal.restaurant_location" */
+export interface KmealRestaurantLocationVarSampOrderBy {
+  distance?: OrderBy | null;
+}
+/** order by variance() on columns of table "kmeal.restaurant_location" */
+export interface KmealRestaurantLocationVarianceOrderBy {
+  distance?: OrderBy | null;
+}
+/** order by aggregate values of table "raster_columns" */
+export interface RasterColumnsAggregateOrderBy {
+  avg?: RasterColumnsAvgOrderBy | null;
+
+  count?: OrderBy | null;
+
+  max?: RasterColumnsMaxOrderBy | null;
+
+  min?: RasterColumnsMinOrderBy | null;
+
+  stddev?: RasterColumnsStddevOrderBy | null;
+
+  stddev_pop?: RasterColumnsStddevPopOrderBy | null;
+
+  stddev_samp?: RasterColumnsStddevSampOrderBy | null;
+
+  sum?: RasterColumnsSumOrderBy | null;
+
+  var_pop?: RasterColumnsVarPopOrderBy | null;
+
+  var_samp?: RasterColumnsVarSampOrderBy | null;
+
+  variance?: RasterColumnsVarianceOrderBy | null;
+}
+/** order by avg() on columns of table "raster_columns" */
+export interface RasterColumnsAvgOrderBy {
+  blocksize_x?: OrderBy | null;
+
+  blocksize_y?: OrderBy | null;
+
+  num_bands?: OrderBy | null;
+
+  scale_x?: OrderBy | null;
+
+  scale_y?: OrderBy | null;
+
+  srid?: OrderBy | null;
+}
+/** order by max() on columns of table "raster_columns" */
+export interface RasterColumnsMaxOrderBy {
+  blocksize_x?: OrderBy | null;
+
+  blocksize_y?: OrderBy | null;
+
+  num_bands?: OrderBy | null;
+
+  scale_x?: OrderBy | null;
+
+  scale_y?: OrderBy | null;
+
+  srid?: OrderBy | null;
+}
+/** order by min() on columns of table "raster_columns" */
+export interface RasterColumnsMinOrderBy {
+  blocksize_x?: OrderBy | null;
+
+  blocksize_y?: OrderBy | null;
+
+  num_bands?: OrderBy | null;
+
+  scale_x?: OrderBy | null;
+
+  scale_y?: OrderBy | null;
+
+  srid?: OrderBy | null;
+}
+/** order by stddev() on columns of table "raster_columns" */
+export interface RasterColumnsStddevOrderBy {
+  blocksize_x?: OrderBy | null;
+
+  blocksize_y?: OrderBy | null;
+
+  num_bands?: OrderBy | null;
+
+  scale_x?: OrderBy | null;
+
+  scale_y?: OrderBy | null;
+
+  srid?: OrderBy | null;
+}
+/** order by stddev_pop() on columns of table "raster_columns" */
+export interface RasterColumnsStddevPopOrderBy {
+  blocksize_x?: OrderBy | null;
+
+  blocksize_y?: OrderBy | null;
+
+  num_bands?: OrderBy | null;
+
+  scale_x?: OrderBy | null;
+
+  scale_y?: OrderBy | null;
+
+  srid?: OrderBy | null;
+}
+/** order by stddev_samp() on columns of table "raster_columns" */
+export interface RasterColumnsStddevSampOrderBy {
+  blocksize_x?: OrderBy | null;
+
+  blocksize_y?: OrderBy | null;
+
+  num_bands?: OrderBy | null;
+
+  scale_x?: OrderBy | null;
+
+  scale_y?: OrderBy | null;
+
+  srid?: OrderBy | null;
+}
+/** order by sum() on columns of table "raster_columns" */
+export interface RasterColumnsSumOrderBy {
+  blocksize_x?: OrderBy | null;
+
+  blocksize_y?: OrderBy | null;
+
+  num_bands?: OrderBy | null;
+
+  scale_x?: OrderBy | null;
+
+  scale_y?: OrderBy | null;
+
+  srid?: OrderBy | null;
+}
+/** order by var_pop() on columns of table "raster_columns" */
+export interface RasterColumnsVarPopOrderBy {
+  blocksize_x?: OrderBy | null;
+
+  blocksize_y?: OrderBy | null;
+
+  num_bands?: OrderBy | null;
+
+  scale_x?: OrderBy | null;
+
+  scale_y?: OrderBy | null;
+
+  srid?: OrderBy | null;
+}
+/** order by var_samp() on columns of table "raster_columns" */
+export interface RasterColumnsVarSampOrderBy {
+  blocksize_x?: OrderBy | null;
+
+  blocksize_y?: OrderBy | null;
+
+  num_bands?: OrderBy | null;
+
+  scale_x?: OrderBy | null;
+
+  scale_y?: OrderBy | null;
+
+  srid?: OrderBy | null;
+}
+/** order by variance() on columns of table "raster_columns" */
+export interface RasterColumnsVarianceOrderBy {
+  blocksize_x?: OrderBy | null;
+
+  blocksize_y?: OrderBy | null;
+
+  num_bands?: OrderBy | null;
+
+  scale_x?: OrderBy | null;
+
+  scale_y?: OrderBy | null;
+
+  srid?: OrderBy | null;
+}
+/** order by aggregate values of table "raster_overviews" */
+export interface RasterOverviewsAggregateOrderBy {
+  avg?: RasterOverviewsAvgOrderBy | null;
+
+  count?: OrderBy | null;
+
+  max?: RasterOverviewsMaxOrderBy | null;
+
+  min?: RasterOverviewsMinOrderBy | null;
+
+  stddev?: RasterOverviewsStddevOrderBy | null;
+
+  stddev_pop?: RasterOverviewsStddevPopOrderBy | null;
+
+  stddev_samp?: RasterOverviewsStddevSampOrderBy | null;
+
+  sum?: RasterOverviewsSumOrderBy | null;
+
+  var_pop?: RasterOverviewsVarPopOrderBy | null;
+
+  var_samp?: RasterOverviewsVarSampOrderBy | null;
+
+  variance?: RasterOverviewsVarianceOrderBy | null;
+}
+/** order by avg() on columns of table "raster_overviews" */
+export interface RasterOverviewsAvgOrderBy {
+  overview_factor?: OrderBy | null;
+}
+/** order by max() on columns of table "raster_overviews" */
+export interface RasterOverviewsMaxOrderBy {
+  overview_factor?: OrderBy | null;
+}
+/** order by min() on columns of table "raster_overviews" */
+export interface RasterOverviewsMinOrderBy {
+  overview_factor?: OrderBy | null;
+}
+/** order by stddev() on columns of table "raster_overviews" */
+export interface RasterOverviewsStddevOrderBy {
+  overview_factor?: OrderBy | null;
+}
+/** order by stddev_pop() on columns of table "raster_overviews" */
+export interface RasterOverviewsStddevPopOrderBy {
+  overview_factor?: OrderBy | null;
+}
+/** order by stddev_samp() on columns of table "raster_overviews" */
+export interface RasterOverviewsStddevSampOrderBy {
+  overview_factor?: OrderBy | null;
+}
+/** order by sum() on columns of table "raster_overviews" */
+export interface RasterOverviewsSumOrderBy {
+  overview_factor?: OrderBy | null;
+}
+/** order by var_pop() on columns of table "raster_overviews" */
+export interface RasterOverviewsVarPopOrderBy {
+  overview_factor?: OrderBy | null;
+}
+/** order by var_samp() on columns of table "raster_overviews" */
+export interface RasterOverviewsVarSampOrderBy {
+  overview_factor?: OrderBy | null;
+}
+/** order by variance() on columns of table "raster_overviews" */
+export interface RasterOverviewsVarianceOrderBy {
+  overview_factor?: OrderBy | null;
+}
+/** order by aggregate values of table "spatial_ref_sys" */
+export interface SpatialRefSysAggregateOrderBy {
+  avg?: SpatialRefSysAvgOrderBy | null;
+
+  count?: OrderBy | null;
+
+  max?: SpatialRefSysMaxOrderBy | null;
+
+  min?: SpatialRefSysMinOrderBy | null;
+
+  stddev?: SpatialRefSysStddevOrderBy | null;
+
+  stddev_pop?: SpatialRefSysStddevPopOrderBy | null;
+
+  stddev_samp?: SpatialRefSysStddevSampOrderBy | null;
+
+  sum?: SpatialRefSysSumOrderBy | null;
+
+  var_pop?: SpatialRefSysVarPopOrderBy | null;
+
+  var_samp?: SpatialRefSysVarSampOrderBy | null;
+
+  variance?: SpatialRefSysVarianceOrderBy | null;
+}
+/** order by avg() on columns of table "spatial_ref_sys" */
+export interface SpatialRefSysAvgOrderBy {
+  auth_srid?: OrderBy | null;
+
+  srid?: OrderBy | null;
+}
+/** order by max() on columns of table "spatial_ref_sys" */
+export interface SpatialRefSysMaxOrderBy {
+  auth_name?: OrderBy | null;
+
+  auth_srid?: OrderBy | null;
+
+  proj4text?: OrderBy | null;
+
+  srid?: OrderBy | null;
+
+  srtext?: OrderBy | null;
+}
+/** order by min() on columns of table "spatial_ref_sys" */
+export interface SpatialRefSysMinOrderBy {
+  auth_name?: OrderBy | null;
+
+  auth_srid?: OrderBy | null;
+
+  proj4text?: OrderBy | null;
+
+  srid?: OrderBy | null;
+
+  srtext?: OrderBy | null;
+}
+/** order by stddev() on columns of table "spatial_ref_sys" */
+export interface SpatialRefSysStddevOrderBy {
+  auth_srid?: OrderBy | null;
+
+  srid?: OrderBy | null;
+}
+/** order by stddev_pop() on columns of table "spatial_ref_sys" */
+export interface SpatialRefSysStddevPopOrderBy {
+  auth_srid?: OrderBy | null;
+
+  srid?: OrderBy | null;
+}
+/** order by stddev_samp() on columns of table "spatial_ref_sys" */
+export interface SpatialRefSysStddevSampOrderBy {
+  auth_srid?: OrderBy | null;
+
+  srid?: OrderBy | null;
+}
+/** order by sum() on columns of table "spatial_ref_sys" */
+export interface SpatialRefSysSumOrderBy {
+  auth_srid?: OrderBy | null;
+
+  srid?: OrderBy | null;
+}
+/** order by var_pop() on columns of table "spatial_ref_sys" */
+export interface SpatialRefSysVarPopOrderBy {
+  auth_srid?: OrderBy | null;
+
+  srid?: OrderBy | null;
+}
+/** order by var_samp() on columns of table "spatial_ref_sys" */
+export interface SpatialRefSysVarSampOrderBy {
+  auth_srid?: OrderBy | null;
+
+  srid?: OrderBy | null;
+}
+/** order by variance() on columns of table "spatial_ref_sys" */
+export interface SpatialRefSysVarianceOrderBy {
+  auth_srid?: OrderBy | null;
+
+  srid?: OrderBy | null;
+}
 /** input type for inserting array relation for remote table "spatial_ref_sys" */
 export interface SpatialRefSysArrRelInsertInput {
   data: SpatialRefSysInsertInput[];
@@ -2784,6 +5547,114 @@ export interface TopologyLayerObjRelInsertInput {
   data: TopologyLayerInsertInput;
 
   on_conflict?: TopologyLayerOnConflict | null;
+}
+/** order by aggregate values of table "topology.topology" */
+export interface TopologyTopologyAggregateOrderBy {
+  avg?: TopologyTopologyAvgOrderBy | null;
+
+  count?: OrderBy | null;
+
+  max?: TopologyTopologyMaxOrderBy | null;
+
+  min?: TopologyTopologyMinOrderBy | null;
+
+  stddev?: TopologyTopologyStddevOrderBy | null;
+
+  stddev_pop?: TopologyTopologyStddevPopOrderBy | null;
+
+  stddev_samp?: TopologyTopologyStddevSampOrderBy | null;
+
+  sum?: TopologyTopologySumOrderBy | null;
+
+  var_pop?: TopologyTopologyVarPopOrderBy | null;
+
+  var_samp?: TopologyTopologyVarSampOrderBy | null;
+
+  variance?: TopologyTopologyVarianceOrderBy | null;
+}
+/** order by avg() on columns of table "topology.topology" */
+export interface TopologyTopologyAvgOrderBy {
+  id?: OrderBy | null;
+
+  precision?: OrderBy | null;
+
+  srid?: OrderBy | null;
+}
+/** order by max() on columns of table "topology.topology" */
+export interface TopologyTopologyMaxOrderBy {
+  id?: OrderBy | null;
+
+  name?: OrderBy | null;
+
+  precision?: OrderBy | null;
+
+  srid?: OrderBy | null;
+}
+/** order by min() on columns of table "topology.topology" */
+export interface TopologyTopologyMinOrderBy {
+  id?: OrderBy | null;
+
+  name?: OrderBy | null;
+
+  precision?: OrderBy | null;
+
+  srid?: OrderBy | null;
+}
+/** order by stddev() on columns of table "topology.topology" */
+export interface TopologyTopologyStddevOrderBy {
+  id?: OrderBy | null;
+
+  precision?: OrderBy | null;
+
+  srid?: OrderBy | null;
+}
+/** order by stddev_pop() on columns of table "topology.topology" */
+export interface TopologyTopologyStddevPopOrderBy {
+  id?: OrderBy | null;
+
+  precision?: OrderBy | null;
+
+  srid?: OrderBy | null;
+}
+/** order by stddev_samp() on columns of table "topology.topology" */
+export interface TopologyTopologyStddevSampOrderBy {
+  id?: OrderBy | null;
+
+  precision?: OrderBy | null;
+
+  srid?: OrderBy | null;
+}
+/** order by sum() on columns of table "topology.topology" */
+export interface TopologyTopologySumOrderBy {
+  id?: OrderBy | null;
+
+  precision?: OrderBy | null;
+
+  srid?: OrderBy | null;
+}
+/** order by var_pop() on columns of table "topology.topology" */
+export interface TopologyTopologyVarPopOrderBy {
+  id?: OrderBy | null;
+
+  precision?: OrderBy | null;
+
+  srid?: OrderBy | null;
+}
+/** order by var_samp() on columns of table "topology.topology" */
+export interface TopologyTopologyVarSampOrderBy {
+  id?: OrderBy | null;
+
+  precision?: OrderBy | null;
+
+  srid?: OrderBy | null;
+}
+/** order by variance() on columns of table "topology.topology" */
+export interface TopologyTopologyVarianceOrderBy {
+  id?: OrderBy | null;
+
+  precision?: OrderBy | null;
+
+  srid?: OrderBy | null;
 }
 /** input type for inserting array relation for remote table "topology.topology" */
 export interface TopologyTopologyArrRelInsertInput {
@@ -2959,7 +5830,7 @@ export enum KmealItemTypesSelectColumn {
 /** select columns of table "kmeal.listing_item_sides" */
 export enum KmealListingItemSidesSelectColumn {
   Group = "group",
-  ItemId = "item_id",
+  ItemName = "item_name",
   ListPrice = "list_price",
   ListingId = "listing_id",
   MaxSelection = "max_selection"
@@ -3060,11 +5931,6 @@ export enum TopologyTopologySelectColumn {
   Name = "name",
   Precision = "precision",
   Srid = "srid"
-}
-/** conflict action */
-export enum ConflictAction {
-  Ignore = "ignore",
-  Update = "update"
 }
 /** unique or primary key constraints on table "kmeal._block_number_txid" */
 export enum KmealBlockNumberTxidConstraint {
@@ -3306,6 +6172,11 @@ export enum TopologyTopologyUpdateColumn {
   Name = "name",
   Precision = "precision",
   Srid = "srid"
+}
+/** conflict action */
+export enum ConflictAction {
+  Ignore = "ignore",
+  Update = "update"
 }
 
 export type Name = any;

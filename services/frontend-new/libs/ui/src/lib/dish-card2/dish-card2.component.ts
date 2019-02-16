@@ -34,7 +34,7 @@ import { DishOrderComponent } from '../dish-order/dish-order.component';
       onClick(){
           const dialogRef = this.dialog.open(DishOrderComponent, {
               width: '650px',
-              data: this.data
+              data: this.data.listingsByitemId[0].listingItemSidessBylistingId || [],
             });
         
           dialogRef.afterClosed().subscribe(result => {
