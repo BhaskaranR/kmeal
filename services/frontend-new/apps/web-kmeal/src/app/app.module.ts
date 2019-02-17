@@ -13,9 +13,7 @@ import { homeRoutes, FeatureHomeModule } from '@kmeal-nx/feature-home';
 import { FeatureSearchModule ,featureSearchRoutes} from '@kmeal-nx/feature-search';
 import {featureRestaurantRoutes, FeatureRestaurantModule} from '@kmeal-nx/feature-restaurant';
 import { ErrorComponent } from './error.component';
-import { FeatureOrderModule } from '@kmeal-nx/feature-order';
-import { CheckoutComponent } from 'libs/feature-order/src/lib/checkout/checkout.component';
-import { OrderHistoryClientComponent } from 'libs/feature-order/src/lib/order-history-client/order-history.component';
+import { FeatureOrderModule, CheckoutComponent, OrderHistoryClientComponent } from '@kmeal-nx/feature-order';
 
 @NgModule({
   declarations: [AppComponent, ErrorComponent],

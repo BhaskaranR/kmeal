@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS kmeal."item" (
 CREATE TABLE IF NOT EXISTS kmeal."item_section" (
   "item_id" INTEGER NOT NULL REFERENCES kmeal.item("item_id"),
   "section_id" INTEGER NOT NULL REFERENCES kmeal.menu_book_section (section_id),
-  "sort_order" INTEGER NOT NULL,
+  "sort_order" INTEGER,
   PRIMARY KEY(item_id, section_id)
 );
 
@@ -67,8 +67,8 @@ CREATE TABLE  IF NOT EXISTS  kmeal."listing" (
 
 CREATE TABLE IF NOT EXISTS kmeal."listing_item_sides" (
   "listing_id" INTEGER NOT NULL REFERENCES kmeal.listing("listing_id"),
-  "item_id" INTEGER  NOT NULL REFERENCES kmeal.item("item_id"),
+  "item_name" VARCHAR(100)  NOT NULL,
   "group" VARCHAR(50),
   "max_selection" INTEGER ,
-  "list_price" DECIMAL NOT NULL
+  "list_price" DECIMAL
 );

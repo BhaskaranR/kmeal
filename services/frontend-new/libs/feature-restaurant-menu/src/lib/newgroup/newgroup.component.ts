@@ -12,7 +12,6 @@ import {
   InsertKmealMenuBookSectionGQL,
   UpdateKmealMenuBookSection as updKmealMenuBookSection,
   UpdateKmealMenuBookSectionGQL,
-  DeleteKmealMenuBookSection as delKmealMenuBookSection,
   DeleteKmealItemGQL,
   ConflictAction,
   KmealMenuBookConstraint,
@@ -22,9 +21,8 @@ import {
 
 import { pluck, map } from "rxjs/operators";
 import { FormBuilder, Validators } from "@angular/forms";
-import { InsertKmealMenuBookSection, UpdateKmealMenuBookSection } from '../generated/graphql';
 import { MatSnackBar } from "@angular/material";
-import { KmealMenuBookSectionUpdateColumn } from '../../../../feature-profile/src/lib/generated/graphql';
+import { ScatterService } from "@kmeal-nx/scatter";
 
 @Component({
   selector: "kmeal-nx-newgroup",
@@ -48,11 +46,9 @@ export class NewgroupComponent {
 
   constructor(private kmealMenuBookGQL: KmealMenuBookGQL,
     private insertKmealMenuBookGQL: InsertKmealMenuBookGQL,
-    private updateKmealMenuBookGQL: UpdateKmealMenuBookGQL,
     private deleteKmealMenuBookGQL: DeleteKmealMenuBookGQL,
-    private insertKmealMenuBookSectionGQL: InsertKmealMenuBookSectionGQL,
-    private updateKmealMenuBookSectionGQL: UpdateKmealMenuBookSectionGQL, 
     private deleteKmealMenuBookSectionGQL: DeleteKmealItemGQL,
+    private scatterService: ScatterService,
     public snackBar: MatSnackBar,
     private fb: FormBuilder) {
   }
@@ -61,7 +57,7 @@ export class NewgroupComponent {
     const variables = {
       "where": {
         "restaurant_id": {
-          "_eq": 1
+          "_eq": this.scatterService.restaurant_id
         }
       }
     };
@@ -87,7 +83,7 @@ export class NewgroupComponent {
       objects.push({
         menu_book_id: this.menubooks[i].menu_book_id,
         menu_book: this.menubooks[i].menu_book,
-        restaurant_id: 1,
+        restaurant_id: this.scatterService.restaurant_id,
         sort_order: i
       })
     }
@@ -95,7 +91,6 @@ export class NewgroupComponent {
     const variables: insKmealMenuBook.Variables = {
       objects: objects,
       "on_conflict": {
-        "action": ConflictAction.Update,
         "constraint": KmealMenuBookConstraint.MenuBookPkey,
         "update_columns": [KmealMenuBookUpdateColumn.SortOrder]
       }
@@ -114,11 +109,10 @@ export class NewgroupComponent {
     const variables: insKmealMenuBook.Variables = {
       objects: [{
         menu_book: this.menuBookForm.value.menubook,
-        restaurant_id: 1,
+        restaurant_id: this.scatterService.restaurant_id,
         sort_order: this.menubooks.length + 1
       }],
       "on_conflict": {
-        "action": ConflictAction.Update,
         "constraint": KmealMenuBookConstraint.MenuBookPkey,
         "update_columns": [KmealMenuBookUpdateColumn.MenuBook]
       }
@@ -126,10 +120,12 @@ export class NewgroupComponent {
     this.insertKmealMenuBookGQL.mutate(variables).pipe(pluck('data', 'insert_kmeal_menu_book', 'returning')).subscribe((mb: insKmealMenuBook.KmealMenuBookInlineFragment[]) => {
       const newgroup = <kmb.KmealMenuBook>mb[0];
       this.menubooks.push(newgroup);
+    }, (err) => {
+      this.openSnackBar("Error creating menu book :" + err, "");
     })
   }
 
- 
+
   deleteMenuGroup(ev) {
     const variables: delKmealMenuBook.Variables = {
       "where": {
@@ -138,14 +134,17 @@ export class NewgroupComponent {
         }
       }
     }
-    this.deleteKmealMenuBookGQL.mutate(variables).pipe(pluck('data', 'delete_kmeal_menu_book', 'returning')).subscribe((mb: string[]) => {
-      if (mb.length == 0) {
-        this.openSnackBar("not deleted, make sure you don't have sections associated with this section", "");  
-      }
-      const indx = this.menubooks.findIndex((mb) => mb.menu_book_id == ev.menu_book_id)
-      this.menubooks.splice(indx, 1);
-      this.openSnackBar("deleted", "");
-    })
+    this.deleteKmealMenuBookGQL.mutate(variables).pipe(pluck('data', 'delete_kmeal_menu_book', 'returning')).subscribe(
+      (mb: string[]) => {
+        if (mb.length == 0) {
+          this.openSnackBar("not deleted, make sure you don't have sections associated with this section", "");
+        }
+        const indx = this.menubooks.findIndex((mb) => mb.menu_book_id == ev.menu_book_id)
+        this.menubooks.splice(indx, 1);
+        this.openSnackBar("deleted", "");
+      }, (err) => {
+        this.openSnackBar("Cannot delete the menu book, Please delete/move the items associated with this book", "");
+      })
   }
 
 

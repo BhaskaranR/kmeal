@@ -6207,24 +6207,6 @@ export type _Text = any;
 // Documents
 // ====================================================
 
-export namespace KmealCategories {
-  export type Variables = {};
-
-  export type Query = {
-    __typename?: "Query";
-
-    kmeal_categories: KmealCategories[];
-  };
-
-  export type KmealCategories = {
-    __typename?: "kmeal_categories";
-
-    title: string;
-
-    alias: string;
-  };
-}
-
 export namespace GetRestaurantsNearBy {
   export type Variables = {
     nearby?: GetNearByInput | null;
@@ -6282,19 +6264,6 @@ import gql from "graphql-tag";
 // Apollo Services
 // ====================================================
 
-@Injectable({
-  providedIn: "root"
-})
-export class KmealCategoriesGQL extends Apollo.Query<KmealCategories.Query, KmealCategories.Variables> {
-  document: any = gql`
-    query kmeal_categories {
-      kmeal_categories {
-        title
-        alias
-      }
-    }
-  `;
-}
 @Injectable({
   providedIn: "root"
 })

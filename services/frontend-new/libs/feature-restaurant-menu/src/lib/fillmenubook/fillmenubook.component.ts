@@ -19,6 +19,7 @@ import { combineLatest } from 'rxjs';
 import { pluck, map } from "rxjs/operators";
 import { FormBuilder, Validators } from "@angular/forms";
 import { MatSnackBar, MatSelectChange, MatAutocompleteSelectedEvent } from "@angular/material";
+import { ScatterService } from "@kmeal-nx/scatter";
 
 @Component({
   selector: 'kmeal-nx-fillmenubook',
@@ -45,6 +46,7 @@ export class FillmenubookComponent implements OnInit {
     private insertItemSectionGQL: InsertItemSectionGQL,
     private deleteItemSectionGQL: deleteItemSectionGQL,
     public snackBar: MatSnackBar,
+    private scatterService: ScatterService,
     private fb: FormBuilder) {
   }
 
@@ -52,7 +54,7 @@ export class FillmenubookComponent implements OnInit {
     const variables = {
       "where": {
         "restaurant_id": {
-          "_eq": 1
+          "_eq": this.scatterService.restaurant_id
         }
       }
     };
@@ -132,7 +134,6 @@ export class FillmenubookComponent implements OnInit {
     const variables: insItemSection.Variables = {
       objects: objects,
       "on_conflict": {
-        "action": ConflictAction.Update,
         "constraint": KmealItemSectionConstraint.ItemSectionPkey,
         "update_columns": [KmealItemSectionUpdateColumn.SortOrder]
       }

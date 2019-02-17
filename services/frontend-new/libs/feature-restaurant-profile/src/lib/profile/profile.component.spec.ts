@@ -1,4 +1,13 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ReactiveFormsModule } from '@angular/forms';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import {
+  MatButtonModule,
+  MatCardModule,
+  MatInputModule,
+  MatRadioModule,
+  MatSelectModule,
+} from '@angular/material';
 
 import { ProfileComponent } from './profile.component';
 
@@ -8,7 +17,16 @@ describe('ProfileComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ProfileComponent]
+      declarations: [ ProfileComponent ],
+      imports: [
+        NoopAnimationsModule,
+        ReactiveFormsModule,
+        MatButtonModule,
+        MatCardModule,
+        MatInputModule,
+        MatRadioModule,
+        MatSelectModule,
+      ]
     }).compileComponents();
   }));
 
@@ -18,7 +36,7 @@ describe('ProfileComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should compile', () => {
     expect(component).toBeTruthy();
   });
 });

@@ -8,6 +8,8 @@ import {
   KmealItemUpdateColumn
 } from '../generated/graphql';
 import { pluck } from 'rxjs/operators';
+import { ScatterService } from "@kmeal-nx/scatter";
+import { MatSnackBar } from "@angular/material";
 
 @Component({
   selector: "kmeal-nx-newmenu",
@@ -46,6 +48,8 @@ export class NewmenuComponent {
 
   constructor(private fb: FormBuilder,
     private insertKmealItemGQL: InsertKmealItemGQL,
+    private scatterService: ScatterService,
+    public snackBar: MatSnackBar,
     private kmealMenuBookGQL: KmealMenuBookGQL) { }
 
   get itemName() {
@@ -78,7 +82,7 @@ export class NewmenuComponent {
     const variables = {
       "where": {
         "restaurant_id": {
-          "_eq": 1
+          "_eq": this.scatterService.restaurant_id
         }
       }
     };
@@ -112,25 +116,26 @@ export class NewmenuComponent {
     if (!this.menuForm.valid) {
       return;
     }
+    const newMenu = {
+      "cooking_time": this.menuForm.get("cooking_time").value,
+      "description": this.menuForm.get("description").value,
+      //item_id: ,
+      "item_name": this.menuForm.get("itemName").value,
+      "photo": this.menuForm.get("photo").value ==  null ? 'na':  this.menuForm.get("photo").value  ,
+      "restaurant_id": this.scatterService.restaurant_id,
+      "sort_order":  1,
+      "spicy_level": this.menuForm.get("spicy_level").value,
+      "vegetarian": this.menuForm.get("vegetarian").value,
+      "itemSectionsByitemId":  {
+        "data":[{
+          "section_id": this.menuForm.get("section_id").value
+        }]
+      }
+    };
+   
     const variables: insKmealMenuItem.Variables = {
-      object:  [{
-        "cooking_time": this.menuForm.get("cooking_time").value,
-        "description": this.menuForm.get("description").value,
-        //item_id: ,
-        "item_name": this.menuForm.get("itemName").value,
-        "photo": this.menuForm.get("photo").value ==  null ? 'na':  this.menuForm.get("photo").value  ,
-        "restaurant_id": 1,
-        "sort_order":  1,
-        "spicy_level": this.menuForm.get("spicy_level").value,
-        "vegetarian": this.menuForm.get("vegetarian").value,
-        "itemSectionsByitemId":  {
-          "data":[{
-            "section_id":this.menuForm.get("section_id").value
-          }]
-        }
-      }],
+      object:  [newMenu],
       "on_conflict": {
-        "action": ConflictAction.Update,
         "constraint": KmealItemConstraint.ItemPkey,
         "update_columns": [
           KmealItemUpdateColumn.ItemName
@@ -141,10 +146,18 @@ export class NewmenuComponent {
       if (items.length !== 0) {
           this.formSubmitted = true;
       }
+    }, (err) => {
+      this.openSnackBar("cannot create new item :" + err, '');
     });
   }
 
   deletemenu() {
     
+  }
+
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 2000,
+    });
   }
 }

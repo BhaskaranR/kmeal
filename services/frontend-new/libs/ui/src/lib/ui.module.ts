@@ -10,11 +10,16 @@ import { DishCardTwoComponent } from './dish-card2/dish-card2.component';
 import { DealTimerDirective } from './dish-card2/deal-timer.directive';
 
 
-const components = [DealTimerDirective,DishDetailPopupComponent, DishCardTwoComponent,DishCardComponent, RestaurantComponent, DishOrderComponent]
+const components = [DealTimerDirective, 
+  DishDetailPopupComponent, 
+  DishCardTwoComponent, 
+  DishCardComponent, 
+  RestaurantComponent, 
+  DishOrderComponent]
 
 @NgModule({
   declarations: components,
-  entryComponents:[DishOrderComponent,DishDetailPopupComponent],
+  entryComponents: [DishOrderComponent, DishDetailPopupComponent],
   imports: [
     FeatureCoreModule,
     CommonModule],

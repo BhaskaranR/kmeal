@@ -4,12 +4,12 @@ import { Apollo } from 'apollo-angular';
 import { Router } from '@angular/router';
 import { MatSnackBar, MatDialog } from '@angular/material';
 import { imagesMapping } from './utils';
-import { KmealCategoriesGQL, GetRestaurantsNearByGQL, KmealCategories, GetRestaurantsNearBy } from '../generated/graphql';
+import {  GetRestaurantsNearByGQL, GetRestaurantsNearBy } from '../generated/graphql';
 import { map, pluck } from 'rxjs/operators';
 import {  combineLatest } from 'rxjs';
-import { DishDetailPopupComponent } from 'libs/ui/src/lib/dish-detail/dish-detail-popup.component';
-import { DishOrderComponent } from 'libs/ui/src/lib/dish-order/dish-order.component';
+
 import { LocalStorage } from '@ngx-pwa/local-storage';
+import { KmealCategoriesGQL, KmealCategories, DishDetailPopupComponent, DishOrderComponent } from '@kmeal-nx/ui';
 
 @Component({
     selector: 'kmeal-nx-home',

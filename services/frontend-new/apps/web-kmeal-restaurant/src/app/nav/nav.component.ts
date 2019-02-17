@@ -1,8 +1,9 @@
-import { Component, Output, EventEmitter } from "@angular/core";
+import { Component, Output, EventEmitter, OnInit } from "@angular/core";
 import { ScatterService } from "@kmeal-nx/scatter";
-import { SECTIONS } from "../menu-items/menu-items";
+import { SECTIONS, PROFILESECTION } from '../menu-items/menu-items';
 
 import { Network } from "scatterjs-core";
+import { Router, ActivatedRoute } from '@angular/router';
 
 const SECTIONS_KEYS = Object.keys(SECTIONS);
 
@@ -12,25 +13,32 @@ const SECTIONS_KEYS = Object.keys(SECTIONS);
   templateUrl: "./nav.component.html",
   styleUrls: ["./nav.component.scss"]
 })
-export class NavBarComponent {
+export class NavBarComponent implements OnInit {
   dia: any;
   isLoggedIn = true;
   isSideNavOpen: boolean = false;
   @Output() toggleSidenavEvent: EventEmitter<boolean> = new EventEmitter();
-
+  _sections = SECTIONS;
+  _sectionKeys = SECTIONS_KEYS;
 
   get sections() {
-    return SECTIONS;
+    return this._sections;
   }
 
   get sectionKeys() {
-    return SECTIONS_KEYS;
+    return this._sectionKeys;
   }
 
   constructor(
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
     public scatterService: ScatterService) { }
 
-
+  ngOnInit() {
+    if (this.scatterService && this.scatterService.scatter && this.scatterService.scatter.identity) {
+      this.addProfileNav();
+    }
+  }
 
   toggleSideNav() {
     this.isSideNavOpen = !this.isSideNavOpen;
@@ -41,11 +49,21 @@ export class NavBarComponent {
     this.scatterService.selectedNetwork = e
   }
 
-  login() {
-    this.scatterService.loginorlogout();
+  async login() {
+    await this.scatterService.loginorlogout();
+    this.addProfileNav();
   }
 
-  logout() {
-    this.scatterService.loginorlogout();
+  addProfileNav() {
+    this._sections = Object.assign(this.sections , PROFILESECTION)
+    this._sectionKeys =[...this._sectionKeys, ...Object.keys(PROFILESECTION)]
+  }
+
+  async logout() {
+    await this.scatterService.loginorlogout();
+    this._sectionKeys.pop();
+    this.router.navigate([''])
+    
+    // this.router.goto
   }
 }
