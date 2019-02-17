@@ -126,7 +126,6 @@
                           {{fruit}}
                           <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
                         </mat-chip>
-                        {{categories}}
                         <input placeholder="Pick cuisine..." #fruitInput formControlName="categories" 
                           [matAutocomplete]="auto" [matChipInputFor]="chipList"
                           [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
