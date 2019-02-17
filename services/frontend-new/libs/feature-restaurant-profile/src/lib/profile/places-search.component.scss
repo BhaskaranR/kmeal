@@ -1,0 +1,22 @@
+.search-bar-container{
+    height:45px;
+    .search-bar-search{
+        input{
+            font-size: 14px;
+            padding:10px 52px 10px 48px;
+            height:35px;
+            outline: none;
+            background:whitesmoke;
+        }
+    }
+}
+
+#search-bar{
+    border:0;
+}
+
+input:focus{
+    outline: none;
+}
+
+mat-spinner.small-spinner svg { width: 40px !important; height: 40px !important; }

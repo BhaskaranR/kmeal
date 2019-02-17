@@ -8,9 +8,11 @@ import { MenuSidenavComponent } from './sidenav/sidenav.component';
 import { HomeComponent } from './home/home.component';
 import { WalletComponent } from './wallet/wallet.component';
 import { SendComponent } from './send/send.component';
-import { MatSidenavModule, MatListModule, MatCardModule, MatIconModule, MatFormFieldModule, MatButtonModule, MatInputModule, MatRadioModule, MatSelectModule, MatGridListModule, MatMenuModule, MatAutocompleteModule, MatChipsModule } from '@angular/material';
+import { MatSidenavModule, MatListModule, MatCardModule, MatIconModule, MatFormFieldModule, MatButtonModule, MatInputModule, MatRadioModule, MatSelectModule, MatGridListModule, MatMenuModule, MatAutocompleteModule, MatChipsModule, MatProgressSpinnerModule } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { PlacesSearchComponent } from './profile/places-search.component';
+import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 
 
 export const profileRoutes: Routes = [
@@ -26,7 +28,11 @@ export const profileRoutes: Routes = [
 
 
 @NgModule({
-  imports: [CommonModule, ScatterModule,
+  imports: [
+    GooglePlaceModule,
+    CommonModule, 
+    ScatterModule,
+    FlexLayoutModule,
     ReactiveFormsModule,
     MatGridListModule,
     MatIconModule,
@@ -36,6 +42,7 @@ export const profileRoutes: Routes = [
     MatInputModule,
     MatRadioModule,
     MatSelectModule,
+    MatProgressSpinnerModule,
     MatListModule,
     MatIconModule,
     MatCardModule,
@@ -45,7 +52,7 @@ export const profileRoutes: Routes = [
     MatChipsModule,
     FlexLayoutModule,
     RouterModule.forChild(profileRoutes)],
-  declarations: [MenuSidenavComponent, ProfileComponent, WalletComponent, HomeComponent, SendComponent],
+  declarations: [MenuSidenavComponent, PlacesSearchComponent, ProfileComponent, WalletComponent, HomeComponent, SendComponent],
   providers: [AccountService]
 })
 export class FeatureRestaurantProfileModule { }
