@@ -3,9 +3,8 @@ import { MediaMatcher } from "@angular/cdk/layout";
 import { ActivatedRoute } from "@angular/router";
 import { pluck } from "rxjs/operators";
 import { MatDialog, MatSnackBar } from "@angular/material";
-import { DishDetailPopupComponent } from 'libs/ui/src/lib/dish-detail/dish-detail-popup.component';
-import { DishOrderComponent } from 'libs/ui/src/lib/dish-order/dish-order.component';
 import { KmealListingGQL, OrderBy } from "../generated/graphql";
+import { DishDetailPopupComponent, DishOrderComponent } from "@kmeal-nx/ui";
 
 @Component({
     selector: "kmeal-nx-restaurant",

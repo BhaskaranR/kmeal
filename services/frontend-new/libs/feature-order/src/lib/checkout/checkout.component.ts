@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, OnDestroy } from "@angular/core";
 import { MatDialog } from "@angular/material";
-import { DishOrderComponent } from "libs/ui/src/lib/dish-order/dish-order.component";
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { DishOrderComponent } from "@kmeal-nx/ui";
 
 @Component({
   selector: "kmeal-nx-checkout",

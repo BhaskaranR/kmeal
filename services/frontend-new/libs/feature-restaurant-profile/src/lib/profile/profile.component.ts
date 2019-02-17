@@ -44,7 +44,7 @@ export class ProfileComponent {
   });
 
   addressForm = this.fb.group({
-    name:  [null, Validators.required],
+    name: [null, Validators.required],
     address: [null, Validators.required],
     address2: null,
     city: [null, Validators.required],
@@ -52,11 +52,11 @@ export class ProfileComponent {
     postalCode: [null, Validators.compose([
       Validators.required, Validators.minLength(5), Validators.maxLength(5)])
     ],
-    description:  [null, Validators.required],
+    description: [null, Validators.required],
     phone: this.phone,
     logo: null,
     timeofoperation: [null],
-    categories: ['',  Validators.required]
+    categories: ['', Validators.required]
   });
 
   hasUnitNumber = false;
@@ -142,7 +142,7 @@ export class ProfileComponent {
       this.allCategories = data1.map(d => d.alias);
       combined.unsubscribe();
     });
-    
+
     this.filteredCategories = this.addressForm.get("categories").valueChanges.pipe(
       startWith(null),
       map((fruit: string | null) => {
@@ -192,15 +192,19 @@ export class ProfileComponent {
   }
 
   async onSubmit() {
-    if (this.category && this.category.length) {
-      this.addressForm.get("categories").setValue(this.category.join(","));
+    try {
+      if (this.category && this.category.length) {
+        this.addressForm.get("categories").setValue(this.category.join(","));
+      }
+      if (!this.addressForm.valid) {
+        this.openSnackBar("Invalid form", "");
+        return;
+      }
+      await this.acctService.signup(this.addressForm.value);
+      this.openSnackBar("Profile updated", "");
+    } catch (e) {
+      this.openSnackBar(e, "");
     }
-    if (!this.addressForm.valid) {
-      this.openSnackBar("Invalid form", "");
-      return;
-    }
-    await this.acctService.signup(this.addressForm.value);
-    this.openSnackBar("Profile updated", "");
   }
 
   openSnackBar(message: string, action: string) {

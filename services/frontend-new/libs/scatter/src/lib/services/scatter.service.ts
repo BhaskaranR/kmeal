@@ -5,11 +5,13 @@ import ScatterLynx from 'scatterjs-plugin-lynx';
 import { Network } from 'scatterjs-core';
 import * as Eos from 'eosjs';
 
-export let eos,  reader, contract, balanceTimeout;
+let scatter: ScatterJS;
+export let eos;
+export let reader; 
+export let contract;
 
 import { HttpClient } from '@angular/common/http';
 import { BigNumber } from 'bignumber.js';
-import { EOS } from '../../scatter';
 export const code = 'kmealadmin13';
 
 export const RETURN_TYPES = {
@@ -56,8 +58,9 @@ export class ScatterService {
     selectedNetwork: Network;
     balance: '0.0000 KMEAL';
     networks: Network[] = [];
+    scatter;
+    balanceTimeout;
 
-    scatter: ScatterJS;
     constructor(private http: HttpClient) {
     }
 
@@ -70,18 +73,18 @@ export class ScatterService {
             return;
         }
 
-        this.scatter = ScatterJS.scatter;
+        this.scatter = scatter = ScatterJS.scatter;
         return await this.setSignatureProvider();
     }
 
     get identity(){
-        if(!this.scatter) return null;
-        return this.scatter.identity;
+        if(!scatter) return null;
+        return scatter.identity;
     };
 
     get account(){
-        if(!this.scatter || !this.scatter.identity) return;
-        return this.scatter.identity.accounts[0];
+        if(!scatter || !scatter.identity) return;
+        return scatter.identity.accounts[0];
     };
     
     get accountName(){
@@ -89,19 +92,19 @@ export class ScatterService {
         return this.account.name;
     };
 
+    getScatter() {
+        return scatter;
+    }
+
+
+    getContract() {
+        return contract;
+    }
 
     setEos = () => {
         reader = Eos({ httpEndpoint: this.selectedNetwork.fullhost(), chainId: this.selectedNetwork.chainId });
         eos = Eos({ httpEndpoint: this.selectedNetwork.fullhost(), chainId: this.selectedNetwork.chainId });
     };
-
-    checkLogin = (resolve, cb) => {
-        if (!this.scatter.identity) return resolve(errorMessage('Please log in with Scatter first.'));
-        const account = this.scatter.identity.accounts[0];
-        const opts = { authorization: `${account.name}@${account.authority}` };
-        cb(account, opts);
-    };
-
 
     loadNetworks(network: string) {
         return new Promise((resolve, reject) => {
@@ -119,13 +122,13 @@ export class ScatterService {
     }
 
     async loginorlogout() {
-        if (!this.scatter) return;
-        if (!this.scatter.identity) {
-            const identity = await this.scatter.getIdentity({ accounts: [this.selectedNetwork] });
+        if (!scatter) return;
+        if (!scatter.identity) {
+            const identity = await scatter.getIdentity({ accounts: [this.selectedNetwork] });
             return await this.setSignatureProvider();
         }
         else {
-            this.scatter.forgetIdentity()
+            scatter.forgetIdentity()
             return await this.setSignatureProvider();
         }
     }
@@ -136,12 +139,12 @@ export class ScatterService {
 
     async setSignatureProvider() {
         try {
-            if (!this.scatter || !this.scatter.identity) {
+            if (!scatter || !scatter.identity) {
                 this.setEos();
                 contract = null;
                 return false;
             }
-            eos = this.scatter.eos(this.selectedNetwork, Eos);
+            eos = scatter.eos(this.selectedNetwork, Eos);
             contract = await eos.contract(code, {requiredFields:{}});
 
         }
@@ -158,10 +161,10 @@ export class ScatterService {
 
 
     async watchBalance() {
-        const timeout = () => balanceTimeout = setTimeout(() => this.watchBalance(), 60000);
-        clearTimeout(balanceTimeout);
-        if (!this.scatter || !this.scatter.identity) return timeout();
-        const account = await reader.getAccount(this.scatter.identity.accounts[0].name).catch(res => null);
+        const timeout = () => this.balanceTimeout = setTimeout(() => this.watchBalance(), 60000);
+        clearTimeout(this.balanceTimeout);
+        if (!scatter || !scatter.identity) return timeout();
+        const account = await reader.getAccount(scatter.identity.accounts[0].name).catch(res => null);
         if (account) this.balance = account.core_liquid_balance;
         timeout();
     }
