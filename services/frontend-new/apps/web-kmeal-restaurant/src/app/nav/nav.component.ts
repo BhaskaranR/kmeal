@@ -59,6 +59,11 @@ export class NavBarComponent implements OnInit {
     this._sectionKeys =[...this._sectionKeys, ...Object.keys(PROFILESECTION)]
   }
 
+  viewAccount() {
+    this.router.navigate(['profile/profile'])
+
+  }
+
   async logout() {
     await this.scatterService.loginorlogout();
     this._sectionKeys.pop();

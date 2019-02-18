@@ -9,7 +9,12 @@ import { startWith, map } from 'rxjs/operators';
 
 import { KmealCategoriesGQL } from '@kmeal-nx/ui';
 
-
+interface Coordinate {
+  type: string,
+  lat: number,
+  lng: number,
+  radius: number
+}
 
 @Component({
   selector: 'kmeal-nx-profile',
@@ -46,7 +51,7 @@ export class ProfileComponent {
   addressForm = this.fb.group({
     name: [null, Validators.required],
     address: [null, Validators.required],
-    address2: null,
+    address2: '',
     city: [null, Validators.required],
     state: [null, Validators.required],
     postalCode: [null, Validators.compose([
@@ -54,8 +59,10 @@ export class ProfileComponent {
     ],
     description: [null, Validators.required],
     phone: this.phone,
-    logo: null,
-    timeofoperation: [null],
+    logo: '',
+    timeofoperation: [''],
+    latitude:[null],
+    longitude:[null],
     categories: ['', Validators.required]
   });
 
@@ -150,6 +157,30 @@ export class ProfileComponent {
       }));
   }
 
+
+
+  onAddressChange(e) {
+    console.log(e);
+    var value = e.formatted_address.split(",");
+    const count = value.length;
+    
+    const country = value[count-1];
+    const state = value[count-2];
+    const city = value[count-3];
+    var z=state.split(" ");
+    //this.addressForm.get("country").setValue(country);
+    var i =z.length;
+    this.addressForm.get("state").setValue(z[1]);
+    if(i>2){
+      this.addressForm.get("postalCode").setValue(z[2]);
+    }
+    this.addressForm.get("address").setValue(value[0]);
+    this.addressForm.get("city").setValue(city);
+    this.addressForm.get("latitude").setValue(e.geometry.location.lat())
+    this.addressForm.get("longitude").setValue(e.geometry.location.lng())
+
+  }
+
   add(event: MatChipInputEvent): void {
     // Add fruit only when MatAutocomplete is not open
     // To make sure this does not conflict with OptionSelected Event
@@ -194,7 +225,7 @@ export class ProfileComponent {
   async onSubmit() {
     try {
       if (this.category && this.category.length) {
-        this.addressForm.get("categories").setValue(this.category.join(","));
+        this.addressForm.get("categories").setValue(this.category);
       }
       if (!this.addressForm.valid) {
         this.openSnackBar("Invalid form", "");

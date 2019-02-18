@@ -42,10 +42,6 @@ export class PlacesSearchComponent  implements OnInit{
     }
 
     handleAddressChange(e){
-        if (this.searchOnBlur) {
         this.onAddressChangeEvent.emit(e);
-        } else {
-            this.geometry = e;
-        }
     }
 }
