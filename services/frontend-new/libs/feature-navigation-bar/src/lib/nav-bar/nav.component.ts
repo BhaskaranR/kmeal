@@ -1,5 +1,6 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { ScatterService } from '@kmeal-nx/scatter';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -14,7 +15,8 @@ export class NavBarComponent {
     @Output() toggleSidenavEvent: EventEmitter<boolean> = new EventEmitter();
     @Output() onAddressChangeEvent: EventEmitter<{ [key: string]: string }> = new EventEmitter();
     constructor(
-        public scatter: ScatterService) { }
+        private router: Router,
+        public scatterService: ScatterService) { }
     toggleSideNav() {
         this.isSideNavOpen = !this.isSideNavOpen;
         this.toggleSidenavEvent.emit(this.isSideNavOpen);
@@ -23,4 +25,14 @@ export class NavBarComponent {
     onAddressChange(e) {
         this.onAddressChangeEvent.emit(e);
     }
+
+
+  async login() {
+    await this.scatterService.loginorlogout();
+  }
+
+  async logout() {
+    await this.scatterService.loginorlogout();
+    this.router.navigate([''])
+  }
 }
