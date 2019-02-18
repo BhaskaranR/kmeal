@@ -7,6 +7,21 @@ query kmeal_listing($menuBookWhere: kmeal_menu_book_bool_exp,
    menu_book
    menu_book_id
    sort_order
+   restaurantByrestaurantId {
+    address
+    description
+    isactive
+    latitude
+    longitude
+    logo
+    name
+    owner
+    phone
+    restaurant_id
+    timeofoperation
+    yelp_id
+    rating
+   }
    menuBookSectionsBymenuBookId (order_by: $menuBookSectionsOrderby) {
      section_id
      section_name
@@ -42,5 +57,5 @@ query kmeal_listing($menuBookWhere: kmeal_menu_book_bool_exp,
        }
      }
    }
- }
+  }
 }

@@ -1,10 +1,11 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef} from "@angular/core";
 import { MediaMatcher } from "@angular/cdk/layout";
 import { ActivatedRoute } from "@angular/router";
-import { pluck } from "rxjs/operators";
+import { pluck, switchMap } from "rxjs/operators";
 import { MatDialog, MatSnackBar } from "@angular/material";
 import { KmealListingGQL, OrderBy } from "../generated/graphql";
 import { DishDetailPopupComponent, DishOrderComponent } from "@kmeal-nx/ui";
+import * as _ from 'underscore';
 
 @Component({
     selector: "kmeal-nx-restaurant",
@@ -18,6 +19,7 @@ export class ResComponent implements OnInit, OnDestroy{
     mobileQuery: MediaQueryList;
     book:any;
     sections:any[];
+    restaurantInfo:any;
     routeParamSub:any;
     menu:Array<string> ;
     dishes:any[];
@@ -38,38 +40,40 @@ export class ResComponent implements OnInit, OnDestroy{
 
     ngOnDestroy(): void {
         this.mobileQuery.removeListener(this._mobileQueryListener);
-        this.kmealListListner.unsubscribe();
         this.routeParamSub.unsubscribe();
     }
 
     ngOnInit(){
-        console.log('init restuanrats')
-        this.breakpoint = this.generateBreakpoint(window.innerWidth);
-        this.routeParamSub =  this.route
+        let self = this;
+        self.breakpoint = self.generateBreakpoint(window.innerWidth);
+        self.routeParamSub =  self.route
         .params
-        .pipe(pluck('id'))
-        .subscribe(params => {
-            console.log(params);
-            this.loadRestaurantDetails(this.getQuery(params,true));
-        })
+        .pipe(pluck('id'),switchMap(self.loadRestaurantData.bind(self)))
+        .subscribe(self.dataHandler.bind(self), self.throwError.bind(self));
     }
 
-    kmealListListner:any;
-    loadRestaurantDetails(query){
-        this.kmealListListner = this.kmealListingGQL.watch(query)
-        .valueChanges
-        .pipe(pluck("data","kmeal_menu_book"))
-        .subscribe((result: any[]) =>{
+    private loadRestaurantData(param) {
+        if (_.isUndefined(param)){
+            throw new Error('Something went wrong');
+        }
 
-            if (!result || result.length == 0){
-                this.throwError('Something went wrong');
-                return;
-            }
-            this.book = result[0];
-            this.sections = this.book.menuBookSectionsBymenuBookId;
-            this.isReady = true;
-            console.log(result);
-        })
+        return this.kmealListingGQL.watch(this.getQuery(param,true))
+                .valueChanges
+                .pipe(pluck('data','kmeal_menu_book'));
+    }
+
+    private dataHandler(result){
+
+        if (!_.isArray(result) || _.isUndefined(result) || _.isEmpty(result)){
+            this.throwError('Something went wrong');
+            return;
+        }
+
+        console.log('found data : ', result);
+        this.book = result[0];
+        this.sections = !_.isEmpty(this.book.menuBookSectionsBymenuBookId) ? this.book.menuBookSectionsBymenuBookId : [];
+        this.restaurantInfo = !_.isUndefined(this.book.restaurantByrestaurantId) ? this.book.restaurantByrestaurantId : {} ;
+        this.isReady = true;
     }
 
     private getQuery(id, isActive){
@@ -106,60 +110,6 @@ export class ResComponent implements OnInit, OnDestroy{
         return (width <= 959 ) ? 1: (width <= 1279) ? 2: 3;
     }
 
-    openDishDetails(e){
-        const dialogRef = this.dialog.open(
-            DishDetailPopupComponent,
-            {
-                width: '650px',
-                data: e
-            });
-      
-        dialogRef.afterClosed().subscribe(result => {
-            if (result == 'ORDER'){
-                this.orderDishNow();
-            }
-        });
-    }
-
-
-    orderDishNow(){
-        let data = {
-            name:'Chicken noodle',
-            id:'hxusa2432nk',
-            specifications:[
-                {
-                    type:'number',
-                    inputs:'',
-                    name:'Quantity',
-                    value:null,
-                },{
-                    type:'select',
-                    inputs:['Mild','Medium','Extra Spicy'],
-                    value:null,
-                    name:'Spicy Level'
-                },{
-                    type:'multiple',
-                    inputs:['extra shrimp','extra chicken breast','salad'],
-                    name:'AddOn',
-                    value:null,
-                },{
-                    type:'string',
-                    inputs:'',
-                    name:'Other Instructions',
-                    value:null
-                }
-            ]
-        }
-
-        const dialogRef = this.dialog.open(DishOrderComponent, {
-            width: '650px',
-            data: data
-          });
-      
-        dialogRef.afterClosed().subscribe(result => {
-            console.log('closed', result);
-        });
-    }
 
 
     throwError(msg) {

@@ -6231,7 +6231,39 @@ export namespace KmealListing {
 
     sort_order: number;
 
+    restaurantByrestaurantId: RestaurantByrestaurantId;
+
     menuBookSectionsBymenuBookId: MenuBookSectionsBymenuBookId[];
+  };
+
+  export type RestaurantByrestaurantId = {
+    __typename?: "kmeal_restaurant";
+
+    address: string;
+
+    description: string;
+
+    isactive: boolean;
+
+    latitude: Float8;
+
+    longitude: Float8;
+
+    logo: string;
+
+    name: string;
+
+    owner: Bpchar;
+
+    phone: string;
+
+    restaurant_id: number;
+
+    timeofoperation: string;
+
+    yelp_id: string | null;
+
+    rating: number | null;
   };
 
   export type MenuBookSectionsBymenuBookId = {
@@ -6342,6 +6374,21 @@ export class KmealListingGQL extends Apollo.Query<KmealListing.Query, KmealListi
         menu_book
         menu_book_id
         sort_order
+        restaurantByrestaurantId {
+          address
+          description
+          isactive
+          latitude
+          longitude
+          logo
+          name
+          owner
+          phone
+          restaurant_id
+          timeofoperation
+          yelp_id
+          rating
+        }
         menuBookSectionsBymenuBookId(order_by: $menuBookSectionsOrderby) {
           section_id
           section_name
