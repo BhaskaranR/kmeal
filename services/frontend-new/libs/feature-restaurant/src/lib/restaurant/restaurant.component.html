@@ -20,7 +20,7 @@
     <mat-divider></mat-divider>
 
     <mat-tab-group *ngIf="isReady && (!!sections && sections.length !== 0)">
-        <mat-tab *ngFor="let sec of book.menuBookSectionsBymenuBookId; let index = index" 
+        <mat-tab *ngFor="let sec of sections; let index = index" 
                 [label]="sec.section_name">
                 <br>
                 <mat-grid-list [cols]="breakpoint" rowHeight="3:1.6" (window:resize)="onResize($event)" >

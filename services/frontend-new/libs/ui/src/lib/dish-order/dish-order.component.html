@@ -1,59 +1,44 @@
 <form action="" *ngIf="isReady">
-    <mat-card class="mat-card-flat">
+    <mat-dialog-content>
         <div fxLayout="row">
             <div fxFlex=78%>
                 <h5><b>{{options.name}}</b></h5>
-                <mat-card-subtitle>$14.99</mat-card-subtitle>
+                <mat-card-subtitle class="mat-body-1">$ {{data.price}}</mat-card-subtitle>
             </div>
             <div fxFlex="22%">
                 <div style="padding:10px 10px; border:1px solid lightgray; border-radius:5px">
-                    <div style="display: inline-block; width:20%">+</div>
-                    <div style="display: inline-block; width:60%; text-align: center">1</div>
-                    <div style="display: inline-block;width:20%; text-align: right">-</div>
+                    <div style="display: inline-block; width:20%" (click)="onChangeQty('PLUS')">+</div>
+                    <div style="display: inline-block; width:60%; text-align: center">{{qty}}</div>
+                    <div style="display: inline-block;width:20%; text-align: right" (click)="onChangeQty('MINUS')">-</div>
                 </div>
             </div>
         </div>
-        <br>
+
         <div *ngFor="let spe of options.options; let i = index">
-            <div fxLayout="row">
-                <div fxFlex="50%">
-                    <h6>{{spe.name}}</h6>
-                </div>
-                <div fxFlex="50%">
-                    <mat-form-field *ngIf="spe.type === 'select'" appearance="fill" style="width: 100%">
-                        <mat-select placeholder="{{spe.name}}" [hidden]="spe.type !== 'select'" [(ngModel)]="spe.value" name="select+i">
-                            <mat-option *ngFor="let opt of spe.inputs; let idx = index" [value]="spe.value">
-                                {{opt}}
-                            </mat-option>
-                        </mat-select>    
-                    </mat-form-field>
+            <p class="mat-body-1">{{spe.name}} <mat-card-subtitle style="display:inline">{{spe.subName}}</mat-card-subtitle></p>
+ 
+          
+            <div *ngIf="spe.type === 'select'" style="width: 100%">
+                <mat-radio-group [(ngModel)]="spe.value" name="single-select" (change)="onChangeSingle()">
+                    <mat-radio-button *ngFor="let opt of spe.inputs ; let idx=index" [value]="opt" style="margin-right:10px">
+                    {{opt}} <small>{{ spe.inputsPrices[idx] > 0 ? '(+$ ' + spe.inputsPrices[idx] + ')' : '' }}</small>
+                    </mat-radio-button>
+                </mat-radio-group>  
+            </div>
 
-                    <div *ngIf="spe.type === 'multi-choices'" >
-                        <div *ngFor="let opt of spe.inputs">
-                            <div style="display: inline-block;width:80%">
-                                <mat-checkbox >{{opt}}</mat-checkbox>
-                            </div>
-                            <div style="display: inline-block;width: 20%; text-align: right">
-                                Free
-                            </div>
-                        </div>
-                    </div> 
+            <div *ngIf="spe.type === 'multi-choices'" >
+                <div *ngFor="let opt of spe.inputs; let idx = index">
+                    <div style="display: inline-block;">
+                        <mat-checkbox (change)="onChangeMultiChoice(spe, idx)" [(ngModel)]="spe.value[idx]" name="'multi'+ idx">{{opt}} <small>{{ spe.inputsPrices[idx] > 0 ? '(+$ ' + spe.inputsPrices[idx]+')' : '' }}</small></mat-checkbox>
+                    </div>
                 </div>
-            </div>    
-            <br>        
+            </div> 
+        
+            <br>   
         </div> 
-
-        <br>
-
-        <div fxLayout="row">
-            <div fxFlex="50%">
-                Total
-            </div>
-            <div fxFlex="50%">
-                $14.44
-            </div>
-        </div>
-    </mat-card>
+    </mat-dialog-content>
+    <br>
+    <p class="mat-h4">Total : $ {{total}}</p>
         
     <mat-dialog-actions>
         <button mat-button mat-dialog-close [mat-dialog-close]="'close'" style="margin-right: 10px">Cancel</button>

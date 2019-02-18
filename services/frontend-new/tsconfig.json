@@ -65,6 +65,9 @@
       ],
       "@kmeal-nx/feature-search": [
         "libs/feature-search/src/index.ts"
+      ],
+      "jszip": [
+        "./node_modules/jszip/dist/jszip.min.js"
       ]
     }
   },

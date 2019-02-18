@@ -6207,21 +6207,141 @@ export type _Text = any;
 // Documents
 // ====================================================
 
-export namespace KmealCategories {
-  export type Variables = {};
+export namespace KmealListing {
+  export type Variables = {
+    menuBookWhere?: KmealMenuBookBoolExp | null;
+    menuBookOrderby?: KmealMenuBookOrderBy[] | null;
+    menuBookSectionsOrderby?: KmealMenuBookSectionOrderBy[] | null;
+    itemSectionsOrderby?: KmealItemSectionOrderBy[] | null;
+    listingWhere?: KmealListingBoolExp | null;
+  };
 
   export type Query = {
     __typename?: "Query";
 
-    kmeal_categories: KmealCategories[];
+    kmeal_menu_book: KmealMenuBook[];
   };
 
-  export type KmealCategories = {
-    __typename?: "kmeal_categories";
+  export type KmealMenuBook = {
+    __typename?: "kmeal_menu_book";
 
-    title: string;
+    menu_book: string;
 
-    alias: string;
+    menu_book_id: number;
+
+    sort_order: number;
+
+    restaurantByrestaurantId: RestaurantByrestaurantId;
+
+    menuBookSectionsBymenuBookId: MenuBookSectionsBymenuBookId[];
+  };
+
+  export type RestaurantByrestaurantId = {
+    __typename?: "kmeal_restaurant";
+
+    address: string;
+
+    description: string;
+
+    isactive: boolean;
+
+    latitude: Float8;
+
+    longitude: Float8;
+
+    logo: string;
+
+    name: string;
+
+    owner: Bpchar;
+
+    phone: string;
+
+    restaurant_id: number;
+
+    timeofoperation: string;
+
+    yelp_id: string | null;
+
+    rating: number | null;
+  };
+
+  export type MenuBookSectionsBymenuBookId = {
+    __typename?: "kmeal_menu_book_section";
+
+    section_id: number;
+
+    section_name: string;
+
+    itemSectionsBysectionId: ItemSectionsBysectionId[];
+  };
+
+  export type ItemSectionsBysectionId = {
+    __typename?: "kmeal_item_section";
+
+    itemByitemId: ItemByitemId;
+  };
+
+  export type ItemByitemId = {
+    __typename?: "kmeal_item";
+
+    item_id: number;
+
+    item_name: string;
+
+    description: string;
+
+    spicy_level: number | null;
+
+    vegetarian: number | null;
+
+    photo: string;
+
+    sort_order: number;
+
+    cooking_time: number | null;
+
+    listingsByitemId: ListingsByitemId[];
+  };
+
+  export type ListingsByitemId = {
+    __typename?: "kmeal_listing";
+
+    listing_id: number;
+
+    list_price: Numeric;
+
+    list_type: Bpchar;
+
+    min_price: Numeric | null;
+
+    quantity: number | null;
+
+    sliding_rate: Numeric | null;
+
+    start_date: Date | null;
+
+    start_time: string | null;
+
+    end_date: Date | null;
+
+    end_time: string | null;
+
+    listingItemSidessBylistingId: ListingItemSidessBylistingId[];
+  };
+
+  export type ListingItemSidessBylistingId = {
+    __typename?: "kmeal_listing_item_sides";
+
+    item_name: string;
+
+    listing_id: number;
+
+    list_price: Numeric | null;
+
+    group: string | null;
+
+    max_selection: number | null;
   };
 }
 
@@ -6241,12 +6361,69 @@ import gql from "graphql-tag";
 @Injectable({
   providedIn: "root"
 })
-export class KmealCategoriesGQL extends Apollo.Query<KmealCategories.Query, KmealCategories.Variables> {
+export class KmealListingGQL extends Apollo.Query<KmealListing.Query, KmealListing.Variables> {
   document: any = gql`
-    query kmeal_categories {
-      kmeal_categories {
-        title
-        alias
+    query kmeal_listing(
+      $menuBookWhere: kmeal_menu_book_bool_exp
+      $menuBookOrderby: [kmeal_menu_book_order_by!]
+      $menuBookSectionsOrderby: [kmeal_menu_book_section_order_by!]
+      $itemSectionsOrderby: [kmeal_item_section_order_by!]
+      $listingWhere: kmeal_listing_bool_exp
+    ) {
+      kmeal_menu_book(where: $menuBookWhere, order_by: $menuBookOrderby) {
+        menu_book
+        menu_book_id
+        sort_order
+        restaurantByrestaurantId {
+          address
+          description
+          isactive
+          latitude
+          longitude
+          logo
+          name
+          owner
+          phone
+          restaurant_id
+          timeofoperation
+          yelp_id
+          rating
+        }
+        menuBookSectionsBymenuBookId(order_by: $menuBookSectionsOrderby) {
+          section_id
+          section_name
+          itemSectionsBysectionId(order_by: $itemSectionsOrderby) {
+            itemByitemId {
+              item_id
+              item_name
+              description
+              spicy_level
+              vegetarian
+              photo
+              sort_order
+              cooking_time
+              listingsByitemId(where: $listingWhere) {
+                listing_id
+                list_price
+                list_type
+                min_price
+                quantity
+                sliding_rate
+                start_date
+                start_time
+                end_date
+                end_time
+                listingItemSidessBylistingId {
+                  item_name
+                  listing_id
+                  list_price
+                  group
+                  max_selection
+                }
+              }
+            }
+          }
+        }
       }
     }
   `;

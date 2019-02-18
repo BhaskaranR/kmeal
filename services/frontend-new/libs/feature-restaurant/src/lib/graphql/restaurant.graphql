@@ -57,5 +57,5 @@ query kmeal_listing($menuBookWhere: kmeal_menu_book_bool_exp,
        }
      }
    }
- }
+  }
 }
