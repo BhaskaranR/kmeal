@@ -29,20 +29,25 @@ export class NavBarComponent implements OnInit {
     }
 
     ngOnInit(){
-        this.localStorage.getItem('orders').subscribe( (result:any[]) => {
-            this.cnt = result.length || 0;
-            console.log(this.cnt, this.localStorage);
+        this.localStorage.getItem('orders').subscribe((result:any[]) => {
+            this.cnt = result.length;
+            console.log('get itme ?');
         });
 
-        window.addEventListener('storage',(e) => {
-            console.log('storage changed ', e);
+        this.localStorage.setItemSubscribe('orders', (e)=>{
+            console.log('set item sub?  ',e);
         })
     }
 
     async login() {
         await this.scatterService.loginorlogout();
+<<<<<<< HEAD
     }
 
+=======
+      }
+    
+>>>>>>> 1035508fab40a8b6fd57c0e72c51f8c47f5e0f5a
     async logout() {
         await this.scatterService.loginorlogout();
         this.router.navigate([''])

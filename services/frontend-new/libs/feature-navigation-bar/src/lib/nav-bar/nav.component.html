@@ -20,7 +20,39 @@
         fxLayoutGap="20px"
         fxLayoutGap.xs="0px">
         
-        <button mat-icon-button routerLink="/checkout" ><mat-icon [matBadge]="cnt"  matBadgeColor="warn">shopping_cart</mat-icon></button>
+    <button mat-icon-button routerLink="/checkout" ><mat-icon [matBadge]="cnt"  matBadgeColor="warn">shopping_cart</mat-icon></button>
+
+
+    <button mat-button [matMenuTriggerFor]="envPicker">
+        {{scatterService.selectedNetwork?.name}}
+        <mat-icon>arrow_drop_down</mat-icon>
+    </button>
+
+    <mat-menu #envPicker="matMenu">
+        <button mat-menu-item *ngFor="let env of scatterService.networks" (click)="onenvChanged(env)">
+            {{env.name}}
+        </button>
+    </mat-menu>
+
+    <figure class="action scatter" *ngIf="scatterService?.scatter?.identity">
+        <button mat-button [matMenuTriggerFor]="account">
+           {{scatterService.accountName}}
+        </button>
+        <mat-menu #account="matMenu">
+            <button mat-menu-item (click)="viewAccount()">
+                View Account
+            </button>
+            <button mat-menu-item (click)="logout()">
+                Log out
+            </button>
+        </mat-menu>
+    </figure>
+
+    <figure class="action scatter" *ngIf="scatterService.scatter && !scatterService.scatter.identity">
+        <button mat-button  (click)="login()">
+                Login
+        </button>
+    </figure>
     </div>
 
 </div>

@@ -2,6 +2,8 @@ import { Component, OnInit, Input, OnDestroy } from "@angular/core";
 import { MatDialog } from "@angular/material";
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { DishOrderComponent } from "@kmeal-nx/ui";
+import { LocalStorage } from '@ngx-pwa/local-storage';
+
 
 @Component({
   selector: "kmeal-nx-checkout",
@@ -23,13 +25,21 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     orderForm:FormGroup;
     sub:any;
     orderSub:any;
+    orders:any[] | any;
+    isReady:boolean = false;
 
     constructor(public dialog: MatDialog,
-        private fb:FormBuilder){
-        }
+        protected localStorage: LocalStorage,
+        private fb:FormBuilder){}
 
     ngOnInit(){
-        this.initForm();
+        this.orders = this.localStorage.getItem('orders').subscribe((result) => {
+            this.orders = result;
+            this.initForm();
+            this.isReady = true;
+            console.log(this.orders)
+        });
+
     }
 
     ngOnDestroy(){

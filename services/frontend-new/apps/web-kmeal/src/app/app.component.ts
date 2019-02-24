@@ -30,32 +30,10 @@ export class AppComponent {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = ()=> changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
-    this.localStorage.getItem<string>('address').subscribe((address) => {
-      if (address) {
-        this.isAddressSet = true;
-      }
-      console.log(address, 'web ')
-    });
   }
 
 
   ngOnDestroy(): void {
     this.mobileQuery.removeListener(this._mobileQueryListener);
-  }
-
-  onAddressChange(e){
-    let param : Coordinate = {
-      type:'ADDRESS',
-      lat:e.geometry.location.lat(),
-      lng:e.geometry.location.lng(),
-      radius:10
-    }
-    this.updateLocateStorage(param);
-    this.router.navigate(['/search'],{queryParams:param});
-  }
-
-  private updateLocateStorage(param){
-    this.localStorage.setItem('address', param)
-  }
-  
+  }  
 }

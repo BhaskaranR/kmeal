@@ -111,7 +111,9 @@ export class ResComponent implements OnInit, OnDestroy{
     }
 
     onPlaceOrder(order){
+
         console.log('ordered ', order);
+
         this.localStorage.getItem('orders').subscribe( (result:any[] | null) =>{
             if (!result){
                 this.localStorage.setItem('orders', [order]).subscribe((re) => {
