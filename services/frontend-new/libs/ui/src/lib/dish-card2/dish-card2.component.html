@@ -1,4 +1,3 @@
-<mat-card  style="width:100%;cursor:pointer" *ngIf="isDynamic" (click)="onClick()" [class.mat-elevation-z0]="!isActive" [class.mat-elevation-z2]="isActive" (mouseenter) ="isActive = true"  (mouseleave) ="isActive = false">
     <div fxLayout="row" fxLayoutGap="15px">
         <div fxFlex="30%">
             <img [attr.src]="defaultPhoto" alt="foto" style="width: 100%; margin-top:13px">
@@ -17,18 +16,4 @@
         </div>
     </div>
 </mat-card>
-
-<mat-card  style="width:100%; cursor:pointer" *ngIf="!isDynamic" (click)="onClick()" [class.mat-elevation-z0]="!isActive" [class.mat-elevation-z2]="isActive" (mouseenter) ="isActive = true"  (mouseleave) ="isActive = false">
-    <div fxLayout="row" fxLayoutGap="15px">
-        <div fxFlex="30%">
-            <img [attr.src]="defaultPhoto" alt="foto" style="width: 100%; margin-top:13px">
-        </div>
-        <div fxFlex="70%">
-            <h6>{{data.item_name}}</h6>
-            <mat-card-subtitle style="height:85px;overflow-y: hidden">{{data.description}}</mat-card-subtitle>
-            $ {{price}}
-        </div>
-    </div>
-</mat-card>
-
 
