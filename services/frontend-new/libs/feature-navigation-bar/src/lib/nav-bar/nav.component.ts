@@ -29,13 +29,13 @@ export class NavBarComponent implements OnInit {
     }
 
     ngOnInit(){
-        this.localStorage.getItem('orders').subscribe( (result:any[]) => {
-            this.cnt = result.length || 0;
-            console.log(this.cnt, this.localStorage);
+        this.localStorage.getItem('orders').subscribe((result:any[]) => {
+            this.cnt = result.length;
+            console.log('get itme ?');
         });
 
-        window.addEventListener('storage',(e) => {
-            console.log('storage changed ', e);
+        this.localStorage.setItemSubscribe('orders', (e)=>{
+            console.log('set item sub?  ',e);
         })
     }
 
