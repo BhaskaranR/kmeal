@@ -57,9 +57,8 @@ import * as _ from 'underscore';
           });
         
           dialogRef.afterClosed().subscribe(result => {
-              console.log('closed', result);
-              if (result == 'order'){
-                this.onClickEvent.emit(this.data);
+              if (!!result){
+                this.onClickEvent.emit(result);
               }
           });
         }   

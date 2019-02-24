@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, Input, Inject , OnInit} from "@angular/core";
+import { Component, ChangeDetectionStrategy, Input, Inject , OnInit,Output, EventEmitter} from "@angular/core";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
 import * as _ from 'underscore';
 
@@ -34,6 +34,7 @@ export class DishOrderComponent implements OnInit{
   total:number=0;
   qty:number = 1;
   price:number = 0;
+
   constructor(public dialogRef: MatDialogRef<DishOrderComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {}
 
   ngOnInit(){
@@ -61,31 +62,38 @@ export class DishOrderComponent implements OnInit{
         type:type,
         inputs:keys[k].map( side => side.item_name),
         inputsPrices:keys[k].map(side => side.list_price || 0),
-        value: type=='select' ? null : [],
+        value: type=='select' ? keys[k].map( side => side.item_name)[0] : keys[k].map(side => false),
         maxSelect: type == 'select' ? 1 : type == 'multi-choices' ?  keys[k][0].max_selection : null,
         name:k,
         subName:type == 'multi-choices' ? `Up to ${keys[k][0].max_selection}` : null ,
       } )
     })
-
-    console.log(this.options);
   }
 
   onChangeSingle(){
     this.getTotalPrice();
   }
 
-  onChangeMultiChoice(opt, idx){
-    console.log(opt);
+  onChangeMultiChoice(opt, idx, e){
+    console.log(opt, idx);
     if (!this.validateMulti(opt) ) {
       opt.value[idx] = false;
-      alert('exceeding max choices');
+      e.source.checked = false;
+      return;
     }
+    this.getTotalPrice();
   }
 
   onChangeQty(type) {
     this.qty = type == 'PLUS' ? this.qty + 1 : this.qty - 1 <= 0 ? 0 : this.qty - 1; 
     this.getTotalPrice();
+  }
+
+  onPlaceOrder(){
+    this.dialogRef.close({
+      total:this.total,
+      sides:this.options
+    });
   }
 
   private getTotalPrice(){
@@ -95,15 +103,18 @@ export class DishOrderComponent implements OnInit{
       if (!!opt.value && opt.type == 'select') {
         const idx = opt.inputs.indexOf(opt.value);
         tol += opt.inputsPrices[idx];
+      } else if (opt.type=="multi-choices"){
+        opt.value.forEach( (val,i) => {
+          if (val) {
+            tol += opt.inputsPrices[i];
+          } 
+        })
       }
     })
     this.total = tol;
   }
 
   private validateMulti(opt){
-    const max = opt.maxSelect;
-    let cnt = _.filter(opt.value, (val) => val == true).length;
-
-    return max > cnt;
+    return opt.maxSelect >= _.filter(opt.value, (val) => val == true).length;
   }
 }

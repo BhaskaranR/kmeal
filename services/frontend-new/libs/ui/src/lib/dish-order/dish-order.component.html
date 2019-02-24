@@ -7,9 +7,9 @@
             </div>
             <div fxFlex="22%">
                 <div style="padding:10px 10px; border:1px solid lightgray; border-radius:5px">
-                    <div style="display: inline-block; width:20%" (click)="onChangeQty('PLUS')">+</div>
-                    <div style="display: inline-block; width:60%; text-align: center">{{qty}}</div>
                     <div style="display: inline-block;width:20%; text-align: right" (click)="onChangeQty('MINUS')">-</div>
+                    <div style="display: inline-block; width:60%; text-align: center">{{qty}}</div>
+                    <div style="display: inline-block; width:20%" (click)="onChangeQty('PLUS')">+</div>
                 </div>
             </div>
         </div>
@@ -19,8 +19,8 @@
  
           
             <div *ngIf="spe.type === 'select'" style="width: 100%">
-                <mat-radio-group [(ngModel)]="spe.value" name="single-select" (change)="onChangeSingle()">
-                    <mat-radio-button *ngFor="let opt of spe.inputs ; let idx=index" [value]="opt" style="margin-right:10px">
+                <mat-radio-group [(ngModel)]="spe.value" [name]="spe.name" (change)="onChangeSingle()">
+                    <mat-radio-button *ngFor="let opt of spe.inputs ; let idx=index" [value]="opt" style="margin-right:10px" >
                     {{opt}} <small>{{ spe.inputsPrices[idx] > 0 ? '(+$ ' + spe.inputsPrices[idx] + ')' : '' }}</small>
                     </mat-radio-button>
                 </mat-radio-group>  
@@ -29,7 +29,8 @@
             <div *ngIf="spe.type === 'multi-choices'" >
                 <div *ngFor="let opt of spe.inputs; let idx = index">
                     <div style="display: inline-block;">
-                        <mat-checkbox (change)="onChangeMultiChoice(spe, idx)" [(ngModel)]="spe.value[idx]" name="'multi'+ idx">{{opt}} <small>{{ spe.inputsPrices[idx] > 0 ? '(+$ ' + spe.inputsPrices[idx]+')' : '' }}</small></mat-checkbox>
+                        {{spe.value[idx]}}
+                        <mat-checkbox (change)="onChangeMultiChoice(spe, idx, $event)" [(ngModel)]="spe.value[idx]"  [name]="'multi'+ idx">{{opt}} <small>{{ spe.inputsPrices[idx] > 0 ? '(+$ ' + spe.inputsPrices[idx]+')' : '' }}</small></mat-checkbox>
                     </div>
                 </div>
             </div> 
@@ -42,6 +43,6 @@
         
     <mat-dialog-actions>
         <button mat-button mat-dialog-close [mat-dialog-close]="'close'" style="margin-right: 10px">Cancel</button>
-        <button mat-flat-button color="warn" [mat-dialog-close]="'order'">Add to Cart</button>
+        <button mat-flat-button color="warn" (click)="onPlaceOrder()">Add to Cart</button>
     </mat-dialog-actions>
 </form>

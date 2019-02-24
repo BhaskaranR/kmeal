@@ -110,7 +110,9 @@ export class ResComponent implements OnInit, OnDestroy{
         return (width <= 959 ) ? 1: (width <= 1279) ? 2: 3;
     }
 
-
+    onPlaceOrder(order){
+        console.log('ordered ', order);
+    }
 
     throwError(msg) {
         this.snackBar.open(msg, '', {
