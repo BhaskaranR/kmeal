@@ -1,6 +1,7 @@
 import { Component, Output, EventEmitter, OnInit } from '@angular/core';
 import { ScatterService } from '@kmeal-nx/scatter';
 import { LocalStorage } from '@ngx-pwa/local-storage';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'kmeal-nx-nav-bar',
@@ -15,7 +16,8 @@ export class NavBarComponent implements OnInit {
     @Output() toggleSidenavEvent: EventEmitter<boolean> = new EventEmitter();
     @Output() onAddressChangeEvent: EventEmitter<{ [key: string]: string }> = new EventEmitter();
     constructor(
-        public scatter: ScatterService,
+        private router: Router,
+        public scatterService: ScatterService,
         public localStorage:LocalStorage) { }
     toggleSideNav() {
         this.isSideNavOpen = !this.isSideNavOpen;
@@ -35,5 +37,14 @@ export class NavBarComponent implements OnInit {
         window.addEventListener('storage',(e) => {
             console.log('storage changed ', e);
         })
+    }
+
+    async login() {
+        await this.scatterService.loginorlogout();
+    }
+
+    async logout() {
+        await this.scatterService.loginorlogout();
+        this.router.navigate([''])
     }
 }

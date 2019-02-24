@@ -19,4 +19,54 @@ input:focus{
     outline: none;
 }
 
+figure {
+    margin: 0 0 0 0rem!important;
+}
+
+.actions {
+    flex:1;
+    text-align:right;
+  
+    .action {
+        cursor: pointer;
+        display:inline-block;
+        font-weight: bold;
+        line-height:13px;
+        font-size: 13px;
+        margin-left:30px;
+        transition: all 0.2s ease;
+        transition-property: color, padding, border;
+  
+        &.scatter {
+            text-align:center;
+            vertical-align: middle;
+  
+            .name {
+                display: block;
+            }
+  
+            .balance {
+                display: block;
+                font-size: 11px;
+                color:blue;
+            }
+        }
+  
+        &.router-link-active {
+            color:blue;
+        }
+  
+        select {
+            outline:0;
+            background:#fff;
+            height:30px;
+            padding:0 6px;
+            border-radius:5px;
+            border:1px solid rgba(0,0,0,0.1);
+            font-size: 11px;
+        }
+    }
+  }
+
+
 mat-spinner.small-spinner svg { width: 40px !important; height: 40px !important; }

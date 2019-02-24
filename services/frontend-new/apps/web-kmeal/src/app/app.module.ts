@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
 import { NxModule } from '@nrwl/nx';
@@ -14,6 +14,12 @@ import { FeatureSearchModule ,featureSearchRoutes} from '@kmeal-nx/feature-searc
 import {featureRestaurantRoutes, FeatureRestaurantModule} from '@kmeal-nx/feature-restaurant';
 import { ErrorComponent } from './error.component';
 import { FeatureOrderModule, CheckoutComponent, OrderHistoryClientComponent } from '@kmeal-nx/feature-order';
+import { ScatterModule, ScatterService } from '@kmeal-nx/scatter';
+
+
+export function init_app(scatterService: ScatterService) {
+  return () => scatterService.initScatter('Kylin');
+}
 
 @NgModule({
   declarations: [AppComponent, ErrorComponent],
@@ -23,6 +29,7 @@ import { FeatureOrderModule, CheckoutComponent, OrderHistoryClientComponent } fr
     NxModule.forRoot(),
     ApiModule,
     SharedModule,
+    ScatterModule,
     FeatureHomeModule,
     FeatureSearchModule,
     FeatureRestaurantModule,
@@ -67,6 +74,7 @@ import { FeatureOrderModule, CheckoutComponent, OrderHistoryClientComponent } fr
     )
   ],
   providers: [
+    { provide: APP_INITIALIZER, useFactory: init_app, deps: [ScatterService], multi: true },
     {
       provide: APP_BASE_HREF,
       useValue: '/'
