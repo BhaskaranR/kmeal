@@ -34,6 +34,7 @@ export class AppComponent {
       if (address) {
         this.isAddressSet = true;
       }
+      console.log(address, 'web ')
     });
   }
 

@@ -4,8 +4,8 @@ import { ActivatedRoute } from "@angular/router";
 import { pluck, switchMap } from "rxjs/operators";
 import { MatDialog, MatSnackBar } from "@angular/material";
 import { KmealListingGQL, OrderBy } from "../generated/graphql";
-import { DishDetailPopupComponent, DishOrderComponent } from "@kmeal-nx/ui";
 import * as _ from 'underscore';
+import { LocalStorage } from '@ngx-pwa/local-storage';
 
 @Component({
     selector: "kmeal-nx-restaurant",
@@ -32,6 +32,7 @@ export class ResComponent implements OnInit, OnDestroy{
         media: MediaMatcher,
         public dialog: MatDialog,
         private kmealListingGQL:KmealListingGQL,
+        protected localStorage: LocalStorage,
         public snackBar: MatSnackBar) {
         this.mobileQuery = media.matchMedia('(max-width: 600px)');
         this._mobileQueryListener = () => changeDetectorRef.detectChanges();
@@ -69,7 +70,6 @@ export class ResComponent implements OnInit, OnDestroy{
             return;
         }
 
-        console.log('found data : ', result);
         this.book = result[0];
         this.sections = !_.isEmpty(this.book.menuBookSectionsBymenuBookId) ? this.book.menuBookSectionsBymenuBookId : [];
         this.restaurantInfo = !_.isUndefined(this.book.restaurantByrestaurantId) ? this.book.restaurantByrestaurantId : {} ;
@@ -112,6 +112,18 @@ export class ResComponent implements OnInit, OnDestroy{
 
     onPlaceOrder(order){
         console.log('ordered ', order);
+        this.localStorage.getItem('orders').subscribe( (result:any[] | null) =>{
+            if (!result){
+                this.localStorage.setItem('orders', [order]).subscribe((re) => {
+                    console.log('saved ! ', re);
+                })
+            } else {
+                result.push(order);
+                this.localStorage.setItem('orders', result).subscribe((re) => {
+                    console.log('saved ! ', re);
+                })
+            }
+        });
     }
 
     throwError(msg) {

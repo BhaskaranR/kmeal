@@ -14,6 +14,7 @@ interface SideDetail {
 
 interface Sides {
   name:string;
+  qty:number,
   options:SideDetail[]
 }
 
@@ -26,7 +27,8 @@ interface Sides {
 export class DishOrderComponent implements OnInit{
   options :Sides = {
     name:null,
-    options:[]
+    options:[],
+    qty:0
   }
 
   sides:any= {};
@@ -90,6 +92,7 @@ export class DishOrderComponent implements OnInit{
   }
 
   onPlaceOrder(){
+    this.options.qty = this.qty;
     this.dialogRef.close({
       total:this.total,
       sides:this.options
