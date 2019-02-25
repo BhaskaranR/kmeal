@@ -1,12 +1,16 @@
 <br>
 <br>
 <h1 style="text-align: center; margin-bottom:60px"><i>Express Checkout</i></h1>
+<br>
+
 <div fxLayout="row" fxLayout.sm="column" fxLayout.xs="column">
     <div fxFlex="20%" fxFlex.sm="0" fxFlex.xs="0"></div>
     <div fxFlex="60%" fxFlex.sm="100%" fxFlex.sm="100%">
         <div>
             <mat-vertical-stepper labelPosition="bottom" #stepper >
                 <mat-step [stepControl]="paymentForm" label="Order Summary">
+                        <h4>Your Order Summary</h4>
+                        <p>From Indian Dinner</p>
                     <br>
                     <form [formGroup]="orderForm">
                         <mat-card class="mat-card-flat" *ngFor="let order of orders; let idx = index">

@@ -5,7 +5,8 @@ import { pluck, switchMap } from "rxjs/operators";
 import { MatDialog, MatSnackBar } from "@angular/material";
 import { KmealListingGQL, OrderBy } from "../generated/graphql";
 import * as _ from 'underscore';
-import { LocalStorage } from '@ngx-pwa/local-storage';
+import { CartService } from "../../../../../libs/ui/src/lib/cart.service";
+
 
 @Component({
     selector: "kmeal-nx-restaurant",
@@ -32,7 +33,7 @@ export class ResComponent implements OnInit, OnDestroy{
         media: MediaMatcher,
         public dialog: MatDialog,
         private kmealListingGQL:KmealListingGQL,
-        protected localStorage: LocalStorage,
+        public cartService:CartService,
         public snackBar: MatSnackBar) {
         this.mobileQuery = media.matchMedia('(max-width: 600px)');
         this._mobileQueryListener = () => changeDetectorRef.detectChanges();
@@ -111,21 +112,12 @@ export class ResComponent implements OnInit, OnDestroy{
     }
 
     onPlaceOrder(order){
+        let stored = this.cartService.addOrder(order, this.restaurantInfo);
 
-        console.log('ordered ', order);
-
-        this.localStorage.getItem('orders').subscribe( (result:any[] | null) =>{
-            if (!result){
-                this.localStorage.setItem('orders', [order]).subscribe((re) => {
-                    console.log('saved ! ', re);
-                })
-            } else {
-                result.push(order);
-                this.localStorage.setItem('orders', result).subscribe((re) => {
-                    console.log('saved ! ', re);
-                })
-            }
-        });
+        if (!stored){
+            this.throwError('not the same retsuarant');
+            return;
+        }
     }
 
     throwError(msg) {

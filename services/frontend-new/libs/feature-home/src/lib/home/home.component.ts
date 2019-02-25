@@ -7,8 +7,6 @@ import { imagesMapping } from './utils';
 import {  GetRestaurantsNearByGQL, GetRestaurantsNearBy } from '../generated/graphql';
 import { map, pluck } from 'rxjs/operators';
 import {  combineLatest } from 'rxjs';
-
-import { LocalStorage } from '@ngx-pwa/local-storage';
 import { KmealCategoriesGQL, KmealCategories, DishDetailPopupComponent, DishOrderComponent } from '@kmeal-nx/ui';
 
 @Component({
@@ -26,7 +24,6 @@ export class HomeComponent implements OnInit, OnDestroy {
         private kmealCategoriesGQL: KmealCategoriesGQL,
         private getRestaurantsNearByGQL:GetRestaurantsNearByGQL,
         public dialog: MatDialog,
-        protected localStorage: LocalStorage,
     ) {}
 
     cuisines: KmealCategories.KmealCategories[];
@@ -166,7 +163,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     ngOnDestroy() {}
 
     private loadUserProfile(){
-        const userProfile = this.localStorage.getItem("kmealUserProfile");
+        const userProfile = null;
 
         if (!!userProfile && userProfile['location']){
             this.loadUserData(40.710237, -74.007810);
