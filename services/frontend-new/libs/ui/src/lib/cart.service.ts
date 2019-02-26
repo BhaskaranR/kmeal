@@ -26,7 +26,7 @@ export class CartService {
 
   orders:any[];
   restaurantId:string;
-  restaurantInfo:string;
+  restaurantInfo:{[key:string]:any};
   user:User;
 
   resetData(){
@@ -48,7 +48,7 @@ export class CartService {
 
     if (this.user.restaurant.restaurant_id !== restaurantInfo.restaurant_id) return false;
     else {
-        this.orders.push(order);
+        this.user.orders.push(order);
         this.saveChanges();
         return true;
     }
@@ -69,15 +69,10 @@ export class CartService {
   }
 
   public async getOrders(){
-      let pro = new Promise((res, rej) =>{
-          this.localStorage.getItem('user')
-            .subscribe((user:User) =>{
-             res(user.orders);
-          });
-      });
-
-      pro.then((orders)=>{
-          return orders;
+      return new Promise((res, rej)=> {
+        this.localStorage.getItem('user').subscribe((user:User) => {
+            res(user.orders);
+        })
       })
   }
 

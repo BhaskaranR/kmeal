@@ -4,6 +4,9 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { DishOrderComponent } from "@kmeal-nx/ui";
 import { CartService } from "../../../../../libs/ui/src/lib/cart.service";
 
+interface OrderSide {
+    name:string
+}
 
 @Component({
   selector: "kmeal-nx-checkout",
@@ -32,8 +35,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         public cartService: CartService,
         private fb:FormBuilder){}
 
-    ngOnInit(){
-        this.orders = this.cartService.getOrders();
+    async ngOnInit(){
+        this.orders = await this.cartService.getOrders();
         this.initForm();
         this.isReady = true;
         console.log(this.orders, this.cartService);
@@ -45,6 +48,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     }
 
     private initForm(){
+        
         this.paymentForm = this.fb.group({
             'paymentMethod':[null,[
                 Validators.required,
@@ -95,37 +99,9 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     }
 
     changeOrder(){
-        let data = {
-            name:'Chicken noodle',
-            id:'hxusa2432nk',
-            specifications:[
-                {
-                    type:'number',
-                    inputs:'',
-                    name:'Quantity',
-                    value:null,
-                },{
-                    type:'select',
-                    inputs:['Mild','Medium','Extra Spicy'],
-                    value:null,
-                    name:'Spicy Level'
-                },{
-                    type:'multiple',
-                    inputs:['extra shrimp','extra chicken breast','salad'],
-                    name:'AddOn',
-                    value:null,
-                },{
-                    type:'string',
-                    inputs:'',
-                    name:'Other Instructions',
-                    value:null
-                }
-            ]
-        }
-
         const dialogRef = this.dialog.open(DishOrderComponent, {
             width: '650px',
-            data: data
+            data: this.orders
           });
       
         dialogRef.afterClosed().subscribe(result => {

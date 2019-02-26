@@ -42,8 +42,8 @@ export class DishOrderComponent implements OnInit{
   ngOnInit(){
 
     this.options.name = this.data.name;
-    this.total = this.data.price;
-    this.price = this.data.price;
+    this.total = parseFloat(this.data.price);
+    this.price = parseFloat(this.data.price);
     this.populateSides();
     this.isReady = true;
     
@@ -77,7 +77,6 @@ export class DishOrderComponent implements OnInit{
   }
 
   onChangeMultiChoice(opt, idx, e){
-    console.log(opt, idx);
     if (!this.validateMulti(opt) ) {
       opt.value[idx] = false;
       e.source.checked = false;
@@ -100,8 +99,7 @@ export class DishOrderComponent implements OnInit{
   }
 
   private getTotalPrice(){
-    console.log('calculating..');
-    let tol = this.price * this.qty;
+    let tol = 0;
     this.options.options.forEach( opt => {
       if (!!opt.value && opt.type == 'select') {
         const idx = opt.inputs.indexOf(opt.value);
@@ -113,8 +111,8 @@ export class DishOrderComponent implements OnInit{
           } 
         })
       }
-    })
-    this.total = tol;
+    });
+    this.total = (this.price + tol) * this.qty
   }
 
   private validateMulti(opt){
