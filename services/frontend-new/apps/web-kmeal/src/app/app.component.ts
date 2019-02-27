@@ -1,7 +1,6 @@
 import { Component, ChangeDetectorRef } from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { Router, ActivatedRoute } from '@angular/router';
-import { LocalStorage } from '@ngx-pwa/local-storage';
 
 interface Coordinate {
   type:string,
@@ -24,7 +23,6 @@ export class AppComponent {
     public changeDetectorRef: ChangeDetectorRef, 
     public media: MediaMatcher,
     public router:Router,
-    protected localStorage: LocalStorage,
     public activatedRoute : ActivatedRoute) 
   {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');

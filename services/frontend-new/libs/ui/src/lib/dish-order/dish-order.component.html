@@ -14,7 +14,7 @@
             </div>
         </div>
 
-        <div *ngFor="let spe of options.options; let i = index">
+        <div *ngFor="let spe of options.sides; let i = index">
             <p class="mat-body-1">{{spe.name}} <mat-card-subtitle style="display:inline">{{spe.subName}}</mat-card-subtitle></p>
  
           
@@ -29,7 +29,6 @@
             <div *ngIf="spe.type === 'multi-choices'" >
                 <div *ngFor="let opt of spe.inputs; let idx = index">
                     <div style="display: inline-block;">
-                        {{spe.value[idx]}}
                         <mat-checkbox (change)="onChangeMultiChoice(spe, idx, $event)" [(ngModel)]="spe.value[idx]"  [name]="'multi'+ idx">{{opt}} <small>{{ spe.inputsPrices[idx] > 0 ? '(+$ ' + spe.inputsPrices[idx]+')' : '' }}</small></mat-checkbox>
                     </div>
                 </div>

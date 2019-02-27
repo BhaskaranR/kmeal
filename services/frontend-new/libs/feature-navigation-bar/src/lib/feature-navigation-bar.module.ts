@@ -7,10 +7,11 @@ import { MatIconModule } from '@angular/material';
 import { RouterModule } from '@angular/router';
 import { ScatterModule } from '@kmeal-nx/scatter';
 import {MatBadgeModule} from '@angular/material/badge';
+import { UiModule } from '@kmeal-nx/ui';
 
 
 @NgModule({
-  imports: [FeatureCoreModule, MatIconModule, RouterModule, ScatterModule,MatBadgeModule],
+  imports: [FeatureCoreModule, MatIconModule, RouterModule, ScatterModule,MatBadgeModule, UiModule],
   declarations: [NavBarComponent,FooterComponent,SearchBarComponent],
   providers: [],
   entryComponents:[],

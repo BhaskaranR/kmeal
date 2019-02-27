@@ -1,6 +1,7 @@
 import { Component, ChangeDetectionStrategy, Input, Inject , OnInit,Output, EventEmitter} from "@angular/core";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
 import * as _ from 'underscore';
+import { DishData } from "../dish-card2/dish-card2.component";
 
 interface SideDetail {
   type:string,
@@ -12,10 +13,10 @@ interface SideDetail {
   subName:string | null
 }
 
-interface Sides {
+interface Dish {
   name:string;
   qty:number,
-  options:SideDetail[]
+  sides:SideDetail[]
 }
 
 @Component({
@@ -25,9 +26,9 @@ interface Sides {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DishOrderComponent implements OnInit{
-  options :Sides = {
+  options : Dish = {
     name:null,
-    options:[],
+    sides:[],
     qty:0
   }
 
@@ -36,11 +37,13 @@ export class DishOrderComponent implements OnInit{
   total:number=0;
   qty:number = 1;
   price:number = 0;
-
-  constructor(public dialogRef: MatDialogRef<DishOrderComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {}
+  isToModify:boolean;
+  constructor(public dialogRef: MatDialogRef<DishOrderComponent>, @Inject(MAT_DIALOG_DATA) public data: DishData) {}
 
   ngOnInit(){
-
+    if (this.data.isToModify) {
+      alert('have to populate existing data!!');
+    }
     this.options.name = this.data.name;
     this.total = this.data.price;
     this.price = this.data.price;
@@ -60,7 +63,7 @@ export class DishOrderComponent implements OnInit{
 
     _.keys(keys).forEach(k => {
       const type = keys[k][0].max_selection == 1 ? 'select' : 'multi-choices';
-      this.options.options.push({
+      this.options.sides.push({
         type:type,
         inputs:keys[k].map( side => side.item_name),
         inputsPrices:keys[k].map(side => side.list_price || 0),
@@ -77,7 +80,6 @@ export class DishOrderComponent implements OnInit{
   }
 
   onChangeMultiChoice(opt, idx, e){
-    console.log(opt, idx);
     if (!this.validateMulti(opt) ) {
       opt.value[idx] = false;
       e.source.checked = false;
@@ -93,16 +95,17 @@ export class DishOrderComponent implements OnInit{
 
   onPlaceOrder(){
     this.options.qty = this.qty;
+
     this.dialogRef.close({
       total:this.total,
-      sides:this.options
+      order:this.options,
+      dish: this.data.dish
     });
   }
 
   private getTotalPrice(){
-    console.log('calculating..');
-    let tol = this.price * this.qty;
-    this.options.options.forEach( opt => {
+    let tol = 0;
+    this.options.sides.forEach( opt => {
       if (!!opt.value && opt.type == 'select') {
         const idx = opt.inputs.indexOf(opt.value);
         tol += opt.inputsPrices[idx];
@@ -113,8 +116,8 @@ export class DishOrderComponent implements OnInit{
           } 
         })
       }
-    })
-    this.total = tol;
+    });
+    this.total = (this.price + tol) * this.qty
   }
 
   private validateMulti(opt){

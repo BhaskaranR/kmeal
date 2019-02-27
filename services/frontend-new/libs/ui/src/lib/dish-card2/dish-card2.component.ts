@@ -10,6 +10,14 @@ import { MatDialog } from '@angular/material';
 import { DishOrderComponent } from '../dish-order/dish-order.component';
 import * as _ from 'underscore';
 
+export interface DishData {
+  sides:any[], 
+  name:string,
+  isDynamic:boolean,
+  price : number,
+  dish:{[key:string]:any},
+  isToModify:boolean
+}
 
   @Component({
     selector: 'dish-card2',
@@ -27,7 +35,7 @@ import * as _ from 'underscore';
       constructor(public dialog: MatDialog){}
 
       ngOnInit(){
-        console.log(this.data.listingsByitemId[0]);
+        console.log(this.data);
         if (_.isUndefined(this.data.listingsByitemId) || _.isEmpty(this.data.listingsByitemId) ) {
           this.isDynamic = false;
           this.price = 0;
@@ -36,7 +44,7 @@ import * as _ from 'underscore';
         }
         
         this.isDynamic = this.data.listingsByitemId[0].list_type == 'd' ? true : false;
-        this.price = this.data.listingsByitemId[0].list_price.toFixed(2);
+        this.price = parseFloat(this.data.listingsByitemId[0].list_price.toFixed(2));
         
       }
 
@@ -46,20 +54,22 @@ import * as _ from 'underscore';
             return;
           }
 
+          let dishData : DishData = {
+            sides:this.data.listingsByitemId[0].listingItemSidessBylistingId, 
+            name:this.data.item_name,
+            isDynamic:this.isDynamic,
+            price:this.price,
+            dish:this.data,
+            isToModify:false,
+          }
+
           const dialogRef = this.dialog.open(DishOrderComponent, {
             width: '650px',
-            data: {
-              sides:this.data.listingsByitemId[0].listingItemSidessBylistingId, 
-              name:this.data.item_name,
-              isDynamic:this.isDynamic,
-              price : this.price
-            }
+            data: dishData,
           });
         
-          dialogRef.afterClosed().subscribe(result => {
-              if (!!result){
-                this.onClickEvent.emit(result);
-              }
+          dialogRef.afterClosed().subscribe(result =>{
+            this.onClickEvent.emit(result);
           });
         }   
   }
