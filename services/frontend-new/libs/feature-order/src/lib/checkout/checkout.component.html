@@ -5,7 +5,7 @@
 
 <div fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" *ngIf="isReady">
     <div fxFlex="20%" fxFlex.sm="0" fxFlex.xs="0"></div>
-    <div fxFlex="60%" fxFlex.sm="100%" fxFlex.sm="100%">
+    <div fxFlex="60%" fxFlex.sm="100%" fxFlex.sm="100%" *ngIf="!isEmpty">
         <div>
             <mat-vertical-stepper labelPosition="bottom" #stepper >
                 <mat-step [stepControl]="paymentForm" label="Order Summary">
@@ -13,19 +13,26 @@
                         <p>From {{cartService.user.restaurant.name}}</p>
                     <br>
                     <form [formGroup]="orderForm">
-                        <mat-card class="mat-card-flat" *ngFor="let order of orders; let idx = index">
+                        <mat-card class="mat-card-flat" *ngFor="let or of orders; let idx = index" >
                             <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px" >
-                                <div fxFlex="80px">
-                                    <img style="width:100%" src="https://www.foxrc.com/wp-content/themes/frc/static/images/plate1.png" alt="">
+                                <div fxFlex="80px" >
+                                    <div style="display: inline-block; width:60%; text-align: center">X {{or.order.qty}}</div>  
                                 </div>
-                                <div fxFlex="65%">
-                                    <h6 style="margin-top:15px">{{order.sides.name}}</h6>
-                                    <mat-card-subtitle>test</mat-card-subtitle>
+                                <div fxFlex="68%">
+                                    <h6 style="margin-top:15px"><a (click)="changeOrder(or)">{{or.order.name}}</a></h6>
+                                    <mat-card-subtitle>
+                                        <span *ngFor="let s of or.order.sides">
+                                            <span *ngIf="s.type == 'select'">{{s.value}} , </span>
+                                            <span *ngIf="s.type == 'multi-choices'">
+                                                <span *ngFor="let v of s.inputs; let i = index">
+                                                    <span *ngIf="s.value[i]">{{v}} , </span>
+                                                </span>
+                                            </span>
+                                        </span>
+                                    </mat-card-subtitle>
                                 </div>
                                 <div fxFlex="20%">
-                                    <div style="padding:10px 10px; border:1px solid lightgray; border-radius:5px">
-                                        <div style="display: inline-block; width:60%; text-align: center">{{order.sides.qty}}</div>
-                                    </div>
+                                   <div style="text-align: right"> $ {{or.total}}</div>
                                 </div>
                             </div>
                             <br>
@@ -143,6 +150,9 @@
                 </mat-step>
             </mat-vertical-stepper>
         </div>
+    </div>
+    <div fxFlex="60%" fxFlex.sm="100%" fxFlex.sm="100%" *ngIf="isEmpty">
+        <h5 style="text-align: center">You have not placed orders yet</h5>
     </div>
     <div fxFlex="20%" fxFlex.sm="0" fxFlex.xs="0"></div>
 </div>

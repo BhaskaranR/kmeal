@@ -1,21 +1,13 @@
 import { Component, OnInit, Input, OnDestroy } from "@angular/core";
 import { MatDialog } from "@angular/material";
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import { DishOrderComponent } from "@kmeal-nx/ui";
+import { DishOrderComponent, DishData } from "@kmeal-nx/ui";
 import { CartService } from "../../../../../libs/ui/src/lib/cart.service";
 
-interface OrderSide {
-    name:string
-}
 
 @Component({
   selector: "kmeal-nx-checkout",
   templateUrl: "./checkout.component.html",
-  styles:[`
-  .card-radio-group {
-    display: inline-flex;
-    flex-direction: row;
-  }`]
 })
 export class CheckoutComponent implements OnInit, OnDestroy {
     @Input() data:any;
@@ -30,21 +22,35 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     orderSub:any;
     orders:any[] | any;
     isReady:boolean = false;
+    isEmpty:boolean = false;
 
+    qtyOptions: Array<number> = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30];
     constructor(public dialog: MatDialog,
         public cartService: CartService,
         private fb:FormBuilder){}
 
     async ngOnInit(){
-        this.orders = await this.cartService.getOrders();
+        this.orders = await this.cartService.getOrders() || null;
+
+        if (!this.orders || this.orders.length == 0) {
+            this.isReady = true;
+            this.isEmpty = true;
+            return;
+        }
+
         this.initForm();
         this.isReady = true;
         console.log(this.orders, this.cartService);
     }
 
     ngOnDestroy(){
-        this.sub.unsubscribe();
-        this.orderSub.unsubscribe();
+        if (!!this.sub) {
+            this.sub.unsubscribe();
+        }
+
+        if (!!this.orderSub){
+            this.orderSub.unsubscribe();
+        }
     }
 
     private initForm(){
@@ -98,15 +104,27 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         })
     }
 
-    changeOrder(){
+    changeOrder(order){
+
+        const isDynamic = order.dish.listingsByitemId[0].list_type == 'd' ? true : false;
+        const price = parseFloat(order.dish.listingsByitemId[0].list_price.toFixed(2));
+
+
+        let dishData : DishData = {
+            sides:order.dish.listingsByitemId[0].listingItemSidessBylistingId, 
+            name:order.dish.item_name,
+            isDynamic:isDynamic,
+            price:price,
+            dish:order.dish,
+            isToModify:true
+          }
+          
         const dialogRef = this.dialog.open(DishOrderComponent, {
             width: '650px',
-            data: this.orders
+            data: dishData
           });
       
-        dialogRef.afterClosed().subscribe(result => {
-            console.log('closed', result);
-        });
+        dialogRef.afterClosed().subscribe(console.log);
     }
 
     submitOrders(data){

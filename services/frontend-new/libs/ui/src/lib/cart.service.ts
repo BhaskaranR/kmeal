@@ -64,11 +64,11 @@ export class CartService {
       this.saveChanges();
   }
 
-  getOrdersCount(){
+  getOrdersCount() {
       return this.user ? this.user.orders.length : 0;
   }
 
-  public async getOrders(){
+  async getOrders(): Promise<any>{
       return new Promise((res, rej)=> {
         this.localStorage.getItem('user').subscribe((user:User) => {
             res(user.orders);
