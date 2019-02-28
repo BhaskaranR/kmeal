@@ -116,7 +116,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
             isDynamic:isDynamic,
             price:price,
             dish:order.dish,
-            isToModify:true
+            isToModify:true,
+            order:order
           }
           
         const dialogRef = this.dialog.open(DishOrderComponent, {

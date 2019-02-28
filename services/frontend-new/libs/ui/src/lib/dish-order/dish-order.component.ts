@@ -41,13 +41,17 @@ export class DishOrderComponent implements OnInit{
   constructor(public dialogRef: MatDialogRef<DishOrderComponent>, @Inject(MAT_DIALOG_DATA) public data: DishData) {}
 
   ngOnInit(){
-    if (this.data.isToModify) {
-      alert('have to populate existing data!!');
-    }
     this.options.name = this.data.name;
     this.total = this.data.price;
     this.price = this.data.price;
     this.populateSides();
+
+    if (this.data.isToModify) {
+      this.options.qty = this.data.order.order.qty;
+      this.selectSides();
+      this.getTotalPrice();
+    }
+
     this.isReady = true;
     
   }
@@ -72,6 +76,16 @@ export class DishOrderComponent implements OnInit{
         name:k,
         subName:type == 'multi-choices' ? `Up to ${keys[k][0].max_selection}` : null ,
       } )
+    })
+  }
+
+  private selectSides(){
+    const sides = this.data.order.order.sides;
+    console.log(this.options.sides , 'options');
+    console.log(sides, 'order');
+
+    sides.forEach((side, idx)=>{
+      this.options.sides[idx].value = side.value;
     })
   }
 
@@ -101,6 +115,10 @@ export class DishOrderComponent implements OnInit{
       order:this.options,
       dish: this.data.dish
     });
+  }
+
+  onSaveChanges(){
+    console.log('saved!');
   }
 
   private getTotalPrice(){
