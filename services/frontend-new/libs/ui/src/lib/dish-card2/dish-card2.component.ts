@@ -18,6 +18,7 @@ export interface DishData {
   dish:{[key:string]:any},
   isToModify:boolean,
   order:any,
+  index?:number
 }
 
   @Component({
