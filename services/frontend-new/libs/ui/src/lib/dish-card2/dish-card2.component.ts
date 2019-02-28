@@ -16,7 +16,8 @@ export interface DishData {
   isDynamic:boolean,
   price : number,
   dish:{[key:string]:any},
-  isToModify:boolean
+  isToModify:boolean,
+  order:any,
 }
 
   @Component({
@@ -61,6 +62,7 @@ export interface DishData {
             price:this.price,
             dish:this.data,
             isToModify:false,
+            order:null,
           }
 
           const dialogRef = this.dialog.open(DishOrderComponent, {
@@ -69,6 +71,7 @@ export interface DishData {
           });
         
           dialogRef.afterClosed().subscribe(result =>{
+            if (result == 'close') return ;
             this.onClickEvent.emit(result);
           });
         }   

@@ -41,4 +41,4 @@ export class NavBarComponent implements OnInit {
         await this.scatterService.loginorlogout();
         this.router.navigate([''])
     }
-}
+} 

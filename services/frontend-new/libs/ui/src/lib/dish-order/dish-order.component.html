@@ -42,6 +42,7 @@
         
     <mat-dialog-actions>
         <button mat-button mat-dialog-close [mat-dialog-close]="'close'" style="margin-right: 10px">Cancel</button>
-        <button mat-flat-button color="warn" (click)="onPlaceOrder()">Add to Cart</button>
+        <button mat-flat-button color="warn" *ngIf="!data.isToModify" (click)="onPlaceOrder()">Add to Cart</button>
+        <button mat-flat-button color="warn" *ngIf="data.isToModify" (click)="onSaveChanges()">Save Changes</button>
     </mat-dialog-actions>
 </form>
