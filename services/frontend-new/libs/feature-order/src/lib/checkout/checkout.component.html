@@ -31,16 +31,16 @@
                                         </span>
                                     </mat-card-subtitle>
                                     <br>
-                                    <a href="" color="warn" (click)="removeOrder(or, idx)">Delete</a>
+                                    <a href="" color="warn" (click)="removeOrder(or, idx, $event);$event.preventDefault()">Delete</a>
                                 </div>
                                 <div fxFlex="20%">
                                    <div style="text-align: right"> $ {{or.total}}</div>
                                 </div>
                             </div>
                             <br>
+                            <mat-divider></mat-divider>
                         </mat-card>
                             
-                        <mat-divider></mat-divider>
                         <br>
                         <div fxLayout="column" fxLayoutGap="5px">
                             <div>

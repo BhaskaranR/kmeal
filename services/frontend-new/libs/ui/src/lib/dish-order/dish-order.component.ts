@@ -146,4 +146,5 @@ export class DishOrderComponent implements OnInit{
   private validateMulti(opt){
     return opt.maxSelect >= _.filter(opt.value, (val) => val == true).length;
   }
+
 }

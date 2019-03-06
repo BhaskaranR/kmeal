@@ -29,7 +29,7 @@
             <div *ngIf="spe.type === 'multi-choices'" >
                 <div *ngFor="let opt of spe.inputs; let idx = index">
                     <div style="display: inline-block;">
-                        <mat-checkbox (change)="onChangeMultiChoice(spe, idx, $event)" [(ngModel)]="spe.value[idx]"  [name]="'multi'+ idx">{{opt}} <small>{{ spe.inputsPrices[idx] > 0 ? '(+$ ' + spe.inputsPrices[idx]+')' : '' }}</small></mat-checkbox>
+                        {{spe.value[idx]}}<mat-checkbox (change)="onChangeMultiChoice(spe, idx, $event)" [(ngModel)]="spe.value[idx]"  [name]="'multi'+ idx">{{opt}} <small>{{ spe.inputsPrices[idx] > 0 ? '(+$ ' + spe.inputsPrices[idx]+')' : '' }}</small></mat-checkbox>
                     </div>
                 </div>
             </div> 

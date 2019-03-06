@@ -105,7 +105,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     }
 
     changeOrder(order, idx){
-
         const isDynamic = order.dish.listingsByitemId[0].list_type == 'd' ? true : false;
         const price = parseFloat(order.dish.listingsByitemId[0].list_price.toFixed(2));
 
@@ -127,7 +126,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
           });
       
         dialogRef.afterClosed().subscribe(result =>{
-            if (result == 'close') return;
+            if (result == 'close' || result == void 0) return;
             this.updateOrders(result);
         });
     }
