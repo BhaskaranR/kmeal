@@ -16,7 +16,9 @@ interface SideDetail {
 interface Dish {
   name:string;
   qty:number,
-  sides:SideDetail[]
+  sides:SideDetail[],
+  total:number,
+  price:number
 }
 
 @Component({
@@ -29,21 +31,20 @@ export class DishOrderComponent implements OnInit{
   options : Dish = {
     name:null,
     sides:[],
-    qty:0
+    qty:1,
+    total:0,
+    price:0,
   }
 
   sides:any= {};
   isReady:boolean = false;
-  total:number=0;
-  qty:number = 1;
-  price:number = 0;
   isToModify:boolean;
   constructor(public dialogRef: MatDialogRef<DishOrderComponent>, @Inject(MAT_DIALOG_DATA) public data: DishData) {}
 
   ngOnInit(){
     this.options.name = this.data.name;
-    this.total = this.data.price;
-    this.price = this.data.price;
+    this.options.total = this.data.price;
+    this.options.price = this.data.price;
     this.populateSides();
 
     if (this.data.isToModify) {
@@ -103,15 +104,13 @@ export class DishOrderComponent implements OnInit{
   }
 
   onChangeQty(type) {
-    this.qty = type == 'PLUS' ? this.qty + 1 : this.qty - 1 <= 0 ? 0 : this.qty - 1; 
+    this.options.qty = type == 'PLUS' ? this.options.qty + 1 : this.options.qty - 1 <= 0 ? 0 : this.options.qty - 1; 
     this.getTotalPrice();
   }
 
   onPlaceOrder(){
-    this.options.qty = this.qty;
-
     this.dialogRef.close({
-      total:this.total,
+      total:this.options.total,
       order:this.options,
       dish: this.data.dish
     });
@@ -119,6 +118,12 @@ export class DishOrderComponent implements OnInit{
 
   onSaveChanges(){
     console.log('saved!');
+    this.dialogRef.close({
+      total:this.options.total,
+      order:this.options,
+      dish: this.data.dish,
+      index:this.data.index,
+    });
   }
 
   private getTotalPrice(){
@@ -135,10 +140,11 @@ export class DishOrderComponent implements OnInit{
         })
       }
     });
-    this.total = (this.price + tol) * this.qty
+    this.options.total = (this.options.price + tol) * this.options.qty
   }
 
   private validateMulti(opt){
     return opt.maxSelect >= _.filter(opt.value, (val) => val == true).length;
   }
+
 }

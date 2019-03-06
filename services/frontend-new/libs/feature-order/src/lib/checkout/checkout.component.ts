@@ -104,8 +104,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         })
     }
 
-    changeOrder(order){
-
+    changeOrder(order, idx){
         const isDynamic = order.dish.listingsByitemId[0].list_type == 'd' ? true : false;
         const price = parseFloat(order.dish.listingsByitemId[0].list_price.toFixed(2));
 
@@ -117,7 +116,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
             price:price,
             dish:order.dish,
             isToModify:true,
-            order:order
+            order:order,
+            index:idx,
           }
           
         const dialogRef = this.dialog.open(DishOrderComponent, {
@@ -125,10 +125,23 @@ export class CheckoutComponent implements OnInit, OnDestroy {
             data: dishData
           });
       
-        dialogRef.afterClosed().subscribe(console.log);
+        dialogRef.afterClosed().subscribe(result =>{
+            if (result == 'close' || result == void 0) return;
+            this.updateOrders(result);
+        });
     }
 
     submitOrders(data){
         console.log('submit ', data);
+    }
+
+    private updateOrders(data){
+        this.orders[data.index] = data;
+        this.cartService.updateOrders(this.orders)
+    }
+
+    removeOrder(order, idx){
+        this.orders.splice(idx, 1);
+        this.cartService.updateOrders(this.orders);
     }
 }

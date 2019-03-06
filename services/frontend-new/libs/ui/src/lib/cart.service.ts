@@ -24,7 +24,6 @@ export class CartService {
       })   
   }
 
-  orders:any[];
   restaurantId:string;
   restaurantInfo:{[key:string]:any};
   user:User;
@@ -78,5 +77,10 @@ export class CartService {
 
   private saveChanges(){
       this.localStorage.setItem('user', this.user).subscribe(console.log);
+  }
+
+  updateOrders(orders){
+      this.user.orders = orders;
+      this.saveChanges();
   }
 }

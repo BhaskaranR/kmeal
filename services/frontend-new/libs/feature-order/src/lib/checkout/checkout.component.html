@@ -19,7 +19,7 @@
                                     <div style="display: inline-block; width:60%; text-align: center">X {{or.order.qty}}</div>  
                                 </div>
                                 <div fxFlex="68%">
-                                    <h6 style="margin-top:15px"><a (click)="changeOrder(or)">{{or.order.name}}</a></h6>
+                                    <h6 style="margin-top:15px"><a (click)="changeOrder(or, idx)">{{or.order.name}}</a></h6>
                                     <mat-card-subtitle>
                                         <span *ngFor="let s of or.order.sides">
                                             <span *ngIf="s.type == 'select'">{{s.value}} , </span>
@@ -30,15 +30,17 @@
                                             </span>
                                         </span>
                                     </mat-card-subtitle>
+                                    <br>
+                                    <a href="" color="warn" (click)="removeOrder(or, idx, $event);$event.preventDefault()">Delete</a>
                                 </div>
                                 <div fxFlex="20%">
                                    <div style="text-align: right"> $ {{or.total}}</div>
                                 </div>
                             </div>
                             <br>
+                            <mat-divider></mat-divider>
                         </mat-card>
                             
-                        <mat-divider></mat-divider>
                         <br>
                         <div fxLayout="column" fxLayoutGap="5px">
                             <div>
