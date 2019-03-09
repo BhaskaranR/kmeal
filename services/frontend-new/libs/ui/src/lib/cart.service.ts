@@ -4,6 +4,7 @@ import {LocalStorage} from '@ngx-pwa/local-storage';
 interface User {
     restaurant:{[key:string]:any};
     orders:Array<any>;
+    address?:string;
 }
 
 @Injectable({

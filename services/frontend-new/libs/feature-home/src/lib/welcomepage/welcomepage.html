@@ -4,8 +4,8 @@
             <h1 class="mat-h1">Kmeal</h1>
             <h2> Discover restaurants around you</h2>
         </div>
-        <div class="header-start">
-            <kmeal-nx-search-bar></kmeal-nx-search-bar>
+        <div class="header-start" style="width:50%; margin-left:auto; margin-right:auto">
+            <kmeal-nx-search-bar (onAddressChangeEvent)="onAddressChange($event)"></kmeal-nx-search-bar>
         </div>
     </div>
 </header>

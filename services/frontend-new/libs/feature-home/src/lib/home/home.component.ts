@@ -8,6 +8,7 @@ import {  GetRestaurantsNearByGQL, GetRestaurantsNearBy } from '../generated/gra
 import { map, pluck } from 'rxjs/operators';
 import {  combineLatest } from 'rxjs';
 import { KmealCategoriesGQL, KmealCategories, DishDetailPopupComponent, DishOrderComponent } from '@kmeal-nx/ui';
+import {LocalStorage} from '@ngx-pwa/local-storage';
 
 @Component({
     selector: 'kmeal-nx-home',
@@ -23,6 +24,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         public snackBar: MatSnackBar,
         private kmealCategoriesGQL: KmealCategoriesGQL,
         private getRestaurantsNearByGQL:GetRestaurantsNearByGQL,
+        public localStorage: LocalStorage,
         public dialog: MatDialog,
     ) {}
 
@@ -163,23 +165,22 @@ export class HomeComponent implements OnInit, OnDestroy {
     ngOnDestroy() {}
 
     private loadUserProfile(){
-        const userProfile = null;
+        let user;
+        this.localStorage.removeItem('user');
+        this.localStorage.getItem('user').subscribe((user:any)=>{
+            console.log(user);
+            if (user.lat !== void 0 && user.lng !== void 0){
+                this.loadUserData(user.lat, user.lng);
+                return;
+            }
+            
+            navigator.geolocation.getCurrentPosition((position) => {
+                this.loadUserData(40.710237, -74.007810);
+            },(positionError) => {
+                this.loadUserData(40.710237, -74.007810);
+            });
 
-        if (!!userProfile && userProfile['location']){
-            this.loadUserData(40.710237, -74.007810);
-            return;
-        }
-        
-        if (!navigator.geolocation) {
-            this.loadUserData(40.710237, -74.007810);
-            return;
-        };
-
-        navigator.geolocation.getCurrentPosition((position) => {
-            this.loadUserData(40.710237, -74.007810);
-        },(positionError) => {
-            this.loadUserData(40.710237, -74.007810);
-        });
+        })
     }
 
     private loadUserData(lat, lng){

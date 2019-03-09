@@ -1,5 +1,5 @@
 <div *ngIf="!isAddressSet; else app">
-    <kmeal-nx-welcomepage></kmeal-nx-welcomepage>
+    <kmeal-nx-welcomepage  (onAddressChangeEvent)="onAddressChange($event)"></kmeal-nx-welcomepage>
     <kmeal-nx-footer-bar></kmeal-nx-footer-bar>
 </div>
 
@@ -22,6 +22,10 @@
                     <mat-list-item routerLink="/orders">
                         <mat-icon mat-list-icon>history</mat-icon>
                         <p mat-line> Orders </p>
+                    </mat-list-item>
+                    <mat-list-item>
+                        <mat-icon mat-list-icon>history</mat-icon>
+                        <p mat-line> Profile </p>
                     </mat-list-item>
                     <mat-divider></mat-divider>
                     <h3 mat-subheader>Others</h3>
