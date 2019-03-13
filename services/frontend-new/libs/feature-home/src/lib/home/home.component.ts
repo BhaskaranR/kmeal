@@ -1,14 +1,16 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NguCarouselConfig } from '@ngu/carousel';
 import { Apollo } from 'apollo-angular';
 import { Router } from '@angular/router';
 import { MatSnackBar, MatDialog } from '@angular/material';
 import { imagesMapping } from './utils';
-import {  GetRestaurantsNearByGQL, GetRestaurantsNearBy } from '../generated/graphql';
+import { GetRestaurantsNearByGQL, GetRestaurantsNearBy } from '../generated/graphql';
 import { map, pluck } from 'rxjs/operators';
-import {  combineLatest } from 'rxjs';
+import { combineLatest, Observable, Subscription } from 'rxjs';
 import { KmealCategoriesGQL, KmealCategories, DishDetailPopupComponent, DishOrderComponent } from '@kmeal-nx/ui';
-import {LocalStorage} from '@ngx-pwa/local-storage';
+import { LocalStorage } from '@ngx-pwa/local-storage';
+import { NavService } from '../../../../../apps/web-kmeal/src/app/nav.services';
+
 
 @Component({
     selector: 'kmeal-nx-home',
@@ -25,9 +27,14 @@ export class HomeComponent implements OnInit, OnDestroy {
         private kmealCategoriesGQL: KmealCategoriesGQL,
         private getRestaurantsNearByGQL:GetRestaurantsNearByGQL,
         public localStorage: LocalStorage,
+        public navService:NavService,
         public dialog: MatDialog,
-    ) {}
-
+    ) {
+        this.localStorageSub = this.localStorage.getItem('user');
+        this.addrChangeSub = this.navService.getAddrChangeSub().subscribe(this.onAddrChange.bind(this));
+    }
+    localStorageSub: Observable<any>;
+    addrChangeSub:Subscription;
     cuisines: KmealCategories.KmealCategories[];
 
     restaurants: GetRestaurantsNearBy.GetRestaurantsNearby[];
@@ -159,31 +166,27 @@ export class HomeComponent implements OnInit, OnDestroy {
     ];
 
     ngOnInit() {
-        this.loadUserProfile();
+        this.localStorageSub.subscribe(this.populateData.bind(this));
     }
 
     ngOnDestroy() {}
 
-    private loadUserProfile(){
-        let user;
-        this.localStorage.removeItem('user');
-        this.localStorage.getItem('user').subscribe((user:any)=>{
-            console.log(user);
-            if (user.lat !== void 0 && user.lng !== void 0){
-                this.loadUserData(user.lat, user.lng);
-                return;
-            }
-            
-            navigator.geolocation.getCurrentPosition((position) => {
-                this.loadUserData(40.710237, -74.007810);
-            },(positionError) => {
-                this.loadUserData(40.710237, -74.007810);
-            });
-
-        })
+    populateData(user) {
+        console.log(user);
+        if (user.lat !== void 0 && user.lng !== void 0){
+            this.loadUserData(user.lat, user.lng);
+            return;
+        }
+        
+        navigator.geolocation.getCurrentPosition((position) => {
+            this.loadUserData(40.710237, -74.007810);
+        },(positionError) => {
+            this.loadUserData(40.710237, -74.007810);
+        });
     }
 
     private loadUserData(lat, lng){
+        this.isReady = false;
         const cuisinesObs = this.kmealCategoriesGQL
             .watch({})
             .valueChanges
@@ -282,6 +285,13 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     restaurantDetails(res){
         this.router.navigate(['./restaurant/' + res.restaurant_id]);
+    }
+
+    onAddrChange(e) {
+        console.log('home page got address change!!1');
+        this.localStorageSub.subscribe(user => {
+            this.loadUserData(user.lat, user.lng);
+        })
     }
     
 }

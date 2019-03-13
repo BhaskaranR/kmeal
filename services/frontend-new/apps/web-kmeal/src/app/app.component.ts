@@ -2,6 +2,7 @@ import { Component, ChangeDetectorRef } from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { Router, ActivatedRoute } from '@angular/router';
 import {LocalStorage} from '@ngx-pwa/local-storage';
+import { NavService } from './nav.services';
 
 @Component({
   selector: 'kmeal-nx-root',
@@ -18,7 +19,8 @@ export class AppComponent {
     public media: MediaMatcher,
     public router:Router,
     public localStorage: LocalStorage,
-    public activatedRoute : ActivatedRoute) 
+    public activatedRoute : ActivatedRoute,
+    public navService:NavService) 
   {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = ()=> changeDetectorRef.detectChanges();
@@ -44,4 +46,8 @@ export class AppComponent {
   ngOnDestroy(): void {
     this.mobileQuery.removeListener(this._mobileQueryListener);
   }  
+
+  onAddrChange(e){
+    this.navService.onAddressChange(e);
+  }
 }

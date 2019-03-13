@@ -109,3 +109,19 @@ div.tile {
     transform: rotateZ(-45deg);
   }
 }
+
+.spinner-wrap{
+  width:250px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top:45px;
+  div{
+    display: inline-block;
+  }
+
+  div.mat-spinner-text{
+    position: relative;
+      top:-8px;
+      left: 15px;
+  }
+}

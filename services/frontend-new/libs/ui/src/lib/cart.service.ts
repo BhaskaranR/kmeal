@@ -65,7 +65,7 @@ export class CartService {
   }
 
   getOrdersCount() {
-      return this.user ? this.user.orders.length : 0;
+      return this.user ? this.user.orders ? this.user.orders.length : 0 : 0;
   }
 
   async getOrders(): Promise<any>{

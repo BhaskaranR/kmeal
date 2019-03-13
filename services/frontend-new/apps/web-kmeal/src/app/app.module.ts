@@ -63,6 +63,10 @@ export function init_app(scatterService: ScatterService) {
           component:OrderHistoryClientComponent
         },
         {
+          path: 'profile', 
+          component:OrderHistoryClientComponent
+        },
+        {
           path: '**', 
           component:ErrorComponent
         }

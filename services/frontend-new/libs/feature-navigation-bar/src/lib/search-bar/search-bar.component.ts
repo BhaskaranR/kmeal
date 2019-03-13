@@ -19,7 +19,8 @@ export class SearchBarComponent  implements OnInit{
     constructor(public localStorage: LocalStorage) {}
 
     
-    ngOnInit(){
+    async ngOnInit(){
+        this.userInput = await this.populateAddress();
     }
 
     onFocus(e){
@@ -28,6 +29,21 @@ export class SearchBarComponent  implements OnInit{
 
     onBlur(e){
         console.log('on blur : ',this.userInput);
+    }
+
+    async populateAddress() : Promise<any> { 
+        return new Promise((res, rej)=>{
+            this.localStorage.getItem('user').subscribe((user:{[key:string]:any} ) => {
+                if (!user) {
+                    res(null);
+                    return;
+                }
+                if (user['address']){
+                    res(user['address']);
+                    return;
+                }
+            })
+        })
     }
 
     async handleAddressChange(e){
