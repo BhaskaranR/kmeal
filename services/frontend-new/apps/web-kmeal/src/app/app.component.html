@@ -1,12 +1,12 @@
 <div *ngIf="!isAddressSet; else app">
-    <kmeal-nx-welcomepage></kmeal-nx-welcomepage>
+    <kmeal-nx-welcomepage  (onAddressChangeEvent)="onAddressChange($event)"></kmeal-nx-welcomepage>
     <kmeal-nx-footer-bar></kmeal-nx-footer-bar>
 </div>
 
 <ng-template #app>
     
     <mat-toolbar class="mat-elevation-z0" >
-        <kmeal-nx-nav-bar (toggleSidenavEvent)="snav.toggle($event)" class="custom-toolbar"></kmeal-nx-nav-bar>
+        <kmeal-nx-nav-bar (toggleSidenavEvent)="snav.toggle($event)" class="custom-toolbar" (onAddressChangeEvent)="onAddrChange($event)"></kmeal-nx-nav-bar>
     </mat-toolbar>
     <mat-sidenav-container >
         
@@ -22,6 +22,10 @@
                     <mat-list-item routerLink="/orders">
                         <mat-icon mat-list-icon>history</mat-icon>
                         <p mat-line> Orders </p>
+                    </mat-list-item>
+                    <mat-list-item routerLink="/profile">
+                        <mat-icon mat-list-icon>person</mat-icon>
+                        <p mat-line> Profile </p>
                     </mat-list-item>
                     <mat-divider></mat-divider>
                     <h3 mat-subheader>Others</h3>

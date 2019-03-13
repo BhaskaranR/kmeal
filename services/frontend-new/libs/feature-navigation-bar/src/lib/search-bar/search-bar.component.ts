@@ -1,6 +1,6 @@
 import { Component ,ViewChild, OnInit, EventEmitter,Output, Input} from '@angular/core';
 import { GooglePlaceDirective } from 'ngx-google-places-autocomplete';
-
+import {LocalStorage} from '@ngx-pwa/local-storage';
 
 @Component({
   selector: 'kmeal-nx-search-bar',
@@ -9,11 +9,6 @@ import { GooglePlaceDirective } from 'ngx-google-places-autocomplete';
   styleUrls:['../feature-navigation-bar.scss']
 })
 export class SearchBarComponent  implements OnInit{
-    options={
-        types: [],
-        componentRestrictions: { country: 'USA' }
-    };
-    geometry: any;
     
     userInput:string;
     isLoaded:boolean = true;
@@ -21,10 +16,11 @@ export class SearchBarComponent  implements OnInit{
     @ViewChild("placesRef") placesRef : GooglePlaceDirective;
     @Input() searchOnBlur;
     
-    constructor() {}
+    constructor(public localStorage: LocalStorage) {}
 
     
-    ngOnInit(){
+    async ngOnInit(){
+        this.userInput = await this.populateAddress();
     }
 
     onFocus(e){
@@ -35,17 +31,44 @@ export class SearchBarComponent  implements OnInit{
         console.log('on blur : ',this.userInput);
     }
 
-    findFood() {
-        if (this.geometry) {
-            this.onAddressChangeEvent.emit(this.geometry);
+    async populateAddress() : Promise<any> { 
+        return new Promise((res, rej)=>{
+            this.localStorage.getItem('user').subscribe((user:{[key:string]:any} ) => {
+                if (!user) {
+                    res(null);
+                    return;
+                }
+                if (user['address']){
+                    res(user['address']);
+                    return;
+                }
+            })
+        })
+    }
+
+    async handleAddressChange(e){
+        console.log(e, this.userInput);
+        if (e && !!e.formatted_address){
+            await this.saveAddress(e.formatted_address, e.geometry.location.lat(), e.geometry.location.lng());
+            this.onAddressChangeEvent.emit(e.formatted_address);
         }
     }
 
-    handleAddressChange(e){
-        if (this.searchOnBlur) {
-        this.onAddressChangeEvent.emit(e);
-        } else {
-            this.geometry = e;
-        }
+    async saveAddress(addr, lat, lng) {
+        return new Promise((res, rej)=>{
+            this.localStorage.getItem('user').subscribe((data:any)=>{
+                if (!data){
+                    data = {};
+                }
+
+                data.address = addr;
+                data.lat = lat;
+                data.lng = lng;
+
+                this.localStorage.setItem('user', data).subscribe((result)=> {
+                    res(result);
+                })
+            })
+        })
     }
 }
