@@ -11,7 +11,6 @@
         <input fxFlex="100%" 
             ngx-google-places-autocomplete 
             [(ngModel)]="userInput" 
-            [options]='options' 
             #placesRef="ngx-places" 
             (onAddressChange)="handleAddressChange($event)" 
             placeholder="Street Addresses and Zip Code" 

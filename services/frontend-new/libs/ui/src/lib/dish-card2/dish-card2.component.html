@@ -1,3 +1,4 @@
+<mat-card>
     <div fxLayout="row" fxLayoutGap="15px">
         <div fxFlex="30%">
             <img [attr.src]="defaultPhoto" alt="foto" style="width: 100%; margin-top:13px">
@@ -9,11 +10,13 @@
                 <mat-progress-bar color="primary" mode="determinate" value="60"></mat-progress-bar>
                 <div fxLayout="row">
                     <div fxFlex="40%"><small>42%</small></div>
-                    <div fxFlex="60%" style="text-align:right"><small>Deal ends in <span [dealTimer]="'6:00 pm 2019-02-06'">time</span> <mat-icon style="font-size:12px">help_outline</mat-icon></small></div>
+                    <div fxFlex="60%" style="text-align:right"><small>Deal ends in <span
+                                [dealTimer]="'6:00 pm 2019-02-06'">time</span>
+                            <mat-icon style="font-size:12px">help_outline</mat-icon>
+                        </small></div>
                 </div>
             </mat-card-content>
             <p>{{price}}</p>
         </div>
     </div>
 </mat-card>
-
