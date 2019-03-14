@@ -1,0 +1,54 @@
+<mat-toolbar class="mat-elevation-z0" >
+    <h4>Profile</h4>
+</mat-toolbar>
+
+<div fxLayout="row" 
+    fxLayoutAlign="space-evenly stretch" 
+    fxLayoutGap="1px" 
+    >
+
+    <div fxFlex="40%" style="border-right:1px solid rgba(0, 0, 0, 0.12)">
+        <mat-card class="mat-elevation-z0">
+            <mat-card-header>
+              <div mat-card-avatar class="example-header-image"></div>
+              <mat-card-title>Shiba Inu</mat-card-title>
+              <mat-card-subtitle>Dog Breed</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+              <p>
+                this is a Profile
+              </p>
+            </mat-card-content>
+            <mat-card-actions>
+                    <button mat-flat-button color="warn">Edit</button>
+            </mat-card-actions>
+        </mat-card>
+        <mat-list>
+            <mat-list-item >
+                <h5 matLine>Location</h5>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item >
+                <h5 matLine>Credit Card</h5>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item >
+                <h5 matLine>Transfer Token</h5>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+        </mat-list>
+    </div>
+
+    <div fxFlex="60%">
+        content
+
+        <ng-template>
+            temp 1
+        </ng-template>
+
+        <ng-template>
+            temp 2
+        </ng-template>
+    </div>
+
+</div>
