@@ -15,6 +15,7 @@ import {featureRestaurantRoutes, FeatureRestaurantModule} from '@kmeal-nx/featur
 import { ErrorComponent } from './error.component';
 import { FeatureOrderModule, CheckoutComponent, OrderHistoryClientComponent } from '@kmeal-nx/feature-order';
 import { ScatterModule, ScatterService } from '@kmeal-nx/scatter';
+import { FeatureProfileModule, ProfileClientComponent } from '@kmeal-nx/feature-profile';
 
 
 export function init_app(scatterService: ScatterService) {
@@ -35,6 +36,7 @@ export function init_app(scatterService: ScatterService) {
     FeatureRestaurantModule,
     FeatureNavigationBarModule,
     FeatureOrderModule,
+    FeatureProfileModule,
     RouterModule.forRoot(
       [
         {
@@ -64,7 +66,7 @@ export function init_app(scatterService: ScatterService) {
         },
         {
           path: 'profile', 
-          component:OrderHistoryClientComponent
+          component:ProfileClientComponent
         },
         {
           path: '**', 
