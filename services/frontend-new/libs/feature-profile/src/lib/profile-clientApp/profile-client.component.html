@@ -7,7 +7,7 @@
     fxLayoutGap="1px" 
     >
 
-    <div fxFlex="40%" style="border-right:1px solid rgba(0, 0, 0, 0.12)">
+    <div fxFlex="35%" style="border-right:1px solid rgba(0, 0, 0, 0.12)">
         <mat-card class="mat-elevation-z0">
             <mat-card-header>
               <div mat-card-avatar class="example-header-image"></div>
@@ -25,30 +25,34 @@
         </mat-card>
         <mat-list>
             <mat-list-item >
-                <h5 matLine>Location</h5>
+                <h5 matLine (click)="view = 1">Location</h5>
             </mat-list-item>
             <mat-divider></mat-divider>
             <mat-list-item >
-                <h5 matLine>Credit Card</h5>
+                <h5 matLine (click)="view = 2">Credit Card</h5>
             </mat-list-item>
             <mat-divider></mat-divider>
             <mat-list-item >
-                <h5 matLine>Transfer Token</h5>
+                <h5 matLine (click)="view = 3">Transfer Token</h5>
             </mat-list-item>
             <mat-divider></mat-divider>
         </mat-list>
     </div>
 
-    <div fxFlex="60%">
-        content
-
-        <ng-template>
-            temp 1
-        </ng-template>
-
-        <ng-template>
-            temp 2
-        </ng-template>
+    <div fxFlex="65%">
+        <ng-container [ngSwitch]="view">
+            <div *ngSwitchCase="1">
+                Inner content 1
+            </div>
+            <div *ngSwitchCase="2">
+                
+            </div>
+            <div *ngSwitchCase="3">
+                Inner content 3
+            </div>¯
+            <div *ngSwitchCase="4">
+                Inner content 4
+            </div>
+        </ng-container>
     </div>
-
 </div>
