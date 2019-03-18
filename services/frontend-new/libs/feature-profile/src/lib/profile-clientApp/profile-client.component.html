@@ -7,7 +7,7 @@
     fxLayoutGap="1px" 
     >
 
-    <div fxFlex="35%" style="border-right:1px solid rgba(0, 0, 0, 0.12)">
+    <div fxFlex="25%" style="border-right:1px solid rgba(0, 0, 0, 0.12); min-height:calc(100vh - 128px)">
         <mat-card class="mat-elevation-z0">
             <mat-card-header>
               <div mat-card-avatar class="example-header-image"></div>
@@ -39,17 +39,17 @@
         </mat-list>
     </div>
 
-    <div fxFlex="65%">
+    <div fxFlex="75%">
         <ng-container [ngSwitch]="view">
             <div *ngSwitchCase="1">
                 Inner content 1
             </div>
             <div *ngSwitchCase="2">
-                
+                <kmeal-nx-profile-client-credit-card></kmeal-nx-profile-client-credit-card>
             </div>
             <div *ngSwitchCase="3">
                 Inner content 3
-            </div>¯
+            </div>
             <div *ngSwitchCase="4">
                 Inner content 4
             </div>

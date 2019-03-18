@@ -1,22 +1,21 @@
-<mat-card>
+<mat-card  style="width:100%;cursor:pointer" *ngIf="isDynamic" (click)="onClick()" [class.mat-elevation-z0]="!isActive" [class.mat-elevation-z2]="isActive" (mouseenter) ="isActive = true"  (mouseleave) ="isActive = false">
+    <div fxLayout="row" fxLayoutGap="15px">
+        <div fxFlex="30%">
+            <img [attr.src]="defaultPhoto" alt="foto" style="width: 100%; margin-top:13px">
+            <h6>{{data.item_name}}</h6>
+        </div>
+    </div>
+</mat-card>
+
+<mat-card  style="width:100%; cursor:pointer" *ngIf="!isDynamic" (click)="onClick()" [class.mat-elevation-z0]="!isActive" [class.mat-elevation-z2]="isActive" (mouseenter) ="isActive = true"  (mouseleave) ="isActive = false">
     <div fxLayout="row" fxLayoutGap="15px">
         <div fxFlex="30%">
             <img [attr.src]="defaultPhoto" alt="foto" style="width: 100%; margin-top:13px">
         </div>
         <div fxFlex="70%">
             <h6>{{data.item_name}}</h6>
-            <mat-card-subtitle>{{data.description}}</mat-card-subtitle>
-            <mat-card-content style="height:40px; margin-bottom:0">
-                <mat-progress-bar color="primary" mode="determinate" value="60"></mat-progress-bar>
-                <div fxLayout="row">
-                    <div fxFlex="40%"><small>42%</small></div>
-                    <div fxFlex="60%" style="text-align:right"><small>Deal ends in <span
-                                [dealTimer]="'6:00 pm 2019-02-06'">time</span>
-                            <mat-icon style="font-size:12px">help_outline</mat-icon>
-                        </small></div>
-                </div>
-            </mat-card-content>
-            <p>{{price}}</p>
+            <mat-card-subtitle style="height:85px;overflow-y: hidden">{{data.description}}</mat-card-subtitle>
+            <p>$ {{price}}</p>
         </div>
     </div>
 </mat-card>
