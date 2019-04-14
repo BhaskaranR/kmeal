@@ -39,7 +39,7 @@
            {{scatterService.accountName}}
         </button>
         <mat-menu #account="matMenu">
-            <button mat-menu-item (click)="viewAccount()">
+            <button mat-menu-item routerLink="/profile">
                 View Account
             </button>
             <button mat-menu-item (click)="logout()">

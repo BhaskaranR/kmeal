@@ -1,58 +1,15 @@
-<mat-toolbar class="mat-elevation-z0" >
-    <h4>Profile</h4>
-</mat-toolbar>
-
-<div fxLayout="row" 
-    fxLayoutAlign="space-evenly stretch" 
-    fxLayoutGap="1px" 
-    >
-
-    <div fxFlex="25%" style="border-right:1px solid rgba(0, 0, 0, 0.12); min-height:calc(100vh - 128px)">
-        <mat-card class="mat-elevation-z0">
-            <mat-card-header>
-              <div mat-card-avatar class="example-header-image"></div>
-              <mat-card-title>Shiba Inu</mat-card-title>
-              <mat-card-subtitle>Dog Breed</mat-card-subtitle>
-            </mat-card-header>
-            <mat-card-content>
-              <p>
-                this is a Profile
-              </p>
-            </mat-card-content>
-            <mat-card-actions>
-                    <button mat-flat-button color="warn">Edit</button>
-            </mat-card-actions>
-        </mat-card>
-        <mat-list>
-            <mat-list-item >
-                <h5 matLine (click)="view = 1">Location</h5>
-            </mat-list-item>
-            <mat-divider></mat-divider>
-            <mat-list-item >
-                <h5 matLine (click)="view = 2">Credit Card</h5>
-            </mat-list-item>
-            <mat-divider></mat-divider>
-            <mat-list-item >
-                <h5 matLine (click)="view = 3">Transfer Token</h5>
-            </mat-list-item>
-            <mat-divider></mat-divider>
-        </mat-list>
-    </div>
-
-    <div fxFlex="75%">
-        <ng-container [ngSwitch]="view">
-            <div *ngSwitchCase="1">
-                Inner content 1
-            </div>
-            <div *ngSwitchCase="2">
-                <kmeal-nx-profile-client-credit-card></kmeal-nx-profile-client-credit-card>
-            </div>
-            <div *ngSwitchCase="3">
-                Inner content 3
-            </div>
-            <div *ngSwitchCase="4">
-                Inner content 4
-            </div>
-        </ng-container>
-    </div>
+<div style="height:250px; background:url('http://picalls.com/wp-content/uploads/2015/01/Lollipop-Android-Wallpaper-by-Puscifer91.jpg')">
+    user name, profile pic and stuff
 </div>
+<mat-divider></mat-divider>
+
+
+<mat-tab-group >
+    <mat-tab [label]="'Profile'">
+        <kmeal-nx-profile-detail></kmeal-nx-profile-detail>
+    </mat-tab>
+    <mat-tab [label]="'Manage Payment'">
+        <kmeal-nx-profile-client-credit-card></kmeal-nx-profile-client-credit-card>
+    </mat-tab>
+    <mat-tab [label]="'Transfer Token'">Transfer Token</mat-tab>
+</mat-tab-group>
