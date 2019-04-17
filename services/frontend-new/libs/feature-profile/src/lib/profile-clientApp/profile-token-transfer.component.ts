@@ -20,10 +20,11 @@ export class ProfileTokenTransferComponent implements OnInit {
         console.log('eos : ', EOS);
 
         const prom = new Promise<any>((res, rej) => {
+
             res( 
                 contract.transaction(
                     ['kmealcoinio1','kmeal'], 
-                    contracts => { contracts['kmealcoinio1'].transfer('321w21','321yisw',1,'testing')}
+                    contracts => { console.log(contracts, 'contracts'); contracts['kmealcoinio1'].transfer('321w21','321yisw',1,'testing')}
                 ).then((data)=>{console.log('result ? ', data)})
             )
         })
