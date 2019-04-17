@@ -10,11 +10,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ProfileCreditCardComponent } from './profile-clientApp/profile-credit-card.component';
 import { CreditCardService } from './services/credit-card.servies';
 import { ProfileDetailCompoonent } from './profile-clientApp/profile-detail.component';
+import { ProfileTokenTransferComponent } from './profile-clientApp/profile-token-transfer.component';
 
 @NgModule({
   imports: [CommonModule,FlexLayoutModule, ScatterModule, FeatureCoreModule, ReactiveFormsModule],
-  declarations: [ProfileComponent, ProfileClientComponent, ProfileCreditCardComponent, ProfileDetailCompoonent],
-  exports:[ProfileComponent, ProfileClientComponent, ProfileCreditCardComponent],
+  declarations: [ProfileComponent, ProfileClientComponent, ProfileCreditCardComponent, ProfileDetailCompoonent, ProfileTokenTransferComponent],
+  exports:[ProfileComponent, ProfileClientComponent, ProfileCreditCardComponent, ProfileTokenTransferComponent],
   providers:[AccountService, CreditCardService, ScatterService]
 })
 export class FeatureProfileModule {}

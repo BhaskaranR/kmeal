@@ -149,7 +149,6 @@ export class ScatterService {
             }
             eos = scatter.eos(this.selectedNetwork, Eos);
             contract = await eos.contract(code, {requiredFields:{}});
-            console.log(eos, contract, ' contract?!?!');
         }
         catch (e) {
             console.log(e);
