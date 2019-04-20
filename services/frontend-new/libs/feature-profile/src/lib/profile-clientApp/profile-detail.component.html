@@ -1,0 +1,62 @@
+<br>
+<div style="padding-left:20px;padding-right:20px">
+    <div fxLayout="row"
+     fxLayoutGap="20px"
+     *ngIf="isLoggedIn">
+    <div fxFlex="60%">
+        <mat-card >
+            <mat-card-header >
+              <mat-card-title>General Information</mat-card-title>
+            </mat-card-header>
+            <mat-divider></mat-divider>
+            <mat-card-content>
+                <mat-list>
+                    <mat-list-item>
+                        <h4 mat-line>Full Name</h4>
+                        <p mat-line> {{identity.personal.firstname}} {{identity.personal.lastname}} </p>
+                    </mat-list-item>
+                    <mat-list-item>
+                        <h4 mat-line>Email</h4>
+                        <p mat-line> {{identity.personal.email}}</p>
+                    </mat-list-item>
+                </mat-list>
+            </mat-card-content>
+        </mat-card>
+        <br>
+        <mat-card >
+                <mat-card-header >
+                  <mat-card-title>Location</mat-card-title>
+                </mat-card-header>
+                <mat-divider></mat-divider>
+                <mat-card-content>
+                    <mat-list>
+                        <mat-list-item>
+                            <h4 mat-line>Address</h4>
+                            <p mat-line> {{identity.location.address + ' New York, NY'}} </p>
+                        </mat-list-item>
+                    </mat-list>
+                </mat-card-content>
+            </mat-card>
+            <br>
+    </div>
+    <div fxFlex="40%" style="text-align: right">
+        <mat-card >
+            <mat-card-header>
+              <mat-card-title>Help Center</mat-card-title>
+            </mat-card-header>
+            <mat-divider></mat-divider>
+            <mat-card-content>  
+                <mat-list>
+                    <mat-list-item><a href="">Contact Us ?</a></mat-list-item>
+                    <mat-list-item><a href="">Report an issue ?</a></mat-list-item>
+                </mat-list>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>
+<div *ngIf="!isLoggedIn">Please Login </div>
+</div>
+
+
+
+

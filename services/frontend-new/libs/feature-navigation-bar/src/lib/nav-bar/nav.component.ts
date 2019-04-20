@@ -32,6 +32,7 @@ export class NavBarComponent implements OnInit {
     ngOnInit(){
 
     }
+    
 
     async login() {
         await this.scatterService.loginorlogout();
