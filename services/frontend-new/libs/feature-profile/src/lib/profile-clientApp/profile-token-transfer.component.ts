@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { ScatterService , eos, contract} from '@kmeal-nx/scatter';
-
+import {ual, scatter} from '../../../../scatter/src/lib/services/ual-render';
 @Component({
     selector: 'kmeal-nx-profile-token-transfer',
     moduleId: module.id,
@@ -12,25 +12,14 @@ export class ProfileTokenTransferComponent implements OnInit {
     async onSubmit(){
         alert('submitting transfer');
         console.log("scatter service : ",this.scatterService);
-        this.scatterService.setEos();
-        this.scatterService.setEos();
         const contract = this.scatterService.getContract();
-        const EOS = this.scatterService.getScatter().eos;
+        
         console.log('contract : ', contract);
-        console.log('eos : ', EOS);
+        
+        console.log('scatter : ', scatter);
+        //console.log('eos : ', e);
 
-        const prom = new Promise<any>((res, rej) => {
-
-            res( 
-                contract.transaction(
-                    ['kmealcoinio1','kmeal'], 
-                    contracts => { console.log(contracts, 'contracts'); contracts['kmealcoinio1'].transfer('321w21','321yisw',1,'testing')}
-                ).then((data)=>{console.log('result ? ', data)})
-            )
-        })
-
-        prom.then((res) => {
-            console.log(res);
-        })
+        //const trx = await e.transfer(this.scatterService.scatter.identity.accounts[0].name,'helloworld','1.0000 EOS',{});
+        //console.log(`Transaction ID: ${trx.transaction_id}`);
     }
 }

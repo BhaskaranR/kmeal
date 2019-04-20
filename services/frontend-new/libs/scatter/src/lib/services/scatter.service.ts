@@ -125,8 +125,8 @@ export class ScatterService {
         if (!scatter) return;
         if (!scatter.identity) {
             const identity = await scatter.getIdentity({ 
-                personal:['firstname', 'lastname', 'email'],
-                location:['country', 'phone', 'address',],
+                personal:['firstname', 'lastname', 'email','birthdate'],
+                location:['country', 'phone', 'address','city','state','zipcode'],
                 accounts: [this.selectedNetwork] });
             return await this.setSignatureProvider();
         }
