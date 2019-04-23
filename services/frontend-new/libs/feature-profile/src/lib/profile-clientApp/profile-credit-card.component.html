@@ -1,9 +1,9 @@
-<p *ngIf="isEmpty" style="padding:15px">No credit card is added</p>
-<div style="padding:0 15px" >
-    <form action="" >
+<p *ngIf="isEmpty" style="padding:15px;width:500px; margin-left: auto;margin-right: auto">No credit card is added</p>
+<div style="padding:0 15px; width:500px; margin-left: auto;margin-right: auto" >
+    <form [formGroup]="myFg" >
             <div class="form-group">
                 <label for="">Card Type</label>
-                <select name="" id="" class="form-control">
+                <select name="" id="" class="form-control" formControlName="cardType">
                     <option value="">- Select a Type</option>
                     <option value="visa">Visa</option>
                     <option value="mastercard">MasterCard</option>
@@ -11,29 +11,27 @@
             </div>
             <div class="form-group">
                 <label for="">Card Holder Name</label>
-                <input type="text" class="form-control" placeholder="Full Name on the card"/>
+                <input type="text" class="form-control" placeholder="Full Name on the card" formControlName="name"/>
             </div>
-        
-        
             <div class="form-group">
                 <label for="">Card Number</label>
-                <input placeholder="Card Number" class="form-control" required name="cardNumber">
+                <input class="form-control" required name="cardNumber" autocomplete="cc-number" id="cc-number" formControlName="cardNumber">
             </div>
         
             <div>
                 <div style="display: inline-block;width:65%;padding-right:10px" class="form-group">
                     <label for="">Exp. Date</label>
-                    <input type="text" class="form-control" placeholder="MM/DD/YYYY">
+                    <input type="text" class="form-control"  autocomplete="cc-exp" id="cc-exp" formControlName="cardExpDate">
                 </div>
                 <div style="display: inline-block;width:35%;" class="form-group">
                     <label for="">CVV</label>
-                    <input type="text" class="form-control" placeholder="CVV"/>
+                    <input type="text" class="form-control" autocomplete="cc-cvc" id="cc-csc" formControlName="cardCVV"/>
                 </div>
             </div>
         
             <div class="form-group">
                 <label for="">Zip Code</label>
-                <input type="text" class="form-control" placeholder="ZipCode"/>
+                <input type="text" class="form-control" placeholder="ZipCode" formControlName="zipcode"/>
             </div>
         
             <button mat-flat-button color="primary" >Add a Card</button>

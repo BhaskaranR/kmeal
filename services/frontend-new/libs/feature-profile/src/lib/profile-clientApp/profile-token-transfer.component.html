@@ -1,31 +1,28 @@
-<br>
-<p style="text-align: center">Tanfer Tokens</p>
-
+<h3 style="text-align: center; margin-top:60px">Tranfer Tokens</h3>
+<br><br>
 <div style="max-width:40%; width:600px; margin-left: auto; margin-right: auto">
-    <form action="" (submit)="onSubmit()">
+    <form [formGroup]="transferTokenForm" (submit)="onSubmit()">
         <div class="form-group">
             <label for="">Token</label>
-            <select name="" id="" class="form-control" >
+            <select name="" id="" class="form-control" formControlName="coinType">
                 <option value="">- Select a Coin -</option>
-                <option value="eos">EOS</option>
                 <option value="kmealcoin">Kmeal Coin</option>
             </select>
         </div>
         <div class="form-group">
-                <label for="">Send to (account)</label>
-                <input type="text" class="form-control" placeholder="Account">
-            </div>
-        <div class="form-group">
-            <label for="">Amount</label>
-            <input type="text" class="form-control" placeholder="Amount">
+            <label for="">Send to (account)</label>
+            <input type="text" class="form-control" placeholder="Account" formControlName="sendTo">
         </div>
         <div class="form-group">
-                <label for="">Memo (optional)</label>
-                <input type="text" class="form-control" placeholder="Memo">
-            </div>
-    
-    
-        <button mat-flat-button color="primary" >Send</button>
-        
+            <label for="">Amount</label>
+            <input type="text" class="form-control" placeholder="Amount" formControlName="amount">
+        </div>
+        <div class="form-group">
+            <label for="">Memo (optional)</label>
+            <input type="text" class="form-control" placeholder="Memo" formControlName="memo">
+        </div>
+        <button mat-flat-button color="primary" [disabled]="transferTokenForm.invalid">Send</button>
     </form>
+    <br>
+    <br>
 </div>

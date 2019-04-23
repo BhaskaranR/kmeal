@@ -11,9 +11,10 @@ import { ProfileCreditCardComponent } from './profile-clientApp/profile-credit-c
 import { CreditCardService } from './services/credit-card.servies';
 import { ProfileDetailCompoonent } from './profile-clientApp/profile-detail.component';
 import { ProfileTokenTransferComponent } from './profile-clientApp/profile-token-transfer.component';
+import { NgXCreditCardsModule } from 'ngx-credit-cards';
 
 @NgModule({
-  imports: [CommonModule,FlexLayoutModule, ScatterModule, FeatureCoreModule, ReactiveFormsModule],
+  imports: [CommonModule,FlexLayoutModule, ScatterModule, FeatureCoreModule, ReactiveFormsModule,NgXCreditCardsModule],
   declarations: [ProfileComponent, ProfileClientComponent, ProfileCreditCardComponent, ProfileDetailCompoonent, ProfileTokenTransferComponent],
   exports:[ProfileComponent, ProfileClientComponent, ProfileCreditCardComponent, ProfileTokenTransferComponent],
   providers:[AccountService, CreditCardService, ScatterService]

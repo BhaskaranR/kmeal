@@ -1,0 +1,19 @@
+<div class="action scatter" *ngIf="isLoggedIn">
+    <button mat-button [matMenuTriggerFor]="account">
+        {{user.accountName}}
+    </button>
+    <mat-menu #account="matMenu">
+        <button mat-menu-item routerLink="/profile">
+            View Account
+        </button>
+        <button mat-menu-item (click)="logout()">
+            Log out
+        </button>
+    </mat-menu>
+</div>
+
+<div class="action scatter" *ngIf="!isLoggedIn">
+    <button mat-button  (click)="login()">
+            Login
+    </button>
+</div>

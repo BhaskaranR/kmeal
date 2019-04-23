@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
-import { ScatterService } from '@kmeal-nx/scatter';
+import { ScatterUIService } from '@kmeal-nx/scatter';
 
 @Component({
     selector: 'kmeal-nx-profile-detail',
@@ -12,16 +12,13 @@ export class ProfileDetailCompoonent implements OnInit {
     identity:{[key:string]:any};
 
     constructor(
-        public scatterService:ScatterService
+        public scatterUIService:ScatterUIService
     ){}
 
-    ngOnInit(){
-      this.identity = this.scatterService.scatter.identity;
-      console.log(this.identity);
-      if (this.identity){
-          this.isLoggedIn = true;
-      }
-
-      console.log(this.scatterService.getContract())
+    async ngOnInit(){
+      //this.identity = await this.scatterUIService.user.scatter.getIdentity() ;
+      //if (this.identity) {
+       //   this.isLoggedIn = true;
+     // }
     }
 }
