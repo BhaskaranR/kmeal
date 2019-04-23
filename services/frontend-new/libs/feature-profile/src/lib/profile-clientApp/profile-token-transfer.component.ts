@@ -19,8 +19,8 @@ export class ProfileTokenTransferComponent implements OnInit {
       this.transferTokenForm = this.fb.group({
           coinType:['',[Validators.required]],
           sendTo:[null, [Validators.required]],
-          memo:[null, [Validators.required]],
-          amount:null
+          amount:[null, [Validators.required]],
+          memo:null,
       });
     }
 

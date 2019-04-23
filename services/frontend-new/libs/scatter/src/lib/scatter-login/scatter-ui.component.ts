@@ -10,7 +10,6 @@ import { ScatterUIService } from '../services/scatter-ui.service';
 export class ScatterUIComponent implements OnInit {
     isLoggedIn:boolean=false;
     user:any;
-    scatter:any;
     constructor(public scatterUIService:ScatterUIService){}
     
     ngOnInit(){
