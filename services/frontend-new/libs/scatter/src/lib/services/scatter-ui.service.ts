@@ -19,12 +19,12 @@ export class ScatterUIService {
     accountName:string;
 
     constructor(){
+        this.scatter = new Scatter([this.network],{appName:this.appName});
+        this.scatter.init();
         console.log('scatter : ', this.scatter);
     }
 
     initScatter(){
-        this.scatter = new Scatter([this.network],{appName:this.appName});
-        this.scatter.init();
         return this.scatter
     }
 
