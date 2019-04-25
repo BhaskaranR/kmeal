@@ -1,25 +1,54 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
-import { ScatterService , eos, contract} from '@kmeal-nx/scatter';
-import {ual, scatter} from '../../../../scatter/src/lib/services/ual-render';
+import { ScatterUIService } from '@kmeal-nx/scatter';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+
 @Component({
     selector: 'kmeal-nx-profile-token-transfer',
     moduleId: module.id,
     templateUrl: './profile-token-transfer.component.html'
 })
 export class ProfileTokenTransferComponent implements OnInit {
-    constructor(public scatterService:ScatterService){}
-    ngOnInit(){}
-    async onSubmit(){
-        alert('submitting transfer');
-        console.log("scatter service : ",this.scatterService);
-        const contract = this.scatterService.getContract();
-        
-        console.log('contract : ', contract);
-        
-        console.log('scatter : ', scatter);
-        //console.log('eos : ', e);
 
-        //const trx = await e.transfer(this.scatterService.scatter.identity.accounts[0].name,'helloworld','1.0000 EOS',{});
-        //console.log(`Transaction ID: ${trx.transaction_id}`);
+    transferTokenForm:FormGroup;
+    
+    constructor(
+        public scatterUIService:ScatterUIService,
+        public fb: FormBuilder){}
+
+    ngOnInit(){
+      this.transferTokenForm = this.fb.group({
+          coinType:['',[Validators.required]],
+          sendTo:[null, [Validators.required]],
+          amount:[null, [Validators.required]],
+          memo:null,
+      });
     }
+
+    async onSubmit(){
+
+
+      const result = await this.scatterUIService.signTransaction({
+            actions: [{
+              account: 'eosio.token',
+              name: 'transfer',
+              authorization: [{
+                actor: 'kmealadmin15',
+                permission: 'active',
+              }],
+              data: {
+                from:'kmealadmin15',
+                to: 'kmealtestio1',
+                quantity: '0.0001 kmealcoin',
+                memo: '',
+              },
+            }]
+          }, {
+            blocksBehind: 3,
+            expireSeconds: 30,
+          })
+
+          console.log('transafer? ', result);
+    }
+
+    
 }

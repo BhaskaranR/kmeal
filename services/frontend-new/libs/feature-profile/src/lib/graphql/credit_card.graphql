@@ -1,0 +1,22 @@
+query getCreditCards($where:kmeal_credit_card_info_bool_exp){
+    kmeal_credit_card_info(where:$where){
+        card_cvv
+        card_num
+        card_type
+        card_holder
+        country
+        city
+        postal_code
+        address_line_1
+        address_line_2
+        exp_date
+        username
+    }  
+}
+
+
+mutation insertCreditCards($objects: [kmeal_credit_card_info_insert_input!]!) {
+    insert_kmeal_credit_card_info(objects:$objects){
+        affected_rows
+    }
+}

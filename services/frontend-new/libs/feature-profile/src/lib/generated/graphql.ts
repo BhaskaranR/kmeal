@@ -1159,6 +1159,18 @@ export interface GeographyComparisonExp {
   _neq?: Geography | null;
 
   _nin?: (Geography | null)[] | null;
+  /** is the column within a distance from a geography value */
+  _st_d_within?: StDWithinGeographyInput | null;
+  /** does the column spatially intersect the given geography value */
+  _st_intersects?: Geography | null;
+}
+
+export interface StDWithinGeographyInput {
+  distance: number;
+
+  from: Geography;
+
+  use_spheroid?: boolean | null;
 }
 /** Boolean expression to filter rows from the table "kmeal.order". All fields are combined with a logical 'AND'. */
 export interface KmealOrderBoolExp {
@@ -2898,6 +2910,60 @@ export interface KmealCategoriesBoolExp {
 
   title?: VarcharComparisonExp | null;
 }
+/** ordering options when selecting data from "kmeal.credit_card_info" */
+export interface KmealCreditCardInfoOrderBy {
+  address_line_1?: OrderBy | null;
+
+  address_line_2?: OrderBy | null;
+
+  card_cvv?: OrderBy | null;
+
+  card_holder?: OrderBy | null;
+
+  card_num?: OrderBy | null;
+
+  card_type?: OrderBy | null;
+
+  city?: OrderBy | null;
+
+  country?: OrderBy | null;
+
+  exp_date?: OrderBy | null;
+
+  postal_code?: OrderBy | null;
+
+  username?: OrderBy | null;
+}
+/** Boolean expression to filter rows from the table "kmeal.credit_card_info". All fields are combined with a logical 'AND'. */
+export interface KmealCreditCardInfoBoolExp {
+  _and?: (KmealCreditCardInfoBoolExp | null)[] | null;
+
+  _not?: KmealCreditCardInfoBoolExp | null;
+
+  _or?: (KmealCreditCardInfoBoolExp | null)[] | null;
+
+  address_line_1?: TextComparisonExp | null;
+
+  address_line_2?: TextComparisonExp | null;
+
+  card_cvv?: NumericComparisonExp | null;
+
+  card_holder?: TextComparisonExp | null;
+
+  card_num?: NumericComparisonExp | null;
+
+  card_type?: TextComparisonExp | null;
+
+  city?: TextComparisonExp | null;
+
+  country?: TextComparisonExp | null;
+
+  exp_date?: DateComparisonExp | null;
+
+  postal_code?: NumericComparisonExp | null;
+
+  username?: TextComparisonExp | null;
+}
 /** ordering options when selecting data from "kmeal.restaurant_location" */
 export interface KmealRestaurantLocationOrderBy {
   address?: OrderBy | null;
@@ -2939,6 +3005,24 @@ export interface KmealRestaurantLocationBoolExp {
   owner?: BpcharComparisonExp | null;
 
   phone?: VarcharComparisonExp | null;
+}
+/** ordering options when selecting data from "offerings" */
+export interface OfferingsOrderBy {
+  cusip?: OrderBy | null;
+
+  offer_id?: OrderBy | null;
+}
+/** Boolean expression to filter rows from the table "offerings". All fields are combined with a logical 'AND'. */
+export interface OfferingsBoolExp {
+  _and?: (OfferingsBoolExp | null)[] | null;
+
+  _not?: OfferingsBoolExp | null;
+
+  _or?: (OfferingsBoolExp | null)[] | null;
+
+  cusip?: TextComparisonExp | null;
+
+  offer_id?: IntegerComparisonExp | null;
 }
 /** ordering options when selecting data from "raster_columns" */
 export interface RasterColumnsOrderBy {
@@ -4004,6 +4088,48 @@ export interface KmealCategoriesOnConflict {
 
   update_columns: KmealCategoriesUpdateColumn[];
 }
+/** input type for inserting data into table "kmeal.credit_card_info" */
+export interface KmealCreditCardInfoInsertInput {
+  address_line_1?: string | null;
+
+  address_line_2?: string | null;
+
+  card_cvv?: Numeric | null;
+
+  card_holder?: string | null;
+
+  card_num?: Numeric | null;
+
+  card_type?: string | null;
+
+  city?: string | null;
+
+  country?: string | null;
+
+  exp_date?: Date | null;
+
+  postal_code?: Numeric | null;
+
+  username?: string | null;
+}
+/** on conflict condition type for table "kmeal.credit_card_info" */
+export interface KmealCreditCardInfoOnConflict {
+  constraint: KmealCreditCardInfoConstraint;
+
+  update_columns: KmealCreditCardInfoUpdateColumn[];
+}
+/** input type for inserting data into table "offerings" */
+export interface OfferingsInsertInput {
+  cusip?: string | null;
+
+  offer_id?: number | null;
+}
+/** on conflict condition type for table "offerings" */
+export interface OfferingsOnConflict {
+  constraint: OfferingsConstraint;
+
+  update_columns: OfferingsUpdateColumn[];
+}
 /** input type for inserting data into table "spatial_ref_sys" */
 export interface SpatialRefSysInsertInput {
   auth_name?: string | null;
@@ -4157,6 +4283,30 @@ export interface KmealCategoriesSetInput {
   alias?: string | null;
 
   title?: string | null;
+}
+/** input type for updating data in table "kmeal.credit_card_info" */
+export interface KmealCreditCardInfoSetInput {
+  address_line_1?: string | null;
+
+  address_line_2?: string | null;
+
+  card_cvv?: Numeric | null;
+
+  card_holder?: string | null;
+
+  card_num?: Numeric | null;
+
+  card_type?: string | null;
+
+  city?: string | null;
+
+  country?: string | null;
+
+  exp_date?: Date | null;
+
+  postal_code?: Numeric | null;
+
+  username?: string | null;
 }
 /** input type for incrementing integer columne in table "kmeal.dporder" */
 export interface KmealDporderIncInput {
@@ -4501,6 +4651,16 @@ export interface KmealRestaurantCategoriesSetInput {
   category?: string | null;
 
   restaurant_id?: number | null;
+}
+/** input type for incrementing integer columne in table "offerings" */
+export interface OfferingsIncInput {
+  offer_id?: number | null;
+}
+/** input type for updating data in table "offerings" */
+export interface OfferingsSetInput {
+  cusip?: string | null;
+
+  offer_id?: number | null;
 }
 /** input type for incrementing integer columne in table "spatial_ref_sys" */
 export interface SpatialRefSysIncInput {
@@ -5082,6 +5242,154 @@ export interface KmealCategoriesObjRelInsertInput {
 
   on_conflict?: KmealCategoriesOnConflict | null;
 }
+/** order by aggregate values of table "kmeal.credit_card_info" */
+export interface KmealCreditCardInfoAggregateOrderBy {
+  avg?: KmealCreditCardInfoAvgOrderBy | null;
+
+  count?: OrderBy | null;
+
+  max?: KmealCreditCardInfoMaxOrderBy | null;
+
+  min?: KmealCreditCardInfoMinOrderBy | null;
+
+  stddev?: KmealCreditCardInfoStddevOrderBy | null;
+
+  stddev_pop?: KmealCreditCardInfoStddevPopOrderBy | null;
+
+  stddev_samp?: KmealCreditCardInfoStddevSampOrderBy | null;
+
+  sum?: KmealCreditCardInfoSumOrderBy | null;
+
+  var_pop?: KmealCreditCardInfoVarPopOrderBy | null;
+
+  var_samp?: KmealCreditCardInfoVarSampOrderBy | null;
+
+  variance?: KmealCreditCardInfoVarianceOrderBy | null;
+}
+/** order by avg() on columns of table "kmeal.credit_card_info" */
+export interface KmealCreditCardInfoAvgOrderBy {
+  card_cvv?: OrderBy | null;
+
+  card_num?: OrderBy | null;
+
+  postal_code?: OrderBy | null;
+}
+/** order by max() on columns of table "kmeal.credit_card_info" */
+export interface KmealCreditCardInfoMaxOrderBy {
+  address_line_1?: OrderBy | null;
+
+  address_line_2?: OrderBy | null;
+
+  card_cvv?: OrderBy | null;
+
+  card_holder?: OrderBy | null;
+
+  card_num?: OrderBy | null;
+
+  card_type?: OrderBy | null;
+
+  city?: OrderBy | null;
+
+  country?: OrderBy | null;
+
+  exp_date?: OrderBy | null;
+
+  postal_code?: OrderBy | null;
+
+  username?: OrderBy | null;
+}
+/** order by min() on columns of table "kmeal.credit_card_info" */
+export interface KmealCreditCardInfoMinOrderBy {
+  address_line_1?: OrderBy | null;
+
+  address_line_2?: OrderBy | null;
+
+  card_cvv?: OrderBy | null;
+
+  card_holder?: OrderBy | null;
+
+  card_num?: OrderBy | null;
+
+  card_type?: OrderBy | null;
+
+  city?: OrderBy | null;
+
+  country?: OrderBy | null;
+
+  exp_date?: OrderBy | null;
+
+  postal_code?: OrderBy | null;
+
+  username?: OrderBy | null;
+}
+/** order by stddev() on columns of table "kmeal.credit_card_info" */
+export interface KmealCreditCardInfoStddevOrderBy {
+  card_cvv?: OrderBy | null;
+
+  card_num?: OrderBy | null;
+
+  postal_code?: OrderBy | null;
+}
+/** order by stddev_pop() on columns of table "kmeal.credit_card_info" */
+export interface KmealCreditCardInfoStddevPopOrderBy {
+  card_cvv?: OrderBy | null;
+
+  card_num?: OrderBy | null;
+
+  postal_code?: OrderBy | null;
+}
+/** order by stddev_samp() on columns of table "kmeal.credit_card_info" */
+export interface KmealCreditCardInfoStddevSampOrderBy {
+  card_cvv?: OrderBy | null;
+
+  card_num?: OrderBy | null;
+
+  postal_code?: OrderBy | null;
+}
+/** order by sum() on columns of table "kmeal.credit_card_info" */
+export interface KmealCreditCardInfoSumOrderBy {
+  card_cvv?: OrderBy | null;
+
+  card_num?: OrderBy | null;
+
+  postal_code?: OrderBy | null;
+}
+/** order by var_pop() on columns of table "kmeal.credit_card_info" */
+export interface KmealCreditCardInfoVarPopOrderBy {
+  card_cvv?: OrderBy | null;
+
+  card_num?: OrderBy | null;
+
+  postal_code?: OrderBy | null;
+}
+/** order by var_samp() on columns of table "kmeal.credit_card_info" */
+export interface KmealCreditCardInfoVarSampOrderBy {
+  card_cvv?: OrderBy | null;
+
+  card_num?: OrderBy | null;
+
+  postal_code?: OrderBy | null;
+}
+/** order by variance() on columns of table "kmeal.credit_card_info" */
+export interface KmealCreditCardInfoVarianceOrderBy {
+  card_cvv?: OrderBy | null;
+
+  card_num?: OrderBy | null;
+
+  postal_code?: OrderBy | null;
+}
+/** input type for inserting array relation for remote table "kmeal.credit_card_info" */
+export interface KmealCreditCardInfoArrRelInsertInput {
+  data: KmealCreditCardInfoInsertInput[];
+
+  on_conflict?: KmealCreditCardInfoOnConflict | null;
+}
+/** input type for inserting object relation for remote table "kmeal.credit_card_info" */
+export interface KmealCreditCardInfoObjRelInsertInput {
+  data: KmealCreditCardInfoInsertInput;
+
+  on_conflict?: KmealCreditCardInfoOnConflict | null;
+}
 /** input type for inserting object relation for remote table "kmeal.dporder" */
 export interface KmealDporderObjRelInsertInput {
   data: KmealDporderInsertInput;
@@ -5205,6 +5513,86 @@ export interface KmealRestaurantLocationVarSampOrderBy {
 /** order by variance() on columns of table "kmeal.restaurant_location" */
 export interface KmealRestaurantLocationVarianceOrderBy {
   distance?: OrderBy | null;
+}
+/** order by aggregate values of table "offerings" */
+export interface OfferingsAggregateOrderBy {
+  avg?: OfferingsAvgOrderBy | null;
+
+  count?: OrderBy | null;
+
+  max?: OfferingsMaxOrderBy | null;
+
+  min?: OfferingsMinOrderBy | null;
+
+  stddev?: OfferingsStddevOrderBy | null;
+
+  stddev_pop?: OfferingsStddevPopOrderBy | null;
+
+  stddev_samp?: OfferingsStddevSampOrderBy | null;
+
+  sum?: OfferingsSumOrderBy | null;
+
+  var_pop?: OfferingsVarPopOrderBy | null;
+
+  var_samp?: OfferingsVarSampOrderBy | null;
+
+  variance?: OfferingsVarianceOrderBy | null;
+}
+/** order by avg() on columns of table "offerings" */
+export interface OfferingsAvgOrderBy {
+  offer_id?: OrderBy | null;
+}
+/** order by max() on columns of table "offerings" */
+export interface OfferingsMaxOrderBy {
+  cusip?: OrderBy | null;
+
+  offer_id?: OrderBy | null;
+}
+/** order by min() on columns of table "offerings" */
+export interface OfferingsMinOrderBy {
+  cusip?: OrderBy | null;
+
+  offer_id?: OrderBy | null;
+}
+/** order by stddev() on columns of table "offerings" */
+export interface OfferingsStddevOrderBy {
+  offer_id?: OrderBy | null;
+}
+/** order by stddev_pop() on columns of table "offerings" */
+export interface OfferingsStddevPopOrderBy {
+  offer_id?: OrderBy | null;
+}
+/** order by stddev_samp() on columns of table "offerings" */
+export interface OfferingsStddevSampOrderBy {
+  offer_id?: OrderBy | null;
+}
+/** order by sum() on columns of table "offerings" */
+export interface OfferingsSumOrderBy {
+  offer_id?: OrderBy | null;
+}
+/** order by var_pop() on columns of table "offerings" */
+export interface OfferingsVarPopOrderBy {
+  offer_id?: OrderBy | null;
+}
+/** order by var_samp() on columns of table "offerings" */
+export interface OfferingsVarSampOrderBy {
+  offer_id?: OrderBy | null;
+}
+/** order by variance() on columns of table "offerings" */
+export interface OfferingsVarianceOrderBy {
+  offer_id?: OrderBy | null;
+}
+/** input type for inserting array relation for remote table "offerings" */
+export interface OfferingsArrRelInsertInput {
+  data: OfferingsInsertInput[];
+
+  on_conflict?: OfferingsOnConflict | null;
+}
+/** input type for inserting object relation for remote table "offerings" */
+export interface OfferingsObjRelInsertInput {
+  data: OfferingsInsertInput;
+
+  on_conflict?: OfferingsOnConflict | null;
 }
 /** order by aggregate values of table "raster_columns" */
 export interface RasterColumnsAggregateOrderBy {
@@ -5862,6 +6250,20 @@ export enum KmealCategoriesSelectColumn {
   Alias = "alias",
   Title = "title"
 }
+/** select columns of table "kmeal.credit_card_info" */
+export enum KmealCreditCardInfoSelectColumn {
+  AddressLine_1 = "address_line_1",
+  AddressLine_2 = "address_line_2",
+  CardCvv = "card_cvv",
+  CardHolder = "card_holder",
+  CardNum = "card_num",
+  CardType = "card_type",
+  City = "city",
+  Country = "country",
+  ExpDate = "exp_date",
+  PostalCode = "postal_code",
+  Username = "username"
+}
 /** select columns of table "kmeal.restaurant_location" */
 export enum KmealRestaurantLocationSelectColumn {
   Address = "address",
@@ -5872,6 +6274,11 @@ export enum KmealRestaurantLocationSelectColumn {
   Name = "name",
   Owner = "owner",
   Phone = "phone"
+}
+/** select columns of table "offerings" */
+export enum OfferingsSelectColumn {
+  Cusip = "cusip",
+  OfferId = "offer_id"
 }
 /** select columns of table "raster_columns" */
 export enum RasterColumnsSelectColumn {
@@ -6132,6 +6539,33 @@ export enum KmealCategoriesUpdateColumn {
   Alias = "alias",
   Title = "title"
 }
+/** unique or primary key constraints on table "kmeal.credit_card_info" */
+export enum KmealCreditCardInfoConstraint {
+  CreditCardInfoPkey = "credit_card_info_pkey"
+}
+/** update columns of table "kmeal.credit_card_info" */
+export enum KmealCreditCardInfoUpdateColumn {
+  AddressLine_1 = "address_line_1",
+  AddressLine_2 = "address_line_2",
+  CardCvv = "card_cvv",
+  CardHolder = "card_holder",
+  CardNum = "card_num",
+  CardType = "card_type",
+  City = "city",
+  Country = "country",
+  ExpDate = "exp_date",
+  PostalCode = "postal_code",
+  Username = "username"
+}
+/** unique or primary key constraints on table "offerings" */
+export enum OfferingsConstraint {
+  OfferingsPkey = "offerings_pkey"
+}
+/** update columns of table "offerings" */
+export enum OfferingsUpdateColumn {
+  Cusip = "cusip",
+  OfferId = "offer_id"
+}
 /** unique or primary key constraints on table "spatial_ref_sys" */
 export enum SpatialRefSysConstraint {
   SpatialRefSysPkey = "spatial_ref_sys_pkey"
@@ -6202,3 +6636,115 @@ export type _Float8 = any;
 export type _Bool = any;
 
 export type _Text = any;
+
+// ====================================================
+// Documents
+// ====================================================
+
+export namespace GetCreditCards {
+  export type Variables = {
+    where?: KmealCreditCardInfoBoolExp | null;
+  };
+
+  export type Query = {
+    __typename?: "Query";
+
+    kmeal_credit_card_info: KmealCreditCardInfo[];
+  };
+
+  export type KmealCreditCardInfo = {
+    __typename?: "kmeal_credit_card_info";
+
+    card_cvv: Numeric;
+
+    card_num: Numeric;
+
+    card_type: string;
+
+    card_holder: string;
+
+    country: string;
+
+    city: string;
+
+    postal_code: Numeric;
+
+    address_line_1: string;
+
+    address_line_2: string | null;
+
+    exp_date: Date;
+
+    username: string;
+  };
+}
+
+export namespace InsertCreditCards {
+  export type Variables = {
+    objects: KmealCreditCardInfoInsertInput[];
+  };
+
+  export type Mutation = {
+    __typename?: "Mutation";
+
+    insert_kmeal_credit_card_info: InsertKmealCreditCardInfo | null;
+  };
+
+  export type InsertKmealCreditCardInfo = {
+    __typename?: "kmeal_credit_card_info_mutation_response";
+
+    affected_rows: number;
+  };
+}
+
+// ====================================================
+// START: Apollo Angular template
+// ====================================================
+
+import { Injectable } from "@angular/core";
+import * as Apollo from "apollo-angular";
+
+import gql from "graphql-tag";
+
+// ====================================================
+// Apollo Services
+// ====================================================
+
+@Injectable({
+  providedIn: "root"
+})
+export class GetCreditCardsGQL extends Apollo.Query<GetCreditCards.Query, GetCreditCards.Variables> {
+  document: any = gql`
+    query getCreditCards($where: kmeal_credit_card_info_bool_exp) {
+      kmeal_credit_card_info(where: $where) {
+        card_cvv
+        card_num
+        card_type
+        card_holder
+        country
+        city
+        postal_code
+        address_line_1
+        address_line_2
+        exp_date
+        username
+      }
+    }
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
+export class InsertCreditCardsGQL extends Apollo.Mutation<InsertCreditCards.Mutation, InsertCreditCards.Variables> {
+  document: any = gql`
+    mutation insertCreditCards($objects: [kmeal_credit_card_info_insert_input!]!) {
+      insert_kmeal_credit_card_info(objects: $objects) {
+        affected_rows
+      }
+    }
+  `;
+}
+
+// ====================================================
+// END: Apollo Angular template
+// ====================================================

@@ -2,8 +2,10 @@ import { Scatter } from 'ual-scatter'
 import { User, Authenticator } from 'universal-authenticator-library'
 import { UALJs } from 'ual-plainjs-renderer'
 import { JsonRpc } from 'eosjs';
-import { ScatterAuthenticator } from './ual-auth';
+import { ScatterAuthenticator, ScatterUser } from './ual-auth';
+import { Injectable } from '@angular/core';
 
+const appName = 'kmeal';
 
 export const demoTransaction = {
     actions: [{
@@ -57,15 +59,16 @@ const userCallback = async (users: User[]) => {
   transferDiv!.style.display = 'block'
 }
 
-export const scatter = new Scatter([network], {appName:'kmeal'});
-export let scatterAuth = new ScatterAuthenticator([network]);
-console.log('scatter init ', scatter, scatterAuth);
+export const scatter = new Scatter([network], {appName:appName});
+//const u = new ScatterUser('test',[network]);
+//export let scatterAuth = new ScatterAuthenticator([network]);
+console.log('scatter init ', scatter);
 
 export const ual = new UALJs(
   userCallback,
   [network],
-  'UAL Test',
-  [scatter, scatterAuth],
+  appName,
+  [scatter],
   {
     containerElement: document.getElementById('ual-div')
   }
