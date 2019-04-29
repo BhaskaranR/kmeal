@@ -1,68 +1,69 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 
-import { StripeService, StripeCardComponent, ElementOptions, ElementsOptions } from "ngx-stripe";
-
+import { StripeService, Elements, Element as StripeElement, ElementsOptions } from "ngx-stripe";
 
 @Component({
-  selector: 'app-stripe-test',
-  templateUrl: 'stripe.component.html'
+  selector: 'kmeal-stripe',
+  templateUrl: './payment.component.html'
 })
-export class StripeTestComponent implements OnInit {
-  stripeKey = '';
-  error: any;
-  complete = false;
-  element: any;
-  cardOptions: ElementOptions = {
-    style: {
-      base: {
-        iconColor: '#276fd3',
-        color: '#31325F',
-        lineHeight: '40px',
-        fontWeight: 300,
-        fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
-        fontSize: '18px',
-        '::placeholder': {
-          color: '#CFD7E0'
-        }
-      }
-    }
+export class StripeComponent implements OnInit {
+  elements: Elements;
+  card: StripeElement;
+
+  // optional parameters
+  elementsOptions: ElementsOptions = {
+    locale: 'es'
   };
 
-  elementsOptions: ElementsOptions = {
-    locale: 'en'
-  };
+  stripeTest: FormGroup;
 
   constructor(
-    private _stripe: StripeService
-  ) {}
+    private fb: FormBuilder,
+    private stripeService: StripeService) {}
 
-  cardUpdated(result) {
-    this.element = result.element;
-    this.complete = result.card.complete;
-    this.error = undefined;
-  }
-
-  keyUpdated() {
-    this._stripe.changeKey(this.stripeKey);
-  }
-
-  getCardToken() {
-    this._stripe.createToken(this.element, {
-      name: 'tested_ca',
-      address_line1: '123 A Place',
-      address_line2: 'Suite 100',
-      address_city: 'Irving',
-      address_state: 'BC',
-      address_zip: 'VOE 1H0',
-      address_country: 'CA'
-    }).subscribe(result => {
-      // Pass token to service for purchase.
-      console.log(result);
+  ngOnInit() {
+    this.stripeTest = this.fb.group({
+      name: ['', [Validators.required]]
     });
+    this.stripeService.elements(this.elementsOptions)
+      .subscribe(elements => {
+        this.elements = elements;
+        // Only mount the element the first time
+        if (!this.card) {
+          this.card = this.elements.create('card', {
+            style: {
+              base: {
+                iconColor: '#666EE8',
+                color: '#31325F',
+                lineHeight: '40px',
+                fontWeight: 300,
+                fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+                fontSize: '18px',
+                '::placeholder': {
+                  color: '#CFD7E0'
+                }
+              }
+            }
+          });
+          this.card.mount('#card-element');
+        }
+      });
   }
 
-  ngOnInit(){
-
+  buy() {
+    const name = this.stripeTest.get('name').value;
+    this.stripeService
+      .createToken(this.card, { name })
+      .subscribe(result => {
+        if (result.token) {
+          // Use the token to create a charge or a customer
+          // https://stripe.com/docs/charges
+          console.log(result.token);
+        } else if (result.error) {
+          // Error creating the token
+          console.log(result.error.message);
+        }
+      });
   }
 }

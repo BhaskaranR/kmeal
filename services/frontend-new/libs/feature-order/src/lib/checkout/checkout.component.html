@@ -64,7 +64,7 @@
                 </mat-step>
                 <mat-step [stepControl]="orderForm" label="Place Your Orders">
                     <br>
-                    <form [formGroup]="paymentForm">
+                    <form [formGroup]="paymentForm" >
                             <mat-form-field appearance="fill" style="width:100%">
                                 <mat-label>Payment Method</mat-label>
                                 <mat-select placeholder="Payment Method"  name="paymentMethod" formControlName="paymentMethod" required>
@@ -139,7 +139,7 @@
                             </div>
                             <br>
                             <div>
-                                <button mat-flat-button color="warn" matStepperNext>Submit</button>
+                                <button mat-flat-button color="warn" matStepperNext (click)="onSubmitPayment($event)">Submit</button>
                             </div>
                         </form>
                 </mat-step>

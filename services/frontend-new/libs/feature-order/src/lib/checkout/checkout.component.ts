@@ -2,8 +2,10 @@ import { Component, OnInit, Input, OnDestroy } from "@angular/core";
 import { MatDialog } from "@angular/material";
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { DishOrderComponent, DishData } from "@kmeal-nx/ui";
-import { CartService } from "../../../../../libs/ui/src/lib/cart.service";
-
+import { CartService } from "@kmeal-nx/ui";
+import { pluck, switchMap } from "rxjs/operators";
+import {GetCreditCardsGQL} from '../generated/graphql';
+import { StripeComponent } from "../payment/payment.component";
 
 @Component({
   selector: "kmeal-nx-checkout",
@@ -28,6 +30,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     qtyOptions: Array<number> = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30];
     constructor(public dialog: MatDialog,
         public cartService: CartService,
+        public creditCardsGQL: GetCreditCardsGQL,
         private fb:FormBuilder){}
 
     async ngOnInit(){
@@ -40,6 +43,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         }
 
         this.creditCards = await this.getCreditCards();
+        console.log('credit card : ', this.creditCards);
         this.initForm();
         this.isReady = true;
         console.log(this.orders, this.cartService);
@@ -137,6 +141,19 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         console.log('submit ', data);
     }
 
+    onSubmitPayment(e){
+        console.log('on submit payment ', e);
+        e.preventDefault();
+        const dia = this.dialog.open(StripeComponent, {
+            width:'650px',
+            data:e
+        });
+
+        dia.afterClosed().subscribe(result =>{
+            console.log('closed payment', result);
+        })
+    }
+
     private updateOrders(data){
         this.orders[data.index] = data;
         this.cartService.updateOrders(this.orders)
@@ -148,8 +165,24 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     }
 
     private getCreditCards(){
-        return new Promise((res, rej)=>{
-            res();
+        return new Promise<any[]>((res, rej)=>{
+            this.creditCardsGQL.watch(this.getQuery('kmealadmin15'))
+            .valueChanges
+            .pipe(pluck('data','kmeal_credit_card_info'))
+            .subscribe((data:any[]) =>{
+                console.log('ccs : ', data);
+                res(data);
+            })
         })
+    }
+
+    private getQuery(username) {
+        return {
+            where:{
+                username:{
+                    _eq:username
+                }
+            }
+        }
     }
 }
