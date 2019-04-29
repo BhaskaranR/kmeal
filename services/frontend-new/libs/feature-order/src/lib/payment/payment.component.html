@@ -1,0 +1,5 @@
+<ngx-stripe-card [options]="cardOptions" [elementsOptions]="elementsOptions" (change)="cardUpdated($event)" (error)="error = $event"></ngx-stripe-card>
+<div class="error">
+  {{error?.message}}
+</div>
+<button (click)="getCardToken()" [disabled]="!complete">Get Card Token</button>

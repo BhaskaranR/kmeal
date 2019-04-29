@@ -8,9 +8,10 @@ import { UiModule } from '@kmeal-nx/ui';
 import { ReactiveFormsModule } from '@angular/forms';
 import { OrderHistoryClientComponent } from './order-history-client/order-history.component';
 import {MatTreeModule} from '@angular/material';
+import { NgxStripeModule } from 'ngx-stripe';
 
 @NgModule({
-  imports: [CommonModule, FeatureCoreModule, UiModule, ReactiveFormsModule, MatTreeModule],
+  imports: [CommonModule, FeatureCoreModule, UiModule, ReactiveFormsModule, MatTreeModule,NgxStripeModule],
   declarations: [CartComponent, OrderHistoryComponent, CheckoutComponent, OrderHistoryClientComponent]
 })
 export class FeatureOrderModule {}

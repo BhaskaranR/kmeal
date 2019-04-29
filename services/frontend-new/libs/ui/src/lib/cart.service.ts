@@ -1,10 +1,12 @@
 import { Injectable } from "@angular/core";
 import {LocalStorage} from '@ngx-pwa/local-storage';
 
-interface User {
+export interface User {
     restaurant:{[key:string]:any};
     orders:Array<any>;
-    address?:string;
+    address:string;
+    lat:number;
+    lng:number;
 }
 
 @Injectable({
@@ -17,6 +19,9 @@ export class CartService {
               this.user = {
                   restaurant:null,
                   orders:[],
+                  address:null,
+                  lat:null,
+                  lng:null,
               }
           } else {
               this.user = user;
@@ -30,10 +35,13 @@ export class CartService {
   user:User;
 
   resetData(){
-      this.user = {
-          restaurant:null,
-          orders:[]
-      }
+        this.user = {
+            restaurant:null,
+            orders:[],
+            address:null,
+            lat:null,
+            lng:null,
+        }
 
       this.saveChanges();
   }

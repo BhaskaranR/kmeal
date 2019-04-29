@@ -23,6 +23,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     orders:any[] | any;
     isReady:boolean = false;
     isEmpty:boolean = false;
+    creditCards:any[];
 
     qtyOptions: Array<number> = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30];
     constructor(public dialog: MatDialog,
@@ -38,6 +39,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
             return;
         }
 
+        this.creditCards = await this.getCreditCards();
         this.initForm();
         this.isReady = true;
         console.log(this.orders, this.cartService);
@@ -143,5 +145,11 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     removeOrder(order, idx){
         this.orders.splice(idx, 1);
         this.cartService.updateOrders(this.orders);
+    }
+
+    private getCreditCards(){
+        return new Promise((res, rej)=>{
+            res();
+        })
     }
 }

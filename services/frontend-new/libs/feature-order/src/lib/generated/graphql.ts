@@ -6636,3 +6636,85 @@ export type _Float8 = any;
 export type _Bool = any;
 
 export type _Text = any;
+
+// ====================================================
+// Documents
+// ====================================================
+
+export namespace GetCreditCards {
+  export type Variables = {
+    where?: KmealCreditCardInfoBoolExp | null;
+  };
+
+  export type Query = {
+    __typename?: "Query";
+
+    kmeal_credit_card_info: KmealCreditCardInfo[];
+  };
+
+  export type KmealCreditCardInfo = {
+    __typename?: "kmeal_credit_card_info";
+
+    card_cvv: Numeric;
+
+    card_num: Numeric;
+
+    card_type: string;
+
+    card_holder: string;
+
+    country: string;
+
+    city: string;
+
+    postal_code: Numeric;
+
+    address_line_1: string;
+
+    address_line_2: string | null;
+
+    exp_date: Date;
+
+    username: string;
+  };
+}
+
+// ====================================================
+// START: Apollo Angular template
+// ====================================================
+
+import { Injectable } from "@angular/core";
+import * as Apollo from "apollo-angular";
+
+import gql from "graphql-tag";
+
+// ====================================================
+// Apollo Services
+// ====================================================
+
+@Injectable({
+  providedIn: "root"
+})
+export class GetCreditCardsGQL extends Apollo.Query<GetCreditCards.Query, GetCreditCards.Variables> {
+  document: any = gql`
+    query getCreditCards($where: kmeal_credit_card_info_bool_exp) {
+      kmeal_credit_card_info(where: $where) {
+        card_cvv
+        card_num
+        card_type
+        card_holder
+        country
+        city
+        postal_code
+        address_line_1
+        address_line_2
+        exp_date
+        username
+      }
+    }
+  `;
+}
+
+// ====================================================
+// END: Apollo Angular template
+// ====================================================
