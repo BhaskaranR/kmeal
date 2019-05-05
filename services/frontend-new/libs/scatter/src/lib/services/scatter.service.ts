@@ -12,7 +12,7 @@ export let contract;
 
 import { HttpClient } from '@angular/common/http';
 import { BigNumber } from 'bignumber.js';
-export const code = 'kmealadmin13';
+export const code = 'kmealadmin15';
 
 export const RETURN_TYPES = {
     ERROR: 0,

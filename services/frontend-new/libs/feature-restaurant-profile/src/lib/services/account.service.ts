@@ -20,7 +20,7 @@ export class AccountService {
     async signup(profile) {
         try {
             const accInfo = this.checkLogin();
-            const res = await this.scatterService.getContract().signup(
+            const res = await this.scatterService.getContract().setuprest(
                 accInfo.account.name,
                 profile.name,
                 profile.description,

@@ -42,7 +42,7 @@ class kmeal_menu
     void kmeal::removeitem(account_name account, const uint64_t id)
     {
         require_auth(account);
-//todo validation only restaurant owner can remove the item
+        //todo validation only restaurant owner can remove the item
         item_table items(_self, _self);
         auto iterator = items.find(id);
         eosio_assert(iterator != items.end(), "Product not found");
