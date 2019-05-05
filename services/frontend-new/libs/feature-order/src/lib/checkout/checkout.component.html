@@ -7,7 +7,7 @@
     <div fxFlex="20%" fxFlex.sm="0" fxFlex.xs="0"></div>
     <div fxFlex="60%" fxFlex.sm="100%" fxFlex.sm="100%" *ngIf="!isEmpty">
         <div>
-            <mat-vertical-stepper labelPosition="bottom" #stepper >
+            <mat-vertical-stepper labelPosition="bottom" #stepper (selectionChange)="onStepperSelectionChange($event)">
                 <mat-step [stepControl]="paymentForm" label="Order Summary">
                         <h4>Your Order Summary</h4>
                         <p>From {{cartService.user.restaurant.name}}</p>
@@ -65,83 +65,36 @@
                 <mat-step [stepControl]="orderForm" label="Place Your Orders">
                     <br>
                     <form [formGroup]="paymentForm" >
-                            <mat-form-field appearance="fill" style="width:100%">
-                                <mat-label>Payment Method</mat-label>
-                                <mat-select placeholder="Payment Method"  name="paymentMethod" formControlName="paymentMethod" required>
-                                    <mat-option value="0">New Credit Card</mat-option>
-                                    <mat-option value="1"><mat-icon>credit_card</mat-icon> card  ***9819 </mat-option>
-                                    <mat-option value="2">EOS Token</mat-option>
-                                </mat-select>
-                            </mat-form-field>
-                    
-                            <br>
-                            <div *ngIf="paymentForm.controls.paymentMethod.value == 0" style="width:100%;overflow: hidden">
-                                <mat-form-field appearance="fill" style="width:100%">
-                                    <mat-label>Card Type</mat-label>
-                                    <mat-select placeholder="Card Type" required name="cardType" formControlName="cardType">
-                                        <mat-option value="visa">Visa</mat-option>
-                                        <mat-option value="masterCard">MasterCard</mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                
-                                <mat-form-field appearance="fill" style="width:100%">
-                                    <mat-label>Card Number</mat-label>
-                                        <input matInput placeholder="Card Number" required name="cardNumber" formControlName="cardNumber">
-                                    <span matPrefix><mat-icon>credit_card</mat-icon></span>
-                                </mat-form-field>
-                
-                                <div>
-                                    <div style="display: inline-block;width:65%;">
-                                        <mat-form-field appearance="fill" style="width:100%" >
-                                            <mat-label>Exp. Date</mat-label>
-                                            <input matInput placeholder="MM/YY" required name="expDate" formControlName="expDate">
-                                            <mat-error *ngIf="paymentForm.controls.expDate.invalid">Exp Date is invalid</mat-error>
-                                        </mat-form-field>
-                                    </div>
-                                    <div style="display: inline-block;width:35%;">
-                                        <mat-form-field appearance="fill" style="width:100%" >
-                                            <mat-label>CVV</mat-label>
-                                            <input matInput placeholder="123" required name="cvv" formControlName="cvv">
-                                            <mat-error *ngIf="paymentForm.controls.cvv.invalid">CVV is invalid</mat-error>
-                                        </mat-form-field>
-                                    </div>
-                                </div>
-                
-                                <mat-form-field appearance="fill" style="width:100%">
-                                    <mat-label>Country</mat-label>
-                                    <mat-select required placeholder="Card Type" require name="country" formControlName="country">
-                                        <mat-option value="usa">United States</mat-option>
-                                        <mat-option value="india">India</mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                
-                                <mat-form-field appearance="fill" style="width:100%">
-                                    <mat-label>Zip Code</mat-label>
-                                    <input matInput placeholder="Zip Code" required name="zipcode" formControlName="zipcode">
-                                </mat-form-field>
-                                    
-                                    
-                                <div>
-                                    <div style="display: inline-block;width:50%;">
-                                            <mat-form-field appearance="fill" style="width:100%">
-                                                <mat-label>First Name</mat-label>
-                                                <input matInput placeholder="First Name" required name="firstName" formControlName="firstName">
-                                            </mat-form-field>
-                                    </div>
-                                    <div style="display: inline-block;width:50%;">
-                                        <mat-form-field appearance="fill" style="width:100%">
-                                            <mat-label>Last Name</mat-label>
-                                            <input matInput placeholder="Last Name" required name="lastName" formControlName="lastName">
-                                        </mat-form-field>
-                                    </div>
-                                </div>
-                                <mat-checkbox style="margin-left:15px" name="saved" formControlName="saved">Save this card</mat-checkbox>
-                            </div>
-                            <br>
-                            <div>
-                                <button mat-flat-button color="warn" matStepperNext (click)="onSubmitPayment($event)">Submit</button>
-                            </div>
-                        </form>
+                        
+                        <h4>Pay with Card</h4>
+                        
+                        <div class="form-group">
+                            <label for="">Email</label>
+                            <input type="text" class="form-control" name="email" placeholder="Email" formControlName="email"/>
+                        </div>
+                        
+                        <div id="card-element" class="field"></div>
+                        
+                        <div class="form-group">
+                            <label for="">Card Holder Name</label>
+                            <input type="text" class="form-control" name="cardName" placeholder="eg. Joe Doe" formControlName="cardName"/>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <label for="">Country</label>
+                            <select name="country" class="form-control" formControlName="country">
+                                <option value="">- Select a Country -</option>
+                                <option value="usa">USA</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="ZipCode" formControlName="zipcode"/>
+                        </div>
+                        <br>
+                        
+                        <button mat-flat-button color="warn" (click)="buy()">CHECKOUT</button>
+                        
+                    </form>
                 </mat-step>
                 <mat-step label="Check Your Confirmation">
                     <ng-template matStepLabel>Confirmation Email</ng-template>
