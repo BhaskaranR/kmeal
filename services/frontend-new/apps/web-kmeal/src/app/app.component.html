@@ -12,7 +12,10 @@
         
         <mat-sidenav #snav 
             [mode]="(mobileQuery.matches && !isHome) ? 'over' : (mobileQuery.matches) ? 'over':'side'" 
-            [fixedInViewport]="true" [fixedTopGap]="64" opened style="width:240px">
+            [fixedInViewport]="true" 
+            [fixedTopGap]="64" 
+            opened 
+            style="width:240px">
             <div class="leftSidenavContent" fxLayout="column" fxFlexFill>
                 <mat-list fxFlex="100%">
                     <mat-list-item routerLink="/home">

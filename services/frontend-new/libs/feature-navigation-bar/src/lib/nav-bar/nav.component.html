@@ -20,10 +20,7 @@
         fxLayoutGap="20px"
         fxLayoutGap.xs="0px">
         
-    <button mat-icon-button routerLink="/checkout" ><mat-icon [matBadge]="cartService.getOrdersCount()"  matBadgeColor="warn">shopping_cart</mat-icon></button>
-
-
-
-    <kmeal-nx-scatter-ui></kmeal-nx-scatter-ui>
-
+        <button mat-icon-button routerLink="/checkout" ><mat-icon [matBadge]="cartService.getOrdersCount()"  matBadgeColor="warn">shopping_cart</mat-icon></button>
+        <kmeal-nx-scatter-ui></kmeal-nx-scatter-ui>
+    </div>
 </div>

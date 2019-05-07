@@ -1,160 +1,115 @@
-<div class="grid-container">
-  <h1 class="mat-h1">
-    Profile Information</h1>
-  <mat-grid-list cols="1" rowHeight="750px">
-    <mat-grid-tile>
-      <mat-card class="dashboard-card">
-        <div fxLayout="row" fxLayout.sm="column" fxLayout.xs="column">
-          <div fxFlex="40%" fxFlex.sm="100%" fxFlex.xs="100%" style="height:150px; overflow: hidden;">
-            <img style="display: block; width:100%;"
-              src="https://auspost.com.au/content/dam/corp/travel-essentials/destination-guides/italy/photo-antipasto-platter-italian-food.jpg.auspostimage.970*0.low.jpg"
-              alt="">
-          </div>
-          <div fxFlex="60%" fxFlex.sm="100%" fxFlex.xs="100%" class="restaurant-details">
-            <h3>Indian Dinner</h3>
-            <p>176 96th, Ave, Queens , (646) 325 2201</p>
-          </div>
-        </div>
-        <mat-card-header>
-          <mat-card-title>
-            <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
-              <mat-icon>more_vert</mat-icon>
-            </button>
-            <mat-menu #menu="matMenu" xPosition="before">
-              <button mat-menu-item>Edit Photo</button>
-            </mat-menu>
-          </mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <form [formGroup]="addressForm" novalidate (ngSubmit)="onSubmit()">
-            <mat-card class="shipping-card">
-              <mat-card-content>
-                <div class="row">
-                  <div class="col">
-                    <kmeal-nx-place-search (onAddressChangeEvent)="onAddressChange($event)"></kmeal-nx-place-search>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col">
-                    <mat-form-field class="full-width">
-                      <input matInput placeholder="Name" formControlName="name">
-                      <mat-error *ngIf="addressForm.controls['name'].hasError('required')">
-                        Name is <strong>required</strong>
-                      </mat-error>
-                    </mat-form-field>
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="col">
-                    <mat-form-field class="full-width">
-                      <textarea matInput placeholder="Description" formControlName="description"></textarea>
-                      <mat-error *ngIf="addressForm.controls['description'].hasError('required')">
-                        Description is <strong>required</strong>
-                      </mat-error>
-                    </mat-form-field>
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="col">
-                    <mat-form-field class="full-width">
-                      <textarea matInput placeholder="Address" formControlName="address"></textarea>
-                      <mat-error *ngIf="addressForm.controls['address'].hasError('required')">
-                        Address is <strong>required</strong>
-                      </mat-error>
-                    </mat-form-field>
-                  </div>
-                </div>
-                <div class="row" *ngIf="!hasUnitNumber">
-                  <div class="col">
-                    <button mat-button type="button" (click)="hasUnitNumber = !hasUnitNumber">
-                      + Add C/O, Apt, Suite, Unit
-                    </button>
-                  </div>
-                </div>
-                <div class="row" *ngIf="hasUnitNumber">
-                  <div class="col">
-                    <mat-form-field class="full-width">
-                      <textarea matInput placeholder="Address 2" formControlName="address2"></textarea>
-                    </mat-form-field>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col">
-                    <mat-form-field class="full-width">
-                      <input matInput placeholder="City" formControlName="city">
-                      <mat-error *ngIf="addressForm.controls['city'].hasError('required')">
-                        City is <strong>required</strong>
-                      </mat-error>
-                    </mat-form-field>
-                  </div>
-                  <div class="col">
-                    <mat-form-field class="full-width">
-                      <mat-select placeholder="State" formControlName="state">
-                        <mat-option *ngFor="let state of states" [value]="state.abbreviation">
-                          {{ state.name }}
-                        </mat-option>
-                      </mat-select>
-                      <mat-error *ngIf="addressForm.controls['state'].hasError('required')">
-                        State is <strong>required</strong>
-                      </mat-error>
-                    </mat-form-field>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col">
-                    <mat-form-field class="full-width">
-                      <input matInput #postalCode maxlength="5" placeholder="Postal Code" type="number"
-                        formControlName="postalCode">
-                      <mat-hint align="end">{{postalCode.value.length}} / 5</mat-hint>
-                    </mat-form-field>
-                  </div>
-                  <div class="col">
-                    <mat-form-field class="full-width">
-                      <span matPrefix>+1 &nbsp;</span>
-                      <input type="tel" matInput formControlName="phone" placeholder="Phone" required>
-                      <mat-error *ngIf="addressForm.controls['phone'].hasError('required')">
-                        Phone is <strong>required</strong>
-                      </mat-error>
-                    </mat-form-field>
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="col">
-                    <mat-form-field class="chip-list">
-                      <mat-chip-list #chipList>
-                        <mat-chip *ngFor="let fruit of category" [selectable]="selectable" [removable]="removable"
-                          (removed)="remove(fruit)">
-                          {{fruit}}
-                          <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
-                        </mat-chip>
-                        <input placeholder="Pick cuisine..." #fruitInput formControlName="categories"
-                          [matAutocomplete]="auto" [matChipInputFor]="chipList"
-                          [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
-                          (matChipInputTokenEnd)="add($event)">
-                      </mat-chip-list>
-                      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
-                        <mat-option *ngFor="let fruit of filteredCategories | async" [value]="fruit">
-                          {{fruit}}
-                        </mat-option>
-                      </mat-autocomplete>
-                      <mat-error *ngIf="addressForm.controls['categories'].hasError('required')">
-                        Choose one or more <strong>category</strong>
-                      </mat-error>
-                    </mat-form-field>
-                  </div>
-                </div>
-
-              </mat-card-content>
-              <mat-card-actions>
-                <button mat-raised-button color="primary" type="submit">Submit</button>
-              </mat-card-actions>
-            </mat-card>
-          </form>
-        </mat-card-content>
-      </mat-card>
-    </mat-grid-tile>
-  </mat-grid-list>
+<div style="height:250px; background:url('http://picalls.com/wp-content/uploads/2015/01/Lollipop-Android-Wallpaper-by-Puscifer91.jpg')">
+  Profile Information
 </div>
+<mat-divider></mat-divider>
+
+<mat-card style="margin:auto;margin-top:60px; margin-bottom:60px;width:40%">
+  <mat-card-header>
+    <mat-card-title style="position:relative;left: 80%;">
+      Create A Restaurant
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form [formGroup]="addressForm" novalidate (ngSubmit)="onSubmit()">
+    <kmeal-nx-place-search style="width:100%" (onAddressChangeEvent)="onAddressChange($event)"></kmeal-nx-place-search>
+
+    <mat-form-field class="full-width">
+      <input matInput placeholder="Name" formControlName="name">
+      <mat-error *ngIf="addressForm.controls['name'].hasError('required')">
+        Name is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <textarea matInput placeholder="Description" formControlName="description"></textarea>
+      <mat-error *ngIf="addressForm.controls['description'].hasError('required')">
+        Description is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+      
+    <mat-form-field class="full-width">
+      <textarea matInput placeholder="Address" formControlName="address"></textarea>
+      <mat-error *ngIf="addressForm.controls['address'].hasError('required')">
+        Address is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+      <div *ngIf="!hasUnitNumber">
+        <button mat-button type="button" (click)="hasUnitNumber = !hasUnitNumber">
+          + Add C/O, Apt, Suite, Unit
+        </button>
+      </div>
+
+
+      <div  *ngIf="hasUnitNumber">
+        <mat-form-field class="full-width">
+          <textarea matInput placeholder="Address 2" formControlName="address2"></textarea>
+        </mat-form-field>
+      </div>
+
+
+     
+      <mat-form-field class="full-width">
+        <input matInput placeholder="City" formControlName="city">
+        <mat-error *ngIf="addressForm.controls['city'].hasError('required')">
+          City is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+ 
+        
+      <mat-form-field class="full-width">
+        <mat-select placeholder="State" formControlName="state">
+          <mat-option *ngFor="let state of states" [value]="state.abbreviation">
+            {{ state.name }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="addressForm.controls['state'].hasError('required')">
+          State is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <input matInput #postalCode maxlength="5" placeholder="Postal Code" type="number"
+          formControlName="postalCode">
+        <mat-hint align="end">{{postalCode.value.length}} / 5</mat-hint>
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <span matPrefix>+1 &nbsp;</span>
+        <input type="tel" matInput formControlName="phone" placeholder="Phone" required>
+        <mat-error *ngIf="addressForm.controls['phone'].hasError('required')">
+          Phone is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+
+
+      <mat-form-field class="chip-list">
+        <mat-chip-list #chipList>
+          <mat-chip *ngFor="let fruit of category" [selectable]="selectable" [removable]="removable"
+            (removed)="remove(fruit)">
+            {{fruit}}
+            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+          </mat-chip>
+          <input placeholder="Pick cuisine..." #fruitInput formControlName="categories"
+            [matAutocomplete]="auto" [matChipInputFor]="chipList"
+            [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+            (matChipInputTokenEnd)="add($event)">
+        </mat-chip-list>
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+          <mat-option *ngFor="let fruit of filteredCategories | async" [value]="fruit">
+            {{fruit}}
+          </mat-option>
+        </mat-autocomplete>
+        <mat-error *ngIf="addressForm.controls['categories'].hasError('required')">
+          Choose one or more <strong>category</strong>
+        </mat-error>
+      </mat-form-field>
+
+
+    
+      <button mat-raised-button color="primary" type="submit">Submit</button>
+       
+    </form>
+  </mat-card-content>
+</mat-card>
+  
