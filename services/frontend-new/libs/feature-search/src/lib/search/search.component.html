@@ -33,24 +33,24 @@
         <mat-card class="mat-elevation-z0">
             <mat-card-content>
                 <form action="" (submit)="onSearch($event)">
-                    <button mat-button [matMenuTriggerFor]="cuisine">{{'Cuisine'}} <mat-icon mat-list-icon>expand_more</mat-icon></button>
+                    <button mat-button style="margin-right:30px" [matMenuTriggerFor]="cuisine">Cuisine : {{searchForm.cuisine || 'NA'}} <mat-icon mat-list-icon>expand_more</mat-icon></button>
                     <mat-menu #cuisine>
-                        <button mat-menu-item *ngFor="let cuisine of searchMetadata.cuisines">{{cuisine}} </button>
+                        <button mat-menu-item *ngFor="let cuisine of searchMetadata.cuisines" (click)="onFiltering('cuisine', cuisine, cuisine)">{{cuisine}} </button>
                     </mat-menu>
 
-                    <button mat-button [matMenuTriggerFor]="distance">{{'Distance'}} <mat-icon mat-list-icon>expand_more</mat-icon></button>
+                    <button mat-button style="margin-right:30px" [matMenuTriggerFor]="distance">Distance : {{searchForm.radius || 'NA'}} <mat-icon mat-list-icon>expand_more</mat-icon></button>
                     <mat-menu #distance>
-                        <button mat-menu-item *ngFor="let distance of searchMetadata.distances">{{distance}}</button>
+                        <button mat-menu-item *ngFor="let distance of objectKeys(searchMetadata.distances)" (click)="onFiltering('radius', distance, searchMetadata.distances[distance])">{{searchMetadata.distances[distance]}}</button>
                     </mat-menu>
 
-                    <button mat-button [matMenuTriggerFor]="rating">{{'Rating'}} <mat-icon mat-list-icon>expand_more</mat-icon></button>
+                    <button mat-button style="margin-right:30px" [matMenuTriggerFor]="rating">Rating : {{searchForm.rating || 'NA'}} <mat-icon mat-list-icon>expand_more</mat-icon></button>
                     <mat-menu #rating>
-                        <button mat-menu-item *ngFor="let r of searchMetadata.ratings">{{r}} Stars </button>
+                        <button mat-menu-item *ngFor="let r of objectKeys(searchMetadata.ratings)" (click)="onFiltering('rating', r, searchMetadata.ratings[r])">{{searchMetadata.ratings[r]}}</button>
                     </mat-menu>
 
-                    <button mat-button [matMenuTriggerFor]="price">{{'Price'}} <mat-icon mat-list-icon>expand_more</mat-icon></button>
+                    <button mat-button style="margin-right:30px" [matMenuTriggerFor]="price">Price : {{searchForm.priceLevel || 'NA'}} <mat-icon mat-list-icon>expand_more</mat-icon></button>
                     <mat-menu #price>
-                        <button mat-menu-item *ngFor="let d of searchMetadata.prices">{{d}} </button>
+                        <button mat-menu-item *ngFor="let d of objectKeys(searchMetadata.prices)" (click)="onFiltering('priceLevel', d, searchMetadata.prices[d])">{{searchMetadata.prices[d]}} </button>
                     </mat-menu>
                 </form>
             </mat-card-content>
@@ -59,11 +59,11 @@
         
     <br>
     <mat-grid-list [cols]="breakpoint" rowHeight="240px" (window:resize)="onResize($event)" *ngIf="restaurants.length > 0 && viewType == 'grid'" >
-        <mat-grid-tile *ngFor="let res of restaurants ">
+        <mat-grid-tile *ngFor="let res of restaurants">
             <res-card [res]="res" (click)="restaurantDetails(res)" (onErrorEvent)="throwError($vent)" style="width:calc(100% - 40px); height:100%"></res-card>
         </mat-grid-tile>
     </mat-grid-list>
 
 
-    <div *ngIf="restaurants.length  ==  0" class="to-align" style=" text-align: center">No Results</div>
+    <div *ngIf="restaurants.length  ==  0 && isReady" class="to-align" style=" text-align: center">No Results</div>
 </div>
