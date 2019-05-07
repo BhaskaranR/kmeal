@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from "@angular/router";
 import { map, switchMap, pluck } from "rxjs/operators";
 import { GetRestaurantsNearByGQL } from "../generated/graphql";
 import { MatSnackBar } from "@angular/material";
+import {LocalStorage} from '@ngx-pwa/local-storage';
 
 @Component({
     selector: "app-search",
@@ -27,15 +28,24 @@ export class SearchComponent implements OnInit ,OnDestroy{
     isReady:boolean = false;
     sortedBy:string = "Relevant";
     viewType:string = 'grid';
-
+    filter:any = {};
+    cuisines: string[] = ['Thai', 'American','Dinners','Cocktail Bars', 'Italian', 'Mexican','Seafood','Cafes','Portuguese','Austrailian','Desserts','Beer, Wine & Spirits','Lebanese','French','Vitenamese','Japanese','Korean','American (Traditonal)','Mediterranean','Hawalian','Cantonese','Ramen','Brazillian','Taiwanese','Chinese','Filipino','Vegan','Malaysian','Hala','Asian Fusion','Turkish','Greek','Latin American','Cuban','Indian','South Indian'];
+    searchMetadata = {
+        cuisines: this.cuisines,
+        distances:['1 block', '4 blocks', 'Walking', 'Biking','Driving'],
+        ratings:['0','1','2','3','4','5'],
+        prices:['$','$$','$$$','$$$$']
+    }
     constructor(
         public route:ActivatedRoute,
         public snackBar: MatSnackBar,
+        public localStorage:LocalStorage,
         private getRestaurantsNearByGQL:GetRestaurantsNearByGQL,
         public router: Router){};
     
     
-    ngOnInit() {
+    async ngOnInit() {
+        await this.populateFilter();
         this.breakpoint = this.generateBreakpoint(window.innerWidth);
         this.routeParamSub = this.route
         .queryParams
@@ -43,21 +53,15 @@ export class SearchComponent implements OnInit ,OnDestroy{
             switchMap((params)=>{
                 this.isReady = false;
                 if (!params.type ) {
-                    throw new Error('ERROR');
+                    this.throwError('ERROR! No cuisine type is found');
+                    return;
                 } 
 
                 if (params.type === 'CUISINE'){
                     this.type = "Cuisine : " + params.value;
+                    this.filter.cuisine = params.value;
                     return this.getRestaurantsNearByGQL
-                            .watch({
-                                nearby:{
-                                    cuisine:params.value,
-                                    timeofoperation: "REGULAR",
-                                    lat: 40.710237,
-                                    long: -74.007810,
-                                    radius:10
-                                }
-                            })
+                            .watch({nearby:this.filter})
                             .valueChanges
                             .pipe(pluck('data','getRestaurantsNearby'));
                 }
@@ -65,16 +69,11 @@ export class SearchComponent implements OnInit ,OnDestroy{
                 
                 if (params.type == 'ADDRESS') {
                     this.type = 'Near By';
+                    this.filter.lat = parseFloat(params.lat);
+                    this.filter.long = parseFloat(params.lng);
+                    this.filter.radius = parseFloat(params.radius);
                     return this.getRestaurantsNearByGQL
-                            .watch({
-                                nearby:{
-                                    cuisine:"Italian",
-                                    timeofoperation:"",
-                                    lat:parseFloat(params.lat),
-                                    long:parseFloat(params.lng),
-                                    radius:parseFloat(params.radius),
-                                }
-                            })
+                            .watch({nearby:this.filter})
                             .valueChanges
                             .pipe(pluck('data','getRestaurantsNearby'));
                 }
@@ -85,7 +84,6 @@ export class SearchComponent implements OnInit ,OnDestroy{
                 this.restaurants = params;
                 this.isReady = true;
             }, (err)=>{
-                console.log('ERROR');
                 this.throwError(err);
             });
         }
@@ -115,5 +113,24 @@ export class SearchComponent implements OnInit ,OnDestroy{
 
     changeView(type){
         this.viewType = type;
+    }
+
+    private async populateFilter(){
+        return new Promise((res, rej)=>{
+            this.localStorage.getItem('user').subscribe((user:any) => {
+                console.log(user);
+                this.filter = {
+                    timeofoperation: "REGULAR",
+                    lat: user['lat'],
+                    long:user['lng'],
+                    radius:10
+                }
+                res();
+            })
+        })
+    }
+
+    onSearch(e){
+        e.preventDefault();
     }
 }
