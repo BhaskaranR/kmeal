@@ -28,7 +28,7 @@
     </mat-form-field>
       
     <mat-form-field class="full-width">
-      <textarea matInput placeholder="Address" formControlName="address"></textarea>
+      <textarea matInput placeholder="Address" formControlName="address" ></textarea>
       <mat-error *ngIf="addressForm.controls['address'].hasError('required')">
         Address is <strong>required</strong>
       </mat-error>
@@ -50,7 +50,7 @@
 
      
       <mat-form-field class="full-width">
-        <input matInput placeholder="City" formControlName="city">
+        <input matInput placeholder="City" formControlName="city" > 
         <mat-error *ngIf="addressForm.controls['city'].hasError('required')">
           City is <strong>required</strong>
         </mat-error>
@@ -83,14 +83,15 @@
       </mat-form-field>
 
 
-      <mat-form-field class="chip-list">
+      <mat-form-field class="full-width">
         <mat-chip-list #chipList>
           <mat-chip *ngFor="let fruit of category" [selectable]="selectable" [removable]="removable"
             (removed)="remove(fruit)">
             {{fruit}}
             <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
           </mat-chip>
-          <input placeholder="Pick cuisine..." #fruitInput formControlName="categories"
+          <input placeholder="Pick cuisine..." #fruitInput
+            formControlName="categories"
             [matAutocomplete]="auto" [matChipInputFor]="chipList"
             [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
             (matChipInputTokenEnd)="add($event)">
@@ -106,7 +107,7 @@
       </mat-form-field>
 
 
-    
+      <br>
       <button mat-raised-button color="primary" type="submit">Submit</button>
        
     </form>

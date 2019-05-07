@@ -50,11 +50,11 @@ export class ProfileComponent {
 
   addressForm = this.fb.group({
     name: [null, Validators.required],
-    address: [null, Validators.required],
-    address2: '',
-    city: [null, Validators.required],
-    state: [null, Validators.required],
-    postalCode: [null, Validators.compose([
+    address: [{value:null, disabled:true}, Validators.required],
+    address2: null,
+    city: [{value:null, disabled:true}, Validators.required],
+    state: [{value:null, disabled:true}, Validators.required],
+    postalCode: [{value:null, disabled:true}, Validators.compose([
       Validators.required, Validators.minLength(5), Validators.maxLength(5)])
     ],
     description: [null, Validators.required],
