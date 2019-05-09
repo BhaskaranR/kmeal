@@ -29,4 +29,12 @@ export class NavBarComponent{
     onAddressChange(e) {
         this.onAddressChangeEvent.emit(e);
     }    
+
+    async login() {
+        await this.scatterService.loginorlogout();
+    }
+
+    async logout() {
+        await this.scatterService.loginorlogout();
+    }
 } 

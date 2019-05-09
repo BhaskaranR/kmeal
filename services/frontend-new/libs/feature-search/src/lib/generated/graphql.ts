@@ -189,8 +189,6 @@ export interface GetNearByInput {
   radius: number;
 
   timeofoperation: string;
-
-  priceLevel:number  
 }
 /** ordering options when selecting data from "kmeal._block_number_txid" */
 export interface KmealBlockNumberTxidOrderBy {

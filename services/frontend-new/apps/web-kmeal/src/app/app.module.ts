@@ -64,7 +64,7 @@ export function init_app(scatterService: ScatterService) {
           component:OrderHistoryClientComponent
         },
         {
-          path: 'profile', 
+          path: 'wallet', 
           component:ProfileClientComponent
         },
         {
