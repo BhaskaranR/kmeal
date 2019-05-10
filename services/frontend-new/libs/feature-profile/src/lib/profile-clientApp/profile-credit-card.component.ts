@@ -17,7 +17,7 @@ export class ProfileCreditCardComponent implements OnInit{
 
     ngOnInit(){
         this.myFg = this.fb.group({
-            token:['KMEAL',[Validators.required]],
+            token:[{value:'KMEAL',disabled:true},[Validators.required]],
             sendTo:['',[Validators.required]],
             amount:['', [Validators.required, Validators.pattern("^[0-9]*$")]],
             memo:['', [Validators.required]],

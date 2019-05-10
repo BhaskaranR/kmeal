@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
-import { ScatterUIService } from '@kmeal-nx/scatter';
+import { ScatterService } from '@kmeal-nx/scatter';
 
 @Component({
     selector: 'kmeal-nx-profile-detail',
@@ -26,14 +26,16 @@ import { ScatterUIService } from '@kmeal-nx/scatter';
 })
 export class ProfileDetailCompoonent implements OnInit {
     isLoggedIn:boolean = false;
-    error:string;
-    identity:{[key:string]:any};
-
+    identity:any;
     constructor(
-        public scatterUIService:ScatterUIService
+        public scatterService:ScatterService
     ){}
 
-    async ngOnInit(){
-        this.isLoggedIn = this.scatterUIService.scatter ? this.scatterUIService.scatter['identity'] ? true: false : false;
+    ngOnInit(){
+        console.log('lazy loading ?!');
+      this.isLoggedIn = this.scatterService.scatter ?  this.scatterService.scatter.identity ? true: false : false;
+      console.log(this.scatterService.scatter.identity);
+      if (!this.isLoggedIn) return;
+      this.identity = this.scatterService.scatter.identity;
     }
 }

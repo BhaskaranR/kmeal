@@ -6,7 +6,7 @@
         <form [formGroup]="myFg" (submit)="onSubmit()">
             <mat-form-field style="width:100%">
                 <mat-label>Token</mat-label>
-                <mat-select [disabled]="true" formControlName="token">
+                <mat-select formControlName="token">
                     <mat-option value="KMEAL">KMEAL</mat-option>
                 </mat-select>
             </mat-form-field>
