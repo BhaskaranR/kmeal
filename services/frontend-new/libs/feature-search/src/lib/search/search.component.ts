@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy} from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
 import { map, switchMap, pluck } from "rxjs/operators";
-import { GetRestaurantsNearByGQL } from "../generated/graphql";
+import { KmealGetNearbyGQL } from "../generated/graphql";
 import { MatSnackBar } from "@angular/material";
 import {LocalStorage} from '@ngx-pwa/local-storage'
 
@@ -48,7 +48,7 @@ export class SearchComponent implements OnInit ,OnDestroy{
         public route:ActivatedRoute,
         public snackBar: MatSnackBar,
         public localStorage:LocalStorage,
-        private getRestaurantsNearByGQL:GetRestaurantsNearByGQL,
+        private getRestaurantsNearByGQL:KmealGetNearbyGQL,
         public router: Router){};
     
     
@@ -82,7 +82,7 @@ export class SearchComponent implements OnInit ,OnDestroy{
                 }
 
                 return this.getRestaurantsNearByGQL
-                            .watch({nearby:this.filter})
+                            .watch({args:this.filter})
                             .valueChanges
                             .pipe(pluck('data','getRestaurantsNearby'));
             })
@@ -128,10 +128,11 @@ export class SearchComponent implements OnInit ,OnDestroy{
             this.localStorage.getItem('user').subscribe((user:any) => {
                 console.log(user);
                 this.filter = {
-                    timeofoperation: "REGULAR",
-                    lat: user['lat'],
-                    long:user['lng'],
-                    radius:10,
+                    cuisine:null,
+                    latitude:user['lat'],
+                    longitude:user['lng'],
+                    radius: 10,
+                    timeofop: 'REGULAR'
                 }
                 res();
             })
@@ -152,7 +153,7 @@ export class SearchComponent implements OnInit ,OnDestroy{
         console.log(type, val, display, this.filter);
         this.isReady = false;
         this.getRestaurantsNearByGQL
-                            .watch({nearby:this.filter})
+                            .watch({args:this.filter})
                             .valueChanges
                             .pipe(pluck('data','getRestaurantsNearby'))
                             .subscribe(data => {

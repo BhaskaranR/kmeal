@@ -4,7 +4,7 @@ import { Apollo } from 'apollo-angular';
 import { Router } from '@angular/router';
 import { MatSnackBar, MatDialog } from '@angular/material';
 import { imagesMapping } from './utils';
-import { GetRestaurantsNearByGQL, GetRestaurantsNearBy } from '../generated/graphql';
+import { KmealGetNearbyGQL } from '../generated/graphql';
 import { map, pluck } from 'rxjs/operators';
 import { combineLatest, Observable, Subscription } from 'rxjs';
 import { KmealCategoriesGQL, KmealCategories, DishDetailPopupComponent, DishOrderComponent } from '@kmeal-nx/ui';
@@ -25,7 +25,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         public router: Router,
         public snackBar: MatSnackBar,
         private kmealCategoriesGQL: KmealCategoriesGQL,
-        private getRestaurantsNearByGQL:GetRestaurantsNearByGQL,
+        private getRestaurantsNearByGQL:KmealGetNearbyGQL,
         public localStorage: LocalStorage,
         public navService:NavService,
         public dialog: MatDialog,
@@ -37,7 +37,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     addrChangeSub:Subscription;
     cuisines: KmealCategories.KmealCategories[];
 
-    restaurants: GetRestaurantsNearBy.GetRestaurantsNearby[];
+    restaurants: any[];
 
     isReady:boolean = false;
 
@@ -197,12 +197,12 @@ export class HomeComponent implements OnInit, OnDestroy {
 
         const restaurantsObs = this.getRestaurantsNearByGQL
             .watch({
-                nearby: {
-                    cuisine:'italian',
-                    timeofoperation: "REGULAR",
-                    lat: lat,
-                    long: lng,
-                    radius:10
+                args:{
+                    cuisine:'chinese',
+                    latitude:lat,
+                    longitude:lng,
+                    radius:10,
+                    timeofop: 'REGULAR'
                 }
             })
             .valueChanges
