@@ -1,6 +1,7 @@
 import { Component ,ViewChild, OnInit, EventEmitter,Output, Input} from '@angular/core';
 import { GooglePlaceDirective } from 'ngx-google-places-autocomplete';
 import {LocalStorage} from '@ngx-pwa/local-storage';
+import {User} from '@kmeal-nx/ui';
 
 @Component({
   selector: 'kmeal-nx-search-bar',
@@ -18,7 +19,6 @@ export class SearchBarComponent  implements OnInit{
     
     constructor(public localStorage: LocalStorage) {}
 
-    
     async ngOnInit(){
         this.userInput = await this.populateAddress();
     }
@@ -33,21 +33,19 @@ export class SearchBarComponent  implements OnInit{
 
     async populateAddress() : Promise<any> { 
         return new Promise((res, rej)=>{
-            this.localStorage.getItem('user').subscribe((user:{[key:string]:any} ) => {
+            this.localStorage.getItem('user').subscribe((user:User ) => {
                 if (!user) {
                     res(null);
-                    return;
                 }
                 if (user['address']){
                     res(user['address']);
-                    return;
                 }
             })
         })
     }
 
     async handleAddressChange(e){
-        console.log(e, this.userInput);
+        console.log("on search address change : ", e, this.userInput);
         if (e && !!e.formatted_address){
             await this.saveAddress(e.formatted_address, e.geometry.location.lat(), e.geometry.location.lng());
             this.onAddressChangeEvent.emit(e.formatted_address);
@@ -56,9 +54,15 @@ export class SearchBarComponent  implements OnInit{
 
     async saveAddress(addr, lat, lng) {
         return new Promise((res, rej)=>{
-            this.localStorage.getItem('user').subscribe((data:any)=>{
+            this.localStorage.getItem('user').subscribe((data:User)=>{
                 if (!data){
-                    data = {};
+                    data = {
+                        restaurant:null,
+                        orders:[],
+                        address:null,
+                        lat:null,
+                        lng:null
+                    };
                 }
 
                 data.address = addr;

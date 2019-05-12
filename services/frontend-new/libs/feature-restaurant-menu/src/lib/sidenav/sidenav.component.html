@@ -1,29 +1,35 @@
-<mat-sidenav-container class="sidenav-container">
-    <mat-sidenav #drawer class="sidenav" fixedInViewport="true" [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-        [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="!(isHandset$ | async)">
+<mat-sidenav-container >
+    <mat-sidenav #drawer 
+    fixedInViewport="true" 
+    [fixedTopGap]="64" 
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+        [mode]="(isHandset$ | async) ? 'over' : 'side'" 
+        [opened]="!(isHandset$ | async)"
+        style="width:240px">
         <div class="leftSidenavContent">
-            <mat-nav-list>
+            <mat-list fxFlex="100%">
                 <mat-list-item routerLink="newgroup">
                     <mat-icon mat-list-icon>library_books</mat-icon>
                     <p mat-line> Books</p>
                 </mat-list-item>
                 <mat-list-item routerLink="newsection">
-                    <mat-icon mat-list-icon>book</mat-icon>
-                    <p mat-line> Sections</p>
-                </mat-list-item>
-                <mat-list-item routerLink="newmenu">
-                    <mat-icon mat-list-icon>restaurant_menu</mat-icon>
-                    <p mat-line> New menu</p>
-                </mat-list-item>
+                        <mat-icon mat-list-icon>book</mat-icon>
+                        <p mat-line> Sections</p>
+                    </mat-list-item>
+                    <mat-list-item routerLink="newmenu">
+                            <mat-icon mat-list-icon>restaurant_menu</mat-icon>
+                            <p mat-line> New menu</p>
+                        </mat-list-item>
+                <mat-divider></mat-divider>
                 <mat-list-item routerLink="fillmenubook">
-                    <mat-icon mat-list-icon> format_list_numbered </mat-icon>
-                    <p mat-line> Fill menu book</p>
-                </mat-list-item>
-                <mat-list-item routerLink="newlisting">
-                    <mat-icon mat-list-icon>attach_money </mat-icon>
-                    <p mat-line> Pricing  </p>
-                </mat-list-item>
-            </mat-nav-list>
+                        <mat-icon mat-list-icon> format_list_numbered </mat-icon>
+                        <p mat-line> Fill menu book</p>
+                    </mat-list-item>
+                    <mat-list-item routerLink="newlisting">
+                            <mat-icon mat-list-icon>attach_money </mat-icon>
+                            <p mat-line> Pricing  </p>
+                        </mat-list-item>
+            </mat-list>
         </div>
     </mat-sidenav>
     <mat-sidenav-content>

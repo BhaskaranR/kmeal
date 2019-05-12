@@ -10,7 +10,7 @@ import { CartService } from '../../../../../libs/ui/src/lib/cart.service';
     templateUrl: './nav.component.html',
     styleUrls: ['../feature-navigation-bar.scss']
 })
-export class NavBarComponent implements OnInit {
+export class NavBarComponent{
     isSideNavOpen: boolean = false;
     isLoggedIn: boolean = false;
     cnt:number = 0;
@@ -20,6 +20,7 @@ export class NavBarComponent implements OnInit {
         private router: Router,
         public cartService:CartService,
         public scatterService: ScatterService) { }
+
     toggleSideNav() {
         this.isSideNavOpen = !this.isSideNavOpen;
         this.toggleSidenavEvent.emit(this.isSideNavOpen);
@@ -27,12 +28,7 @@ export class NavBarComponent implements OnInit {
 
     onAddressChange(e) {
         this.onAddressChangeEvent.emit(e);
-    }
-
-    ngOnInit(){
-
-    }
-    
+    }    
 
     async login() {
         await this.scatterService.loginorlogout();
@@ -40,6 +36,5 @@ export class NavBarComponent implements OnInit {
 
     async logout() {
         await this.scatterService.loginorlogout();
-        this.router.navigate([''])
     }
 } 

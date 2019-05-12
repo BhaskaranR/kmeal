@@ -7,6 +7,5 @@ import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
     styleUrls:['./profile-client.scss']
 })
 export class ProfileClientComponent {
-    view:number = 2;
     constructor(){}
 }

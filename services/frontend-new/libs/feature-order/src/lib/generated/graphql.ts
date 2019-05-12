@@ -178,18 +178,6 @@ export interface VarcharComparisonExp {
 
   _similar?: string | null;
 }
-
-export interface GetNearByInput {
-  cuisine: string;
-
-  lat: number;
-
-  long: number;
-
-  radius: number;
-
-  timeofoperation: string;
-}
 /** ordering options when selecting data from "kmeal._block_number_txid" */
 export interface KmealBlockNumberTxidOrderBy {
   block_number?: OrderBy | null;
@@ -1116,6 +1104,8 @@ export interface KmealRestaurantBoolExp {
 
   restaurant_id?: IntegerComparisonExp | null;
 
+  restaurant_nearbies?: KmealRestaurantNearbyBoolExp | null;
+
   timeofoperation?: VarcharComparisonExp | null;
 
   yelp_id?: VarcharComparisonExp | null;
@@ -1279,6 +1269,20 @@ export interface KmealRestaurantCategoriesBoolExp {
   category?: TextComparisonExp | null;
 
   restaurantByrestaurantId?: KmealRestaurantBoolExp | null;
+
+  restaurant_id?: IntegerComparisonExp | null;
+}
+/** Boolean expression to filter rows from the table "kmeal.restaurant_nearby". All fields are combined with a logical 'AND'. */
+export interface KmealRestaurantNearbyBoolExp {
+  _and?: (KmealRestaurantNearbyBoolExp | null)[] | null;
+
+  _not?: KmealRestaurantNearbyBoolExp | null;
+
+  _or?: (KmealRestaurantNearbyBoolExp | null)[] | null;
+
+  distance?: NumericComparisonExp | null;
+
+  restaurant?: KmealRestaurantBoolExp | null;
 
   restaurant_id?: IntegerComparisonExp | null;
 }
@@ -1878,6 +1882,8 @@ export interface KmealRestaurantOrderBy {
 
   restaurant_id?: OrderBy | null;
 
+  restaurant_nearbies_aggregate?: KmealRestaurantNearbyAggregateOrderBy | null;
+
   timeofoperation?: OrderBy | null;
 
   yelp_id?: OrderBy | null;
@@ -2232,6 +2238,90 @@ export interface KmealRestaurantCategoriesVarSampOrderBy {
 }
 /** order by variance() on columns of table "kmeal.restaurant_categories" */
 export interface KmealRestaurantCategoriesVarianceOrderBy {
+  restaurant_id?: OrderBy | null;
+}
+/** order by aggregate values of table "kmeal.restaurant_nearby" */
+export interface KmealRestaurantNearbyAggregateOrderBy {
+  avg?: KmealRestaurantNearbyAvgOrderBy | null;
+
+  count?: OrderBy | null;
+
+  max?: KmealRestaurantNearbyMaxOrderBy | null;
+
+  min?: KmealRestaurantNearbyMinOrderBy | null;
+
+  stddev?: KmealRestaurantNearbyStddevOrderBy | null;
+
+  stddev_pop?: KmealRestaurantNearbyStddevPopOrderBy | null;
+
+  stddev_samp?: KmealRestaurantNearbyStddevSampOrderBy | null;
+
+  sum?: KmealRestaurantNearbySumOrderBy | null;
+
+  var_pop?: KmealRestaurantNearbyVarPopOrderBy | null;
+
+  var_samp?: KmealRestaurantNearbyVarSampOrderBy | null;
+
+  variance?: KmealRestaurantNearbyVarianceOrderBy | null;
+}
+/** order by avg() on columns of table "kmeal.restaurant_nearby" */
+export interface KmealRestaurantNearbyAvgOrderBy {
+  distance?: OrderBy | null;
+
+  restaurant_id?: OrderBy | null;
+}
+/** order by max() on columns of table "kmeal.restaurant_nearby" */
+export interface KmealRestaurantNearbyMaxOrderBy {
+  distance?: OrderBy | null;
+
+  restaurant_id?: OrderBy | null;
+}
+/** order by min() on columns of table "kmeal.restaurant_nearby" */
+export interface KmealRestaurantNearbyMinOrderBy {
+  distance?: OrderBy | null;
+
+  restaurant_id?: OrderBy | null;
+}
+/** order by stddev() on columns of table "kmeal.restaurant_nearby" */
+export interface KmealRestaurantNearbyStddevOrderBy {
+  distance?: OrderBy | null;
+
+  restaurant_id?: OrderBy | null;
+}
+/** order by stddev_pop() on columns of table "kmeal.restaurant_nearby" */
+export interface KmealRestaurantNearbyStddevPopOrderBy {
+  distance?: OrderBy | null;
+
+  restaurant_id?: OrderBy | null;
+}
+/** order by stddev_samp() on columns of table "kmeal.restaurant_nearby" */
+export interface KmealRestaurantNearbyStddevSampOrderBy {
+  distance?: OrderBy | null;
+
+  restaurant_id?: OrderBy | null;
+}
+/** order by sum() on columns of table "kmeal.restaurant_nearby" */
+export interface KmealRestaurantNearbySumOrderBy {
+  distance?: OrderBy | null;
+
+  restaurant_id?: OrderBy | null;
+}
+/** order by var_pop() on columns of table "kmeal.restaurant_nearby" */
+export interface KmealRestaurantNearbyVarPopOrderBy {
+  distance?: OrderBy | null;
+
+  restaurant_id?: OrderBy | null;
+}
+/** order by var_samp() on columns of table "kmeal.restaurant_nearby" */
+export interface KmealRestaurantNearbyVarSampOrderBy {
+  distance?: OrderBy | null;
+
+  restaurant_id?: OrderBy | null;
+}
+/** order by variance() on columns of table "kmeal.restaurant_nearby" */
+export interface KmealRestaurantNearbyVarianceOrderBy {
+  distance?: OrderBy | null;
+
   restaurant_id?: OrderBy | null;
 }
 /** order by aggregate values of table "kmeal.listing_item_sides" */
@@ -2870,6 +2960,14 @@ export interface KmealRestaurantCategoriesOrderBy {
 
   restaurant_id?: OrderBy | null;
 }
+/** ordering options when selecting data from "kmeal.restaurant_nearby" */
+export interface KmealRestaurantNearbyOrderBy {
+  distance?: OrderBy | null;
+
+  restaurant?: KmealRestaurantOrderBy | null;
+
+  restaurant_id?: OrderBy | null;
+}
 /** ordering options when selecting data from "kmeal.item_types" */
 export interface KmealItemTypesOrderBy {
   itemByitemId?: KmealItemOrderBy | null;
@@ -2964,6 +3062,18 @@ export interface KmealCreditCardInfoBoolExp {
 
   username?: TextComparisonExp | null;
 }
+
+export interface KmealGetNearbyArgs {
+  cuisine: string;
+
+  latitude: Float8;
+
+  longitude: Float8;
+
+  radius: number;
+
+  timeofop: string;
+}
 /** ordering options when selecting data from "kmeal.restaurant_location" */
 export interface KmealRestaurantLocationOrderBy {
   address?: OrderBy | null;
@@ -3005,24 +3115,6 @@ export interface KmealRestaurantLocationBoolExp {
   owner?: BpcharComparisonExp | null;
 
   phone?: VarcharComparisonExp | null;
-}
-/** ordering options when selecting data from "offerings" */
-export interface OfferingsOrderBy {
-  cusip?: OrderBy | null;
-
-  offer_id?: OrderBy | null;
-}
-/** Boolean expression to filter rows from the table "offerings". All fields are combined with a logical 'AND'. */
-export interface OfferingsBoolExp {
-  _and?: (OfferingsBoolExp | null)[] | null;
-
-  _not?: OfferingsBoolExp | null;
-
-  _or?: (OfferingsBoolExp | null)[] | null;
-
-  cusip?: TextComparisonExp | null;
-
-  offer_id?: IntegerComparisonExp | null;
 }
 /** ordering options when selecting data from "raster_columns" */
 export interface RasterColumnsOrderBy {
@@ -3852,6 +3944,8 @@ export interface KmealRestaurantInsertInput {
 
   restaurant_id?: number | null;
 
+  restaurant_nearbies?: KmealRestaurantNearbyArrRelInsertInput | null;
+
   timeofoperation?: string | null;
 
   yelp_id?: string | null;
@@ -4022,6 +4116,26 @@ export interface KmealRestaurantCategoriesInsertInput {
 
   restaurant_id?: number | null;
 }
+/** input type for inserting array relation for remote table "kmeal.restaurant_nearby" */
+export interface KmealRestaurantNearbyArrRelInsertInput {
+  data: KmealRestaurantNearbyInsertInput[];
+
+  on_conflict?: KmealRestaurantNearbyOnConflict | null;
+}
+/** input type for inserting data into table "kmeal.restaurant_nearby" */
+export interface KmealRestaurantNearbyInsertInput {
+  distance?: Numeric | null;
+
+  restaurant?: KmealRestaurantObjRelInsertInput | null;
+
+  restaurant_id?: number | null;
+}
+/** on conflict condition type for table "kmeal.restaurant_nearby" */
+export interface KmealRestaurantNearbyOnConflict {
+  constraint: KmealRestaurantNearbyConstraint;
+
+  update_columns: KmealRestaurantNearbyUpdateColumn[];
+}
 /** on conflict condition type for table "kmeal.restaurant" */
 export interface KmealRestaurantOnConflict {
   constraint: KmealRestaurantConstraint;
@@ -4117,18 +4231,6 @@ export interface KmealCreditCardInfoOnConflict {
   constraint: KmealCreditCardInfoConstraint;
 
   update_columns: KmealCreditCardInfoUpdateColumn[];
-}
-/** input type for inserting data into table "offerings" */
-export interface OfferingsInsertInput {
-  cusip?: string | null;
-
-  offer_id?: number | null;
-}
-/** on conflict condition type for table "offerings" */
-export interface OfferingsOnConflict {
-  constraint: OfferingsConstraint;
-
-  update_columns: OfferingsUpdateColumn[];
 }
 /** input type for inserting data into table "spatial_ref_sys" */
 export interface SpatialRefSysInsertInput {
@@ -4652,15 +4754,15 @@ export interface KmealRestaurantCategoriesSetInput {
 
   restaurant_id?: number | null;
 }
-/** input type for incrementing integer columne in table "offerings" */
-export interface OfferingsIncInput {
-  offer_id?: number | null;
+/** input type for incrementing integer columne in table "kmeal.restaurant_nearby" */
+export interface KmealRestaurantNearbyIncInput {
+  restaurant_id?: number | null;
 }
-/** input type for updating data in table "offerings" */
-export interface OfferingsSetInput {
-  cusip?: string | null;
+/** input type for updating data in table "kmeal.restaurant_nearby" */
+export interface KmealRestaurantNearbySetInput {
+  distance?: Numeric | null;
 
-  offer_id?: number | null;
+  restaurant_id?: number | null;
 }
 /** input type for incrementing integer columne in table "spatial_ref_sys" */
 export interface SpatialRefSysIncInput {
@@ -5514,85 +5616,11 @@ export interface KmealRestaurantLocationVarSampOrderBy {
 export interface KmealRestaurantLocationVarianceOrderBy {
   distance?: OrderBy | null;
 }
-/** order by aggregate values of table "offerings" */
-export interface OfferingsAggregateOrderBy {
-  avg?: OfferingsAvgOrderBy | null;
+/** input type for inserting object relation for remote table "kmeal.restaurant_nearby" */
+export interface KmealRestaurantNearbyObjRelInsertInput {
+  data: KmealRestaurantNearbyInsertInput;
 
-  count?: OrderBy | null;
-
-  max?: OfferingsMaxOrderBy | null;
-
-  min?: OfferingsMinOrderBy | null;
-
-  stddev?: OfferingsStddevOrderBy | null;
-
-  stddev_pop?: OfferingsStddevPopOrderBy | null;
-
-  stddev_samp?: OfferingsStddevSampOrderBy | null;
-
-  sum?: OfferingsSumOrderBy | null;
-
-  var_pop?: OfferingsVarPopOrderBy | null;
-
-  var_samp?: OfferingsVarSampOrderBy | null;
-
-  variance?: OfferingsVarianceOrderBy | null;
-}
-/** order by avg() on columns of table "offerings" */
-export interface OfferingsAvgOrderBy {
-  offer_id?: OrderBy | null;
-}
-/** order by max() on columns of table "offerings" */
-export interface OfferingsMaxOrderBy {
-  cusip?: OrderBy | null;
-
-  offer_id?: OrderBy | null;
-}
-/** order by min() on columns of table "offerings" */
-export interface OfferingsMinOrderBy {
-  cusip?: OrderBy | null;
-
-  offer_id?: OrderBy | null;
-}
-/** order by stddev() on columns of table "offerings" */
-export interface OfferingsStddevOrderBy {
-  offer_id?: OrderBy | null;
-}
-/** order by stddev_pop() on columns of table "offerings" */
-export interface OfferingsStddevPopOrderBy {
-  offer_id?: OrderBy | null;
-}
-/** order by stddev_samp() on columns of table "offerings" */
-export interface OfferingsStddevSampOrderBy {
-  offer_id?: OrderBy | null;
-}
-/** order by sum() on columns of table "offerings" */
-export interface OfferingsSumOrderBy {
-  offer_id?: OrderBy | null;
-}
-/** order by var_pop() on columns of table "offerings" */
-export interface OfferingsVarPopOrderBy {
-  offer_id?: OrderBy | null;
-}
-/** order by var_samp() on columns of table "offerings" */
-export interface OfferingsVarSampOrderBy {
-  offer_id?: OrderBy | null;
-}
-/** order by variance() on columns of table "offerings" */
-export interface OfferingsVarianceOrderBy {
-  offer_id?: OrderBy | null;
-}
-/** input type for inserting array relation for remote table "offerings" */
-export interface OfferingsArrRelInsertInput {
-  data: OfferingsInsertInput[];
-
-  on_conflict?: OfferingsOnConflict | null;
-}
-/** input type for inserting object relation for remote table "offerings" */
-export interface OfferingsObjRelInsertInput {
-  data: OfferingsInsertInput;
-
-  on_conflict?: OfferingsOnConflict | null;
+  on_conflict?: KmealRestaurantNearbyOnConflict | null;
 }
 /** order by aggregate values of table "raster_columns" */
 export interface RasterColumnsAggregateOrderBy {
@@ -6210,6 +6238,11 @@ export enum KmealRestaurantCategoriesSelectColumn {
   Category = "category",
   RestaurantId = "restaurant_id"
 }
+/** select columns of table "kmeal.restaurant_nearby" */
+export enum KmealRestaurantNearbySelectColumn {
+  Distance = "distance",
+  RestaurantId = "restaurant_id"
+}
 /** select columns of table "kmeal.item_types" */
 export enum KmealItemTypesSelectColumn {
   ItemId = "item_id",
@@ -6274,11 +6307,6 @@ export enum KmealRestaurantLocationSelectColumn {
   Name = "name",
   Owner = "owner",
   Phone = "phone"
-}
-/** select columns of table "offerings" */
-export enum OfferingsSelectColumn {
-  Cusip = "cusip",
-  OfferId = "offer_id"
 }
 /** select columns of table "raster_columns" */
 export enum RasterColumnsSelectColumn {
@@ -6475,6 +6503,15 @@ export enum KmealPaymentUpdateColumn {
   PaymentId = "payment_id",
   PaymentStatus = "payment_status"
 }
+/** unique or primary key constraints on table "kmeal.restaurant_nearby" */
+export enum KmealRestaurantNearbyConstraint {
+  RestaurantNearbyPkey = "restaurant_nearby_pkey"
+}
+/** update columns of table "kmeal.restaurant_nearby" */
+export enum KmealRestaurantNearbyUpdateColumn {
+  Distance = "distance",
+  RestaurantId = "restaurant_id"
+}
 /** unique or primary key constraints on table "kmeal.restaurant" */
 export enum KmealRestaurantConstraint {
   RestaurantPkey = "restaurant_pkey"
@@ -6557,15 +6594,6 @@ export enum KmealCreditCardInfoUpdateColumn {
   PostalCode = "postal_code",
   Username = "username"
 }
-/** unique or primary key constraints on table "offerings" */
-export enum OfferingsConstraint {
-  OfferingsPkey = "offerings_pkey"
-}
-/** update columns of table "offerings" */
-export enum OfferingsUpdateColumn {
-  Cusip = "cusip",
-  OfferId = "offer_id"
-}
 /** unique or primary key constraints on table "spatial_ref_sys" */
 export enum SpatialRefSysConstraint {
   SpatialRefSysPkey = "spatial_ref_sys_pkey"
@@ -6636,3 +6664,85 @@ export type _Float8 = any;
 export type _Bool = any;
 
 export type _Text = any;
+
+// ====================================================
+// Documents
+// ====================================================
+
+export namespace GetCreditCards {
+  export type Variables = {
+    where?: KmealCreditCardInfoBoolExp | null;
+  };
+
+  export type Query = {
+    __typename?: "Query";
+
+    kmeal_credit_card_info: KmealCreditCardInfo[];
+  };
+
+  export type KmealCreditCardInfo = {
+    __typename?: "kmeal_credit_card_info";
+
+    card_cvv: Numeric;
+
+    card_num: Numeric;
+
+    card_type: string;
+
+    card_holder: string;
+
+    country: string;
+
+    city: string;
+
+    postal_code: Numeric;
+
+    address_line_1: string;
+
+    address_line_2: string | null;
+
+    exp_date: Date;
+
+    username: string;
+  };
+}
+
+// ====================================================
+// START: Apollo Angular template
+// ====================================================
+
+import { Injectable } from "@angular/core";
+import * as Apollo from "apollo-angular";
+
+import gql from "graphql-tag";
+
+// ====================================================
+// Apollo Services
+// ====================================================
+
+@Injectable({
+  providedIn: "root"
+})
+export class GetCreditCardsGQL extends Apollo.Query<GetCreditCards.Query, GetCreditCards.Variables> {
+  document: any = gql`
+    query getCreditCards($where: kmeal_credit_card_info_bool_exp) {
+      kmeal_credit_card_info(where: $where) {
+        card_cvv
+        card_num
+        card_type
+        card_holder
+        country
+        city
+        postal_code
+        address_line_1
+        address_line_2
+        exp_date
+        username
+      }
+    }
+  `;
+}
+
+// ====================================================
+// END: Apollo Angular template
+// ====================================================

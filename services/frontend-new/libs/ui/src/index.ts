@@ -9,3 +9,4 @@ export * from './lib/dish-detail/dish-detail-popup.component';
 export * from './lib/dish-card/dish-card.component';
 export * from './lib/restaurant/restaurant.component';
 export * from './lib/dish-order/dish-order.component';
+export * from './lib/cart.service';

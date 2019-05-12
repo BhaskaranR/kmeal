@@ -25,9 +25,6 @@ div.tile {
   box-shadow: none !important;
 }
 
-.mat-card {
-  border-radius: 0 !important;
-}
 
 .leftRs {
   position: absolute;
@@ -124,4 +121,51 @@ div.tile {
       top:-8px;
       left: 15px;
   }
+}
+
+p{
+  font-size: 0.825rem !important;
+}
+
+.mat-toolbar{
+  background:white !important;
+}
+
+h1, .h1{
+  font-size: 25px;
+}
+
+h2, .h2{
+  font-size: 23px;
+}
+
+h3, h3{
+  font-size: 21px
+}
+
+h4, h4{
+  font-size: 19px
+}
+
+h5,h5{
+  font-size: 17px;
+}
+
+h6, .h6{
+  font-size: 15px;
+}
+
+.h1,.h2,.h3,.h4,.h5,.h6,h1,h2,h3,h4,h5,h6{
+  margin-bottom:0.625rem;
+  font-weight:400;
+  line-height:1.5385;
+}
+
+
+.text-muted{
+  color:#999 !important;
+}
+
+.font-size-base{
+  font-size: 0.8125rem;
 }

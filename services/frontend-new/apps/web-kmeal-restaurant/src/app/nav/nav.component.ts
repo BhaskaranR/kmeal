@@ -38,6 +38,8 @@ export class NavBarComponent implements OnInit {
     if (this.scatterService && this.scatterService.scatter && this.scatterService.scatter.identity) {
       this.addProfileNav();
     }
+
+    console.log(this.scatterService);
   }
 
   toggleSideNav() {

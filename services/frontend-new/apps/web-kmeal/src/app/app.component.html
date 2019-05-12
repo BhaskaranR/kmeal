@@ -8,13 +8,17 @@
     <mat-toolbar class="mat-elevation-z0" >
         <kmeal-nx-nav-bar (toggleSidenavEvent)="snav.toggle($event)" class="custom-toolbar" (onAddressChangeEvent)="onAddrChange($event)"></kmeal-nx-nav-bar>
     </mat-toolbar>
-    <mat-sidenav-container >
-        
+    <mat-divider></mat-divider>
+    <mat-sidenav-container>
         <mat-sidenav #snav 
             [mode]="(mobileQuery.matches && !isHome) ? 'over' : (mobileQuery.matches) ? 'over':'side'" 
-            [fixedInViewport]="true" [fixedTopGap]="64" opened style="width:240px">
+            [fixedInViewport]="true" 
+            [fixedTopGap]="65" 
+            opened 
+            style="width:240px">
             <div class="leftSidenavContent" fxLayout="column" fxFlexFill>
                 <mat-list fxFlex="100%">
+                    <h3 mat-subheader>Main</h3>
                     <mat-list-item routerLink="/home">
                         <mat-icon mat-list-icon>home</mat-icon>
                         <p mat-line> Home </p>
@@ -23,9 +27,9 @@
                         <mat-icon mat-list-icon>history</mat-icon>
                         <p mat-line> Orders </p>
                     </mat-list-item>
-                    <mat-list-item routerLink="/profile">
-                        <mat-icon mat-list-icon>person</mat-icon>
-                        <p mat-line> Profile </p>
+                    <mat-list-item routerLink="/wallet">
+                        <mat-icon mat-list-icon>attach_money</mat-icon>
+                        <p mat-line> Wallet </p>
                     </mat-list-item>
                     <mat-divider></mat-divider>
                     <h3 mat-subheader>Others</h3>

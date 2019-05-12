@@ -8,9 +8,13 @@ import { UiModule } from '@kmeal-nx/ui';
 import { ReactiveFormsModule } from '@angular/forms';
 import { OrderHistoryClientComponent } from './order-history-client/order-history.component';
 import {MatTreeModule} from '@angular/material';
+import { NgxStripeModule, StripeService } from 'ngx-stripe';
+import { StripeComponent } from './payment/payment.component';
 
 @NgModule({
-  imports: [CommonModule, FeatureCoreModule, UiModule, ReactiveFormsModule, MatTreeModule],
-  declarations: [CartComponent, OrderHistoryComponent, CheckoutComponent, OrderHistoryClientComponent]
+  imports: [CommonModule, FeatureCoreModule, UiModule, ReactiveFormsModule, MatTreeModule,
+    NgxStripeModule.forRoot('pk_test_hiOCFCFJ9kNryP5NjM5CEIvJ009VjtHoMw')],
+  declarations: [CartComponent, OrderHistoryComponent, CheckoutComponent, OrderHistoryClientComponent, StripeComponent],
+  entryComponents:[StripeComponent],
 })
 export class FeatureOrderModule {}

@@ -17,7 +17,6 @@ import { FeatureOrderModule, CheckoutComponent, OrderHistoryClientComponent } fr
 import { ScatterModule, ScatterService } from '@kmeal-nx/scatter';
 import { FeatureProfileModule, ProfileClientComponent } from '@kmeal-nx/feature-profile';
 
-
 export function init_app(scatterService: ScatterService) {
   return () => scatterService.initScatter('Kylin');
 }
@@ -65,7 +64,7 @@ export function init_app(scatterService: ScatterService) {
           component:OrderHistoryClientComponent
         },
         {
-          path: 'profile', 
+          path: 'wallet', 
           component:ProfileClientComponent
         },
         {

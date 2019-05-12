@@ -1,20 +1,16 @@
 
-query getRestaurantsNearBy($nearby:GetNearByInput){
-  getRestaurantsNearby(nearby:$nearby)
-  {
-    address
-    description
-    distance
-    isactive
-    latitude
-    longitude
-    logo
-    name
-    owner
-    phone
-    restaurant_id
-    timeofoperation
-    yelp_id
-    rating
-  }
+query kmeal_get_nearby ($args: kmeal_get_nearby_args!){
+ kmeal_get_nearby (args: $args) {
+   restaurant_id
+   distance
+   restaurant {
+     listingsByrestaurantId_aggregate {
+       aggregate {
+         max {
+            list_price
+         }
+       }
+     }
+   }
+ }
 }

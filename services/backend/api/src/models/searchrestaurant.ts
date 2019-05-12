@@ -10,7 +10,9 @@ export async function getRestaurant(nearby: {
     long: number,
     radius: number,
     cuisine: string,
-    timeofoperation: string
+    timeofoperation: string,
+    priceLevel:number,
+    rating:number,
 }){
     const sequelize = new Sequelize(
         POSTGRES_CONNECTION_STRING, {
@@ -22,9 +24,9 @@ export async function getRestaurant(nearby: {
         }
     );
     try {
-        var res = await sequelize.query('select kmeal.get_nearby(:latitude, :longitude, :radius, :cuisine, :timeofoperation ) ',
+        var res = await sequelize.query('select kmeal.get_nearby(:latitude, :longitude, :radius, :cuisine, :timeofoperation, :priceLevel, :rating  ) ',
                                     {  type: sequelize.QueryTypes.SELECT,
-                                         replacements: { latitude: nearby.lat, longitude: nearby.long, radius: nearby.radius, cuisine: nearby.cuisine, timeofoperation: nearby.timeofoperation } }
+                                         replacements: { latitude: nearby.lat, longitude: nearby.long, radius: nearby.radius, cuisine: nearby.cuisine, timeofoperation: nearby.timeofoperation , priceLevel:nearby.priceLevel, rating:nearby.rating} }
                                    );
         return res.map(r => r.get_nearby);
     } catch(e) {

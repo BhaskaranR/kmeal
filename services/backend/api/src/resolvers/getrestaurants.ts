@@ -18,8 +18,10 @@ export default {
                 lat: number,
                 long: number,
                 radius: number,
-                cuisine: string
-                timeofoperation: string
+                cuisine: string,
+                timeofoperation: string,
+                priceLevel: number,
+                rating:number
             }
         }) => {
             try {

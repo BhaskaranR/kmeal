@@ -7,48 +7,24 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
     moduleId: module.id,
     templateUrl: './profile-token-transfer.component.html'
 })
-export class ProfileTokenTransferComponent implements OnInit {
+export class ProfileTokenTransferComponent{
 
-    transferTokenForm:FormGroup;
-    
-    constructor(
-        public scatterUIService:ScatterUIService,
-        public fb: FormBuilder){}
+  myFg:FormGroup;
+  constructor(
+      public fb:FormBuilder,
+      public scatterUIService:ScatterUIService){}
 
-    ngOnInit(){
-      this.transferTokenForm = this.fb.group({
-          coinType:['',[Validators.required]],
-          sendTo:[null, [Validators.required]],
-          amount:[null, [Validators.required]],
-          memo:null,
+  ngOnInit(){
+      this.myFg = this.fb.group({
+          token:['KMEAL',[Validators.required]],
+          sendTo:['',[Validators.required]],
+          amount:['', [Validators.required, Validators.pattern("^[0-9]*$")]],
+          memo:['', [Validators.required]],
       });
-    }
+  }
 
-    async onSubmit(){
+  onSubmit(){
 
-
-      const result = await this.scatterUIService.signTransaction({
-            actions: [{
-              account: 'eosio.token',
-              name: 'transfer',
-              authorization: [{
-                actor: 'kmealadmin15',
-                permission: 'active',
-              }],
-              data: {
-                from:'kmealadmin15',
-                to: 'kmealtestio1',
-                quantity: '0.0001 kmealcoin',
-                memo: '',
-              },
-            }]
-          }, {
-            blocksBehind: 3,
-            expireSeconds: 30,
-          })
-
-          console.log('transafer? ', result);
-    }
-
+  }
     
 }

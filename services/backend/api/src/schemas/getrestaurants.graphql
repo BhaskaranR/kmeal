@@ -29,6 +29,8 @@ input GetNearByInput {
     radius: Int!
     cuisine: String!
     timeofoperation: String!
+    priceLevel: Int
+    rating: Int
 }
 
 type Query {

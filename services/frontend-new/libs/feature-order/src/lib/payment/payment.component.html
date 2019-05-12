@@ -1,0 +1,5 @@
+<form novalidate (ngSubmit)="buy()" [formGroup]="stripeTest">
+    <input type="text" formControlName="name" matInput placeholder="Jane Doe">
+    <div id="card-element" class="field"></div>
+    <button type="submit" mat-flat-button color="primary">BUY</button>
+</form>

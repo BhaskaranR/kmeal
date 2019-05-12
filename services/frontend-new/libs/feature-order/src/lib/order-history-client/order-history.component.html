@@ -1,3 +1,7 @@
+<mat-toolbar class="mat-elevation-z0" >
+    <h4>Order History</h4>
+</mat-toolbar>
+<mat-divider></mat-divider>
 <mat-tab-group>
     <mat-tab label="Current Orders"> 
         <br>
@@ -5,7 +9,7 @@
                   style="width:80%; margin-right:auto;margin-left:auto;margin-bottom:30px" 
                   class="mat-card-flat" 
                   (click) =" order.isDetailOpen = !order.isDetailOpen" 
-                  [class.mat-elevation-z2]="order.isActive" 
+                  [class.mat-elevation-z1]="order.isActive" 
                   (mouseenter) ="order.isActive = true"  
                   (mouseleave) ="order.isActive = false">
             <div feLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
@@ -16,9 +20,10 @@
                     <img style="width:100%" src="https://www.foxrc.com/wp-content/themes/frc/static/images/plate1.png" alt="">
                 </div>
                 <div fxFlex="55%">
-                    {{order.restaurant_name}}
-                    <mat-card-subtitle><span *ngFor="let or of order.orders">{{or + ' ,'}}</span></mat-card-subtitle>
-                    <a href=""><small>Detail</small></a>
+                    <h6>{{order.restaurant_name}} <br>
+                        <span class="font-size-base text-muted" *ngFor="let or of order.orders">{{or + ' ,'}}</span>
+                    </h6>
+                    <a ><small>Detail</small></a>
                 </div>
                 <div fxFlex="15%" style="text-align: right">
                     $32.11

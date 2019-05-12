@@ -1,6 +1,12 @@
-<mat-sidenav-container class="sidenav-container">
-    <mat-sidenav #drawer class="sidenav" fixedInViewport="true" [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-        [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="!(isHandset$ | async)">
+<mat-sidenav-container>
+    <mat-sidenav #drawer 
+        class="sidenav" 
+        [fixedInViewport]="true"
+        [fixedTopGap]="64"
+        [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+        style="width:240px"
+        [mode]="(isHandset$ | async) ? 'over' : 'side'" 
+        [opened]="!(isHandset$ | async)">
         <div class="leftSidenavContent">
             <mat-nav-list>
                 <mat-list-item routerLink="profile">
