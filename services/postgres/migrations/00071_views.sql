@@ -1,23 +1,24 @@
--- select kmeal.get_nearby(40.710237, -74.007810, 4, 'italian', 'REGULAR');
+-- select kmeal.get_nearby(40.710237, -74.007810, 4);
 
-CREATE OR REPLACE FUNCTION kmeal.get_nearby
-(latitude FLOAT, longitude FLOAT, radius INTEGER, cuisine VARCHAR, timeofop VARCHAR) 
- returns setof json as $body$
-BEGIN
-    RETURN QUERY
-    select row_to_json(s)
-    from (
-    SELECT 
-    d.restaurant_id,
-    d.name,
-    d.owner,
-    d.description,
-    d.phone,
-    d.address,
-    d.logo,
-    d.rating,
-    d.timeofoperation,
-    d.distance
+create table "kmeal"."restaurant_nearby" (
+  "restaurant_id" INTEGER NOT NULL PRIMARY KEY REFERENCES  kmeal.restaurant("restaurant_id"),
+   "distance" DECIMAL NOT NULL 
+  );
+
+
+CREATE OR REPLACE FUNCTION  kmeal.get_nearby(latitude FLOAT, longitude FLOAT, radius INTEGER)  
+RETURNS SETOF kmeal.restaurant_nearby AS $$
+     SELECT ROW(d.restaurant_id,
+            d.name,
+            d.owner,
+            d.description,
+            d.phone,
+            d.address,
+            d.logo,
+            d.rating,
+            d.timeofoperation,
+            d.isactive,
+            d.distance)::kmeal.restaurant_nearby
     FROM (
     SELECT z.restaurant_id as restaurant_id,
             z.name as name,
@@ -28,7 +29,10 @@ BEGIN
             z.logo as logo,
             z.rating as rating,
             z.timeofoperation as timeofoperation,
-            z.latitude, z.longitude,
+            z.location as location,
+            z.isactive as isactive,
+            z.latitude as latitude, 
+            z.longitude as longitude,
             p.distance_unit
                     * DEGREES(ACOS(COS(RADIANS(p.latpoint))
                     * COS(RADIANS(z.latitude))
@@ -47,10 +51,9 @@ BEGIN
         AND z.longitude
         BETWEEN p.longpoint - (radius / (p.distance_unit * COS(RADIANS(p.latpoint))))
             AND p.longpoint + (radius / (p.distance_unit * COS(RADIANS(p.latpoint))))
-        AND  rc.category = cuisine AND z.timeofoperation = timeofop
+       -- AND  rc.category = cuisine AND z.timeofoperation = timeofop
     ) AS d
-    WHERE distance <= radius
-    ORDER BY distance
-    LIMIT 100) s;
-END; $body$
-LANGUAGE 'plpgsql';
+    WHERE distance <= 4;
+    -- ORDER BY distance
+    -- LIMIT 100;
+$$ LANGUAGE SQL STABLE;
