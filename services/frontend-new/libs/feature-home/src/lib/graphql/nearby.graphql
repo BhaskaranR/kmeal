@@ -1,15 +1,11 @@
-query kmeal_get_nearby ($args: kmeal_get_nearby_args!){
- kmeal_get_nearby (args: $args) {
+query kmeal_get_nearby($args: kmeal_get_nearby_args!, $where: kmeal_restaurant_nearby_bool_exp) {
+ kmeal_get_nearby(args: $args, where: $where) {
    restaurant_id
    distance
-   restaurant {
-     listingsByrestaurantId_aggregate {
-       aggregate {
-         max {
-            list_price
-         }
-       }
-     }
-   }
+   restaurant{
+    address
+    description
+    name
+  }
  }
 }

@@ -196,13 +196,16 @@ export class HomeComponent implements OnInit, OnDestroy {
                 return ca ;
             })));
 
+            const filter = this.generateFilter();
+
+            console.log(filter);
         const restaurantsObs = this.getRestaurantsNearByGQL
-            .watch(this.generateFilter() as any)
+            .watch(filter)
             .valueChanges
             .pipe(pluck('data','getRestaurantsNearby'));
 
         const combined = combineLatest(cuisinesObs, restaurantsObs).subscribe(([data1, data2])=>{
-            console.log('got data ');
+            console.log('got data ', data2);
             this.cuisines = data1;
             this.restaurants = data2 as any[];
             this.isReady = true;
@@ -215,9 +218,9 @@ export class HomeComponent implements OnInit, OnDestroy {
     private generateFilter(){
         return {
             "args": {
-                "latitude": "",
-                "longitude":"",
-                "radius": 10
+                "latitude": 40.710237,
+                "longitude": -74.007810,
+                "radius": 4
             },
             "where": {
                 "restaurant": {
@@ -228,7 +231,7 @@ export class HomeComponent implements OnInit, OnDestroy {
                     },
                     "restaurantCategoriessByrestaurantId": {
                         "category": {
-                            "_eq": ""
+                            "_eq": "italian"
                         }
                     }
                 }
