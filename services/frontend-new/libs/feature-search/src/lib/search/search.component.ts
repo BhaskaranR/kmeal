@@ -53,7 +53,7 @@ export class SearchComponent implements OnInit ,OnDestroy{
     
     
     async ngOnInit() {
-        await this.populateFilter();
+        this.filter = await this.populateFilter();
         this.breakpoint = this.generateBreakpoint(window.innerWidth);
         this.routeParamSub = this.route
         .queryParams
@@ -64,15 +64,15 @@ export class SearchComponent implements OnInit ,OnDestroy{
                 {
                     case 'CUISINE' : {
                         this.type = "Cuisine : " + params.value;
-                        this.filter.cuisine = this.searchForm.cuisine = params.value;
+                        this.filter['where']['restaurant']['restaurantCategoriessByrestaurantId']['category']['_eq'] = this.searchForm.cuisine = params.value;
                         break;
                     }
 
                     case 'ADDRESS':{
                         this.type = 'Near By';
-                        this.filter.lat = parseFloat(params.lat);
-                        this.filter.long = parseFloat(params.lng);
-                        this.filter.radius = this.searchForm.radius = parseFloat(params.radius);
+                        this.filter['args']['latitude'] = parseFloat(params.lat);
+                        this.filter['args']['longitude'] = parseFloat(params.lng);
+                        this.filter['args']['radius'] = this.searchForm.radius = parseFloat(params.radius);
                         break;
                     }
 
@@ -81,13 +81,15 @@ export class SearchComponent implements OnInit ,OnDestroy{
                     }
                 }
 
+                console.log('search filter ?!', this.filter);
                 return this.getRestaurantsNearByGQL
-                            .watch({args:this.filter})
+                            .watch(this.filter)
                             .valueChanges
                             .pipe(pluck('data','getRestaurantsNearby'));
             })
         )
         .subscribe(data => {
+            console.log("got search data ", data);
             this.restaurants = data;
             this.isReady = true;
         }, (e) => {
@@ -126,15 +128,27 @@ export class SearchComponent implements OnInit ,OnDestroy{
     private async populateFilter(){
         return new Promise((res, rej)=>{
             this.localStorage.getItem('user').subscribe((user:any) => {
-                console.log(user);
-                this.filter = {
-                    cuisine:null,
-                    latitude:user['lat'],
-                    longitude:user['lng'],
-                    radius: 10,
-                    timeofop: 'REGULAR'
-                }
-                res();
+                res({
+                    "args": {
+                        "latitude": user['lat'],
+                        "longitude":user['lng'],
+                        "radius": 10
+                    },
+                    "where": {
+                        "restaurant": {
+                            "listingsByrestaurantId": {
+                                "list_price": {
+                                "_gte": 20
+                                }
+                            },
+                            "restaurantCategoriessByrestaurantId": {
+                                "category": {
+                                    "_eq": ""
+                                }
+                            }
+                        }
+                    }
+                })
             })
         })
     }
@@ -146,6 +160,8 @@ export class SearchComponent implements OnInit ,OnDestroy{
     onFiltering(type, val, display) {
         if(type !== 'cuisine') val = parseInt(val);
         else val = val.toLowerCase();
+
+        console.log(type, val, display, ' filtering ?');
         
         this.filter[type] = val;
         this.searchForm[type] = display;
@@ -157,7 +173,7 @@ export class SearchComponent implements OnInit ,OnDestroy{
                             .valueChanges
                             .pipe(pluck('data','getRestaurantsNearby'))
                             .subscribe(data => {
-                                this.restaurants = data;
+                                this.restaurants = data || [];
                                 this.isReady = true;
                             }, (e) =>{
                                 this.throwError(e);

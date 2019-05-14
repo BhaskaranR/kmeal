@@ -33,6 +33,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.localStorageSub = this.localStorage.getItem('user');
         this.addrChangeSub = this.navService.getAddrChangeSub().subscribe(this.onAddrChange.bind(this));
     }
+
     localStorageSub: Observable<any>;
     addrChangeSub:Subscription;
     cuisines: KmealCategories.KmealCategories[];
@@ -172,7 +173,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     ngOnDestroy() {}
 
     populateData(user) {
-        console.log(user);
+        console.log(user,' initing for this user');
         if (user.lat !== void 0 && user.lng !== void 0){
             this.loadUserData(user.lat, user.lng);
             return;
@@ -196,19 +197,12 @@ export class HomeComponent implements OnInit, OnDestroy {
             })));
 
         const restaurantsObs = this.getRestaurantsNearByGQL
-            .watch({
-                args:{
-                    cuisine:'chinese',
-                    latitude:lat,
-                    longitude:lng,
-                    radius:10,
-                    timeofop: 'REGULAR'
-                }
-            })
+            .watch(this.generateFilter() as any)
             .valueChanges
             .pipe(pluck('data','getRestaurantsNearby'));
 
         const combined = combineLatest(cuisinesObs, restaurantsObs).subscribe(([data1, data2])=>{
+            console.log('got data ');
             this.cuisines = data1;
             this.restaurants = data2 as any[];
             this.isReady = true;
@@ -216,6 +210,30 @@ export class HomeComponent implements OnInit, OnDestroy {
         });   
 
         
+    }
+
+    private generateFilter(){
+        return {
+            "args": {
+                "latitude": "",
+                "longitude":"",
+                "radius": 10
+            },
+            "where": {
+                "restaurant": {
+                    "listingsByrestaurantId": {
+                        "list_price": {
+                        "_gte": 20
+                        }
+                    },
+                    "restaurantCategoriessByrestaurantId": {
+                        "category": {
+                            "_eq": ""
+                        }
+                    }
+                }
+            }
+        }
     }
     
     onSearchCuisine(cuisine) {

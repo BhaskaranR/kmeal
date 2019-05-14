@@ -32,7 +32,6 @@ export class ProfileDetailCompoonent implements OnInit {
     ){}
 
     ngOnInit(){
-        console.log('lazy loading ?!');
       this.isLoggedIn = this.scatterService.scatter ?  this.scatterService.scatter.identity ? true: false : false;
       console.log(this.scatterService.scatter.identity);
       if (!this.isLoggedIn) return;
