@@ -6,51 +6,8 @@ import { Network } from 'scatterjs-core';
 import * as Eos from 'eosjs';
 
 let scatter: ScatterJS;
-export let eos;
-export let reader; 
-export let contract;
-
 import { HttpClient } from '@angular/common/http';
 import { BigNumber } from 'bignumber.js';
-export const code = 'kmealadminio';
-
-export const RETURN_TYPES = {
-    ERROR: 0,
-    SUCCESS: 1
-};
-
-
-export const formatRow = (result, model) => {
-    result.rows = result.rows.map(model.fromJson);
-    return result;
-};
-export const getRowsOnly = result => result.rows;
-export const getFirstOnly = result => result.rows.length ? getRowsOnly(result)[0] : null;
-
-export const read = async ({ table, index, upper_bound = null, limit = 10, model = null, scope = code, firstOnly = false, rowsOnly = false, key_type = null, index_position = null }) => {
-   let additions = index !== null ? { lower_bound: index, upper_bound: upper_bound ? upper_bound : new BigNumber(index).plus(limit).toString() } : {};
-   if (key_type) additions = Object.assign({ key_type }, additions);
-   if (index_position) additions = Object.assign({ index_position }, additions);
-   return await reader.getTableRows(Object.assign({ json: true, code, scope, table, limit }, additions)).then(result => {
-       if (model) result = formatRow(result, model);
-       if (firstOnly) return getFirstOnly(result);
-       if (rowsOnly) return getRowsOnly(result);
-       return result;
-   });
-};
-
-export const errorMessage = (err) => {
-    const msg = typeof err === 'string'
-        ? (() => {
-            const j = JSON.parse(err);
-            return j.error.details.length
-                ? JSON.parse(err).error.details[0].message.replace('assertion failure with message: ', '')
-                : j;
-        })()
-        : err.message;
-    return { type: RETURN_TYPES.ERROR, msg }
-}
-export const success = (msg) => ({ type: RETURN_TYPES.SUCCESS, msg });
 
 @Injectable()
 export class ScatterService {
@@ -63,6 +20,51 @@ export class ScatterService {
 
     constructor(private http: HttpClient) {
     }
+
+    code :'kmealadminio';
+
+    RETURN_TYPES : {
+        ERROR: 0,
+        SUCCESS: 1
+    };
+
+    eos;
+    reader; 
+    contract;
+    formatRow (result, model) {
+        result.rows = result.rows.map(model.fromJson);
+        return result;
+    };
+    getRowsOnly(result){return result.rows};
+    getFirstOnly(result){return result.rows.length ? this.getRowsOnly(result)[0] : null};
+
+    async read ({ table, index, upper_bound = null, limit = 10, model = null, scope = this.code, firstOnly = false, rowsOnly = false, key_type = null, index_position = null }) {
+        let self = this;
+        let code = this.code;
+        let additions = index !== null ? { lower_bound: index, upper_bound: upper_bound ? upper_bound : new BigNumber(index).plus(limit).toString() } : {};
+        if (key_type) additions = Object.assign({ key_type }, additions);
+        if (index_position) additions = Object.assign({ index_position }, additions);
+        return await this.reader.getTableRows(Object.assign({ json: true, code, scope, table, limit }, additions)).then(result => {
+            if (model) result = this.formatRow(result, model);
+            if (firstOnly) return this.getFirstOnly(result);
+            if (rowsOnly) return this.getRowsOnly(result);
+            return result;
+        });
+     };
+
+    errorMessage(err) {
+        const msg = typeof err === 'string'
+            ? (() => {
+                const j = JSON.parse(err);
+                return j.error.details.length
+                    ? JSON.parse(err).error.details[0].message.replace('assertion failure with message: ', '')
+                    : j;
+            })()
+            : err.message;
+        return { type: this.RETURN_TYPES.ERROR, msg }
+    }
+    success (msg){return { type: this.RETURN_TYPES.SUCCESS, msg }};
+    
 
     async initScatter(network: string) {
         await this.loadNetworks(network);
@@ -93,17 +95,17 @@ export class ScatterService {
     };
 
     getScatter() {
-        return scatter;
+        return this.scatter;
     }
 
 
     getContract() {
-        return contract;
+        return this.contract;
     }
 
     setEos = () => {
-        reader = Eos({ httpEndpoint: this.selectedNetwork.fullhost(), chainId: this.selectedNetwork.chainId });
-        eos = Eos({ httpEndpoint: this.selectedNetwork.fullhost(), chainId: this.selectedNetwork.chainId });
+        this.reader = Eos({ httpEndpoint: this.selectedNetwork.fullhost(), chainId: this.selectedNetwork.chainId });
+        this.eos = Eos({ httpEndpoint: this.selectedNetwork.fullhost(), chainId: this.selectedNetwork.chainId });
     };
 
     loadNetworks(network: string) {
@@ -144,11 +146,11 @@ export class ScatterService {
         try {
             if (!scatter || !scatter.identity) {
                 this.setEos();
-                contract = null;
+                this.contract = null;
                 return false;
             }
-            eos = scatter.eos(this.selectedNetwork, Eos);
-            contract = await eos.contract(code, {requiredFields:{}});
+            this.eos = scatter.eos(this.selectedNetwork, Eos);
+            this.contract = await this.eos.contract(this.code, {requiredFields:{}});
         }
         catch (e) {
             console.log(e);
@@ -166,7 +168,7 @@ export class ScatterService {
         const timeout = () => this.balanceTimeout = setTimeout(() => this.watchBalance(), 60000);
         clearTimeout(this.balanceTimeout);
         if (!scatter || !scatter.identity) return timeout();
-        const account = await reader.getAccount(scatter.identity.accounts[0].name).catch(res => null);
+        const account = await this.reader.getAccount(scatter.identity.accounts[0].name).catch(res => null);
         if (account) this.balance = account.core_liquid_balance;
         timeout();
     }
