@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { ScatterService, success, errorMessage } from "@kmeal-nx/scatter";
+import { ScatterService } from "@kmeal-nx/scatter";
 
 @Injectable()
 export class AccountService {
@@ -7,7 +7,7 @@ export class AccountService {
     }
     checkLogin() {
         if (!this.scatterService.getScatter().identity) {
-            throw errorMessage('Please log in with Scatter first.');
+            throw new Error('Please log in with Scatter first.');
         }
         const account = this.scatterService.getScatter().identity.accounts[0];
         const opts = { authorization: `${account.name}@${account.authority}` };

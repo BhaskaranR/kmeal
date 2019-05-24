@@ -85,7 +85,7 @@ export class SearchComponent implements OnInit ,OnDestroy{
                 return this.getRestaurantsNearByGQL
                             .watch(this.filter)
                             .valueChanges
-                            .pipe(pluck('data','getRestaurantsNearby'));
+                            .pipe(pluck('data','kmeal_get_nearby'));
             })
         )
         .subscribe(data => {
@@ -136,14 +136,9 @@ export class SearchComponent implements OnInit ,OnDestroy{
                     },
                     "where": {
                         "restaurant": {
-                            "listingsByrestaurantId": {
-                                "list_price": {
-                                "_gte": 20
-                                }
-                            },
                             "restaurantCategoriessByrestaurantId": {
                                 "category": {
-                                    "_eq": ""
+                                  "_eq": "italian"
                                 }
                             }
                         }

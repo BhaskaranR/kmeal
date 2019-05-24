@@ -196,13 +196,13 @@ export class HomeComponent implements OnInit, OnDestroy {
                 return ca ;
             })));
 
-            const filter = this.generateFilter();
+        const filter = this.generateFilter(lat, lng);
 
-            console.log(filter);
+        console.log(filter);
         const restaurantsObs = this.getRestaurantsNearByGQL
             .watch(filter)
             .valueChanges
-            .pipe(pluck('data','getRestaurantsNearby'));
+            .pipe(pluck('data','kmeal_get_nearby'));
 
         const combined = combineLatest(cuisinesObs, restaurantsObs).subscribe(([data1, data2])=>{
             console.log('got data ', data2);
@@ -215,25 +215,20 @@ export class HomeComponent implements OnInit, OnDestroy {
         
     }
 
-    private generateFilter(){
+    private generateFilter(lat, lng){
         return {
             "args": {
-                "latitude": 40.710237,
-                "longitude": -74.007810,
+                "latitude":lat,
+                "longitude":lng,
                 "radius": 4
-            },
+           },
             "where": {
                 "restaurant": {
-                    "listingsByrestaurantId": {
-                        "list_price": {
-                        "_gte": 20
-                        }
-                    },
-                    "restaurantCategoriessByrestaurantId": {
-                        "category": {
-                            "_eq": "italian"
-                        }
+                  "restaurantCategoriessByrestaurantId": {
+                    "category": {
+                      "_eq": "italian"
                     }
+                  }
                 }
             }
         }
