@@ -136,9 +136,17 @@ export class SearchComponent implements OnInit ,OnDestroy{
                     },
                     "where": {
                         "restaurant": {
+                            "rating":{
+                                "_eq": null
+                            },
+                            "listingsByrestaurantId": {
+                                "list_price": {
+                                    "_gte": null
+                                },
+                            },
                             "restaurantCategoriessByrestaurantId": {
                                 "category": {
-                                  "_eq": "italian"
+                                  "_eq": null
                                 }
                             }
                         }
@@ -157,16 +165,31 @@ export class SearchComponent implements OnInit ,OnDestroy{
         else val = val.toLowerCase();
 
         console.log(type, val, display, ' filtering ?');
+
+        if (type === 'cuisine') {
+            this.filter.where.restaurant.restaurantCategoriessByrestaurantId.category._eq = val;
+        }
+
+        if (type === 'radius') {
+            this.filter.args.radius = val;
+        }
+
+        if (type === 'rating'){
+            this.filter.where.restaurant.rating._eq = val;
+        }
+
+        if (type === "priceLevel") {
+            this.filter.where.restaurant.listingsByrestaurantId.list_price._gte = val;
+        }
         
-        this.filter[type] = val;
+
         this.searchForm[type] = display;
-        delete this.filter.priceLevel;
-        console.log(type, val, display, this.filter);
         this.isReady = false;
+        console.log(this.filter, ' filter !?');
         this.getRestaurantsNearByGQL
-                            .watch({args:this.filter})
+                            .watch(this.filter)
                             .valueChanges
-                            .pipe(pluck('data','getRestaurantsNearby'))
+                            .pipe(pluck('data','kmeal_get_nearby'))
                             .subscribe(data => {
                                 this.restaurants = data || [];
                                 this.isReady = true;

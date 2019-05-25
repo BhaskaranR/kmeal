@@ -6695,6 +6695,10 @@ export namespace KmealGetNearby {
     description: string;
 
     name: string;
+
+    logo: string;
+
+    rating: number | null;
   };
 }
 
@@ -6724,6 +6728,8 @@ export class KmealGetNearbyGQL extends Apollo.Query<KmealGetNearby.Query, KmealG
           address
           description
           name
+          logo
+          rating
         }
       }
     }

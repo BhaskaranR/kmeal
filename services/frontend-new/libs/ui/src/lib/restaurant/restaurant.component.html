@@ -1,13 +1,15 @@
-<mat-card [class.mat-elevation-z1]="!isActive" [class.mat-elevation-z2]="isActive" (mouseenter) ="isActive = true"  (mouseleave) ="isActive = false">
-    <div [ngStyle]="{ 'background-image': 'url(' + res.logo + ')'}" class="res-card" style="height:105px; margin:-15px"></div>
+<mat-card [class.mat-elevation-z1]="!isActive" [class.mat-elevation-z2]="isActive" (mouseenter)="isActive = true" (mouseleave)="isActive = false">
+    <div [ngStyle]="{ 'background-image': 'url(' + res.restaurant.logo + ')'}" class="res-card" style="height:105px; margin:-15px"></div>
     <br>
     <div style="height:60px;">
-        <h6 style="margin:0">{{res.name}}</h6>
-        <mat-card-subtitle><small>{{res.address}}</small></mat-card-subtitle>
+        <h6 style="margin:0">{{res.restaurant.name}}</h6>
+        <mat-card-subtitle><small>{{res.restaurant.address}}</small></mat-card-subtitle>
     </div>
     <mat-card-content>
         <mat-chip-list>
-            <mat-chip color="accent" selected>{{res.rating}} <mat-icon >star</mat-icon></mat-chip>
+            <mat-chip color="accent" selected>{{res.rating}}
+                <mat-icon>star</mat-icon>
+            </mat-chip>
             <mat-chip>{{res.distance.toFixed(2) }} ft</mat-chip>
         </mat-chip-list>
     </mat-card-content>

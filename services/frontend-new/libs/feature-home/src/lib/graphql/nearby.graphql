@@ -6,6 +6,8 @@ query kmeal_get_nearby($args: kmeal_get_nearby_args!, $where: kmeal_restaurant_n
     address
     description
     name
+    logo
+    rating
   }
  }
 }
