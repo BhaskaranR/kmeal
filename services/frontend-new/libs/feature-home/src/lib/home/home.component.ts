@@ -201,11 +201,9 @@ export class HomeComponent implements OnInit, OnDestroy {
         const restaurantsObs = this.getRestaurantsNearByGQL
             .watch({
                 args:{
-                    cuisine:'chinese',
                     latitude:lat,
                     longitude:lng,
-                    radius:10,
-                    timeofop: 'REGULAR'
+                    radius:10
                 }
             })
             .valueChanges
