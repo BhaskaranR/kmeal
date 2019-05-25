@@ -9,7 +9,6 @@ let scatter: ScatterJS;
 import { HttpClient } from '@angular/common/http';
 import { BigNumber } from 'bignumber.js';
 
-
 @Injectable()
 export class ScatterService {
     restaurant_id = 440;
@@ -22,7 +21,7 @@ export class ScatterService {
     constructor(private http: HttpClient) {
     }
 
-    code :'kmealadmin15';
+    code :'kmealadminio';
 
     RETURN_TYPES : {
         ERROR: 0,

@@ -1,5 +1,6 @@
-query kmeal_get_nearby($args: kmeal_get_nearby_args!, $where: kmeal_restaurant_nearby_bool_exp) {
- kmeal_get_nearby(args: $args, where: $where) {
+
+query kmeal_get_nearby ($args: kmeal_get_nearby_args!){
+ kmeal_get_nearby (args: $args) {
    restaurant_id
    distance
    restaurant{

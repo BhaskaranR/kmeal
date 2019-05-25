@@ -3064,11 +3064,15 @@ export interface KmealCreditCardInfoBoolExp {
 }
 
 export interface KmealGetNearbyArgs {
+  cuisine: string;
+
   latitude: Float8;
 
   longitude: Float8;
 
   radius: number;
+
+  timeofop: string;
 }
 /** ordering options when selecting data from "kmeal.restaurant_location" */
 export interface KmealRestaurantLocationOrderBy {
@@ -6668,7 +6672,6 @@ export type _Text = any;
 export namespace KmealGetNearby {
   export type Variables = {
     args: KmealGetNearbyArgs;
-    where?: KmealRestaurantNearbyBoolExp | null;
   };
 
   export type Query = {
@@ -6690,9 +6693,23 @@ export namespace KmealGetNearby {
   export type Restaurant = {
     __typename?: "kmeal_restaurant";
 
-    address: string;
+    listingsByrestaurantId_aggregate: ListingsByrestaurantIdAggregate;
+  };
 
-    description: string;
+  export type ListingsByrestaurantIdAggregate = {
+    __typename?: "kmeal_listing_aggregate";
+
+    aggregate: Aggregate | null;
+  };
+
+  export type Aggregate = {
+    __typename?: "kmeal_listing_aggregate_fields";
+
+    max: Max | null;
+  };
+
+  export type Max = {
+    __typename?: "kmeal_listing_max_fields";
 
     name: string;
 
@@ -6720,16 +6737,26 @@ import gql from "graphql-tag";
 })
 export class KmealGetNearbyGQL extends Apollo.Query<KmealGetNearby.Query, KmealGetNearby.Variables> {
   document: any = gql`
-    query kmeal_get_nearby($args: kmeal_get_nearby_args!, $where: kmeal_restaurant_nearby_bool_exp) {
-      kmeal_get_nearby(args: $args, where: $where) {
+    query kmeal_get_nearby($args: kmeal_get_nearby_args!) {
+      kmeal_get_nearby(args: $args) {
         restaurant_id
         distance
         restaurant {
+<<<<<<< HEAD
           address
           description
           name
           logo
           rating
+=======
+          listingsByrestaurantId_aggregate {
+            aggregate {
+              max {
+                list_price
+              }
+            }
+          }
+>>>>>>> 297737509b243d1e88156e515905ffac8fe994a6
         }
       }
     }

@@ -33,7 +33,6 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.localStorageSub = this.localStorage.getItem('user');
         this.addrChangeSub = this.navService.getAddrChangeSub().subscribe(this.onAddrChange.bind(this));
     }
-
     localStorageSub: Observable<any>;
     addrChangeSub:Subscription;
     cuisines: KmealCategories.KmealCategories[];
@@ -173,7 +172,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     ngOnDestroy() {}
 
     populateData(user) {
-        console.log(user,' initing for this user');
+        console.log(user);
         if (user.lat !== void 0 && user.lng !== void 0){
             this.loadUserData(user.lat, user.lng);
             return;
@@ -200,12 +199,19 @@ export class HomeComponent implements OnInit, OnDestroy {
 
         console.log(filter);
         const restaurantsObs = this.getRestaurantsNearByGQL
-            .watch(filter)
+            .watch({
+                args:{
+                    cuisine:'chinese',
+                    latitude:lat,
+                    longitude:lng,
+                    radius:10,
+                    timeofop: 'REGULAR'
+                }
+            })
             .valueChanges
             .pipe(pluck('data','kmeal_get_nearby'));
 
         const combined = combineLatest(cuisinesObs, restaurantsObs).subscribe(([data1, data2])=>{
-            console.log('got data ', data2);
             this.cuisines = data1;
             this.restaurants = data2 as any[];
             this.isReady = true;

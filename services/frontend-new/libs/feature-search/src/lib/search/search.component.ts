@@ -53,7 +53,7 @@ export class SearchComponent implements OnInit ,OnDestroy{
     
     
     async ngOnInit() {
-        this.filter = await this.populateFilter();
+        await this.populateFilter();
         this.breakpoint = this.generateBreakpoint(window.innerWidth);
         this.routeParamSub = this.route
         .queryParams
@@ -64,15 +64,15 @@ export class SearchComponent implements OnInit ,OnDestroy{
                 {
                     case 'CUISINE' : {
                         this.type = "Cuisine : " + params.value;
-                        this.filter['where']['restaurant']['restaurantCategoriessByrestaurantId']['category']['_eq'] = this.searchForm.cuisine = params.value;
+                        this.filter.cuisine = this.searchForm.cuisine = params.value;
                         break;
                     }
 
                     case 'ADDRESS':{
                         this.type = 'Near By';
-                        this.filter['args']['latitude'] = parseFloat(params.lat);
-                        this.filter['args']['longitude'] = parseFloat(params.lng);
-                        this.filter['args']['radius'] = this.searchForm.radius = parseFloat(params.radius);
+                        this.filter.lat = parseFloat(params.lat);
+                        this.filter.long = parseFloat(params.lng);
+                        this.filter.radius = this.searchForm.radius = parseFloat(params.radius);
                         break;
                     }
 
@@ -81,15 +81,13 @@ export class SearchComponent implements OnInit ,OnDestroy{
                     }
                 }
 
-                console.log('search filter ?!', this.filter);
                 return this.getRestaurantsNearByGQL
-                            .watch(this.filter)
+                            .watch({args:this.filter})
                             .valueChanges
                             .pipe(pluck('data','kmeal_get_nearby'));
             })
         )
         .subscribe(data => {
-            console.log("got search data ", data);
             this.restaurants = data;
             this.isReady = true;
         }, (e) => {
@@ -191,7 +189,7 @@ export class SearchComponent implements OnInit ,OnDestroy{
                             .valueChanges
                             .pipe(pluck('data','kmeal_get_nearby'))
                             .subscribe(data => {
-                                this.restaurants = data || [];
+                                this.restaurants = data;
                                 this.isReady = true;
                             }, (e) =>{
                                 this.throwError(e);

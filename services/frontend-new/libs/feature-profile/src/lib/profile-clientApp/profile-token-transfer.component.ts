@@ -8,5 +8,23 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
     templateUrl: './profile-token-transfer.component.html'
 })
 export class ProfileTokenTransferComponent{
-  constructor(){}   
+
+  myFg:FormGroup;
+  constructor(
+      public fb:FormBuilder,
+      public scatterUIService:ScatterUIService){}
+
+  ngOnInit(){
+      this.myFg = this.fb.group({
+          token:['KMEAL',[Validators.required]],
+          sendTo:['',[Validators.required]],
+          amount:['', [Validators.required, Validators.pattern("^[0-9]*$")]],
+          memo:['', [Validators.required]],
+      });
+  }
+
+  onSubmit(){
+
+  }
+    
 }

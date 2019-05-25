@@ -3064,11 +3064,15 @@ export interface KmealCreditCardInfoBoolExp {
 }
 
 export interface KmealGetNearbyArgs {
+  cuisine: string;
+
   latitude: Float8;
 
   longitude: Float8;
 
   radius: number;
+
+  timeofop: string;
 }
 /** ordering options when selecting data from "kmeal.restaurant_location" */
 export interface KmealRestaurantLocationOrderBy {
