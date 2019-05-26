@@ -3064,15 +3064,11 @@ export interface KmealCreditCardInfoBoolExp {
 }
 
 export interface KmealGetNearbyArgs {
-  cuisine: string;
-
   latitude: Float8;
 
   longitude: Float8;
 
   radius: number;
-
-  timeofop: string;
 }
 /** ordering options when selecting data from "kmeal.restaurant_location" */
 export interface KmealRestaurantLocationOrderBy {
@@ -6693,23 +6689,9 @@ export namespace KmealGetNearby {
   export type Restaurant = {
     __typename?: "kmeal_restaurant";
 
-    listingsByrestaurantId_aggregate: ListingsByrestaurantIdAggregate;
-  };
+    address: string;
 
-  export type ListingsByrestaurantIdAggregate = {
-    __typename?: "kmeal_listing_aggregate";
-
-    aggregate: Aggregate | null;
-  };
-
-  export type Aggregate = {
-    __typename?: "kmeal_listing_aggregate_fields";
-
-    max: Max | null;
-  };
-
-  export type Max = {
-    __typename?: "kmeal_listing_max_fields";
+    description: string;
 
     name: string;
 
