@@ -6742,21 +6742,11 @@ export class KmealGetNearbyGQL extends Apollo.Query<KmealGetNearby.Query, KmealG
         restaurant_id
         distance
         restaurant {
-<<<<<<< HEAD
           address
           description
           name
           logo
           rating
-=======
-          listingsByrestaurantId_aggregate {
-            aggregate {
-              max {
-                list_price
-              }
-            }
-          }
->>>>>>> 297737509b243d1e88156e515905ffac8fe994a6
         }
       }
     }

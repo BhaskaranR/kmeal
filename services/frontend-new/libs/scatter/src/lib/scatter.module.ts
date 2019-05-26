@@ -9,7 +9,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { LayoutModule } from '@angular/cdk/layout';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TokenMathService } from './services/token-math.service';
-import { ScatterUIService } from './services/scatter-ui.service';
 import { ScatterUIComponent } from './scatter-login/scatter-ui.component';
 
 const components = [EosioAccountComponent, LoginComponent, ScatterUIComponent];
@@ -33,7 +32,6 @@ export const scatterRoutes: Routes = [
   declarations: components,
   exports: components,
   providers: [
-    ScatterUIService,
     TokenMathService,
     ScatterService
   ]

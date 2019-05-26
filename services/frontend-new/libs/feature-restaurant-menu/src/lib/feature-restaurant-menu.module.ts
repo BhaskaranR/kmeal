@@ -19,7 +19,7 @@ import { FillmenubookComponent } from './fillmenubook/fillmenubook.component';
 import { MenuSidenavComponent } from './sidenav/sidenav.component';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { NewsectionComponent } from './newsection/newsection.component';
-import { ScatterModule } from '@kmeal-nx/scatter';
+import { ScatterModule, ScatterService } from '@kmeal-nx/scatter';
 
 
 export const restaurantMenuRoutes: Routes = [
@@ -58,6 +58,7 @@ export const restaurantMenuRoutes: Routes = [
     CdkSelectionModule,
     DragDropModule,
     RouterModule.forChild(restaurantMenuRoutes)],
-  declarations: [MenuSidenavComponent, NewmenuComponent, HomeComponent, NewgroupComponent, NewlistingComponent, FillmenubookComponent, NewsectionComponent]
+  declarations: [MenuSidenavComponent, NewmenuComponent, HomeComponent, NewgroupComponent, NewlistingComponent, FillmenubookComponent, NewsectionComponent],
+    providers:[]
 })
 export class FeatureRestaurantMenuModule { }

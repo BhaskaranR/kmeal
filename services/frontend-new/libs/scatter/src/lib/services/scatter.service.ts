@@ -21,7 +21,7 @@ export class ScatterService {
     constructor(private http: HttpClient) {
     }
 
-    code :'kmealadminio';
+    code : string = 'kmealadmin15';
 
     RETURN_TYPES : {
         ERROR: 0,
@@ -147,10 +147,12 @@ export class ScatterService {
             if (!scatter || !scatter.identity) {
                 this.setEos();
                 this.contract = null;
-                return false;
+                return false;  
             }
+
             this.eos = scatter.eos(this.selectedNetwork, Eos);
             this.contract = await this.eos.contract(this.code, {requiredFields:{}});
+            console.log(this.eos);
         }
         catch (e) {
             console.log(e);

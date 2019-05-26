@@ -22,7 +22,8 @@ import {
 import { pluck, map } from "rxjs/operators";
 import { FormBuilder, Validators } from "@angular/forms";
 import { MatSnackBar } from "@angular/material";
-import { ScatterService } from "@kmeal-nx/scatter";
+import { ScatterService } from '@kmeal-nx/scatter';
+
 
 @Component({
   selector: "kmeal-nx-newgroup",
@@ -72,6 +73,8 @@ export class NewgroupComponent {
           this.sections = this.selectedMenuBook.menuBookSectionsBymenuBookId
         }
       });
+
+    console.log(this.scatterService);
   }
 
   dropMenubook(event: CdkDragDrop<kmb.KmealMenuBook[]>) {
@@ -106,6 +109,13 @@ export class NewgroupComponent {
       this.openSnackBar("Enter menu book", "");
       return;
     }
+
+    console.log(this.scatterService.eos);
+    this.scatterService.eos.transaction('kmealadminio', (contract)=>{
+      console.log('contract ?!', contract);
+    })
+
+    /*
     const variables: insKmealMenuBook.Variables = {
       objects: [{
         menu_book: this.menuBookForm.value.menubook,
@@ -122,7 +132,7 @@ export class NewgroupComponent {
       this.menubooks.push(newgroup);
     }, (err) => {
       this.openSnackBar("Error creating menu book :" + err, "");
-    })
+    })*/
   }
 
 

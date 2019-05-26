@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProfileComponent } from './profile/profile.component';
 import { AccountService } from './services/account.service';
-import { ScatterModule, ScatterService } from '@kmeal-nx/scatter';
+import { ScatterModule } from '@kmeal-nx/scatter';
 import { ProfileClientComponent } from './profile-clientApp/profile-client.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FeatureCoreModule } from '@kmeal-nx/feature-core';
@@ -17,6 +17,6 @@ import { NgXCreditCardsModule } from 'ngx-credit-cards';
   imports: [CommonModule,FlexLayoutModule, ScatterModule, FeatureCoreModule, ReactiveFormsModule,NgXCreditCardsModule],
   declarations: [ProfileComponent, ProfileClientComponent, ProfileCreditCardComponent, ProfileDetailCompoonent, ProfileTokenTransferComponent],
   exports:[ProfileComponent, ProfileClientComponent, ProfileCreditCardComponent, ProfileTokenTransferComponent],
-  providers:[AccountService, CreditCardService, ScatterService]
+  providers:[AccountService, CreditCardService]
 })
 export class FeatureProfileModule {}

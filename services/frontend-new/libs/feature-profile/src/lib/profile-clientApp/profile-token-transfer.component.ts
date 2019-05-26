@@ -1,5 +1,4 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
-import { ScatterUIService } from '@kmeal-nx/scatter';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
@@ -11,8 +10,7 @@ export class ProfileTokenTransferComponent{
 
   myFg:FormGroup;
   constructor(
-      public fb:FormBuilder,
-      public scatterUIService:ScatterUIService){}
+      public fb:FormBuilder,){}
 
   ngOnInit(){
       this.myFg = this.fb.group({

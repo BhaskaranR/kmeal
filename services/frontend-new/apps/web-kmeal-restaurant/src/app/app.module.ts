@@ -65,7 +65,6 @@ export function init_app(scatterService: ScatterService) {
     LayoutModule
   ],
   providers: [
-
     { provide: APP_INITIALIZER, useFactory: init_app, deps: [ScatterService], multi: true },
   ],
   bootstrap: [AppComponent]

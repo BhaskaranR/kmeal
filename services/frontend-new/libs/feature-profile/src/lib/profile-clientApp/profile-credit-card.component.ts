@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators} from '@angular/forms';
-import { ScatterUIService } from '@kmeal-nx/scatter';
-
-
+import { ScatterService } from '@kmeal-nx/scatter';
 
 @Component({
     selector: 'kmeal-nx-profile-client-credit-card',
@@ -13,7 +11,7 @@ export class ProfileCreditCardComponent implements OnInit{
     myFg:FormGroup;
     constructor(
         public fb:FormBuilder,
-        public scatterUIService:ScatterUIService){}
+        public scatterService:ScatterService){}
 
     ngOnInit(){
         this.myFg = this.fb.group({
@@ -24,8 +22,20 @@ export class ProfileCreditCardComponent implements OnInit{
         });
     }
 
-    onSubmit(){
+    async onSubmit(){
 
+        try{
+          const contract = await this.scatterService.eos.transaction('kmealadmin15', async (contract) => {
+              console.log('kmealadmin15 contract', contract);
+
+              const call = await this.scatterService.eos.transfer(this.scatterService.code,'kmealadminio','1 KMEAL','test');
+              console.log('called ? ', call);
+          });
+
+        }
+        catch(e){
+            console.log('what error ?!', e );
+        }
     }
 
 }

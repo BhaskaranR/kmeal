@@ -196,18 +196,9 @@ export class HomeComponent implements OnInit, OnDestroy {
             })));
 
         const filter = this.generateFilter(lat, lng);
-
-        console.log(filter);
+        console.log('filter ? ', filter);
         const restaurantsObs = this.getRestaurantsNearByGQL
-            .watch({
-                args:{
-                    cuisine:'chinese',
-                    latitude:lat,
-                    longitude:lng,
-                    radius:10,
-                    timeofop: 'REGULAR'
-                }
-            })
+            .watch(filter as any)
             .valueChanges
             .pipe(pluck('data','kmeal_get_nearby'));
 
