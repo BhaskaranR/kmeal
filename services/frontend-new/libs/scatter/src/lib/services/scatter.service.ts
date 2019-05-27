@@ -12,7 +12,7 @@ import { BigNumber } from 'bignumber.js';
 @Injectable()
 export class ScatterService {
     restaurant_id = 440;
-    selectedNetwork: Network;
+    public selectedNetwork: Network;
     balance: '0.0000 KMEAL';
     networks: Network[] = [];
     scatter;
@@ -21,7 +21,7 @@ export class ScatterService {
     constructor(private http: HttpClient) {
     }
 
-    code : string = 'kmealadmin15';
+    code : string = 'kmealadminio';
 
     RETURN_TYPES : {
         ERROR: 0,
@@ -31,6 +31,7 @@ export class ScatterService {
     eos;
     reader; 
     contract;
+    tokencontract;
     formatRow (result, model) {
         result.rows = result.rows.map(model.fromJson);
         return result;
@@ -103,6 +104,7 @@ export class ScatterService {
         return this.contract;
     }
 
+
     setEos = () => {
         this.reader = Eos({ httpEndpoint: this.selectedNetwork.fullhost(), chainId: this.selectedNetwork.chainId });
         this.eos = Eos({ httpEndpoint: this.selectedNetwork.fullhost(), chainId: this.selectedNetwork.chainId });
@@ -152,7 +154,6 @@ export class ScatterService {
 
             this.eos = scatter.eos(this.selectedNetwork, Eos);
             this.contract = await this.eos.contract(this.code, {requiredFields:{}});
-            console.log(this.eos);
         }
         catch (e) {
             console.log(e);
