@@ -19,7 +19,7 @@ import { FillmenubookComponent } from './fillmenubook/fillmenubook.component';
 import { MenuSidenavComponent } from './sidenav/sidenav.component';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { NewsectionComponent } from './newsection/newsection.component';
-import { ScatterModule, ScatterService } from '@kmeal-nx/scatter';
+
 
 
 export const restaurantMenuRoutes: Routes = [
@@ -38,7 +38,6 @@ export const restaurantMenuRoutes: Routes = [
 @NgModule({
   imports: [CommonModule, MatInputModule, MatButtonModule, MatSelectModule, MatRadioModule,
     //MatChipsModule,
-    ScatterModule,
     MatAutocompleteModule,
     NgxMaterialTimepickerModule.forRoot(),
     MatSliderModule,

@@ -19,9 +19,10 @@ export class ScatterService {
     balanceTimeout;
 
     constructor(private http: HttpClient) {
+        console.log('initing scatter service');
     }
 
-    code : string = 'kmealadmin15';
+    code : string = 'kmealadminio';
 
     RETURN_TYPES : {
         ERROR: 0,
@@ -67,6 +68,7 @@ export class ScatterService {
     
 
     async initScatter(network: string) {
+        console.log('calling init in scatter service')
         await this.loadNetworks(network);
         ScatterJS.plugins(new ScatterEOS(), new ScatterLynx());
         const connected = await ScatterJS.scatter.connect('kmeal')
@@ -152,7 +154,6 @@ export class ScatterService {
 
             this.eos = scatter.eos(this.selectedNetwork, Eos);
             this.contract = await this.eos.contract(this.code, {requiredFields:{}});
-            console.log(this.eos);
         }
         catch (e) {
             console.log(e);

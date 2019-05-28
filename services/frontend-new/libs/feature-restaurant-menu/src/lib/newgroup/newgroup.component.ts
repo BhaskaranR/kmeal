@@ -19,10 +19,10 @@ import {
   KmealMenuBookSectionConstraint,
 } from '../generated/graphql';
 
-import { pluck, map } from "rxjs/operators";
+import { pluck } from "rxjs/operators";
 import { FormBuilder, Validators } from "@angular/forms";
 import { MatSnackBar } from "@angular/material";
-import { ScatterService } from '@kmeal-nx/scatter';
+import { ScatterService } from '../../../../scatter/src/lib/services/scatter.service';
 
 
 @Component({
@@ -73,8 +73,6 @@ export class NewgroupComponent {
           this.sections = this.selectedMenuBook.menuBookSectionsBymenuBookId
         }
       });
-
-    console.log(this.scatterService);
   }
 
   dropMenubook(event: CdkDragDrop<kmb.KmealMenuBook[]>) {
@@ -104,17 +102,40 @@ export class NewgroupComponent {
   }
 
 
-  onBookSubmit() {
+  async onBookSubmit() {
     if (!this.menuBookForm.valid) {
       this.openSnackBar("Enter menu book", "");
       return;
     }
 
-    console.log(this.scatterService.eos);
-    this.scatterService.eos.transaction('kmealadminio', (contract)=>{
-      console.log('contract ?!', contract);
-    })
+    try{
+      const contract = this.scatterService.getContract();
+      console.log('got contract ? ', contract);
+      const callResult = contract['createbook']({
+        account:'kmealadminio', 
+        bookname:this.menuBookForm.get('menubook').value
+      });
 
+      console.log('called ? ', callResult);
+
+      this.scatterService.eos.transaction(this.scatterService.code, (contract) => {
+        console.log('got contract ? ', contract);
+
+        contract.createbook({
+          account:'kmealadminio', 
+          bookname:this.menuBookForm.get('menubook').value
+        });
+      }, {
+        authorization:`kmealadminio`,
+        permission: 'active',
+      })
+      .then(console.log)
+      .catch(console.log);
+  }
+  catch(e){
+    console.log('something wrong ?');
+    console.log(e);
+  }
     /*
     const variables: insKmealMenuBook.Variables = {
       objects: [{
