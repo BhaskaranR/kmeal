@@ -1,28 +1,19 @@
-import { Component } from "@angular/core";
-import { CdkDragDrop, moveItemInArray, CdkDrag } from '@angular/cdk/drag-drop';
+import { Component, OnInit } from "@angular/core";
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import {
   KmealMenuBookGQL, KmealMenuBook as kmb,
   InsertKmealMenuBook as insKmealMenuBook,
   InsertKmealMenuBookGQL,
-  UpdateKmealMenuBook as updKmealMenuBook,
-  UpdateKmealMenuBookGQL,
   DeleteKmealMenuBook as delKmealMenuBook,
   DeleteKmealMenuBookGQL,
-  InsertKmealMenuBookSection as insKmealMenuBookSection,
-  InsertKmealMenuBookSectionGQL,
-  UpdateKmealMenuBookSection as updKmealMenuBookSection,
-  UpdateKmealMenuBookSectionGQL,
-  DeleteKmealItemGQL,
-  ConflictAction,
   KmealMenuBookConstraint,
   KmealMenuBookUpdateColumn,
-  KmealMenuBookSectionConstraint,
 } from '../generated/graphql';
 
 import { pluck } from "rxjs/operators";
 import { FormBuilder, Validators } from "@angular/forms";
 import { MatSnackBar } from "@angular/material";
-import { ScatterService } from '../../../../scatter/src/lib/services/scatter.service';
+import { MenuService } from "../services/menu.service";
 
 
 @Component({
@@ -30,7 +21,7 @@ import { ScatterService } from '../../../../scatter/src/lib/services/scatter.ser
   templateUrl: "./newgroup.component.html",
   styleUrls: ["./newgroup.component.scss"]
 })
-export class NewgroupComponent {
+export class NewgroupComponent implements OnInit {
   selectedMenuBook: kmb.KmealMenuBook;
 
   menuBookForm = this.fb.group({
@@ -48,57 +39,55 @@ export class NewgroupComponent {
   constructor(private kmealMenuBookGQL: KmealMenuBookGQL,
     private insertKmealMenuBookGQL: InsertKmealMenuBookGQL,
     private deleteKmealMenuBookGQL: DeleteKmealMenuBookGQL,
-    private deleteKmealMenuBookSectionGQL: DeleteKmealItemGQL,
-    private scatterService: ScatterService,
+    private menuService: MenuService,
     public snackBar: MatSnackBar,
     private fb: FormBuilder) {
   }
 
   ngOnInit() {
-    const variables = {
-      "where": {
-        "restaurant_id": {
-          "_eq": this.scatterService.restaurant_id
-        }
-      }
-    };
-    this.kmealMenuBookGQL.watch(variables, {}).valueChanges.pipe(pluck('data', 'kmeal_menu_book'))
-      .subscribe((mg: kmb.KmealMenuBook[]) => {
-        if (!mg) {
-          return;
-        }
-        this.menubooks = mg
-        if (this.menubooks.length == 0) {
-          this.selectedMenuBook = this.menubooks[0]
-          this.sections = this.selectedMenuBook.menuBookSectionsBymenuBookId
-        }
-      });
+    // const variables = {
+    //   "where": {
+    //     "restaurant_id": {
+    //       "_eq": this.scatterService.restaurant_id
+    //     }
+    //   }
+    // };
+    // this.kmealMenuBookGQL.watch(variables, {}).valueChanges.pipe(pluck('data', 'kmeal_menu_book'))
+    //   .subscribe((mg: kmb.KmealMenuBook[]) => {
+    //     if (!mg) {
+    //       return;
+    //     }
+    //     this.menubooks = mg
+    //     if (this.menubooks.length == 0) {
+    //       this.selectedMenuBook = this.menubooks[0]
+    //       this.sections = this.selectedMenuBook.menuBookSectionsBymenuBookId
+    //     }
+    //   });
   }
 
   dropMenubook(event: CdkDragDrop<kmb.KmealMenuBook[]>) {
+    // moveItemInArray(this.menubooks, event.previousIndex, event.currentIndex);
 
-    moveItemInArray(this.menubooks, event.previousIndex, event.currentIndex);
+    // const objects = [];
+    // for (let i = 0; i < this.menubooks.length; i++) {
+    //   objects.push({
+    //     menu_book_id: this.menubooks[i].menu_book_id,
+    //     menu_book: this.menubooks[i].menu_book,
+    //     restaurant_id: this.scatterService.restaurant_id,
+    //     sort_order: i
+    //   })
+    // }
 
-    const objects = [];
-    for (let i = 0; i < this.menubooks.length; i++) {
-      objects.push({
-        menu_book_id: this.menubooks[i].menu_book_id,
-        menu_book: this.menubooks[i].menu_book,
-        restaurant_id: this.scatterService.restaurant_id,
-        sort_order: i
-      })
-    }
-
-    const variables: insKmealMenuBook.Variables = {
-      objects: objects,
-      "on_conflict": {
-        "constraint": KmealMenuBookConstraint.MenuBookPkey,
-        "update_columns": [KmealMenuBookUpdateColumn.SortOrder]
-      }
-    }
-    this.insertKmealMenuBookGQL.mutate(variables).pipe(pluck('data', 'insert_kmeal_menu_book', 'returning')).subscribe((mb: insKmealMenuBook.KmealMenuBookInlineFragment[]) => {
-      this.openSnackBar("updated", "");
-    })
+    // const variables: insKmealMenuBook.Variables = {
+    //   objects: objects,
+    //   "on_conflict": {
+    //     "constraint": KmealMenuBookConstraint.MenuBookPkey,
+    //     "update_columns": [KmealMenuBookUpdateColumn.SortOrder]
+    //   }
+    // }
+    // this.insertKmealMenuBookGQL.mutate(variables).pipe(pluck('data', 'insert_kmeal_menu_book', 'returning')).subscribe((mb: insKmealMenuBook.KmealMenuBookInlineFragment[]) => {
+    //   this.openSnackBar("updated", "");
+    // })
   }
 
 
@@ -107,35 +96,14 @@ export class NewgroupComponent {
       this.openSnackBar("Enter menu book", "");
       return;
     }
-
-    try{
-      const contract = this.scatterService.getContract();
-      console.log('got contract ? ', contract);
-      const callResult = contract['createbook']({
-        account:'kmealadminio', 
-        bookname:this.menuBookForm.get('menubook').value
-      });
-
-      console.log('called ? ', callResult);
-
-      this.scatterService.eos.transaction(this.scatterService.code, (contract) => {
-        console.log('got contract ? ', contract);
-
-        contract.createbook({
-          account:'kmealadminio', 
-          bookname:this.menuBookForm.get('menubook').value
-        });
-      }, {
-        authorization:`kmealadminio`,
-        permission: 'active',
-      })
-      .then(console.log)
-      .catch(console.log);
-  }
-  catch(e){
-    console.log('something wrong ?');
-    console.log(e);
-  }
+    try {
+     const resp = await this.menuService.createbook(this.menuBookForm.value.menubook);
+     this.menubooks.push(this.menuBookForm.value.menubook);
+     this.openSnackBar("menu book created", "");
+    }
+    catch (e) {
+      this.openSnackBar("Error creating menu book :" + e, "");
+    }
     /*
     const variables: insKmealMenuBook.Variables = {
       objects: [{
