@@ -1,12 +1,12 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { Component, OnInit } from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 
 @Component({
     selector: 'kmeal-nx-profile-token-transfer',
     moduleId: module.id,
     templateUrl: './profile-token-transfer.component.html'
 })
-export class ProfileTokenTransferComponent{
+export class ProfileTokenTransferComponent implements OnInit{
 
   myFg:FormGroup;
   constructor(

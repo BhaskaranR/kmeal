@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AccountService } from '../services/account.service';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { OnInit, Component } from '@angular/core';
 
 @Component({
     selector: 'kmeal-nx-profile-client-credit-card',

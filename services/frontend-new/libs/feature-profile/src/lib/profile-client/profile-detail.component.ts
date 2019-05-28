@@ -1,5 +1,6 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ScatterService } from '@kmeal-nx/scatter';
+
 
 @Component({
     selector: 'kmeal-nx-profile-detail',

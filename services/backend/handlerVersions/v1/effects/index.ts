@@ -9,10 +9,12 @@
 
 // IMPORT START
 import exampleEffect from './effect'
+import kmealadminioSetuprest from './kmealadminio/setuprest'
 // IMPORT END
 
 export const effects = [
   // ARRAY ITEMS START
   exampleEffect,
+  kmealadminioSetuprest,
   // ARRAY ITEMS END
 ]
