@@ -3,14 +3,14 @@ import { CommonModule } from '@angular/common';
 import { ProfileComponent } from './profile/profile.component';
 import { AccountService } from './services/account.service';
 import { ScatterModule } from '@kmeal-nx/scatter';
-import { ProfileClientComponent } from './profile-clientApp/profile-client.component';
+import { ProfileClientComponent } from './profile-client/profile-client.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FeatureCoreModule } from '@kmeal-nx/feature-core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { ProfileCreditCardComponent } from './profile-clientApp/profile-credit-card.component';
+import { ProfileCreditCardComponent } from './profile-client/profile-credit-card.component';
 import { CreditCardService } from './services/credit-card.servies';
-import { ProfileDetailCompoonent } from './profile-clientApp/profile-detail.component';
-import { ProfileTokenTransferComponent } from './profile-clientApp/profile-token-transfer.component';
+import { ProfileDetailCompoonent } from './profile-client/profile-detail.component';
+import { ProfileTokenTransferComponent } from './profile-client/profile-token-transfer.component';
 import { NgXCreditCardsModule } from 'ngx-credit-cards';
 
 @NgModule({

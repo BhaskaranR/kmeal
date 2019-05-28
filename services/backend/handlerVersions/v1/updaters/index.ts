@@ -8,10 +8,12 @@
 
 // IMPORT START
 import exampleUpdater from './updater'
+import kmealadminioSetuprest from './kmealadminio/setuprest'
 // IMPORT END
 
 export const updaters = [
   // ARRAY ITEMS START
   exampleUpdater,
+  kmealadminioSetuprest,
   // ARRAY ITEMS END
 ]

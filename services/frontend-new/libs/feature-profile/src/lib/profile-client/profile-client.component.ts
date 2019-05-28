@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component } from "@angular/core";
 
 @Component({
     selector: 'kmeal-nx-profile-client',
