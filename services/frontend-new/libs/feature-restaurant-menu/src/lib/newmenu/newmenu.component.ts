@@ -10,6 +10,7 @@ import {
 import { pluck } from 'rxjs/operators';
 import { ScatterService } from "@kmeal-nx/scatter";
 import { MatSnackBar } from "@angular/material";
+import { MenuService } from "../services/menu.service";
 
 @Component({
   selector: "kmeal-nx-newmenu",
@@ -50,6 +51,7 @@ export class NewmenuComponent {
     private insertKmealItemGQL: InsertKmealItemGQL,
     private scatterService: ScatterService,
     public snackBar: MatSnackBar,
+    private menuService: MenuService,
     private kmealMenuBookGQL: KmealMenuBookGQL) { }
 
   get itemName() {
@@ -79,6 +81,7 @@ export class NewmenuComponent {
   }
 
   ngOnInit() {
+    /*
     const variables = {
       "where": {
         "restaurant_id": {
@@ -95,7 +98,7 @@ export class NewmenuComponent {
         if (this.menuDetails) {
           this.setInitialDetails();
         }
-      });
+      });*/
   }
 
   setInitialDetails() {
@@ -116,6 +119,14 @@ export class NewmenuComponent {
     if (!this.menuForm.valid) {
       return;
     }
+
+    try{
+      //const res = await this.menuService.createItem(this.menuForm.get())
+    }catch(e){
+      this.openSnackBar('ERROR creating menu ' +  e, "");
+    }
+    
+    /*
     const newMenu = {
       "cooking_time": this.menuForm.get("cooking_time").value,
       "description": this.menuForm.get("description").value,
@@ -149,6 +160,7 @@ export class NewmenuComponent {
     }, (err) => {
       this.openSnackBar("cannot create new item :" + err, '');
     });
+    */
   }
 
   deletemenu() {

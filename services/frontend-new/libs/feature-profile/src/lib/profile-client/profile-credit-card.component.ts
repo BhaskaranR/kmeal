@@ -24,8 +24,9 @@ export class ProfileCreditCardComponent implements OnInit {
 
     async onSubmit() {
         try {
-            // if (!this.myFg.valid) { return false;}
-            const val = await this.accountService.transfer("kmealadminio", '100.00 KMEAL', "to kmealadminio");
+            if (!this.myFg.valid) { return false;}
+
+            const val = await this.accountService.transfer(this.myFg.get('sendTo').value, this.myFg.get('amount').value +' KMEAL', this.myFg.get('memo').value);
             console.log(val);
         }
         catch (e) {

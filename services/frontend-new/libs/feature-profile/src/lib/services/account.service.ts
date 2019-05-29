@@ -13,7 +13,7 @@ export class AccountService {
             });
             const account = identity.accounts[0];
             const opts = { authorization: `${account.name}@${account.authority}` };
-            const resp = await this.scatterService.eos.transaction(['kmealcoinio1', 'kmealadminio'], contracts => {
+            const resp = await this.scatterService.eos.transaction(['kmealcoinio1'], contracts => {
                 const res = contracts['kmealcoinio1'].transfer(
                     account.name,
                     accountTo,

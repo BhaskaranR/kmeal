@@ -32,7 +32,7 @@ export class NewgroupComponent implements OnInit {
     section: [null, Validators.required]
   });
 
-  menubooks: kmb.KmealMenuBook[] = []
+  menubooks: any[] = []
 
   sections: kmb.MenuBookSectionsBymenuBookId[] = [];
 
@@ -45,24 +45,11 @@ export class NewgroupComponent implements OnInit {
   }
 
   ngOnInit() {
-    // const variables = {
-    //   "where": {
-    //     "restaurant_id": {
-    //       "_eq": this.scatterService.restaurant_id
-    //     }
-    //   }
-    // };
-    // this.kmealMenuBookGQL.watch(variables, {}).valueChanges.pipe(pluck('data', 'kmeal_menu_book'))
-    //   .subscribe((mg: kmb.KmealMenuBook[]) => {
-    //     if (!mg) {
-    //       return;
-    //     }
-    //     this.menubooks = mg
-    //     if (this.menubooks.length == 0) {
-    //       this.selectedMenuBook = this.menubooks[0]
-    //       this.sections = this.selectedMenuBook.menuBookSectionsBymenuBookId
-    //     }
-    //   });
+    this.loadBooks();
+  }
+
+  private async loadBooks(){
+    this.menubooks = await this.menuService.readBooks();
   }
 
   dropMenubook(event: CdkDragDrop<kmb.KmealMenuBook[]>) {
@@ -96,6 +83,7 @@ export class NewgroupComponent implements OnInit {
       this.openSnackBar("Enter menu book", "");
       return;
     }
+
     try {
      const resp = await this.menuService.createbook(this.menuBookForm.value.menubook);
      this.menubooks.push(this.menuBookForm.value.menubook);
@@ -104,28 +92,13 @@ export class NewgroupComponent implements OnInit {
     catch (e) {
       this.openSnackBar("Error creating menu book :" + e, "");
     }
-    /*
-    const variables: insKmealMenuBook.Variables = {
-      objects: [{
-        menu_book: this.menuBookForm.value.menubook,
-        restaurant_id: this.scatterService.restaurant_id,
-        sort_order: this.menubooks.length + 1
-      }],
-      "on_conflict": {
-        "constraint": KmealMenuBookConstraint.MenuBookPkey,
-        "update_columns": [KmealMenuBookUpdateColumn.MenuBook]
-      }
-    }
-    this.insertKmealMenuBookGQL.mutate(variables).pipe(pluck('data', 'insert_kmeal_menu_book', 'returning')).subscribe((mb: insKmealMenuBook.KmealMenuBookInlineFragment[]) => {
-      const newgroup = <kmb.KmealMenuBook>mb[0];
-      this.menubooks.push(newgroup);
-    }, (err) => {
-      this.openSnackBar("Error creating menu book :" + err, "");
-    })*/
   }
 
 
   deleteMenuGroup(ev) {
+
+    
+    /*
     const variables: delKmealMenuBook.Variables = {
       "where": {
         "menu_book_id": {
@@ -144,10 +117,11 @@ export class NewgroupComponent implements OnInit {
       }, (err) => {
         this.openSnackBar("Cannot delete the menu book, Please delete/move the items associated with this book", "");
       })
+      */
   }
 
 
-  openSnackBar(message: string, action: string) {
+  private openSnackBar(message: string, action: string) {
     this.snackBar.open(message, action, {
       duration: 2000,
     });
