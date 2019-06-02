@@ -52,7 +52,7 @@ export class NewgroupComponent implements OnInit {
   }
 
   dropMenubook(event: CdkDragDrop<kmb.KmealMenuBook[]>) {
-    // moveItemInArray(this.menubooks, event.previousIndex, event.currentIndex);
+    moveItemInArray(this.menubooks, event.previousIndex, event.currentIndex);
 
     // const objects = [];
     // for (let i = 0; i < this.menubooks.length; i++) {
