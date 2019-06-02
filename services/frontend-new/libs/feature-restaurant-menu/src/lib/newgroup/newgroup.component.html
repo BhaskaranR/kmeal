@@ -24,7 +24,7 @@
                 <div cdkDropList class="list" cdkSelection (cdkDropListDropped)="dropMenubook($event)">
                     <div class="box" *ngFor="let item of menubooks" cdkDrag>
                         <a class="component-list-item" (click)="onSelectionChange(item)">
-                            {{item.menu_book}}
+                            {{item.book_name}}
 
                         </a>
                         <div class="handle" cdkDragHandle>

@@ -1,5 +1,8 @@
 import { Injectable } from "@angular/core";
 import { ScatterService } from "@kmeal-nx/scatter";
+import * as Eos from 'eosjs';
+import { Book } from '../model/books';
+const {format} = Eos.modules;
 
 @Injectable()
 export class MenuService {
@@ -26,14 +29,6 @@ export class MenuService {
         catch (e) {
             throw e;
         }
-    }
-
-    async readBooks(){
-        return await this.scatterService.read({
-            table:'books',
-            index:'',
-
-        });
     }
 
     async addSection(bookid, sectionname){
@@ -186,5 +181,28 @@ export class MenuService {
         catch (e) {
             throw e;
         }
+    }
+
+
+
+
+    /*****************************************/
+    /**               READ                  **/
+    /*****************************************/
+
+    async getMyBooks(){
+        const identity = await this.scatterService.scatter.getIdentity({
+            accounts: [this.scatterService.selectedNetwork]
+        });
+        const account = identity.accounts[0];
+        return await this.scatterService.read({
+            table:'books',
+            limit:100,
+            rowsOnly:true,
+            key_type:'i64',
+            model: Book,
+            index_position:2,
+            index:format.encodeName(account.name, false)
+        });
     }
 }

@@ -10,11 +10,10 @@ import {
   KmealMenuBookUpdateColumn,
 } from '../generated/graphql';
 
-import { pluck } from "rxjs/operators";
 import { FormBuilder, Validators } from "@angular/forms";
 import { MatSnackBar } from "@angular/material";
 import { MenuService } from "../services/menu.service";
-
+import  { Book } from '../model/books';
 
 @Component({
   selector: "kmeal-nx-newgroup",
@@ -32,7 +31,7 @@ export class NewgroupComponent implements OnInit {
     section: [null, Validators.required]
   });
 
-  menubooks: any[] = []
+  menubooks: Book[] = []
 
   sections: kmb.MenuBookSectionsBymenuBookId[] = [];
 
@@ -49,7 +48,7 @@ export class NewgroupComponent implements OnInit {
   }
 
   private async loadBooks(){
-    this.menubooks = await this.menuService.readBooks();
+    this.menubooks = await this.menuService.getMyBooks();
   }
 
   dropMenubook(event: CdkDragDrop<kmb.KmealMenuBook[]>) {
