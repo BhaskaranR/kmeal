@@ -14,6 +14,8 @@ import { pluck, map } from "rxjs/operators";
 import { FormBuilder, Validators } from "@angular/forms";
 import { MatSnackBar } from "@angular/material";
 import { ScatterService } from "@kmeal-nx/scatter";
+import { MenuService } from "../services/menu.service";
+import { Section } from "../model/section";
 
 @Component({
   selector: "kmeal-nx-newsection",
@@ -22,6 +24,7 @@ import { ScatterService } from "@kmeal-nx/scatter";
 })
 export class NewsectionComponent {
   selectedMenuBook: kmb.KmealMenuBook;
+  sections:Section[] ;
 
   menuBookForm = this.fb.group({
     menubook: [null, Validators.required]
@@ -32,34 +35,16 @@ export class NewsectionComponent {
   });
 
   menubooks: kmb.KmealMenuBook[] = []
-
+  hasBooks:boolean = false;
   
-  constructor(private kmealMenuBookGQL: KmealMenuBookGQL,
-    private insertKmealMenuBookSectionGQL: InsertKmealMenuBookSectionGQL,
-    private deleteMenuSectionGQL: DeleteMenuSectionGQL,
-    private scatterService: ScatterService,
+  constructor(public menuService: MenuService,
     public snackBar: MatSnackBar,
     private fb: FormBuilder) {
   }
 
-  ngOnInit() {
-    const variables = {
-      "where": {
-        "restaurant_id": {
-          "_eq": this.scatterService.restaurant_id
-        }
-      }
-    };
-    this.kmealMenuBookGQL.watch(variables, {}).valueChanges.pipe(pluck('data', 'kmeal_menu_book'))
-      .subscribe((mg: kmb.KmealMenuBook[]) => {
-        if (!mg) {
-          return;
-        }
-        this.menubooks = mg
-        if (this.menubooks.length == 0) {
-          this.selectedMenuBook = this.menubooks[0];
-        }
-      });
+  async ngOnInit() {
+    this.menubooks = await this.menuService.getMyBooks();
+    console.log(this.menubooks);
   }
 
   dropSections(event: CdkDragDrop<kmb.KmealMenuBook[]>) {
@@ -82,10 +67,7 @@ export class NewsectionComponent {
         "update_columns": [KmealMenuBookSectionUpdateColumn.SortOrder]
       }
     }
-    this.insertKmealMenuBookSectionGQL.mutate(variables).pipe(pluck('data', 'insert_kmeal_menu_book_section', 'returning')).subscribe((ms:
-      insKmealMenuBookSection.InsertKmealMenuBookSection) => {
-      this.openSnackBar("updated", "");
-    });
+
   }
 
   onSectionsSubmit() {
@@ -112,31 +94,11 @@ export class NewsectionComponent {
         "update_columns": [KmealMenuBookSectionUpdateColumn.SectionName]
       }
     }
-    this.insertKmealMenuBookSectionGQL.mutate(variables).pipe(pluck('data', 'insert_kmeal_menu_book_section', 'returning')).subscribe((ms:
-      insKmealMenuBookSection.InsertKmealMenuBookSection) => {
-        this.selectedMenuBook.menuBookSectionsBymenuBookId.push(<any>ms[0])
-    }, (err) => {
-      this.openSnackBar("error in creating new section", '');
-    });
   }
 
 
   deleteMenuSection(ev) {
-    const variables: DeleteMenuSection.Variables = {
-      "where": {
-        "section_id": {
-          "_eq": ev.section_id
-        }
-      }
-    }
-    this.deleteMenuSectionGQL.mutate(variables).pipe(pluck('data', 'delete_kmeal_menu_book_section', 'returning')).subscribe((mb: string[]) => {
-      if (mb.length == 0) {
-        this.openSnackBar("not deleted, make sure you don't have menu items associated with this section", "");
-      }
-      const indx = this.selectedMenuBook.menuBookSectionsBymenuBookId.findIndex((s) => s.section_id == ev.section_id)
-      this.selectedMenuBook.menuBookSectionsBymenuBookId.splice(indx, 1);
-      this.openSnackBar("deleted", "");
-    })
+    
   }
 
 

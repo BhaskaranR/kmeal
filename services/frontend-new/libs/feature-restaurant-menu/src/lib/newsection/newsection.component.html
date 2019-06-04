@@ -8,20 +8,20 @@
                     </div>
                     <div class="row">
                         <div class="col">
-                          <mat-form-field class="full-width">
-                            <mat-label>Select menu book</mat-label>
-                            <mat-select [(value)]="selectedMenuBook">
-                              <mat-option *ngFor="let item of menubooks" [value]="item">
-                                {{ item.menu_book }}
-                              </mat-option>
-                            </mat-select>
-                          </mat-form-field>
+                            <mat-form-field class="full-width">
+                                <mat-label>Select menu book</mat-label>
+                                <mat-select [(value)]="selectedMenuBook">
+                                    <mat-option *ngFor="let item of menubooks" [value]="item">
+                                        {{ item.book_name }}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
                         </div>
-                      </div>
+                    </div>
                     <div class="row">
                         <div class="col">
                             <mat-form-field class="full-width">
-                                <input matInput placeholder="New section name"  required="true" formControlName="section">
+                                <input matInput placeholder="New section name" required="true" formControlName="section">
                             </mat-form-field>
                         </div>
                     </div>
@@ -47,5 +47,5 @@
             </div>
         </form>
     </div>
-    
+
 </div>

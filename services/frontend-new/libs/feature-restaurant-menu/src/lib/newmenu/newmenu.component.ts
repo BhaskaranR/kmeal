@@ -48,11 +48,8 @@ export class NewmenuComponent {
   });
 
   constructor(private fb: FormBuilder,
-    private insertKmealItemGQL: InsertKmealItemGQL,
-    private scatterService: ScatterService,
     public snackBar: MatSnackBar,
-    private menuService: MenuService,
-    private kmealMenuBookGQL: KmealMenuBookGQL) { }
+    private menuService: MenuService) { }
 
   get itemName() {
     return this.menuForm.get("itemName").value;
@@ -80,25 +77,10 @@ export class NewmenuComponent {
     return this.menuForm.get("cooking_time").value;
   }
 
+  sections:any;
   ngOnInit() {
-    /*
-    const variables = {
-      "where": {
-        "restaurant_id": {
-          "_eq": this.scatterService.restaurant_id
-        }
-      }
-    };
-    this.kmealMenuBookGQL.watch(variables, {}).valueChanges.pipe(pluck('data', 'kmeal_menu_book'))
-      .subscribe((mg: kmb.KmealMenuBook[]) => {
-        if (!mg) {
-          return;
-        }
-        this.menubooks = mg
-        if (this.menuDetails) {
-          this.setInitialDetails();
-        }
-      });*/
+    this.menubooks = this.menuService.getMyBooks() as any;
+    this.sections = this.menuService.getMySections();
   }
 
   setInitialDetails() {
