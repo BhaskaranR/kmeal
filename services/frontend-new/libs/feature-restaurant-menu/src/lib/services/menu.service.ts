@@ -17,9 +17,9 @@ export class MenuService {
             });
             const account = identity.accounts[0];
             const opts = { authorization: `${account.name}@${account.authority}` };
-            const resp = await this.scatterService.eos.transaction(['kmealadminio'], contracts => {
+            const resp = await this.scatterService.eos.transaction([this.scatterService.code], contracts => {
                 
-                const res = contracts['kmealadminio'].createbook(
+                const res = contracts[this.scatterService.code].createbook(
                     account.name,
                     bookname,
                     opts);
@@ -39,9 +39,9 @@ export class MenuService {
             });
             const account = identity.accounts[0];
             const opts = { authorization: `${account.name}@${account.authority}` };
-            const resp = await this.scatterService.eos.transaction(['kmealadminio'], contracts => {
+            const resp = await this.scatterService.eos.transaction([this.scatterService.code], contracts => {
                 
-                const res = contracts['kmealadminio'].addSections(
+                const res = contracts[this.scatterService.code].addSections(
                     bookid,
                     sectionname,
                     opts);
@@ -62,9 +62,9 @@ export class MenuService {
             });
             const account = identity.accounts[0];
             const opts = { authorization: `${account.name}@${account.authority}` };
-            const resp = await this.scatterService.eos.transaction(['kmealadminio'], contracts => {
+            const resp = await this.scatterService.eos.transaction([this.scatterService.code], contracts => {
                 
-                const res = contracts['kmealadminio'].addSections(
+                const res = contracts[this.scatterService.code].addSections(
                     acct,
                     itemname,
                     description,
@@ -90,9 +90,9 @@ export class MenuService {
             });
             const account = identity.accounts[0];
             const opts = { authorization: `${account.name}@${account.authority}` };
-            const resp = await this.scatterService.eos.transaction(['kmealadminio'], contracts => {
+            const resp = await this.scatterService.eos.transaction([this.scatterService.code], contracts => {
                 
-                const res = contracts['kmealadminio'].addtosection(
+                const res = contracts[this.scatterService.code].addtosection(
                     acct,
                     itemname,
                     description,
@@ -118,9 +118,9 @@ export class MenuService {
             });
             const account = identity.accounts[0];
             const opts = { authorization: `${account.name}@${account.authority}` };
-            const resp = await this.scatterService.eos.transaction(['kmealadminio'], contracts => {
+            const resp = await this.scatterService.eos.transaction([this.scatterService.code], contracts => {
                 
-                const res = contracts['kmealadminio'].delsec(
+                const res = contracts[this.scatterService.code].delsec(
                     bookid,
                     sectionid,
                     opts);
@@ -140,9 +140,9 @@ export class MenuService {
             });
             const account = identity.accounts[0];
             const opts = { authorization: `${account.name}@${account.authority}` };
-            const resp = await this.scatterService.eos.transaction(['kmealadminio'], contracts => {
+            const resp = await this.scatterService.eos.transaction([this.scatterService.code], contracts => {
                 
-                const res = contracts['kmealadminio'].edititem(
+                const res = contracts[this.scatterService.code].edititem(
                     itemId,
                     itemName,
                     description,
@@ -168,9 +168,9 @@ export class MenuService {
             });
             const account = identity.accounts[0];
             const opts = { authorization: `${account.name}@${account.authority}` };
-            const resp = await this.scatterService.eos.transaction(['kmealadminio'], contracts => {
+            const resp = await this.scatterService.eos.transaction([this.scatterService.code], contracts => {
                 
-                const res = contracts['kmealadminio'].removefromsec(
+                const res = contracts[this.scatterService.code].removefromsec(
                     bookId,
                     sectionId,
                     itemId,

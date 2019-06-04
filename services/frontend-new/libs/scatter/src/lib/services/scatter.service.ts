@@ -8,6 +8,7 @@ import * as Eos from 'eosjs';
 let scatter: ScatterJS;
 import { HttpClient } from '@angular/common/http';
 import { BigNumber } from 'bignumber.js';
+// import { scatter } from './ual-render';
 
 @Injectable()
 export class ScatterService {
@@ -22,8 +23,8 @@ export class ScatterService {
         console.log('initing scatter service');
     }
 
-    code : string = 'kmealadminio';
-
+    code  = 'kmealowner12';
+    coincode = 'kmealcoin1io';
     RETURN_TYPES : {
         ERROR: 0,
         SUCCESS: 1
@@ -98,7 +99,7 @@ export class ScatterService {
     };
 
     getScatter() {
-        return this.scatter;
+        return this.scatter !== void 0 ? this.scatter : ScatterJS.scatter;
     }
 
 
@@ -156,6 +157,7 @@ export class ScatterService {
 
             this.eos = scatter.eos(this.selectedNetwork, Eos);
             this.contract = await this.eos.contract(this.code, {requiredFields:{}});
+            console.log(this.getContract());
         }
         catch (e) {
             console.log(e);

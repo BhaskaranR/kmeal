@@ -51,7 +51,7 @@ export class ProfileComponent {
   addressForm = this.fb.group({
     name: [null, Validators.required],
     address: [{value:null, disabled:true}, Validators.required],
-    address2: null,
+    address2: "",
     city: [{value:null, disabled:true}, Validators.required],
     state: [{value:null, disabled:true}, Validators.required],
     postalCode: [{value:null, disabled:true}, Validators.compose([
@@ -161,15 +161,15 @@ export class ProfileComponent {
 
   onAddressChange(e) {
     console.log(e);
-    var value = e.formatted_address.split(",");
+    let value = e.formatted_address.split(",");
     const count = value.length;
     
     const country = value[count-1];
     const state = value[count-2];
     const city = value[count-3];
-    var z=state.split(" ");
+    let z=state.split(" ");
     //this.addressForm.get("country").setValue(country);
-    var i =z.length;
+    let i =z.length;
     this.addressForm.get("state").setValue(z[1]);
     if(i>2){
       this.addressForm.get("postalCode").setValue(z[2]);
@@ -231,7 +231,7 @@ export class ProfileComponent {
         this.openSnackBar("Invalid form", "");
         return;
       }
-      await this.acctService.signup(this.addressForm.value);
+      await this.acctService.signup(this.addressForm.getRawValue());
       this.openSnackBar("Profile updated", "");
     } catch (e) {
       this.openSnackBar(e, "");

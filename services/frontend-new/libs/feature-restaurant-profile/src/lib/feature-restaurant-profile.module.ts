@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProfileComponent } from './profile/profile.component';
 import { AccountService } from './services/account.service';
-import { ScatterModule } from '@kmeal-nx/scatter';
 import { Routes, RouterModule } from '@angular/router';
 import { MenuSidenavComponent } from './sidenav/sidenav.component';
 import { HomeComponent } from './home/home.component';
@@ -13,7 +12,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { PlacesSearchComponent } from './profile/places-search.component';
 import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
-
 
 export const profileRoutes: Routes = [
   {
@@ -31,7 +29,6 @@ export const profileRoutes: Routes = [
   imports: [
     GooglePlaceModule,
     CommonModule, 
-    ScatterModule,
     FlexLayoutModule,
     ReactiveFormsModule,
     MatGridListModule,
