@@ -16,16 +16,15 @@
                     </div>
                     <div class="row">
                         <div class="col">
-                            <button mat-raised-button color="primary" type="submit">Create New Menubook</button>
+                            <button mat-raised-button color="primary" [disabled]="menuBookForm.invalid" type="submit">Create New Menubook</button>
                         </div>
                     </div>
                 </div>
 
-                <div cdkDropList class="list" cdkSelection (cdkDropListDropped)="dropMenubook($event)">
+                <div cdkDropList class="list" cdkSelection>
                     <div class="box" *ngFor="let item of menubooks" cdkDrag>
-                        <a class="component-list-item" (click)="onSelectionChange(item)">
+                        <a class="component-list-item">
                             {{item.book_name}}
-
                         </a>
                         <div class="handle" cdkDragHandle>
                             <mat-icon>menu</mat-icon>
