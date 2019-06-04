@@ -1,16 +1,9 @@
 import { Component, Input } from "@angular/core";
 import { FormBuilder, Validators } from "@angular/forms";
-import {
-  KmealMenuBookGQL, KmealMenuBook as kmb, InsertKmealItemGQL,
-  InsertKmealItem as insKmealMenuItem,
-  ConflictAction,
-  KmealItemConstraint,
-  KmealItemUpdateColumn
-} from '../generated/graphql';
-import { pluck } from 'rxjs/operators';
 import { ScatterService } from "@kmeal-nx/scatter";
 import { MatSnackBar } from "@angular/material";
 import { MenuService } from "../services/menu.service";
+import { Book } from "../model/books";
 
 @Component({
   selector: "kmeal-nx-newmenu",
@@ -19,7 +12,7 @@ import { MenuService } from "../services/menu.service";
 })
 export class NewmenuComponent {
 
-  selectedMenuBook: kmb.KmealMenuBook;
+  selectedMenuBook: Book;
   formSubmitted = false;
 
   @Input() menuDetails: {
@@ -35,7 +28,7 @@ export class NewmenuComponent {
     section_id: number
   }
 
-  menubooks: kmb.KmealMenuBook[] = [];
+  menubooks: Book[] = [];
   menuForm = this.fb.group({
     itemName: [null, Validators.required],
     description: [null, Validators.required],
@@ -79,12 +72,10 @@ export class NewmenuComponent {
 
   sections:any;
   ngOnInit() {
-    this.menubooks = this.menuService.getMyBooks() as any;
-    this.sections = this.menuService.getMySections();
   }
 
   setInitialDetails() {
-    const mbs = this.menubooks.filter(mb => mb.menu_book_id == this.menuDetails.menuBookId)
+    const mbs = this.menubooks.filter(mb => mb.book_id == this.menuDetails.menuBookId)
     if (mbs && mbs.length !== 0){
       this.selectedMenuBook = mbs[0];
     }
@@ -108,41 +99,7 @@ export class NewmenuComponent {
       this.openSnackBar('ERROR creating menu ' +  e, "");
     }
     
-    /*
-    const newMenu = {
-      "cooking_time": this.menuForm.get("cooking_time").value,
-      "description": this.menuForm.get("description").value,
-      //item_id: ,
-      "item_name": this.menuForm.get("itemName").value,
-      "photo": this.menuForm.get("photo").value ==  null ? 'na':  this.menuForm.get("photo").value  ,
-      "restaurant_id": this.scatterService.restaurant_id,
-      "sort_order":  1,
-      "spicy_level": this.menuForm.get("spicy_level").value,
-      "vegetarian": this.menuForm.get("vegetarian").value,
-      "itemSectionsByitemId":  {
-        "data":[{
-          "section_id": this.menuForm.get("section_id").value
-        }]
-      }
-    };
-   
-    const variables: insKmealMenuItem.Variables = {
-      object:  [newMenu],
-      "on_conflict": {
-        "constraint": KmealItemConstraint.ItemPkey,
-        "update_columns": [
-          KmealItemUpdateColumn.ItemName
-        ]
-      }
-    }
-    this.insertKmealItemGQL.mutate(variables).pipe(pluck('data', 'insert_kmeal_item', 'returning')).subscribe((items: insKmealMenuItem.Returning[]) => {
-      if (items.length !== 0) {
-          this.formSubmitted = true;
-      }
-    }, (err) => {
-      this.openSnackBar("cannot create new item :" + err, '');
-    });
-    */
+    
   }
 
   deletemenu() {

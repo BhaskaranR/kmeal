@@ -54,6 +54,29 @@ export class MenuService {
         }
     }
 
+    async setSecOrder(bookid, sectionid, secOrder){
+        try {
+            const identity = await this.scatterService.scatter.getIdentity({
+                accounts: [this.scatterService.selectedNetwork]
+            });
+            const account = identity.accounts[0];
+            const opts = { authorization: `${account.name}@${account.authority}` };
+            const resp = await this.scatterService.eos.transaction([this.scatterService.code], contracts => {
+                
+                const res = contracts[this.scatterService.code].setsecorder(
+                    bookid,
+                    sectionid,
+                    secOrder,
+                    opts);
+                return res;
+            }, opts);
+            return resp;
+        }
+        catch (e) {
+            throw e;
+        }
+    }
+
 
     async createItem(acct, itemname, description, photo, spice_level, vegetarian, cooking_name, types){
         try {
@@ -207,17 +230,19 @@ export class MenuService {
         });
     }
 
+
+
     async getMySections(){
         const identity = await this.scatterService.scatter.getIdentity({
             accounts: [this.scatterService.selectedNetwork]
         });
         const account = identity.accounts[0];
         return await this.scatterService.read({
-            table:'sections',
+            table:'books',
             limit:100,
             rowsOnly:true,
             key_type:'i64',
-            model: Section,
+            model: Book,
             index_position:2,
             index:format.encodeName(account.name, false)
         });

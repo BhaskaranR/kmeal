@@ -10,17 +10,16 @@ import { Book }                    from "../model/books";
   styleUrls: ["./newgroup.component.scss"]
 })
 export class NewgroupComponent implements OnInit {
-
   menuBookForm = this.fb.group({
     menubook: [null, Validators.required]
   });
 
-  menubooks: Book[] = [];
-  canCreate: boolean = true;
+  menubooks: Book[] = []
 
-  constructor(private menuService: MenuService,
-              public  snackBar   : MatSnackBar,
-              private fb         : FormBuilder) {
+  constructor(
+    private menuService: MenuService,
+    public snackBar: MatSnackBar,
+    private fb: FormBuilder) {
   }
 
   async ngOnInit() {
@@ -36,7 +35,7 @@ export class NewgroupComponent implements OnInit {
 
     try {
      const resp = await this.menuService.createbook(this.menuBookForm.value.menubook);
-     console.log('resp ', resp);
+     console.log(resp, 'book');
      this.menubooks.push(this.menuBookForm.value.menubook);
      this.openSnackBar("menu book created", "");
     }
@@ -44,6 +43,12 @@ export class NewgroupComponent implements OnInit {
       this.openSnackBar("Error creating menu book :" + e, "");
     }
   }
+
+
+  deleteMenuGroup(ev) {
+
+  }
+
 
   private openSnackBar(message: string, action: string) {
     this.snackBar.open(message, action, {

@@ -1,21 +1,9 @@
 import { Component } from "@angular/core";
 import { CdkDragDrop, moveItemInArray, CdkDrag } from '@angular/cdk/drag-drop';
-import {
-  KmealMenuBookGQL, KmealMenuBook as kmb,
-  InsertKmealMenuBookSection as insKmealMenuBookSection,
-  InsertKmealMenuBookSectionGQL,
-  KmealMenuBookSectionConstraint,
-  KmealMenuBookSectionUpdateColumn,
-  DeleteMenuSection, 
-  DeleteMenuSectionGQL
-} from '../generated/graphql';
-
-import { pluck, map } from "rxjs/operators";
 import { FormBuilder, Validators } from "@angular/forms";
 import { MatSnackBar } from "@angular/material";
-import { ScatterService } from "@kmeal-nx/scatter";
 import { MenuService } from "../services/menu.service";
-import { Section } from "../model/section";
+import { Book } from "../model/books";
 
 @Component({
   selector: "kmeal-nx-newsection",
@@ -23,8 +11,7 @@ import { Section } from "../model/section";
   styleUrls: ["./newsection.component.scss"]
 })
 export class NewsectionComponent {
-  selectedMenuBook: kmb.KmealMenuBook;
-  sections:Section[] ;
+  selectedMenuBook: Book;
 
   menuBookForm = this.fb.group({
     menubook: [null, Validators.required]
@@ -34,43 +21,25 @@ export class NewsectionComponent {
     section: [null, Validators.required]
   });
 
-  menubooks: kmb.KmealMenuBook[] = []
-  hasBooks:boolean = false;
+  menubooks: Book[] = []
+
   
-  constructor(public menuService: MenuService,
+  constructor(
+    private menuService: MenuService,
     public snackBar: MatSnackBar,
     private fb: FormBuilder) {
   }
 
   async ngOnInit() {
     this.menubooks = await this.menuService.getMyBooks();
-    console.log(this.menubooks);
+    console.log('books ? ', this.menubooks);
   }
 
-  dropSections(event: CdkDragDrop<kmb.KmealMenuBook[]>) {
-    moveItemInArray(this.selectedMenuBook.menuBookSectionsBymenuBookId, event.previousIndex, event.currentIndex);
-
-    const objects = [];
-    for (let i = 0; i < this.selectedMenuBook.menuBookSectionsBymenuBookId.length; i++) {
-      objects.push({
-        section_id: this.selectedMenuBook.menuBookSectionsBymenuBookId[i].section_id,
-        section_name: this.selectedMenuBook.menuBookSectionsBymenuBookId[i].section_name,
-        menu_book_id: this.selectedMenuBook.menu_book_id,
-        sort_order: i
-      })
-    }
-
-    const variables: insKmealMenuBookSection.Variables = {
-      objects: objects,
-      "on_conflict": {
-        "constraint": KmealMenuBookSectionConstraint.MenuBookSectionPkey,
-        "update_columns": [KmealMenuBookSectionUpdateColumn.SortOrder]
-      }
-    }
-
+  dropSections(event: CdkDragDrop<Book[]>) {
+    console.log('changed order!');
   }
 
-  onSectionsSubmit() {
+ async onSectionsSubmit() {
     if (!this.menubooks || this.menubooks.length == 0) {
       this.openSnackBar("Create a menu book", "");
       return;
@@ -83,26 +52,26 @@ export class NewsectionComponent {
       this.openSnackBar("Enter menu sections", "");
       return;
     }
-    const variables: insKmealMenuBookSection.Variables = {
-      objects: [{
-        section_name: this.sectionsForm.value.section,
-        menu_book_id: this.selectedMenuBook.menu_book_id,
-        sort_order: this.selectedMenuBook.menuBookSectionsBymenuBookId.length + 1
-      }],
-      "on_conflict": {
-        "constraint": KmealMenuBookSectionConstraint.MenuBookSectionPkey,
-        "update_columns": [KmealMenuBookSectionUpdateColumn.SectionName]
-      }
+    try{
+      const resp = await this.menuService.addSection(this.menuBookForm.get('menubook').value,this.sectionsForm.get('section').value);
+    }
+    catch(e){
+      this.openSnackBar(e,'');
     }
   }
 
 
-  deleteMenuSection(ev) {
-    
+  async deleteMenuSection(ev) {
+    try{
+      const resp = await this.menuService.deleteSection(this.menuBookForm.get('menubook').value, ev);
+    }
+    catch(e) {
+      this.openSnackBar(e,'');
+    }
   }
 
 
-  openSnackBar(message: string, action: string) {
+  private openSnackBar(message: string, action: string) {
     this.snackBar.open(message, action, {
       duration: 2000,
     });
