@@ -10,7 +10,7 @@
                         <div class="col">
                             <mat-form-field class="full-width">
                                 <mat-label>Select menu book</mat-label>
-                                <mat-select [(value)]="selectedMenuBook">
+                                <mat-select [(value)]="selectedMenuBook" (selectionChange)="onBookChange($event)">
                                     <mat-option *ngFor="let item of menubooks" [value]="item">
                                         {{ item.book_name }}
                                     </mat-option>
@@ -21,19 +21,19 @@
                     <div class="row">
                         <div class="col">
                             <mat-form-field class="full-width">
-                                <input matInput placeholder="New section name" required="true" formControlName="section">
+                                <input matInput placeholder="New section name" formControlName="section">
                             </mat-form-field>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col">
-                            <button mat-raised-button color="primary" type="submit">Create New Section</button>
+                            <button mat-raised-button [disabled]="sectionsForm.invalid" color="primary" type="submit">Create New Section</button>
                         </div>
                     </div>
                 </div>
 
                 <div cdkDropList class="list" (cdkDropListDropped)="dropSections($event)">
-                    <div class="box" *ngFor="let item of selectedMenuBook?.menuBookSectionsBymenuBookId" cdkDrag>
+                    <div class="box" *ngFor="let item of sections" cdkDrag>
                         {{item.section_name}}
                         <div class="handle" cdkDragHandle>
                             <mat-icon>menu</mat-icon>

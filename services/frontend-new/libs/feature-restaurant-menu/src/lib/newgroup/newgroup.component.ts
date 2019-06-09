@@ -36,7 +36,7 @@ export class NewgroupComponent implements OnInit {
     try {
      const resp = await this.menuService.createbook(this.menuBookForm.value.menubook);
      console.log(resp, 'book');
-     this.menubooks.push(this.menuBookForm.value.menubook);
+     this.menubooks = await this.menuService.getMyBooks();
      this.openSnackBar("menu book created", "");
     }
     catch (e) {
@@ -45,8 +45,15 @@ export class NewgroupComponent implements OnInit {
   }
 
 
-  deleteMenuGroup(ev) {
-
+  async deleteMenuGroup(ev) {
+    try {
+      const resp = await this.menuService.deleteBook(ev);
+      console.log('deleted ', resp);
+      this.menubooks = await this.menuService.getMyBooks();
+    }
+    catch(e){
+      this.openSnackBar('Error deleteing book '+e,'');
+    }
   }
 
 

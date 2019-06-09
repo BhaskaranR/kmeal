@@ -1,132 +1,131 @@
 <mat-drawer-container class="drawer-container">
-  <mat-toolbar *ngIf="formSubmitted;else preview">
-    <button (click)="start2.toggle();formSubmitted = false;" mat-icon-button>
+    <mat-toolbar *ngIf="formSubmitted;else preview">
+        <button (click)="start2.toggle();formSubmitted = false;" mat-icon-button>
       <mat-icon>edit</mat-icon>
     </button>
-    <span class="fill-remaining"></span>
+        <span class="fill-remaining"></span>
 
-    <button (click)="deletemenu()" mat-icon-button>
+        <button (click)="deletemenu()" mat-icon-button>
       <mat-icon>delete</mat-icon>
     </button>
-  </mat-toolbar>
-  <ng-template #preview>
-    <mat-toolbar class="toolbar-preview">
-      <span>Preview</span>
     </mat-toolbar>
-  </ng-template>
-  <mat-drawer #start2 [opened]="!formSubmitted" mode="side">
-    <form [formGroup]="menuForm" novalidate (ngSubmit)="onSubmit()">
-      <mat-card class="menu-card">
-        <mat-card-header>
-          <mat-card-title>Create new Menu</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <div class="header-section">
-            <div class="header-headline">
-              <h2> Add new menu dish</h2>
-            </div>
-            <div class="row">
-              <div class="col">
-                <mat-form-field class="full-width">
-                  <input matInput placeholder="title" required="true" formControlName="itemName">
-                  <mat-error *ngIf="menuForm.controls['itemName'].hasError('required')">
-                    Title is <strong>required</strong>
-                  </mat-error>
-                </mat-form-field>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col">
-                <button mat-raised-button disabled color="primary" type="button">Add photo</button>
-              </div>
-            </div>
+    <ng-template #preview>
+        <mat-toolbar class="toolbar-preview">
+            <span>Preview</span>
+        </mat-toolbar>
+    </ng-template>
+    <mat-drawer #start2 [opened]="!formSubmitted" mode="side">
+        <form [formGroup]="menuForm" novalidate (ngSubmit)="onSubmit()">
+            <mat-card class="menu-card">
+                <mat-card-header>
+                    <mat-card-title>Create new Menu</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <div class="header-section">
+                        <div class="header-headline">
+                            <h2> Add new menu dish</h2>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <mat-form-field class="full-width">
+                                    <input matInput placeholder="title" required="true" formControlName="itemName">
+                                    <mat-error *ngIf="menuForm.controls['itemName'].hasError('required')">
+                                        Title is <strong>required</strong>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <button mat-raised-button disabled color="primary" type="button">Add photo</button>
+                            </div>
+                        </div>
 
-          </div>
-          <div class="header-section">
-            <div class="header-headline">
-              <h2> Add menu to the cookbook</h2>
-            </div>
-            <div class="row">
-              <div class="col">
-                <mat-form-field class="full-width">
-                  <mat-label>Select menu book</mat-label>
+                    </div>
+                    <div class="header-section">
+                        <div class="header-headline">
+                            <h2> Add menu to the cookbook</h2>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <mat-form-field class="full-width">
+                                    <mat-label>Select menu book</mat-label>
 
-                  <mat-select [(value)]="selectedMenuBook"   formControlName="book_id">
-                    <mat-option *ngFor="let item of menubooks" [value]="item">
-                      {{ item.menu_book }}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col">
-                <mat-form-field class="full-width">
-                  <mat-label>Select section</mat-label>
-                  <mat-select formControlName="section_id" matNativeControl >
-                    <mat-option *ngFor="let item of selectedMenuBook?.menuBookSectionsBymenuBookId" [value]="item.section_id">
-                      {{ item.section_name }}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </div>
-            </div>
+                                    <mat-select [(value)]="selectedMenuBook" formControlName="book_id">
+                                        <mat-option *ngFor="let item of menubooks" [value]="item">
+                                            {{ item.book_name }}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <mat-form-field class="full-width">
+                                    <mat-label>Select section</mat-label>
+                                    <mat-select formControlName="section_id" matNativeControl>
+                                        <mat-option *ngFor="let item of selectedMenuBook?.menuBookSectionsBymenuBookId" [value]="item.section_id">
+                                            {{ item.section_name }}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
 
-          </div>
-          <div class="header-section">
-            <div class="header-headline">
-              <h2> Add information about the dish</h2>
-            </div>
-            <div class="row">
-              <div class="col">
-                <mat-form-field class="full-width">
-                  <textarea required="true" matInput placeholder="description" formControlName="description"></textarea>
-                  <mat-error *ngIf="menuForm.controls['description'].hasError('required')">
-                    Description is <strong>required</strong>
-                  </mat-error>
-                </mat-form-field>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col">
-                <mat-label>Spice level</mat-label>
-                <br>
-                <mat-slider [min]="0" [max]="3"  [tickInterval]="1"  class="full-width" color="warn" value="0"
-                  formControlName="spicy_level" thumbLabel aria-label="spiceness level">
-                </mat-slider>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col">
-                <mat-label>Type</mat-label>
-                <br>
-                <br>
-                <mat-radio-group formControlName="vegetarian">
-                  <mat-radio-button value="1">Vegan</mat-radio-button>
-                  <mat-radio-button value="2">Vegetarian</mat-radio-button>
-                  <mat-radio-button value="3">Other</mat-radio-button>
-                </mat-radio-group>
-              </div>
-            </div>
-          </div>
-        </mat-card-content>
-        <mat-card-actions>
-          <button mat-raised-button color="primary" type="submit">Submit</button>
-        </mat-card-actions>
-      </mat-card>
-    </form>
-  </mat-drawer>
+                    </div>
+                    <div class="header-section">
+                        <div class="header-headline">
+                            <h2> Add information about the dish</h2>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <mat-form-field class="full-width">
+                                    <textarea required="true" matInput placeholder="description" formControlName="description"></textarea>
+                                    <mat-error *ngIf="menuForm.controls['description'].hasError('required')">
+                                        Description is <strong>required</strong>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <mat-label>Spice level</mat-label>
+                                <br>
+                                <mat-slider [min]="0" [max]="3" [tickInterval]="1" class="full-width" color="warn" value="0" formControlName="spicy_level" thumbLabel aria-label="spiceness level">
+                                </mat-slider>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <mat-label>Type</mat-label>
+                                <br>
+                                <br>
+                                <mat-radio-group formControlName="vegetarian">
+                                    <mat-radio-button value="1">Vegan</mat-radio-button>
+                                    <mat-radio-button value="2">Vegetarian</mat-radio-button>
+                                    <mat-radio-button value="3">Other</mat-radio-button>
+                                </mat-radio-group>
+                            </div>
+                        </div>
+                    </div>
+                </mat-card-content>
+                <mat-card-actions>
+                    <button mat-raised-button color="primary" type="submit">Submit</button>
+                </mat-card-actions>
+            </mat-card>
+        </form>
+    </mat-drawer>
 
-  <div class="drawer-content">
-    <mat-card class="mat-card-flat drawer-content-mat-card">
-      <mat-card-title-group>
-        <mat-card-title>{{itemName}}</mat-card-title>
-        <mat-card-subtitle>
-            {{description}}
-        </mat-card-subtitle>
-        <mat-card-subtitle> {{spicyLevel}} {{vegetarian}}</mat-card-subtitle>
-        <img mat-card-lg-image>
-      </mat-card-title-group>
-    </mat-card>
-  </div>
+    <div class="drawer-content">
+        <mat-card class="mat-card-flat drawer-content-mat-card">
+            <mat-card-title-group>
+                <mat-card-title>{{itemName}}</mat-card-title>
+                <mat-card-subtitle>
+                    {{description}}
+                </mat-card-subtitle>
+                <mat-card-subtitle> {{spicyLevel}} {{vegetarian}}</mat-card-subtitle>
+                <img mat-card-lg-image>
+            </mat-card-title-group>
+        </mat-card>
+    </div>
 </mat-drawer-container>

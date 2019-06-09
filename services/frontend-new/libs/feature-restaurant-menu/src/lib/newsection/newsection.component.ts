@@ -13,15 +13,12 @@ import { Book } from "../model/books";
 export class NewsectionComponent {
   selectedMenuBook: Book;
 
-  menuBookForm = this.fb.group({
-    menubook: [null, Validators.required]
-  });
-
   sectionsForm = this.fb.group({
     section: [null, Validators.required]
   });
 
-  menubooks: Book[] = []
+  menubooks: Book[] = [];
+  sections: any[];
 
   
   constructor(
@@ -32,7 +29,6 @@ export class NewsectionComponent {
 
   async ngOnInit() {
     this.menubooks = await this.menuService.getMyBooks();
-    console.log('books ? ', this.menubooks);
   }
 
   dropSections(event: CdkDragDrop<Book[]>) {
@@ -53,17 +49,27 @@ export class NewsectionComponent {
       return;
     }
     try{
-      const resp = await this.menuService.addSection(this.menuBookForm.get('menubook').value,this.sectionsForm.get('section').value);
+      console.log(this.selectedMenuBook);
+     const resp = await this.menuService.addSection(this.selectedMenuBook.book_id,this.sectionsForm.get('section').value);
+     console.log('created section : ', resp); 
+     this.sections = await this.menuService.getMySections(this.selectedMenuBook.book_id);
     }
     catch(e){
       this.openSnackBar(e,'');
     }
   }
 
+  async onBookChange(evt){
+    console.log(evt);
+    this.sections = await this.menuService.getMySections(evt.value.book_id);
+    console.log('sections ? ', this.sections);
+  }
+
 
   async deleteMenuSection(ev) {
     try{
-      const resp = await this.menuService.deleteSection(this.menuBookForm.get('menubook').value, ev);
+      console.log(ev);
+      //const resp = await this.menuService.deleteSection(this.menuBookForm.get('menubook').value, ev);
     }
     catch(e) {
       this.openSnackBar(e,'');

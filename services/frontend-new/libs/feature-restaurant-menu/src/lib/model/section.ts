@@ -1,7 +1,7 @@
 export class Section {
-    book_id: number;
-    section_id: string;
-    section_name:string
+    section_id: number;
+    section_name:string;
+    is_active:boolean;
 
     static fromJson(json){ return Object.assign(Section.placeholder(), json); }
     static placeholder(){ return new Section(); }

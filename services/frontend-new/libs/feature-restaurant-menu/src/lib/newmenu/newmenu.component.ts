@@ -71,7 +71,8 @@ export class NewmenuComponent {
   }
 
   sections:any;
-  ngOnInit() {
+  async ngOnInit() {
+    this.menubooks = await this.menuService.getMyBooks();
   }
 
   setInitialDetails() {
@@ -88,13 +89,21 @@ export class NewmenuComponent {
     this.menuForm.get("section_id").setValue(this.menuDetails.section_id);
   }
 
-  onSubmit() {
+  async onSubmit() {
     if (!this.menuForm.valid) {
       return;
     }
 
     try{
-      //const res = await this.menuService.createItem(this.menuForm.get())
+      const resp = await this.menuService.createItem(
+        this.menuForm.get('itemName').value, 
+        this.menuForm.get('description').value, 
+        this.menuForm.get('photo').value, 
+        this.menuForm.get('spicy_level').value,
+        this.menuForm.get('vegetarian').value,
+        this.menuForm.get('cooking_time'),
+        '');
+      console.log('created ', resp)
     }catch(e){
       this.openSnackBar('ERROR creating menu ' +  e, "");
     }

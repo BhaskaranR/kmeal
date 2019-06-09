@@ -51,8 +51,8 @@ $margin-promotion-sections: 15px;
     min-width: 120px;
 }
 
-.mat-drawer-content {
-    height: calc(100vh -65px);
+.drawer-container {
+    height: calc(100vh - 65px);
 }
 
 .drawer-content-mat-card {

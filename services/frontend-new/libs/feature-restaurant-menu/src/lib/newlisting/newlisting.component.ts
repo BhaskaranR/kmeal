@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, Validators, FormArray, FormGroup, AbstractControl, FormControl } from '@angular/forms';
 import { MatStepper, MatButtonToggleChange, MatSnackBar } from '@angular/material';
 import { Book } from '../model/books';
+import { MenuService } from '../services/menu.service';
 
 @Component({
   selector: 'kmeal-nx-newlisting',
@@ -130,6 +131,7 @@ export class NewlistingComponent implements OnInit {
 
 
   constructor(private fb: FormBuilder,
+    public menuSevice:MenuService,
     public snackBar: MatSnackBar) {
     // this.filteredStates = this.stateCtrl.valueChanges
     // .pipe(
@@ -138,18 +140,14 @@ export class NewlistingComponent implements OnInit {
     // );
   }
 
-  //  private _filterStates(value: string) {
-  //   const filterValue = value.toLowerCase();
 
-  //   return this.states.filter(state => state.name.toLowerCase().indexOf(filterValue) === 0);
-  // }
 
   formatLabel(value: number | null) {
     return value + "%";
   }
 
-  ngOnInit() {
-    
+  async ngOnInit() {
+    this.menubooks = await this.menuSevice.getMyBooks();
   }
 
   listItemSelected(id: number) {
@@ -186,7 +184,7 @@ export class NewlistingComponent implements OnInit {
    
   }
 
-  openSnackBar(message: string, action: string) {
+  private openSnackBar(message: string, action: string) {
     this.snackBar.open(message, action, {
       duration: 2000,
     });

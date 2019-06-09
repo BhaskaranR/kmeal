@@ -32,7 +32,7 @@ export class MenuService {
         }
     }
 
-    async addSection(bookid, sectionname){
+    async deleteBook(bookId: string) {
         try {
             const identity = await this.scatterService.scatter.getIdentity({
                 accounts: [this.scatterService.selectedNetwork]
@@ -41,7 +41,27 @@ export class MenuService {
             const opts = { authorization: `${account.name}@${account.authority}` };
             const resp = await this.scatterService.eos.transaction([this.scatterService.code], contracts => {
                 
-                const res = contracts[this.scatterService.code].addSections(
+                const res = contracts[this.scatterService.code].delbook(
+                    bookId,
+                    opts);
+                return res;
+            }, opts);
+            return resp;
+        }
+        catch (e) {
+            throw e;
+        }
+    }
+
+    async addSection(bookid, sectionname){
+        try {
+            const identity = await this.scatterService.scatter.getIdentity({
+                accounts: [this.scatterService.selectedNetwork]
+            });
+            const account = identity.accounts[0];
+            const opts = { authorization: `${account.name}@${account.authority}` };
+            const resp = await this.scatterService.eos.transaction([this.scatterService.code], contracts => {
+                const res = contracts[this.scatterService.code].addsections(
                     bookid,
                     sectionname,
                     opts);
@@ -78,7 +98,14 @@ export class MenuService {
     }
 
 
-    async createItem(acct, itemname, description, photo, spice_level, vegetarian, cooking_name, types){
+    async createItem(
+        itemname, 
+        description, 
+        photo, 
+        spice_level, 
+        vegetarian, 
+        cooking_time, 
+        types){
         try {
             const identity = await this.scatterService.scatter.getIdentity({
                 accounts: [this.scatterService.selectedNetwork]
@@ -88,13 +115,13 @@ export class MenuService {
             const resp = await this.scatterService.eos.transaction([this.scatterService.code], contracts => {
                 
                 const res = contracts[this.scatterService.code].addSections(
-                    acct,
+                    account.name,
                     itemname,
                     description,
                     photo,
                     spice_level,
                     vegetarian,
-                    cooking_name,
+                    cooking_time,
                     types,
                     opts);
                 return res;
@@ -232,17 +259,17 @@ export class MenuService {
 
 
 
-    async getMySections(){
+    async getMySections(bookId){
         const identity = await this.scatterService.scatter.getIdentity({
             accounts: [this.scatterService.selectedNetwork]
         });
         const account = identity.accounts[0];
         return await this.scatterService.read({
-            table:'books',
+            table:'sections',
             limit:100,
             rowsOnly:true,
             key_type:'i64',
-            model: Book,
+           // model: Section,
             index_position:2,
             index:format.encodeName(account.name, false)
         });
