@@ -101,8 +101,8 @@ export class MenuService {
     async createItem(
         itemname, 
         description, 
-        photo, 
-        spice_level, 
+        photo = '', 
+        spice_level = 0, 
         vegetarian, 
         cooking_time, 
         types){
@@ -114,7 +114,7 @@ export class MenuService {
             const opts = { authorization: `${account.name}@${account.authority}` };
             const resp = await this.scatterService.eos.transaction([this.scatterService.code], contracts => {
                 
-                const res = contracts[this.scatterService.code].addSections(
+                const res = contracts[this.scatterService.code].createitem(
                     account.name,
                     itemname,
                     description,
@@ -129,6 +129,7 @@ export class MenuService {
             return resp;
         }
         catch (e) {
+            console.log(e);
             throw e;
         }
     }
@@ -259,17 +260,17 @@ export class MenuService {
 
 
 
-    async getMySections(bookId){
+    async getMySections(){
         const identity = await this.scatterService.scatter.getIdentity({
             accounts: [this.scatterService.selectedNetwork]
         });
         const account = identity.accounts[0];
         return await this.scatterService.read({
-            table:'sections',
+            table:'sec',
             limit:100,
             rowsOnly:true,
             key_type:'i64',
-           // model: Section,
+            model: Section,
             index_position:2,
             index:format.encodeName(account.name, false)
         });

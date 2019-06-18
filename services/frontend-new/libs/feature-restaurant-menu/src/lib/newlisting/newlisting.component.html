@@ -15,9 +15,6 @@
                                         {{ item.book_name }}
                                     </mat-option>
                                 </mat-select>
-                                <!-- <mat-error *ngIf="formArray?.get([0]).controls['book_id'].hasError('required')">
-                  menu book is <strong>required</strong>
-                </mat-error> -->
                             </mat-form-field>
                         </div>
                     </div>
@@ -26,7 +23,7 @@
                             <mat-form-field class="full-width">
                                 <mat-label>Select section</mat-label>
                                 <mat-select formControlName="section_id" [(value)]="selectedSection" (selectionChange)="stepper.next()">
-                                    <mat-option *ngFor="let item of selectedMenuBook?.menuBookSectionsBymenuBookId" [value]="item">
+                                    <mat-option *ngFor="let item of selectedSections" [value]="item">
                                         {{ item.section_name }}
                                     </mat-option>
                                 </mat-select>
@@ -46,9 +43,9 @@
                 <mat-card-content>
                     <mat-action-list dense class="full-width">
                         <button mat-list-item *ngFor="let item of selectedSection?.itemSectionsBysectionId" (click)="listItemSelected(item.itemByitemId.item_id)">
-              <h4 mat-line>{{item.itemByitemId.item_name}}</h4>
-              <p mat-line class="secondary-text"> {{item.itemByitemId.description}} </p>
-            </button>
+                            <h4 mat-line>{{item.itemByitemId.item_name}}</h4>
+                            <p mat-line class="secondary-text"> {{item.itemByitemId.description}} </p>
+                        </button>
                     </mat-action-list>
                 </mat-card-content>
             </mat-card>

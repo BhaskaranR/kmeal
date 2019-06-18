@@ -22,7 +22,7 @@ import { MenuSidenavComponent } from './sidenav/sidenav.component';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { NewsectionComponent } from './newsection/newsection.component';
 import { MenuService } from './services/menu.service';
-
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 
 export const restaurantMenuRoutes: Routes = [
@@ -39,10 +39,12 @@ export const restaurantMenuRoutes: Routes = [
 ]
 
 @NgModule({
-  imports: [CommonModule, MatInputModule, MatButtonModule, MatSelectModule, MatRadioModule,
+  imports: [
+    CommonModule, MatInputModule, MatButtonModule, MatSelectModule, MatRadioModule,
     //MatChipsModule,
     MatAutocompleteModule,
     NgxMaterialTimepickerModule.forRoot(),
+    MatProgressSpinnerModule,
     MatSliderModule,
     MatNativeDateModule,
     MatSlideToggleModule,

@@ -146,8 +146,12 @@ export class NewlistingComponent implements OnInit {
     return value + "%";
   }
 
+  sections:any;
+  selectedSections;
   async ngOnInit() {
     this.menubooks = await this.menuSevice.getMyBooks();
+    this.sections = await this.menuSevice.getMySections();
+    this.selectedSections = this.sections.filter(sec => !!sec.is_active);
   }
 
   listItemSelected(id: number) {
