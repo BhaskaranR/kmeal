@@ -1,8 +1,0 @@
-mutation delete_menu_section($where: kmeal_menu_book_section_bool_exp!) {
-  delete_kmeal_menu_book_section(where: $where) {
-    returning {
-      section_id
-      section_name
-    }
-  }
-}

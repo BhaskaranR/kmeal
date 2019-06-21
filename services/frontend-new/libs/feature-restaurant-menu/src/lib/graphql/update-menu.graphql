@@ -1,8 +1,0 @@
- mutation update_kmeal_item($where: kmeal_item_bool_exp!, $_set: kmeal_item_set_input, $_inc: kmeal_item_inc_input) {
-  update_kmeal_item(where: $where, _set: $_set, _inc: $_inc) {
-    affected_rows
-    returning {
-        item_id
-    }
-  }
-}

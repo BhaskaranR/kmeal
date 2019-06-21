@@ -1,8 +1,0 @@
-mutation insert_kmeal_item($object: [kmeal_item_insert_input!]!, $on_conflict: kmeal_item_on_conflict) {
-  insert_kmeal_item(objects: $object, on_conflict : $on_conflict) {
-    affected_rows
-    returning {
-      item_id
-    }
-  }
-}

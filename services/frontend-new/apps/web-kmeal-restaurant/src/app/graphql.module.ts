@@ -10,7 +10,10 @@ import { onError } from "apollo-link-error";
 import { SubscriptionClient } from "subscriptions-transport-ws";
 import { WebSocketLink } from "apollo-link-ws";
 import { HttpHeaders } from "@angular/common/http";
-import { environment } from "../environments/environment";
+import { createDfuseClient } from "@dfuse/client";
+import { environment } from '../environments/environment';
+
+
 
 @NgModule({
   declarations: [],
@@ -19,14 +22,20 @@ import { environment } from "../environments/environment";
   providers: []
 })
 export class ApiModule {
-  constructor(apollo: Apollo, httpLink: HttpLink) {
-    const WS_URI = environment.ws_api_entry;
+  constructor(apollo: Apollo) {
+    const dfuseClient = createDfuseClient({
+      // tslint:disable-next-line: no-non-null-assertion
+        apiKey: environment.DFUSE_API_KEY,
+        network: "kylin",
+      });
 
-    const wsClient = new SubscriptionClient(WS_URI, {
+      
+    const wsClient = new SubscriptionClient(dfuseClient.endpoints.graphqlStreamUrl, {
       lazy: true,
-      connectionParams: () => {
+      connectionParams: async () => {
+        const apiToken = await dfuseClient.getTokenInfo();
         return {
-          "x-hasura-access-key": `baba`
+          Authorization:`Bearer ${apiToken.token}`,
         };
       },
       reconnect: true,
@@ -52,26 +61,13 @@ export class ApiModule {
           console.log(`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`)
         );
       }
-
       if (networkError) {
         console.log(`[Network error]: ${networkError}`);
       }
     });
-
-    const middleware = new ApolloLink((operation, forward) => {
-      operation.setContext({
-        headers: new HttpHeaders().set("x-hasura-access-key", "baba")
-      });
-
-      return forward(operation);
-    });
-
-    const link = httpLink.create({
-      uri: environment.api_entry
-    });
-
+ 
     apollo.create({
-      link: from([middleware, networkLink, errorLink, link]),
+      link: from([ networkLink, errorLink]),
       cache: new InMemoryCache()
     });
   }

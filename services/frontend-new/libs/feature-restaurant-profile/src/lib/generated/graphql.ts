@@ -6074,6 +6074,14 @@ export interface TopologyTopologyArrRelInsertInput {
 
   on_conflict?: TopologyTopologyOnConflict | null;
 }
+
+export enum Comparator {
+  Eq = "EQ",
+  Gt = "GT",
+  Gte = "GTE",
+  Lt = "LT",
+  Lte = "LTE"
+}
 /** select columns of table "geography_columns" */
 export enum GeographyColumnsSelectColumn {
   CoordDimension = "coord_dimension",
@@ -6335,6 +6343,73 @@ export enum RasterOverviewsSelectColumn {
   RTableCatalog = "r_table_catalog",
   RTableName = "r_table_name",
   RTableSchema = "r_table_schema"
+}
+/** Use this to rebuild the execution tree, using the `nodeos` dispatch algorithm ofnotifications, actions and context-free actions.This is similar to what you would have gotten in `nodeos` prior to version 1.8.0. */
+export enum ActionSortOrder {
+  Creation = "CREATION",
+  Execution = "EXECUTION"
+}
+/** New paying account.  This is null in the case of a deletion. */
+export enum Uint64Encoding {
+  Decimal = "DECIMAL",
+  Hexadecimal = "HEXADECIMAL",
+  Name = "NAME",
+  Symbol = "SYMBOL",
+  SymbolCode = "SYMBOL_CODE"
+}
+/** New paying account.  This is null in the case of a deletion. */
+export enum DbOperation {
+  Ins = "INS",
+  Rem = "REM",
+  Upd = "UPD"
+}
+/** The deferred transaction payload itself. */
+export enum DtrxOperation {
+  Cancel = "CANCEL",
+  Create = "CREATE",
+  ModifyCancel = "MODIFY_CANCEL",
+  ModifyCreate = "MODIFY_CREATE",
+  PushCreate = "PUSH_CREATE"
+}
+/** Number of bytes now used by the `payer` account, after applying this RAM operation.To have a precise view of the RAM left on an account after this transaction wasapplied, go through all actions in execution order(`TransactionTrace.executedActions`) and use the last RAMOp for the given account. */
+export enum RamOperation {
+  CreateTable = "CREATE_TABLE",
+  DeferredTrxAdd = "DEFERRED_TRX_ADD",
+  DeferredTrxCancel = "DEFERRED_TRX_CANCEL",
+  DeferredTrxPushed = "DEFERRED_TRX_PUSHED",
+  DeferredTrxRemoved = "DEFERRED_TRX_REMOVED",
+  Deleteauth = "DELETEAUTH",
+  Linkauth = "LINKAUTH",
+  Newaccount = "NEWACCOUNT",
+  PrimaryIndexAdd = "PRIMARY_INDEX_ADD",
+  PrimaryIndexRemove = "PRIMARY_INDEX_REMOVE",
+  PrimaryIndexUpdate = "PRIMARY_INDEX_UPDATE",
+  PrimaryIndexUpdateAddNewPayer = "PRIMARY_INDEX_UPDATE_ADD_NEW_PAYER",
+  PrimaryIndexUpdateRemoveOldPayer = "PRIMARY_INDEX_UPDATE_REMOVE_OLD_PAYER",
+  RemoveTable = "REMOVE_TABLE",
+  SecondaryIndexAdd = "SECONDARY_INDEX_ADD",
+  SecondaryIndexRemove = "SECONDARY_INDEX_REMOVE",
+  SecondaryIndexUpdateAddNewPayer = "SECONDARY_INDEX_UPDATE_ADD_NEW_PAYER",
+  SecondaryIndexUpdateRemoveOldPayer = "SECONDARY_INDEX_UPDATE_REMOVE_OLD_PAYER",
+  Setabi = "SETABI",
+  Setcode = "SETCODE",
+  Unlinkauth = "UNLINKAUTH",
+  UpdateauthCreate = "UPDATEAUTH_CREATE",
+  UpdateauthUpdate = "UPDATEAUTH_UPDATE"
+}
+/** Creation or deletion of a table */
+export enum TableOperation {
+  Ins = "INS",
+  Rem = "REM"
+}
+/** New paying account.  This is null in the case of a deletion. */
+export enum TransactionStatus {
+  Delayed = "DELAYED",
+  Executed = "EXECUTED",
+  Expired = "EXPIRED",
+  HardFail = "HARD_FAIL",
+  SoftFail = "SOFT_FAIL",
+  Unknown = "UNKNOWN"
 }
 /** select columns of table "spatial_ref_sys" */
 export enum SpatialRefSysSelectColumn {
@@ -6637,6 +6712,12 @@ export enum ConflictAction {
   Update = "update"
 }
 
+/** Block number in the chain */
+export type Time = any;
+
+/** Block number in the chain */
+export type Uint32 = any;
+
 export type Name = any;
 
 export type Bigint = any;
@@ -6660,3 +6741,12 @@ export type _Float8 = any;
 export type _Bool = any;
 
 export type _Text = any;
+
+/** Block number in the chain */
+export type Int64 = any;
+
+/** Block number in the chain */
+export type Json = any;
+
+/** Block number in the chain */
+export type Uint64 = any;

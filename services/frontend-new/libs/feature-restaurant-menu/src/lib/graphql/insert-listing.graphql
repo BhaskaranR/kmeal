@@ -1,7 +1,0 @@
-mutation insert_kmeal_listing($objects: [kmeal_listing_insert_input!]!, $on_conflict: kmeal_listing_on_conflict) {
-  insert_kmeal_listing (objects:$objects, on_conflict: $on_conflict) { 
-    returning {
-      listing_id
-    }
-  }
-}

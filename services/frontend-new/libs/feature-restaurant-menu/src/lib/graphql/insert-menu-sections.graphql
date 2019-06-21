@@ -1,8 +1,0 @@
-mutation insert_kmeal_menu_book_section($objects: [kmeal_menu_book_section_insert_input!]!, $on_conflict: kmeal_menu_book_section_on_conflict) {
-  insert_kmeal_menu_book_section(objects: $objects, on_conflict: $on_conflict) {
-    returning {
-      section_id
-      section_name
-    }
-  }
-}

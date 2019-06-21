@@ -23,12 +23,12 @@
                 <mat-card-content>
                     <div class="header-section">
                         <div class="header-headline">
-                            <h2> Add new menu dish</h2>
+                            <h2> Add a new dish</h2>
                         </div>
                         <div class="row">
                             <div class="col">
                                 <mat-form-field class="full-width">
-                                    <input matInput placeholder="title" required="true" formControlName="itemName">
+                                    <input matInput placeholder="Title" required="true" formControlName="itemName">
                                     <mat-error *ngIf="menuForm.controls['itemName'].hasError('required')">
                                         Title is <strong>required</strong>
                                     </mat-error>
@@ -44,15 +44,15 @@
                     </div>
                     <div class="header-section">
                         <div class="header-headline">
-                            <h2> Add menu to the cookbook</h2>
+                            <h2> Which menu and section?</h2>
                         </div>
                         <div class="row">
                             <div class="col">
                                 <mat-form-field class="full-width">
                                     <mat-label>Select menu book</mat-label>
 
-                                    <mat-select [(value)]="selectedMenuBook" formControlName="book_id">
-                                        <mat-option *ngFor="let item of menubooks" [value]="item">
+                                    <mat-select [(value)]="selectedMenuBook" formControlName="book_id" (selectionChange)="onChanegMenuBook($event)">
+                                        <mat-option *ngFor="let item of menubooks" [value]="item.book_id">
                                             {{ item.book_name }}
                                         </mat-option>
                                     </mat-select>
@@ -64,7 +64,7 @@
                                 <mat-form-field class="full-width">
                                     <mat-label>Select section</mat-label>
                                     <mat-select formControlName="section_id" matNativeControl>
-                                        <mat-option *ngFor="let item of selectedMenuBook?.menuBookSectionsBymenuBookId" [value]="item.section_id">
+                                        <mat-option *ngFor="let item of selectedSections" [value]="item.section_id">
                                             {{ item.section_name }}
                                         </mat-option>
                                     </mat-select>
@@ -75,7 +75,7 @@
                     </div>
                     <div class="header-section">
                         <div class="header-headline">
-                            <h2> Add information about the dish</h2>
+                            <h2> Add detail information</h2>
                         </div>
                         <div class="row">
                             <div class="col">
@@ -97,6 +97,15 @@
                         </div>
                         <div class="row">
                             <div class="col">
+                                <mat-form-field class="full-width">
+                                    <mat-label>Cooking Time</mat-label>
+                                    <input type="number" matInput placeholder="Minutes" required="true" formControlName="cooking_time">
+                                    <mat-hint align="end">in Minutes</mat-hint>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
                                 <mat-label>Type</mat-label>
                                 <br>
                                 <br>
@@ -110,7 +119,7 @@
                     </div>
                 </mat-card-content>
                 <mat-card-actions>
-                    <button mat-raised-button color="primary" type="submit">Submit</button>
+                    <button mat-raised-button color="primary" [disabled]="menuForm.invalid" type="submit">Submit</button>
                 </mat-card-actions>
             </mat-card>
         </form>

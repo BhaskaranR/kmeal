@@ -6074,6 +6074,14 @@ export interface TopologyTopologyArrRelInsertInput {
 
   on_conflict?: TopologyTopologyOnConflict | null;
 }
+
+export enum Comparator {
+  Eq = "EQ",
+  Gt = "GT",
+  Gte = "GTE",
+  Lt = "LT",
+  Lte = "LTE"
+}
 /** select columns of table "geography_columns" */
 export enum GeographyColumnsSelectColumn {
   CoordDimension = "coord_dimension",
@@ -6335,6 +6343,73 @@ export enum RasterOverviewsSelectColumn {
   RTableCatalog = "r_table_catalog",
   RTableName = "r_table_name",
   RTableSchema = "r_table_schema"
+}
+/** Use this to rebuild the execution tree, using the `nodeos` dispatch algorithm ofnotifications, actions and context-free actions.This is similar to what you would have gotten in `nodeos` prior to version 1.8.0. */
+export enum ActionSortOrder {
+  Creation = "CREATION",
+  Execution = "EXECUTION"
+}
+/** New paying account.  This is null in the case of a deletion. */
+export enum Uint64Encoding {
+  Decimal = "DECIMAL",
+  Hexadecimal = "HEXADECIMAL",
+  Name = "NAME",
+  Symbol = "SYMBOL",
+  SymbolCode = "SYMBOL_CODE"
+}
+/** New paying account.  This is null in the case of a deletion. */
+export enum DbOperation {
+  Ins = "INS",
+  Rem = "REM",
+  Upd = "UPD"
+}
+/** The deferred transaction payload itself. */
+export enum DtrxOperation {
+  Cancel = "CANCEL",
+  Create = "CREATE",
+  ModifyCancel = "MODIFY_CANCEL",
+  ModifyCreate = "MODIFY_CREATE",
+  PushCreate = "PUSH_CREATE"
+}
+/** Number of bytes now used by the `payer` account, after applying this RAM operation.To have a precise view of the RAM left on an account after this transaction wasapplied, go through all actions in execution order(`TransactionTrace.executedActions`) and use the last RAMOp for the given account. */
+export enum RamOperation {
+  CreateTable = "CREATE_TABLE",
+  DeferredTrxAdd = "DEFERRED_TRX_ADD",
+  DeferredTrxCancel = "DEFERRED_TRX_CANCEL",
+  DeferredTrxPushed = "DEFERRED_TRX_PUSHED",
+  DeferredTrxRemoved = "DEFERRED_TRX_REMOVED",
+  Deleteauth = "DELETEAUTH",
+  Linkauth = "LINKAUTH",
+  Newaccount = "NEWACCOUNT",
+  PrimaryIndexAdd = "PRIMARY_INDEX_ADD",
+  PrimaryIndexRemove = "PRIMARY_INDEX_REMOVE",
+  PrimaryIndexUpdate = "PRIMARY_INDEX_UPDATE",
+  PrimaryIndexUpdateAddNewPayer = "PRIMARY_INDEX_UPDATE_ADD_NEW_PAYER",
+  PrimaryIndexUpdateRemoveOldPayer = "PRIMARY_INDEX_UPDATE_REMOVE_OLD_PAYER",
+  RemoveTable = "REMOVE_TABLE",
+  SecondaryIndexAdd = "SECONDARY_INDEX_ADD",
+  SecondaryIndexRemove = "SECONDARY_INDEX_REMOVE",
+  SecondaryIndexUpdateAddNewPayer = "SECONDARY_INDEX_UPDATE_ADD_NEW_PAYER",
+  SecondaryIndexUpdateRemoveOldPayer = "SECONDARY_INDEX_UPDATE_REMOVE_OLD_PAYER",
+  Setabi = "SETABI",
+  Setcode = "SETCODE",
+  Unlinkauth = "UNLINKAUTH",
+  UpdateauthCreate = "UPDATEAUTH_CREATE",
+  UpdateauthUpdate = "UPDATEAUTH_UPDATE"
+}
+/** Creation or deletion of a table */
+export enum TableOperation {
+  Ins = "INS",
+  Rem = "REM"
+}
+/** New paying account.  This is null in the case of a deletion. */
+export enum TransactionStatus {
+  Delayed = "DELAYED",
+  Executed = "EXECUTED",
+  Expired = "EXPIRED",
+  HardFail = "HARD_FAIL",
+  SoftFail = "SOFT_FAIL",
+  Unknown = "UNKNOWN"
 }
 /** select columns of table "spatial_ref_sys" */
 export enum SpatialRefSysSelectColumn {
@@ -6637,6 +6712,12 @@ export enum ConflictAction {
   Update = "update"
 }
 
+/** Block number in the chain */
+export type Time = any;
+
+/** Block number in the chain */
+export type Uint32 = any;
+
 export type Name = any;
 
 export type Bigint = any;
@@ -6661,459 +6742,82 @@ export type _Bool = any;
 
 export type _Text = any;
 
+/** Block number in the chain */
+export type Int64 = any;
+
+/** Block number in the chain */
+export type Json = any;
+
+/** Block number in the chain */
+export type Uint64 = any;
+
 // ====================================================
 // Documents
 // ====================================================
 
-export namespace DeleteItemSection {
+export namespace SearchTransactionsForward {
   export type Variables = {
-    where: KmealItemSectionBoolExp;
+    query: string;
   };
 
-  export type Mutation = {
-    __typename?: "Mutation";
+  export type Subscription = {
+    __typename?: "Subscription";
 
-    delete_kmeal_item_section: DeleteKmealItemSection | null;
+    searchTransactionsForward: SearchTransactionsForward;
   };
 
-  export type DeleteKmealItemSection = {
-    __typename?: "kmeal_item_section_mutation_response";
+  export type SearchTransactionsForward = {
+    __typename?: "SearchTransactionForwardResponse";
 
-    affected_rows: number;
+    cursor: string;
 
-    returning: Returning[];
+    irreversibleBlockNum: Uint32;
+
+    trace: Trace | null;
   };
 
-  export type Returning = {
-    __typename?: "kmeal_item_section";
+  export type Trace = {
+    __typename?: "TransactionTrace";
 
-    section_id: number;
-  };
-}
-
-export namespace DeleteKmealMenuBook {
-  export type Variables = {
-    where: KmealMenuBookBoolExp;
+    matchingActions: MatchingActions[];
   };
 
-  export type Mutation = {
-    __typename?: "Mutation";
+  export type MatchingActions = {
+    __typename?: "ActionTrace";
 
-    delete_kmeal_menu_book: DeleteKmealMenuBook | null;
+    receiver: string;
+
+    account: string;
+
+    name: string;
+
+    json: Json | null;
+
+    dbOps: DbOps[] | null;
   };
 
-  export type DeleteKmealMenuBook = {
-    __typename?: "kmeal_menu_book_mutation_response";
+  export type DbOps = {
+    __typename?: "DBOp";
 
-    returning: Returning[];
+    operation: DbOperation;
+
+    key: Key;
+
+    newJSON: Json | null;
+
+    oldData: string | null;
+
+    newData: string | null;
   };
 
-  export type Returning = {
-    __typename?: "kmeal_menu_book";
+  export type Key = {
+    __typename?: "DBOpKey";
 
-    menu_book_id: number;
-  };
-}
+    code: string;
 
-export namespace DeleteMenuSection {
-  export type Variables = {
-    where: KmealMenuBookSectionBoolExp;
-  };
+    table: string;
 
-  export type Mutation = {
-    __typename?: "Mutation";
-
-    delete_kmeal_menu_book_section: DeleteKmealMenuBookSection | null;
-  };
-
-  export type DeleteKmealMenuBookSection = {
-    __typename?: "kmeal_menu_book_section_mutation_response";
-
-    returning: Returning[];
-  };
-
-  export type Returning = {
-    __typename?: "kmeal_menu_book_section";
-
-    section_id: number;
-
-    section_name: string;
-  };
-}
-
-export namespace DeleteKmealItem {
-  export type Variables = {
-    where: KmealItemBoolExp;
-  };
-
-  export type Mutation = {
-    __typename?: "Mutation";
-
-    delete_kmeal_item: DeleteKmealItem | null;
-  };
-
-  export type DeleteKmealItem = {
-    __typename?: "kmeal_item_mutation_response";
-
-    affected_rows: number;
-
-    returning: Returning[];
-  };
-
-  export type Returning = {
-    __typename?: "kmeal_item";
-
-    item_id: number;
-  };
-}
-
-export namespace KmealBookSectionItems {
-  export type Variables = {
-    where?: KmealMenuBookBoolExp | null;
-  };
-
-  export type Query = {
-    __typename?: "Query";
-
-    kmeal_menu_book: KmealMenuBook[];
-  };
-
-  export type KmealMenuBook = {
-    __typename?: "kmeal_menu_book";
-
-    menu_book_id: number;
-
-    menu_book: string;
-
-    sort_order: number;
-
-    menuBookSectionsBymenuBookId: MenuBookSectionsBymenuBookId[];
-  };
-
-  export type MenuBookSectionsBymenuBookId = {
-    __typename?: "kmeal_menu_book_section";
-
-    section_id: number;
-
-    section_name: string;
-
-    sort_order: number;
-
-    itemSectionsBysectionId: ItemSectionsBysectionId[];
-  };
-
-  export type ItemSectionsBysectionId = {
-    __typename?: "kmeal_item_section";
-
-    item_id: number;
-
-    itemByitemId: ItemByitemId;
-  };
-
-  export type ItemByitemId = {
-    __typename?: "kmeal_item";
-
-    item_id: number;
-
-    item_name: string;
-
-    photo: string;
-
-    description: string;
-
-    cooking_time: number | null;
-
-    spicy_level: number | null;
-
-    vegetarian: number | null;
-  };
-}
-
-export namespace KmealMenuBook {
-  export type Variables = {
-    where?: KmealMenuBookBoolExp | null;
-  };
-
-  export type Query = {
-    __typename?: "Query";
-
-    kmeal_menu_book: KmealMenuBook[];
-  };
-
-  export type KmealMenuBook = {
-    __typename?: "kmeal_menu_book";
-
-    menu_book_id: number;
-
-    menu_book: string;
-
-    sort_order: number;
-
-    menuBookSectionsBymenuBookId: MenuBookSectionsBymenuBookId[];
-  };
-
-  export type MenuBookSectionsBymenuBookId = {
-    __typename?: "kmeal_menu_book_section";
-
-    section_id: number;
-
-    section_name: string;
-
-    sort_order: number;
-  };
-}
-
-export namespace InsertItemSection {
-  export type Variables = {
-    objects: KmealItemSectionInsertInput[];
-    on_conflict?: KmealItemSectionOnConflict | null;
-  };
-
-  export type Mutation = {
-    __typename?: "Mutation";
-
-    insert_kmeal_item_section: InsertKmealItemSection | null;
-  };
-
-  export type InsertKmealItemSection = {
-    __typename?: "kmeal_item_section_mutation_response";
-
-    affected_rows: number;
-
-    returning: Returning[];
-  };
-
-  export type Returning = {
-    __typename?: "kmeal_item_section";
-
-    section_id: number;
-  };
-}
-
-export namespace InsertKmealListing {
-  export type Variables = {
-    objects: KmealListingInsertInput[];
-    on_conflict?: KmealListingOnConflict | null;
-  };
-
-  export type Mutation = {
-    __typename?: "Mutation";
-
-    insert_kmeal_listing: InsertKmealListing | null;
-  };
-
-  export type InsertKmealListing = {
-    __typename?: "kmeal_listing_mutation_response";
-
-    returning: Returning[];
-  };
-
-  export type Returning = {
-    __typename?: "kmeal_listing";
-
-    listing_id: number;
-  };
-}
-
-export namespace InsertKmealMenuBook {
-  export type Variables = {
-    objects: KmealMenuBookInsertInput[];
-    on_conflict?: KmealMenuBookOnConflict | null;
-  };
-
-  export type Mutation = {
-    __typename?: "Mutation";
-
-    insert_kmeal_menu_book: InsertKmealMenuBook | null;
-  };
-
-  export type InsertKmealMenuBook = {
-    __typename?: "kmeal_menu_book_mutation_response";
-
-    returning: Returning[];
-  };
-
-  export type Returning = KmealMenuBookInlineFragment;
-
-  export type KmealMenuBookInlineFragment = {
-    __typename?: "kmeal_menu_book";
-
-    menu_book_id: number;
-
-    menu_book: string;
-
-    sort_order: number;
-  };
-}
-
-export namespace InsertKmealMenuBookSection {
-  export type Variables = {
-    objects: KmealMenuBookSectionInsertInput[];
-    on_conflict?: KmealMenuBookSectionOnConflict | null;
-  };
-
-  export type Mutation = {
-    __typename?: "Mutation";
-
-    insert_kmeal_menu_book_section: InsertKmealMenuBookSection | null;
-  };
-
-  export type InsertKmealMenuBookSection = {
-    __typename?: "kmeal_menu_book_section_mutation_response";
-
-    returning: Returning[];
-  };
-
-  export type Returning = {
-    __typename?: "kmeal_menu_book_section";
-
-    section_id: number;
-
-    section_name: string;
-  };
-}
-
-export namespace InsertKmealItem {
-  export type Variables = {
-    object: KmealItemInsertInput[];
-    on_conflict?: KmealItemOnConflict | null;
-  };
-
-  export type Mutation = {
-    __typename?: "Mutation";
-
-    insert_kmeal_item: InsertKmealItem | null;
-  };
-
-  export type InsertKmealItem = {
-    __typename?: "kmeal_item_mutation_response";
-
-    affected_rows: number;
-
-    returning: Returning[];
-  };
-
-  export type Returning = {
-    __typename?: "kmeal_item";
-
-    item_id: number;
-  };
-}
-
-export namespace KmealItem {
-  export type Variables = {
-    where?: KmealItemBoolExp | null;
-  };
-
-  export type Query = {
-    __typename?: "Query";
-
-    kmeal_item: KmealItem[];
-  };
-
-  export type KmealItem = {
-    __typename?: "kmeal_item";
-
-    item_id: number;
-
-    item_name: string;
-
-    description: string;
-
-    spicy_level: number | null;
-
-    cooking_time: number | null;
-
-    vegetarian: number | null;
-
-    photo: string;
-  };
-}
-
-export namespace UpdateKmealMenuBook {
-  export type Variables = {
-    where: KmealMenuBookBoolExp;
-    _set?: KmealMenuBookSetInput | null;
-    _inc?: KmealMenuBookIncInput | null;
-  };
-
-  export type Mutation = {
-    __typename?: "Mutation";
-
-    update_kmeal_menu_book: UpdateKmealMenuBook | null;
-  };
-
-  export type UpdateKmealMenuBook = {
-    __typename?: "kmeal_menu_book_mutation_response";
-
-    returning: Returning[];
-  };
-
-  export type Returning = {
-    __typename?: "kmeal_menu_book";
-
-    menu_book_id: number;
-
-    menu_book: string;
-
-    sort_order: number;
-  };
-}
-
-export namespace UpdateKmealMenuBookSection {
-  export type Variables = {
-    where: KmealMenuBookSectionBoolExp;
-    _set?: KmealMenuBookSectionSetInput | null;
-  };
-
-  export type Mutation = {
-    __typename?: "Mutation";
-
-    update_kmeal_menu_book_section: UpdateKmealMenuBookSection | null;
-  };
-
-  export type UpdateKmealMenuBookSection = {
-    __typename?: "kmeal_menu_book_section_mutation_response";
-
-    returning: Returning[];
-  };
-
-  export type Returning = {
-    __typename?: "kmeal_menu_book_section";
-
-    section_id: number;
-
-    section_name: string;
-
-    sort_order: number;
-  };
-}
-
-export namespace UpdateKmealItem {
-  export type Variables = {
-    where: KmealItemBoolExp;
-    _set?: KmealItemSetInput | null;
-    _inc?: KmealItemIncInput | null;
-  };
-
-  export type Mutation = {
-    __typename?: "Mutation";
-
-    update_kmeal_item: UpdateKmealItem | null;
-  };
-
-  export type UpdateKmealItem = {
-    __typename?: "kmeal_item_mutation_response";
-
-    affected_rows: number;
-
-    returning: Returning[];
-  };
-
-  export type Returning = {
-    __typename?: "kmeal_item";
-
-    item_id: number;
+    scope: string;
   };
 }
 
@@ -7133,262 +6837,33 @@ import gql from "graphql-tag";
 @Injectable({
   providedIn: "root"
 })
-export class DeleteItemSectionGQL extends Apollo.Mutation<DeleteItemSection.Mutation, DeleteItemSection.Variables> {
+export class SearchTransactionsForwardGQL extends Apollo.Subscription<
+  SearchTransactionsForward.Subscription,
+  SearchTransactionsForward.Variables
+> {
   document: any = gql`
-    mutation deleteItemSection($where: kmeal_item_section_bool_exp!) {
-      delete_kmeal_item_section(where: $where) {
-        affected_rows
-        returning {
-          section_id
-        }
-      }
-    }
-  `;
-}
-@Injectable({
-  providedIn: "root"
-})
-export class DeleteKmealMenuBookGQL extends Apollo.Mutation<DeleteKmealMenuBook.Mutation, DeleteKmealMenuBook.Variables> {
-  document: any = gql`
-    mutation delete_kmeal_menu_book($where: kmeal_menu_book_bool_exp!) {
-      delete_kmeal_menu_book(where: $where) {
-        returning {
-          menu_book_id
-        }
-      }
-    }
-  `;
-}
-@Injectable({
-  providedIn: "root"
-})
-export class DeleteMenuSectionGQL extends Apollo.Mutation<DeleteMenuSection.Mutation, DeleteMenuSection.Variables> {
-  document: any = gql`
-    mutation delete_menu_section($where: kmeal_menu_book_section_bool_exp!) {
-      delete_kmeal_menu_book_section(where: $where) {
-        returning {
-          section_id
-          section_name
-        }
-      }
-    }
-  `;
-}
-@Injectable({
-  providedIn: "root"
-})
-export class DeleteKmealItemGQL extends Apollo.Mutation<DeleteKmealItem.Mutation, DeleteKmealItem.Variables> {
-  document: any = gql`
-    mutation delete_kmeal_item($where: kmeal_item_bool_exp!) {
-      delete_kmeal_item(where: $where) {
-        affected_rows
-        returning {
-          item_id
-        }
-      }
-    }
-  `;
-}
-@Injectable({
-  providedIn: "root"
-})
-export class KmealBookSectionItemsGQL extends Apollo.Query<KmealBookSectionItems.Query, KmealBookSectionItems.Variables> {
-  document: any = gql`
-    query kmeal_book_section_items($where: kmeal_menu_book_bool_exp) {
-      kmeal_menu_book(where: $where) {
-        menu_book_id
-        menu_book
-        sort_order
-        menuBookSectionsBymenuBookId {
-          section_id
-          section_name
-          sort_order
-          itemSectionsBysectionId {
-            item_id
-            itemByitemId {
-              item_id
-              item_name
-              photo
-              description
-              cooking_time
-              spicy_level
-              vegetarian
+    subscription searchTransactionsForward($query: String!) {
+      searchTransactionsForward(query: $query, limit: 1) {
+        cursor
+        irreversibleBlockNum
+        trace {
+          matchingActions {
+            receiver
+            account
+            name
+            json
+            dbOps {
+              operation
+              key {
+                code
+                table
+                scope
+              }
+              newJSON
+              oldData
+              newData
             }
           }
-        }
-      }
-    }
-  `;
-}
-@Injectable({
-  providedIn: "root"
-})
-export class KmealMenuBookGQL extends Apollo.Query<KmealMenuBook.Query, KmealMenuBook.Variables> {
-  document: any = gql`
-    query kmeal_menu_book($where: kmeal_menu_book_bool_exp) {
-      kmeal_menu_book(where: $where) {
-        menu_book_id
-        menu_book
-        sort_order
-        menuBookSectionsBymenuBookId {
-          section_id
-          section_name
-          sort_order
-        }
-      }
-    }
-  `;
-}
-@Injectable({
-  providedIn: "root"
-})
-export class InsertItemSectionGQL extends Apollo.Mutation<InsertItemSection.Mutation, InsertItemSection.Variables> {
-  document: any = gql`
-    mutation insertItemSection($objects: [kmeal_item_section_insert_input!]!, $on_conflict: kmeal_item_section_on_conflict) {
-      insert_kmeal_item_section(objects: $objects, on_conflict: $on_conflict) {
-        affected_rows
-        returning {
-          section_id
-        }
-      }
-    }
-  `;
-}
-@Injectable({
-  providedIn: "root"
-})
-export class InsertKmealListingGQL extends Apollo.Mutation<InsertKmealListing.Mutation, InsertKmealListing.Variables> {
-  document: any = gql`
-    mutation insert_kmeal_listing($objects: [kmeal_listing_insert_input!]!, $on_conflict: kmeal_listing_on_conflict) {
-      insert_kmeal_listing(objects: $objects, on_conflict: $on_conflict) {
-        returning {
-          listing_id
-        }
-      }
-    }
-  `;
-}
-@Injectable({
-  providedIn: "root"
-})
-export class InsertKmealMenuBookGQL extends Apollo.Mutation<InsertKmealMenuBook.Mutation, InsertKmealMenuBook.Variables> {
-  document: any = gql`
-    mutation insert_kmeal_menu_book($objects: [kmeal_menu_book_insert_input!]!, $on_conflict: kmeal_menu_book_on_conflict) {
-      insert_kmeal_menu_book(objects: $objects, on_conflict: $on_conflict) {
-        returning {
-          ... on kmeal_menu_book {
-            menu_book_id
-            menu_book
-            sort_order
-          }
-        }
-      }
-    }
-  `;
-}
-@Injectable({
-  providedIn: "root"
-})
-export class InsertKmealMenuBookSectionGQL extends Apollo.Mutation<
-  InsertKmealMenuBookSection.Mutation,
-  InsertKmealMenuBookSection.Variables
-> {
-  document: any = gql`
-    mutation insert_kmeal_menu_book_section(
-      $objects: [kmeal_menu_book_section_insert_input!]!
-      $on_conflict: kmeal_menu_book_section_on_conflict
-    ) {
-      insert_kmeal_menu_book_section(objects: $objects, on_conflict: $on_conflict) {
-        returning {
-          section_id
-          section_name
-        }
-      }
-    }
-  `;
-}
-@Injectable({
-  providedIn: "root"
-})
-export class InsertKmealItemGQL extends Apollo.Mutation<InsertKmealItem.Mutation, InsertKmealItem.Variables> {
-  document: any = gql`
-    mutation insert_kmeal_item($object: [kmeal_item_insert_input!]!, $on_conflict: kmeal_item_on_conflict) {
-      insert_kmeal_item(objects: $object, on_conflict: $on_conflict) {
-        affected_rows
-        returning {
-          item_id
-        }
-      }
-    }
-  `;
-}
-@Injectable({
-  providedIn: "root"
-})
-export class KmealItemGQL extends Apollo.Query<KmealItem.Query, KmealItem.Variables> {
-  document: any = gql`
-    query kmeal_item($where: kmeal_item_bool_exp) {
-      kmeal_item(where: $where) {
-        item_id
-        item_name
-        description
-        spicy_level
-        cooking_time
-        vegetarian
-        photo
-      }
-    }
-  `;
-}
-@Injectable({
-  providedIn: "root"
-})
-export class UpdateKmealMenuBookGQL extends Apollo.Mutation<UpdateKmealMenuBook.Mutation, UpdateKmealMenuBook.Variables> {
-  document: any = gql`
-    mutation update_kmeal_menu_book(
-      $where: kmeal_menu_book_bool_exp!
-      $_set: kmeal_menu_book_set_input
-      $_inc: kmeal_menu_book_inc_input
-    ) {
-      update_kmeal_menu_book(where: $where, _set: $_set, _inc: $_inc) {
-        returning {
-          menu_book_id
-          menu_book
-          sort_order
-        }
-      }
-    }
-  `;
-}
-@Injectable({
-  providedIn: "root"
-})
-export class UpdateKmealMenuBookSectionGQL extends Apollo.Mutation<
-  UpdateKmealMenuBookSection.Mutation,
-  UpdateKmealMenuBookSection.Variables
-> {
-  document: any = gql`
-    mutation update_kmeal_menu_book_section($where: kmeal_menu_book_section_bool_exp!, $_set: kmeal_menu_book_section_set_input) {
-      update_kmeal_menu_book_section(where: $where, _set: $_set) {
-        returning {
-          section_id
-          section_name
-          sort_order
-        }
-      }
-    }
-  `;
-}
-@Injectable({
-  providedIn: "root"
-})
-export class UpdateKmealItemGQL extends Apollo.Mutation<UpdateKmealItem.Mutation, UpdateKmealItem.Variables> {
-  document: any = gql`
-    mutation update_kmeal_item($where: kmeal_item_bool_exp!, $_set: kmeal_item_set_input, $_inc: kmeal_item_inc_input) {
-      update_kmeal_item(where: $where, _set: $_set, _inc: $_inc) {
-        affected_rows
-        returning {
-          item_id
         }
       }
     }

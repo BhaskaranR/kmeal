@@ -1,8 +1,0 @@
-mutation deleteItemSection($where: kmeal_item_section_bool_exp!) {
-  delete_kmeal_item_section(where:$where) {
-    affected_rows 
-    returning {
-      section_id
-    }
-  }
-}
