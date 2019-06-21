@@ -95,15 +95,21 @@ export class NewmenuComponent {
     }
 
     try{
+      /*
       const resp = await this.menuService.createItem(
         this.menuForm.get('itemName').value, 
         this.menuForm.get('description').value, 
-        this.menuForm.get('photo').value, 
+        this.menuForm.get('photo').value || 'random string', 
         this.menuForm.get('spicy_level').value,
         this.menuForm.get('vegetarian').value,
         this.menuForm.get('cooking_time').value,
-        '');
-     console.log('created ', resp)
+        '');*/
+        console.log(this.menuForm.get('book_id').value, this.menuForm.get('section_id').value);
+        const items = await this.menuService.getMyItems();
+        console.log('items ? ', items);
+
+        await this.menuService.addToSection(this.menuForm.get('book_id').value, this.menuForm.get('section_id').value, 0, 0);
+     //const resp2 = await this.menuService.addToSection()
     }catch(e){
       this.openSnackBar('ERROR creating menu ' +  e, "");
     }

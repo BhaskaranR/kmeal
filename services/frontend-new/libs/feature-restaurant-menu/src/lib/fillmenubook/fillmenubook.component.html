@@ -11,7 +11,7 @@
                             <mat-form-field class="full-width">
                                 <mat-label>Select menu book</mat-label>
                                 <mat-select [(value)]="selectedMenuBook" formControlName="book_id">
-                                    <mat-option *ngFor="let item of menubooks" [value]="item">
+                                    <mat-option *ngFor="let item of menubooks" [value]="item.book_id">
                                         {{ item.book_name }}
                                     </mat-option>
                                 </mat-select>
@@ -23,7 +23,7 @@
                             <mat-form-field class="full-width">
                                 <mat-label>Select section</mat-label>
                                 <mat-select formControlName="section_id" (selectionChange)="sectionsSelectionChanged($event)" [(value)]="selectedSection" matNativeControl>
-                                    <mat-option *ngFor="let item of selectedMenuBook?.menuBookSectionsBymenuBookId" [value]="item">
+                                    <mat-option *ngFor="let item of selectedSections" [value]="item.section_id">
                                         {{ item.section_name }}
                                     </mat-option>
                                 </mat-select>

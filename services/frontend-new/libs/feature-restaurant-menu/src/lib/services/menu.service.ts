@@ -3,6 +3,7 @@ import { ScatterService } from "@kmeal-nx/scatter";
 import * as Eos from 'eosjs';
 import { Book } from '../model/books';
 import { Section} from '../model/section';
+import {Item } from '../model/item';
 const {format} = Eos.modules;
 
 @Injectable()
@@ -134,7 +135,7 @@ export class MenuService {
         }
     }
 
-    async addToSection(acct, itemname, description, photo, spice_level, vegetarian, cooking_name, types){
+    async addToSection(bookId, sectionId, itemId, order){
         try {
             const identity = await this.scatterService.scatter.getIdentity({
                 accounts: [this.scatterService.selectedNetwork]
@@ -144,14 +145,10 @@ export class MenuService {
             const resp = await this.scatterService.eos.transaction([this.scatterService.code], contracts => {
                 
                 const res = contracts[this.scatterService.code].addtosection(
-                    acct,
-                    itemname,
-                    description,
-                    photo,
-                    spice_level,
-                    vegetarian,
-                    cooking_name,
-                    types,
+                    bookId,
+                    sectionId,
+                    itemId,
+                    order,
                     opts);
                 return res;
             }, opts);
@@ -235,6 +232,44 @@ export class MenuService {
         }
     }
 
+    async createListing(bookId, 
+        itemId, 
+        sectionId, 
+        listType, 
+        listPrice,
+        minPrice,
+        qty,expires,
+        slidingRate,
+        sides){
+            try {
+                const identity = await this.scatterService.scatter.getIdentity({
+                    accounts: [this.scatterService.selectedNetwork]
+                });
+                const account = identity.accounts[0];
+                const opts = { authorization: `${account.name}@${account.authority}` };
+                const resp = await this.scatterService.eos.transaction([this.scatterService.code], contracts => {
+                    
+                    const res = contracts[this.scatterService.code].listitem(
+                        bookId,
+                        itemId,
+                        sectionId,
+                        listType,
+                        listPrice,
+                        minPrice,
+                        qty,
+                        expires,
+                        slidingRate,
+                        sides,
+                        opts);
+                    return res;
+                }, opts);
+                return resp;
+            }
+            catch (e) {
+                throw e;
+            }
+        }
+
 
 
 
@@ -271,6 +306,22 @@ export class MenuService {
             rowsOnly:true,
             key_type:'i64',
             model: Section,
+            index_position:2,
+            index:format.encodeName(account.name, false)
+        });
+    }
+
+    async getMyItems(){
+        const identity = await this.scatterService.scatter.getIdentity({
+            accounts: [this.scatterService.selectedNetwork]
+        });
+        const account = identity.accounts[0];
+        return await this.scatterService.read({
+            table:'items',
+            limit:100,
+            rowsOnly:true,
+            key_type:'i64',
+            model: Item,
             index_position:2,
             index:format.encodeName(account.name, false)
         });

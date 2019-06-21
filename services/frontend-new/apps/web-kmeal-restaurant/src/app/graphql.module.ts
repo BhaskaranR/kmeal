@@ -11,6 +11,12 @@ import { SubscriptionClient } from "subscriptions-transport-ws";
 import { WebSocketLink } from "apollo-link-ws";
 import { HttpHeaders } from "@angular/common/http";
 import { environment } from "../environments/environment";
+import { createDfuseClient } from "@dfuse/client";
+
+const dfuseClient = createDfuseClient({
+  apiKey: environment.DFUSE_API_KEY!,
+  network: "kylin",
+});
 
 @NgModule({
   declarations: [],
@@ -20,13 +26,14 @@ import { environment } from "../environments/environment";
 })
 export class ApiModule {
   constructor(apollo: Apollo, httpLink: HttpLink) {
-    const WS_URI = environment.ws_api_entry;
+    const WS_URI = environment.dfuse_graphql_endpoint;
 
-    const wsClient = new SubscriptionClient(WS_URI, {
+    const wsClient = new SubscriptionClient(dfuseClient.endpoints.graphqlStreamUrl, {
       lazy: true,
-      connectionParams: () => {
+      connectionParams: async () => {
+        const apiToken = await dfuseClient.getTokenInfo();
         return {
-          "x-hasura-access-key": `baba`
+          Authorization:`Bearer ${apiToken.token}`,
         };
       },
       reconnect: true,
@@ -67,11 +74,11 @@ export class ApiModule {
     });
 
     const link = httpLink.create({
-      uri: environment.api_entry
+      uri: dfuseClient.endpoints.graphqlStreamUrl
     });
 
     apollo.create({
-      link: from([middleware, networkLink, errorLink, link]),
+      link: from([middleware, networkLink, errorLink]),
       cache: new InMemoryCache()
     });
   }

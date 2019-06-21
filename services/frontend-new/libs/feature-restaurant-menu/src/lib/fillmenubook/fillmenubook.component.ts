@@ -21,7 +21,9 @@ export class FillmenubookComponent implements OnInit {
     book_id: [null, Validators.required]
   });
 
-  menubooks: Book[] = [];
+  menubooks: Book[] ;
+  sections : Section[];
+  selectedSections : Section[];
   items: any[] = [];
   selectedItemId: number;
 
@@ -32,6 +34,9 @@ export class FillmenubookComponent implements OnInit {
 
   async ngOnInit() {
     this.menubooks = await this.menuService.getMyBooks();
+    this.sections = await this.menuService.getMySections();
+    this.sections = this.sections.filter(sec=>!!sec.is_active);
+    this.selectedSections = this.sections;
   }
 
   dropSections(event: CdkDragDrop<Section[]>) {

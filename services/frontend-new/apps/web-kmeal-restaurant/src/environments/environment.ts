@@ -23,5 +23,7 @@ export const environment = {
     projectId: "web-kmeal-restaurant",
     storageBucket: "web-kmeal-restaurant.appspot.com",
     messagingSenderId: "882161751449"
-  }
+  },
+  dfuse_graphql_endpoint:'https://kylin.eos.dfuse.io/graphiql/',
+  DFUSE_API_KEY:'server_0297da273cc6710d5117bac8afcbf268'
 };

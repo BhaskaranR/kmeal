@@ -1,0 +1,25 @@
+subscription {
+ searchTransactionsForward(query: "receiver:kmealowner12 auth:kmealrestnt1 status:executed", limit: 1) {
+       cursor
+       irreversibleBlockNum
+     trace {
+       matchingActions {
+         receiver
+         account
+         name
+         json
+         dbOps {
+           operation
+           key {
+             code
+             table
+             scope
+           }
+           newJSON
+           oldData
+           newData
+         }
+       }
+     }
+   }
+}
