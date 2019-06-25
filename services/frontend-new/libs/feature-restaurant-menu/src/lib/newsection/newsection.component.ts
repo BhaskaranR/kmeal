@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { CdkDragDrop, moveItemInArray, CdkDrag } from '@angular/cdk/drag-drop';
 import { FormBuilder, Validators } from "@angular/forms";
-import { MatSnackBar } from "@angular/material";
+import { MatSnackBar, MatDialog } from "@angular/material";
 import { MenuService } from "../services/menu.service";
 import { Book } from "../model/books";
 import { Section } from "../model/section";
@@ -9,6 +9,7 @@ import { SearchTransactionsForwardGQL } from '../generated/graphql';
 import { Subject } from "rxjs";
 import { takeUntil } from 'rxjs/operators';
 import { ScatterService } from "@kmeal-nx/scatter";
+import { DeleteBookDialog } from "../newgroup/newgroup.component";
 
 @Component({
   selector: "kmeal-nx-newsection",
@@ -32,6 +33,7 @@ export class NewsectionComponent implements OnInit, OnDestroy {
 
   constructor(
     private scatterService: ScatterService,
+    public dialog: MatDialog,
     private searchTransactionsForwardGQL: SearchTransactionsForwardGQL,
     private menuService: MenuService,
     public snackBar: MatSnackBar,
@@ -40,8 +42,8 @@ export class NewsectionComponent implements OnInit, OnDestroy {
 
   async ngOnInit() {
     this.menubooks = await this.menuService.getMyBooks();
-    this.sections = await this.menuService.getMySections();
-    this.sections = this.sections.filter(sec => !!sec.is_active);
+    const sections = await this.menuService.getMySections();
+    this.sections = sections.filter(sec => !!sec.is_active);
     this.selectedSections = this.sections;
     this.isReady = true;
     const accountName = await this.menuService.getAccountName();
@@ -49,27 +51,39 @@ export class NewsectionComponent implements OnInit, OnDestroy {
       "query": `receiver:${this.scatterService.code} auth:${accountName} status:executed  db.table:sec/${this.scatterService.code}`,
     }).pipe(takeUntil(this.unSubscription$));
     sub.subscribe((next) => {
-      console.log(next);
+      console.log(next, 'update ?');
     })
   }
 
-  dropSections(event: CdkDragDrop<Book[]>) {
-    console.log('changed order!', event);
+  async dropSections(evt: CdkDragDrop<Section[]>) {
+    const prev = evt.previousIndex;
+
+    let prevItem = this.selectedSections[prev];
+
+    try{
+      const resp = await this.menuService.setSecOrder(this.selectedMenuBook.book_id, prevItem.section_id, evt.currentIndex);
+      const sections = await this.menuService.getMySections();
+      this.sections = sections.filter(sec => !!sec.is_active);
+      this.openSnackBar('Order Changed',"");
+    }
+    catch(e){
+      this.openSnackBar('Error : ' + e , '');
+    }
   }
 
   async onSectionsSubmit() {
-    if (!this.sectionsForm.valid) {
-      this.openSnackBar("Invalid", "");
-      return;
-    }
-
     try {
       const resp = await this.menuService.addSection(this.selectedMenuBook.book_id, this.sectionsForm.get('section').value);
-      this.sections = await this.menuService.getMySections();
-      this.sections = this.sections.filter(sec => !!sec.is_active);
-
-      this.selectedSections.push(this.sections[this.sections.length - 1]);
-      this.menubooks = await this.menuService.getMyBooks();
+      console.log(this.menubooks, this.sections, this.selectedSections);
+       let newSec = new Section();
+       newSec.section_name = this.sectionsForm.get('section').value;
+       newSec.section_id   = this.sections[this.sections.length-1].section_id + 1;
+       newSec.is_active    = 1;
+      this.selectedSections.push(newSec);
+      this.sections.push(newSec);
+      this.selectedMenuBook.sections.push(newSec.section_id);
+      this.sectionsForm.get('section').setValue(null);
+      
     }
     catch (e) {
       this.openSnackBar(e, '');
@@ -82,18 +96,26 @@ export class NewsectionComponent implements OnInit, OnDestroy {
   }
 
 
-  async deleteMenuSection(ev) {
-    if (!this.selectedMenuBook) {
-      this.openSnackBar('Select a book', '');
-      return;
-    }
+  async deleteMenuSection(name,id) {
+    const dialogRef = this.dialog.open(DeleteBookDialog, {
+      width: '250px',
+      data: {name: name, id:id}
+    });
 
+    dialogRef.afterClosed().subscribe(result => {
+      if (!result) return;
+      this.callContactToDeleteSection(id);
+    });
+
+    
+  }
+
+  async callContactToDeleteSection(id){
     try {
-      console.log(ev);
-      const resp = await this.menuService.deleteSection(this.selectedMenuBook.book_id, ev.section_id);
-      this.sections = await this.menuService.getMySections();
-      this.selectedSections = this.sections.filter(sec => this.selectedMenuBook)
-      console.log('done ? ', this.sections);
+      const resp = await this.menuService.deleteSection(this.selectedMenuBook.book_id,id);
+      this.sections = this.sections.filter(sec => sec.section_id !== id); 
+      this.selectedSections = this.sections.filter(sec => this.selectedMenuBook.sections.includes(sec.section_id) && sec.section_id !== id );
+      this.openSnackBar('Deleted',"");
     }
     catch (e) {
       this.openSnackBar(e, '');

@@ -1,33 +1,38 @@
-import { Component, Input } from "@angular/core";
+import { Component, OnDestroy, OnInit} from "@angular/core";
 import { FormBuilder, Validators } from "@angular/forms";
-import { MatSnackBar } from "@angular/material";
+import { MatSnackBar, MatDialog } from "@angular/material";
 import { MenuService } from "../services/menu.service";
 import { Book } from "../model/books";
 import { Section } from "../model/section";
+import { SearchTransactionsForwardGQL } from "../generated/graphql";
+import { Subject } from "rxjs";
+import { takeUntil } from 'rxjs/operators';
+import { ScatterService } from "@kmeal-nx/scatter";
 
 @Component({
   selector: "kmeal-nx-newmenu",
   templateUrl: "./newmenu.component.html",
   styleUrls: ["./newmenu.component.scss"]
 })
-export class NewmenuComponent {
+export class NewmenuComponent implements OnInit, OnDestroy {
 
   selectedMenuBook : Book;
   selectedSection  : Section;
-  formSubmitted    : boolean= false;
+  formSubmitted    : boolean = false;
   menubooks        : Book[] = [];
   sections         : Section[];
   selectedSections : Section[];
+  isReady          : boolean = false;
 
   menuForm = this.fb.group({
-    itemName: [null, Validators.required],
-    description: [null, Validators.required],
-    photo: null,
-    spicy_level: 0,
-    vegetarian: 3,
-    cooking_time: [null, Validators.required],
-    book_id: null,
-    section_id: null
+    itemName       : [null, Validators.required],
+    description    : [null, Validators.required],
+    photo          : null,
+    spicy_level    : 0,
+    vegetarian     : 3,
+    cooking_time   : [null, Validators.required],
+    book_id        : null,
+    section_id     : null
   });
 
   CONST_VEGETARIAN : any = {
@@ -36,9 +41,14 @@ export class NewmenuComponent {
     1:'Vegan'
   }
 
+  unSubscription$ = new Subject();
+
   constructor(private fb: FormBuilder,
     public snackBar: MatSnackBar,
-    private menuService: MenuService) { }
+    private menuService: MenuService,
+    private scatterService: ScatterService,
+    private searchTransactionsForwardGQL: SearchTransactionsForwardGQL,
+    public dialog: MatDialog,) { }
 
   get itemName() {
     return this.menuForm.get("itemName").value;
@@ -69,33 +79,26 @@ export class NewmenuComponent {
 
   async ngOnInit() {
     this.menubooks = await this.menuService.getMyBooks();
-    this.sections = await this.menuService.getMySections();
-    this.sections = this.sections.filter(sec => !!sec.is_active);
+    const sections = await this.menuService.getMySections();
+    this.sections = sections.filter(sec => !!sec.is_active);
+    const accountName = await this.menuService.getAccountName();
+    const sub = this.searchTransactionsForwardGQL.subscribe({
+      "query": `receiver:${this.scatterService.code} auth:${accountName} status:executed  db.table:sec/${this.scatterService.code}`,
+    }).pipe(takeUntil(this.unSubscription$));
+    sub.subscribe((next) => {
+      console.log(next, 'update ?');
+    });
+    this.isReady = true;
   }
 
   setInitialDetails() {
-    /*
-    const mbs = this.menubooks.filter(mb => mb.book_id == this.menuDetails.menuBookId)
-    if (mbs && mbs.length !== 0){
-      this.selectedMenuBook = mbs[0];
-    }
-    this.menuForm.get("cooking_time").setValue(this.menuDetails.itemName);
-    this.menuForm.get("description").setValue(this.menuDetails.description);
-    this.menuForm.get("itemName").setValue(this.menuDetails.itemName)
-    this.menuForm.get("photo").setValue(this.menuDetails.photo);
-    this.menuForm.get("spicy_level").setValue(this.menuDetails.spicy_level);
-    this.menuForm.get("vegetarian").setValue(this.menuDetails.vegetarian);
-    this.menuForm.get("section_id").setValue(this.menuDetails.section_id);
-    */
+
   }
 
   async onSubmit() {
-    if (!this.menuForm.valid) {
-      return;
-    }
-
+    
     try{
-      /*
+      
       const resp = await this.menuService.createItem(
         this.menuForm.get('itemName').value, 
         this.menuForm.get('description').value, 
@@ -103,13 +106,12 @@ export class NewmenuComponent {
         this.menuForm.get('spicy_level').value,
         this.menuForm.get('vegetarian').value,
         this.menuForm.get('cooking_time').value,
-        '');*/
-        console.log(this.menuForm.get('book_id').value, this.menuForm.get('section_id').value);
-        const items = await this.menuService.getMyItems();
-        console.log('items ? ', items);
+        '');
 
-        await this.menuService.addToSection(this.menuForm.get('book_id').value, this.menuForm.get('section_id').value, 0, 0);
-     //const resp2 = await this.menuService.addToSection()
+      const resp2 = await this.menuService.addToSection(this.menuForm.get('book_id').value, this.menuForm.get('section_id').value, 0, 0);
+      this.openSnackBar('Created new item',"");
+      this.formSubmitted = true;
+
     }catch(e){
       this.openSnackBar('ERROR creating menu ' +  e, "");
     }
@@ -131,5 +133,10 @@ export class NewmenuComponent {
     const bookId = e.value;
     const secs = this.menubooks.filter(book => book.book_id === bookId)[0].sections;
     this.selectedSections = this.sections.filter(sec=> secs.includes(sec.section_id));
+  }
+
+  ngOnDestroy(){
+    this.unSubscription$.next();
+    this.unSubscription$.complete();
   }
 }

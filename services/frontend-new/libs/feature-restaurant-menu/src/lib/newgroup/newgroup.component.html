@@ -1,40 +1,46 @@
-<div class="homepage-promo">
-    <div class="homepage-row">
-        <form [formGroup]="menuBookForm" novalidate (ngSubmit)="onBookSubmit()">
-            <div class="container">
-                <div class="header-section">
-                    <div class="header-headline">
-                        <h1 class="mat-h2">Menu Book</h1>
-                        <h2> Add menu book title</h2>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <mat-form-field class="full-width">
-                                <input matInput placeholder="book name" required="true" formControlName="menubook">
-                            </mat-form-field>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <button mat-raised-button color="primary" [disabled]="menuBookForm.invalid" type="submit">Create New Menubook</button>
-                        </div>
-                    </div>
-                </div>
+<div *ngIf="!isReady; else main">
+    <mat-spinner style="margin:30px auto 30px auto;" [diameter]="25" mode="indeterminate"></mat-spinner>
+</div>
 
-                <div cdkDropList class="list" cdkSelection>
-                    <div class="box" *ngFor="let item of menubooks" cdkDrag>
-                        <a class="component-list-item">
+<ng-template #main>
+    <div class="homepage-promo" *ngIf="isReady">
+        <div class="homepage-row">
+            <form [formGroup]="menuBookForm" novalidate (ngSubmit)="onBookSubmit()">
+                <div class="container">
+                    <div class="header-section">
+                        <div class="header-headline">
+                            <h1 class="mat-h2">Menu Book</h1>
+                            <h2> Add menu book title</h2>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <mat-form-field class="full-width">
+                                    <input matInput placeholder="Menu Name" required="true" formControlName="menubook">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <button mat-raised-button color="primary" [disabled]="menuBookForm.invalid" type="submit">Create New Menubook</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div cdkDropList class="list" cdkSelection>
+                        <div class="box" *ngFor="let item of menubooks" cdkDrag>
+                            <a class="component-list-item">
                             {{item.book_name}}
                         </a>
-                        <div class="handle" cdkDragHandle>
-                            <mat-icon>menu</mat-icon>
-                        </div>
-                        <div class="action" (click)="deleteMenuGroup(item.book_id)">
-                            <mat-icon>delete</mat-icon>
+                            <div class="handle" cdkDragHandle>
+                                <mat-icon>menu</mat-icon>
+                            </div>
+                            <div class="action" (click)="deleteMenuGroup(item.book_id, item.book_name)">
+                                <mat-icon>delete</mat-icon>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
-</div>
+</ng-template>

@@ -11,7 +11,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 import { LayoutModule } from '@angular/cdk/layout';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { NewgroupComponent } from './newgroup/newgroup.component';
+import { NewgroupComponent, DeleteBookDialog } from './newgroup/newgroup.component';
 import { HomeComponent } from './home/home.component';
 import { NewlistingComponent } from './newlisting/newlisting.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
@@ -62,7 +62,8 @@ export const restaurantMenuRoutes: Routes = [
     CdkSelectionModule,
     DragDropModule,
     RouterModule.forChild(restaurantMenuRoutes)],
-  declarations: [MenuSidenavComponent, NewmenuComponent, HomeComponent, NewgroupComponent, NewlistingComponent, FillmenubookComponent, NewsectionComponent],
+  declarations: [MenuSidenavComponent, NewmenuComponent, HomeComponent, NewgroupComponent, NewlistingComponent, FillmenubookComponent, NewsectionComponent, DeleteBookDialog],
+  entryComponents:[DeleteBookDialog],
   providers: [MenuService]
 })
 export class FeatureRestaurantMenuModule { }

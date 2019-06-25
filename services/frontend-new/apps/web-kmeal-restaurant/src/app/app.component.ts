@@ -5,7 +5,17 @@ import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'kmeal-nx-root',
-  templateUrl: './app.component.html'
+  templateUrl: './app.component.html',
+  styles:[`
+  .main-content{
+    height:calc(100vh - 65px) !important;
+    overflow-y:auto;
+  }
+
+  .mat-toolbar{
+    background:white !important;
+  }
+  `]
 })
 export class AppComponent {
 
@@ -14,8 +24,6 @@ export class AppComponent {
       map(result => result.matches)
     );
 
-
   constructor(private breakpointObserver: BreakpointObserver) { }
-
 
 }

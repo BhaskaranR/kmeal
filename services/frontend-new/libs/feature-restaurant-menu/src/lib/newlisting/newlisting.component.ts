@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild,OnDestroy } from '@angular/core';
 import { FormBuilder, Validators, FormArray, FormGroup, AbstractControl, FormControl } from '@angular/forms';
 import { MatStepper, MatButtonToggleChange, MatSnackBar } from '@angular/material';
 import { Book } from '../model/books';
@@ -6,24 +6,28 @@ import { MenuService } from '../services/menu.service';
 import { Section } from '../model/section';
 import { Item } from '../model/item';
 import * as moment from 'moment';
+import { SearchTransactionsForwardGQL } from '../generated/graphql';
+import { ScatterService } from '@kmeal-nx/scatter';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'kmeal-nx-newlisting',
   templateUrl: './newlisting.component.html',
   styleUrls: ['./newlisting.component.scss']
 })
-export class NewlistingComponent implements OnInit {
+export class NewlistingComponent implements OnInit , OnDestroy{
 
-  menubooks: Book[] = [];
-
-  isNonLinear = false;
-
-  isNonEditable = false;
-  pricetype = 'Regular';
+  menubooks       : Book[] = [];
+  isNonLinear     : boolean = false;
+  isNonEditable   : boolean = false;
+  pricetype       : string = 'Regular';
   @ViewChild('linearVerticalStepper') stepper: MatStepper;
   selectedMenuBook: Book;
-  selectedSection: Section;
-  priceHeader = "Enter pricing information";
+  selectedSection : Section;
+  priceHeader     : string = "Enter pricing information";
+  isReady         : boolean = false;
+  unSubscription$ : Subject<any> = new Subject();
 
   /** Returns a FormArray with the name 'formArray'. */
   get formArray(): AbstractControl | null { return this.pricingForm.get('formArray'); }
@@ -76,8 +80,6 @@ export class NewlistingComponent implements OnInit {
       "sides": this.fb.array(
         [this.fb.group(this.side)])
     }));
-
-    console.log((<FormArray>this.pricingForm.get("formArray")).controls[3])
   }
 
   createItemSide(indx) {
@@ -85,14 +87,12 @@ export class NewlistingComponent implements OnInit {
     const groups = itemGroup.get("side_groups") as FormArray;
     const item = groups.controls[indx] as FormGroup;
     (<FormArray>item.get("sides")).push(this.fb.group(this.side));
-    console.log((<FormArray>this.pricingForm.get("formArray")).controls[3])
   }
 
   deleteItemGroup(index) {
     const itemGroup = (<FormArray>this.pricingForm.get("formArray")).controls[3] as FormGroup;
     const groups = itemGroup.get("side_groups") as FormArray;
     groups.removeAt(index);
-    console.log((<FormArray>this.pricingForm.get("formArray")).controls[3])
   }
 
   deleteItemSide(grpIndx, indx) {
@@ -100,13 +100,14 @@ export class NewlistingComponent implements OnInit {
     const groups = itemGroup.get("side_groups") as FormArray;
     const item = groups[grpIndx] as FormGroup;
     (<FormArray>item.get("sides")).removeAt(indx);
-    console.log((<FormArray>this.pricingForm.get("formArray")).controls[3])
   }
 
   constructor(private fb: FormBuilder,
-    public menuSevice:MenuService,
-    public snackBar: MatSnackBar) {
-  }
+    public menuService:MenuService,
+    public snackBar: MatSnackBar,
+    private scatterService: ScatterService,
+    private searchTransactionsForwardGQL: SearchTransactionsForwardGQL,
+    ) {}
 
   formatLabel(value: number | null) {
     return value + "%";
@@ -117,9 +118,20 @@ export class NewlistingComponent implements OnInit {
   items:Item[];
   selectedItems: Item[];
   async ngOnInit() {
-    this.menubooks = await this.menuSevice.getMyBooks();
-    this.sections = await this.menuSevice.getMySections();
-    this.items = await this.menuSevice.getMyItems();
+    this.menubooks = await this.menuService.getMyBooks();
+    this.sections = await this.menuService.getMySections();
+    this.items = await this.menuService.getMyItems();
+    console.log(this.menubooks, this.sections, this.items);
+
+    const accountName = await this.menuService.getAccountName();
+    const sub = this.searchTransactionsForwardGQL.subscribe({
+      "query": `receiver:${this.scatterService.code} auth:${accountName} status:executed  db.table:sec/${this.scatterService.code}`,
+    }).pipe(takeUntil(this.unSubscription$));
+    sub.subscribe((next) => {
+      console.log(next, 'update ?');
+    });
+
+    this.isReady = true;
   }
 
   onMenuBookChange(evt) {
@@ -177,7 +189,7 @@ export class NewlistingComponent implements OnInit {
     const minPrice  = (<FormArray>this.pricingForm.get('formArray')).controls[2].get('min_price').value;
     const qty       = (<FormArray>this.pricingForm.get('formArray')).controls[2].get('quantity').value;
     const slidingRate = (<FormArray>this.pricingForm.get('formArray')).controls[2].get('sliding_rate').value;
-    const   endDate   = (<FormArray>this.pricingForm.get('formArray')).controls[2].get('end_date').value;
+    const endDate   = (<FormArray>this.pricingForm.get('formArray')).controls[2].get('end_date').value;
     const endTime   = (<FormArray>this.pricingForm.get('formArray')).controls[2].get('end_time').value;
     const sides     = this.generateSidesJson();
     const expires = parseFloat(this.convertDatesToSeconds(endDate, endTime));
@@ -195,8 +207,14 @@ export class NewlistingComponent implements OnInit {
     "\n end time : ", endTime,
     '\n sides : ', sides);
 
-    const reps = await this.menuSevice.createListing(bookId, sectionId,itemId, listType, listPrice,minPrice,qty, expires, slidingRate, sides  );
-    console.log('done!?', reps);
+    try{
+      const reps = await this.menuService.createListing(bookId, sectionId,itemId, listType, listPrice,minPrice,qty, expires, slidingRate, sides  );
+      console.log('done!?', reps);
+      this.openSnackBar('Created listing',"");
+    }
+    catch(e){
+      this.openSnackBar(e,"");
+    }
    
   }
 
@@ -219,7 +237,11 @@ export class NewlistingComponent implements OnInit {
   private generateSidesJson(){
     let sides = (<FormArray>this.pricingForm.get('formArray')).controls[3].get('side_groups').value;
     sides = sides.map(s => JSON.stringify(s));
-    console.log(sides);
     return sides;
+  }
+
+  ngOnDestroy(){
+    this.unSubscription$.next();
+    this.unSubscription$.complete();
   }
 }

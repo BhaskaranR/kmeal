@@ -1,43 +1,63 @@
-import { Component, OnInit }       from "@angular/core";
+import { Component, OnInit , Inject, OnDestroy}       from "@angular/core";
 import { FormBuilder, Validators } from "@angular/forms";
-import { MatSnackBar }             from "@angular/material";
+import { MatSnackBar }  from "@angular/material";
 import { MenuService }             from "../services/menu.service";
 import { Book }                    from "../model/books";
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { SearchTransactionsForwardGQL } from "../generated/graphql";
+import { Subject } from "rxjs";
+import { takeUntil } from 'rxjs/operators';
+import { ScatterService } from "@kmeal-nx/scatter";
+
+interface DeleteDialog {
+  name:string,
+  id:string,
+}
 
 @Component({
   selector: "kmeal-nx-newgroup",
   templateUrl: "./newgroup.component.html",
   styleUrls: ["./newgroup.component.scss"]
 })
-export class NewgroupComponent implements OnInit {
+export class NewgroupComponent implements OnInit, OnDestroy {
+  unSubscription$ = new Subject();
+
   menuBookForm = this.fb.group({
     menubook: [null, Validators.required]
   });
 
-  menubooks: Book[] = []
+  menubooks: Book[];
+  isReady:boolean = false;
 
   constructor(
+    private scatterService: ScatterService,
+    private searchTransactionsForwardGQL: SearchTransactionsForwardGQL,
+    public dialog: MatDialog,
     private menuService: MenuService,
     public snackBar: MatSnackBar,
     private fb: FormBuilder) {
   }
 
   async ngOnInit() {
-    this.menubooks = await this.menuService.getMyBooks();
-    console.log(this.menubooks);
+    const books = await this.menuService.getMyBooks();
+    this.menubooks = books.filter(mb => !!mb.is_active);
+    const accountName = await this.menuService.getAccountName();
+    const sub = this.searchTransactionsForwardGQL.subscribe({
+      "query": `receiver:${this.scatterService.code} auth:${accountName} status:executed  db.table:sec/${this.scatterService.code}`,
+    }).pipe(takeUntil(this.unSubscription$));
+    sub.subscribe((next) => {
+      console.log(next, 'update ?');
+    });
+    this.isReady = true;
   }
 
   async onBookSubmit() {
-    if (!this.menuBookForm.valid) {
-      this.openSnackBar("Enter menu book", "");
-      return;
-    }
-
     try {
      const resp = await this.menuService.createbook(this.menuBookForm.value.menubook);
-     console.log(resp, 'book');
-     this.menubooks = await this.menuService.getMyBooks();
-     this.openSnackBar("menu book created", "");
+     const books = await this.menuService.getMyBooks();
+     this.menubooks = books.filter(mb => !!mb.is_active);
+     this.menuBookForm.get('menubook').setValue(null);
+     this.openSnackBar("Menu Book is created", "");
     }
     catch (e) {
       this.openSnackBar("Error creating menu book :" + e, "");
@@ -45,11 +65,24 @@ export class NewgroupComponent implements OnInit {
   }
 
 
-  async deleteMenuGroup(ev) {
+  async deleteMenuGroup(id, name) {
+    const dialogRef = this.dialog.open(DeleteBookDialog, {
+      width: '250px',
+      data: {name: name, id:id}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (!result) return;
+      this.callContactToDeleteBook(id);
+    });
+    
+  }
+
+  async callContactToDeleteBook(id){
     try {
-      const resp = await this.menuService.deleteBook(ev);
-      console.log('deleted ', resp);
-      this.menubooks = await this.menuService.getMyBooks();
+      const resp = await this.menuService.deleteBook(id);
+      this.menubooks = this.menubooks.filter(book => book.book_id !== id);
+      this.openSnackBar('Deleted','');
     }
     catch(e){
       this.openSnackBar('Error deleteing book '+e,'');
@@ -59,7 +92,40 @@ export class NewgroupComponent implements OnInit {
 
   private openSnackBar(message: string, action: string) {
     this.snackBar.open(message, action, {
-      duration: 2000,
+      duration: 4000,
     });
   }
+
+  ngOnDestroy(){
+    this.unSubscription$.next();
+    this.unSubscription$.complete();
+  }
+}
+
+
+@Component({
+  selector: 'delet-book-dialog',
+  template: `<h4 mat-dialog-title>Warning</h4>
+  <div mat-dialog-content>
+    <p>Are you sure to delete {{data.name}}?</p>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button (click)="onYes()">Yes</button>
+    <button mat-button (click)="onNo()" cdkFocusInitial>No</button>
+  </div>`,
+})
+export class DeleteBookDialog {
+
+  constructor(
+    public dialogRef: MatDialogRef<DeleteBookDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: DeleteDialog) {}
+
+  onYes(): void {
+    this.dialogRef.close(true);
+  }
+
+  onNo():void {
+    this.dialogRef.close(false);
+  }
+
 }
