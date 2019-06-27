@@ -15,10 +15,30 @@ import {
   MatMenuModule
 } from "@angular/material";
 import { HttpClientModule } from "@angular/common/http";
-import { Routes, RouterModule } from "@angular/router";
+import { RouterModule } from "@angular/router";
 import { NavBarComponent } from "./nav/nav.component";
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { ScatterModule, ScatterService } from '@kmeal-nx/scatter';
+import { UalModule } from 'ual-ngx-material-renderer';
+import { Chain } from 'universal-authenticator-library';
+import { Scatter } from 'ual-scatter';
+import { EOSIOAuth } from 'ual-eosio-reference-authenticator';
+
+
+const appName = 'kmeal';
+const chain: Chain = {
+  chainId: "5fff1dae8dc8e2fc4d5b23b2c7665c97f9e9d8edf2b6485a86ba311c25639191",
+  rpcEndpoints: [{
+    protocol: "https",
+    host: "api.kylin.alohaeos.com",
+    port: 443
+  }]
+};
+
+// const lynx = new Lynx([exampleNet])
+// const ledger = new Ledger([exampleNet])
+const scatter = new Scatter([chain], {appName});
+const eosioAuth = new EOSIOAuth([chain], { appName, protocol: 'eosio' });
 
 export function init_app(scatterService: ScatterService) {
   return () => scatterService.initScatter('Kylin');
@@ -29,6 +49,11 @@ export function init_app(scatterService: ScatterService) {
   imports: [
     BrowserModule,
     NxModule.forRoot(),
+    UalModule.forRoot({
+      chains: [chain],
+      authenticators: [scatter, eosioAuth],
+      appName
+    }),
     HttpClientModule,
     ApiModule,
     FlexLayoutModule,
@@ -39,7 +64,7 @@ export function init_app(scatterService: ScatterService) {
     MatButtonModule,
     MatSidenavModule,
     MatMenuModule,
-    ScatterModule,
+   // ScatterModule,
     RouterModule.forRoot(
       [
         {
@@ -65,7 +90,7 @@ export function init_app(scatterService: ScatterService) {
     LayoutModule
   ],
   providers: [
-    { provide: APP_INITIALIZER, useFactory: init_app, deps: [ScatterService], multi: true },
+  //  { provide: APP_INITIALIZER, useFactory: init_app, deps: [ScatterService], multi: true },
   ],
   bootstrap: [AppComponent]
 })
