@@ -4,6 +4,7 @@ import { SECTIONS, PROFILESECTION } from '../menu-items/menu-items';
 
 import { Network } from "scatterjs-core";
 import { Router, ActivatedRoute } from '@angular/router';
+import { UalService } from "ual-ngx-material-renderer";
 
 const SECTIONS_KEYS = Object.keys(SECTIONS);
 
@@ -29,15 +30,27 @@ export class NavBarComponent implements OnInit {
     return this._sectionKeys;
   }
 
+  user:any;
+  accountName:any;
+
   constructor(
     private router: Router,
-    private activatedRoute: ActivatedRoute,
+    private ualService: UalService,
     public scatterService: ScatterService) { }
 
   ngOnInit() {
-    if (this.scatterService && this.scatterService.scatter && this.scatterService.scatter.identity) {
-      this.addProfileNav();
+    //if (this.scatterService && this.scatterService.scatter && this.scatterService.scatter.identity) {
+     // this.addProfileNav();
+   // }
+   this.ualService.users$.subscribe(async val => {
+    if (val !== null && val.length > 0) {
+      this.user =  val[val.length - 1];
+      this.accountName = await this.user.getAccountName();
+    } else {
+      this.user = null;
+      this.accountName = '';
     }
+  });
   }
 
   toggleSideNav() {
@@ -50,8 +63,10 @@ export class NavBarComponent implements OnInit {
   }
 
   async login() {
+    /*
     await this.scatterService.loginorlogout();
-    this.addProfileNav();
+    this.addProfileNav();*/
+    this.ualService.showModal();
   }
 
   addProfileNav() {
@@ -65,9 +80,10 @@ export class NavBarComponent implements OnInit {
   }
 
   async logout() {
-    await this.scatterService.loginorlogout();
-    this._sectionKeys.pop();
-    this.router.navigate([''])
+    this.ualService.logoutUser();
+    //await this.scatterService.loginorlogout();
+    //this._sectionKeys.pop();
+    //this.router.navigate([''])
     
     // this.router.goto
   }
