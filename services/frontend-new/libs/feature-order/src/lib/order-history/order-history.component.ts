@@ -8,8 +8,8 @@ import { OrderHistoryDataSource } from "./order-history-datasource";
   styleUrls: ["./order-history.component.scss"]
 })
 export class OrderHistoryComponent implements OnInit {
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
   dataSource: OrderHistoryDataSource;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */

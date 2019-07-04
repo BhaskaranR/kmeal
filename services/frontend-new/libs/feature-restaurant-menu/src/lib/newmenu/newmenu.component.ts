@@ -7,7 +7,6 @@ import { Section } from "../model/section";
 import { SearchTransactionsForwardGQL } from "../generated/graphql";
 import { Subject } from "rxjs";
 import { takeUntil } from 'rxjs/operators';
-import { ScatterService } from "@kmeal-nx/scatter";
 
 @Component({
   selector: "kmeal-nx-newmenu",
@@ -18,11 +17,11 @@ export class NewmenuComponent implements OnInit, OnDestroy {
 
   selectedMenuBook : Book;
   selectedSection  : Section;
-  formSubmitted    : boolean = false;
+  formSubmitted = false;
   menubooks        : Book[] = [];
   sections         : Section[];
   selectedSections : Section[];
-  isReady          : boolean = false;
+  isReady = false;
 
   menuForm = this.fb.group({
     itemName       : [null, Validators.required],
@@ -46,7 +45,6 @@ export class NewmenuComponent implements OnInit, OnDestroy {
   constructor(private fb: FormBuilder,
     public snackBar: MatSnackBar,
     private menuService: MenuService,
-    private scatterService: ScatterService,
     private searchTransactionsForwardGQL: SearchTransactionsForwardGQL,
     public dialog: MatDialog,) { }
 
@@ -69,7 +67,7 @@ export class NewmenuComponent implements OnInit, OnDestroy {
   
   get vegetarian() {
     if (this.menuForm.get("vegetarian").value == 3) return;
-    let idx = this.menuForm.get("vegetarian").value;
+    const idx = this.menuForm.get("vegetarian").value;
     return this.CONST_VEGETARIAN[idx];
   }
 
@@ -81,13 +79,13 @@ export class NewmenuComponent implements OnInit, OnDestroy {
     this.menubooks = await this.menuService.getMyBooks();
     const sections = await this.menuService.getMySections();
     this.sections = sections.filter(sec => !!sec.is_active);
-    const accountName = await this.menuService.getAccountName();
-    const sub = this.searchTransactionsForwardGQL.subscribe({
-      "query": `receiver:${this.scatterService.code} auth:${accountName} status:executed  db.table:sec/${this.scatterService.code}`,
-    }).pipe(takeUntil(this.unSubscription$));
-    sub.subscribe((next) => {
-      console.log(next, 'update ?');
-    });
+    // const accountName = await this.menuService.getAccountName();
+    // const sub = this.searchTransactionsForwardGQL.subscribe({
+    //   "query": `receiver:${this.scatterService.code} auth:${accountName} status:executed  db.table:sec/${this.scatterService.code}`,
+    // }).pipe(takeUntil(this.unSubscription$));
+    // sub.subscribe((next) => {
+    //   console.log(next, 'update ?');
+    // });
     this.isReady = true;
   }
 

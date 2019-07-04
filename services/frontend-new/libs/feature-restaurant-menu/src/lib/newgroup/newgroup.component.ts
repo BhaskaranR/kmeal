@@ -7,7 +7,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialo
 import { SearchTransactionsForwardGQL } from "../generated/graphql";
 import { Subject } from "rxjs";
 import { takeUntil } from 'rxjs/operators';
-import { ScatterService } from "@kmeal-nx/scatter";
+import { UalService } from "ual-ngx-material-renderer";
 
 interface DeleteDialog {
   name:string,
@@ -27,12 +27,12 @@ export class NewgroupComponent implements OnInit, OnDestroy {
   });
 
   menubooks: Book[];
-  isReady:boolean = false;
+  isReady = false;
 
   constructor(
-    private scatterService: ScatterService,
     private searchTransactionsForwardGQL: SearchTransactionsForwardGQL,
     public dialog: MatDialog,
+    private ualService: UalService,
     private menuService: MenuService,
     public snackBar: MatSnackBar,
     private fb: FormBuilder) {
@@ -40,14 +40,17 @@ export class NewgroupComponent implements OnInit, OnDestroy {
 
   async ngOnInit() {
     const books = await this.menuService.getMyBooks();
+    if (books === void 0) {
+      return;
+    }
     this.menubooks = books.filter(mb => !!mb.is_active);
-    const accountName = await this.menuService.getAccountName();
-    const sub = this.searchTransactionsForwardGQL.subscribe({
-      "query": `receiver:${this.scatterService.code} auth:${accountName} status:executed  db.table:sec/${this.scatterService.code}`,
-    }).pipe(takeUntil(this.unSubscription$));
-    sub.subscribe((next) => {
-      console.log(next, 'update ?');
-    });
+    // const accountName = await this.ualService.getAccountName();
+    // const sub = this.searchTransactionsForwardGQL.subscribe({
+    //   "query": `receiver:${this.scatterService.code} auth:${accountName} status:executed  db.table:sec/${this.scatterService.code}`,
+    // }).pipe(takeUntil(this.unSubscription$));
+    // sub.subscribe((next) => {
+    //   console.log(next, 'update ?');
+    // });
     this.isReady = true;
   }
 

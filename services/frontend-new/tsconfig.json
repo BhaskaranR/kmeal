@@ -6,7 +6,7 @@
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "target": "es5",
+    "target": "es2015",
     "typeRoots": [
       "node_modules/@types"
     ],
@@ -20,12 +20,11 @@
       "*": ["types/*"],
       "@kmeal-env/*": ["apps/web-kmeal/src/environments/*"],
       "@kmeal-restaurant-env/*": ["apps/web-kmeal-restaurant/src/environments/*"],
-      "@env-api/environment": ["apps/api/src/environments/environment.ts"],
+      "@env/frontend": ["environments/environment.ts"],
+      "@env/restaurant": ["environments/environment-restaurant.ts"],
+      "@utils": ["libs/utils"],
       "@kmeal-nx/feature-order": [
         "libs/feature-order/src/index.ts"
-      ],
-      "@kmeal-nx/scatter": [
-        "libs/scatter/src/index.ts"
       ],
       "@kmeal-nx/ui": [
         "libs/ui/src/index.ts"

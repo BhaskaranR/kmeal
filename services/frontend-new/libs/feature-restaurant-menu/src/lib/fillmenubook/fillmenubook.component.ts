@@ -51,10 +51,8 @@ export class FillmenubookComponent implements OnInit {
     
   }
 
-
-
   newItemSelected(et: MatAutocompleteSelectedEvent) {
-    const indx = this.items.findIndex(i => i.item_name == et.option.value) ;
+    const indx = this.items.findIndex(i => i.item_name === et.option.value) ;
     this.selectedItemId  = this.items[indx].item_id;
   }
 

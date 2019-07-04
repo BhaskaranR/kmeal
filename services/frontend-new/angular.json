@@ -40,8 +40,8 @@
                     "configurations": {
                         "production": {
                             "fileReplacements": [{
-                                "replace": "apps/web-kmeal/src/environments/environment.ts",
-                                "with": "apps/web-kmeal/src/environments/environment.prod.ts"
+                                "replace": "environments/environment.ts",
+                                "with": "environments/environment.prod.ts"
                             }],
                             "optimization": true,
                             "outputHashing": "all",
@@ -161,7 +161,8 @@
                         "tsConfig": "apps/web-kmeal-restaurant/tsconfig.app.json",
                         "assets": [
                             "apps/web-kmeal-restaurant/src/favicon.ico",
-                            "apps/web-kmeal-restaurant/src/assets"
+                            "apps/web-kmeal-restaurant/src/assets",
+                            "apps/web-kmeal-restaurant/src/manifest.webmanifest"
                         ],
                         "styles": [
                             "apps/web-kmeal-restaurant/src/styles.scss"
@@ -171,8 +172,8 @@
                     "configurations": {
                         "production": {
                             "fileReplacements": [{
-                                "replace": "apps/web-kmeal-restaurant/src/environments/environment.ts",
-                                "with": "apps/web-kmeal-restaurant/src/environments/environment.prod.ts"
+                                "replace": "environments/environment-restaurant.ts",
+                                "with": "environments/environment-restaurant.prod.ts"
                             }],
                             "optimization": true,
                             "outputHashing": "all",
@@ -287,34 +288,6 @@
                         "tsConfig": [
                             "libs/feature-order/tsconfig.lib.json",
                             "libs/feature-order/tsconfig.spec.json"
-                        ],
-                        "exclude": [
-                            "**/node_modules/**"
-                        ]
-                    }
-                }
-            }
-        },
-        "scatter": {
-            "root": "libs/scatter",
-            "sourceRoot": "libs/scatter/src",
-            "projectType": "library",
-            "prefix": "kmeal-nx",
-            "architect": {
-                "test": {
-                    "builder": "@angular-devkit/build-angular:karma",
-                    "options": {
-                        "main": "libs/scatter/src/test.ts",
-                        "tsConfig": "libs/scatter/tsconfig.spec.json",
-                        "karmaConfig": "libs/scatter/karma.conf.js"
-                    }
-                },
-                "lint": {
-                    "builder": "@angular-devkit/build-angular:tslint",
-                    "options": {
-                        "tsConfig": [
-                            "libs/scatter/tsconfig.lib.json",
-                            "libs/scatter/tsconfig.spec.json"
                         ],
                         "exclude": [
                             "**/node_modules/**"

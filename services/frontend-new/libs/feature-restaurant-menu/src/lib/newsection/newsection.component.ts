@@ -8,7 +8,6 @@ import { Section } from "../model/section";
 import { SearchTransactionsForwardGQL } from '../generated/graphql';
 import { Subject } from "rxjs";
 import { takeUntil } from 'rxjs/operators';
-import { ScatterService } from "@kmeal-nx/scatter";
 import { DeleteBookDialog } from "../newgroup/newgroup.component";
 
 @Component({
@@ -32,7 +31,6 @@ export class NewsectionComponent implements OnInit, OnDestroy {
   isReady = false;
 
   constructor(
-    private scatterService: ScatterService,
     public dialog: MatDialog,
     private searchTransactionsForwardGQL: SearchTransactionsForwardGQL,
     private menuService: MenuService,
@@ -46,20 +44,18 @@ export class NewsectionComponent implements OnInit, OnDestroy {
     this.sections = sections.filter(sec => !!sec.is_active);
     this.selectedSections = this.sections;
     this.isReady = true;
-    const accountName = await this.menuService.getAccountName();
-    const sub = this.searchTransactionsForwardGQL.subscribe({
-      "query": `receiver:${this.scatterService.code} auth:${accountName} status:executed  db.table:sec/${this.scatterService.code}`,
-    }).pipe(takeUntil(this.unSubscription$));
-    sub.subscribe((next) => {
-      console.log(next, 'update ?');
-    })
+    //const accountName = await this.menuService.getAccountName();
+    // const sub = this.searchTransactionsForwardGQL.subscribe({
+    //   "query": `receiver:${this.scatterService.code} auth:${accountName} status:executed  db.table:sec/${this.scatterService.code}`,
+    // }).pipe(takeUntil(this.unSubscription$));
+    // sub.subscribe((next) => {
+    //   console.log(next, 'update ?');
+    // })
   }
 
   async dropSections(evt: CdkDragDrop<Section[]>) {
     const prev = evt.previousIndex;
-
-    let prevItem = this.selectedSections[prev];
-
+    const prevItem = this.selectedSections[prev];
     try{
       const resp = await this.menuService.setSecOrder(this.selectedMenuBook.book_id, prevItem.section_id, evt.currentIndex);
       const sections = await this.menuService.getMySections();
@@ -75,7 +71,7 @@ export class NewsectionComponent implements OnInit, OnDestroy {
     try {
       const resp = await this.menuService.addSection(this.selectedMenuBook.book_id, this.sectionsForm.get('section').value);
       console.log(this.menubooks, this.sections, this.selectedSections);
-       let newSec = new Section();
+       const newSec = new Section();
        newSec.section_name = this.sectionsForm.get('section').value;
        newSec.section_id   = this.sections[this.sections.length-1].section_id + 1;
        newSec.is_active    = 1;
@@ -106,8 +102,6 @@ export class NewsectionComponent implements OnInit, OnDestroy {
       if (!result) return;
       this.callContactToDeleteSection(id);
     });
-
-    
   }
 
   async callContactToDeleteSection(id){

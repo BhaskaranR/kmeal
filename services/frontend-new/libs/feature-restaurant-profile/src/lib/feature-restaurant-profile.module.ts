@@ -7,7 +7,7 @@ import { MenuSidenavComponent } from './sidenav/sidenav.component';
 import { HomeComponent } from './home/home.component';
 import { WalletComponent } from './wallet/wallet.component';
 import { SendComponent } from './send/send.component';
-import { MatSidenavModule, MatListModule, MatCardModule, MatIconModule, MatFormFieldModule, MatButtonModule, MatInputModule, MatRadioModule, MatSelectModule, MatGridListModule, MatMenuModule, MatAutocompleteModule, MatChipsModule, MatProgressSpinnerModule } from '@angular/material';
+import { MatSidenavModule, MatListModule, MatCardModule, MatIconModule, MatFormFieldModule, MatButtonModule, MatInputModule, MatRadioModule, MatSelectModule, MatGridListModule, MatMenuModule, MatAutocompleteModule, MatChipsModule, MatProgressSpinnerModule, MatSnackBarModule } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { PlacesSearchComponent } from './profile/places-search.component';
@@ -45,6 +45,7 @@ export const profileRoutes: Routes = [
     MatCardModule,
     MatMenuModule,
     MatSidenavModule,
+    MatSnackBarModule,
     MatAutocompleteModule,
     MatChipsModule,
     FlexLayoutModule,

@@ -20,31 +20,21 @@
         fxLayoutGap="10px"
         fxLayoutGap.xs="0px">
 
-        <div>
-            <button mat-button [matMenuTriggerFor]="envPicker">
-                {{scatterService.selectedNetwork?.name}}
-                <mat-icon>arrow_drop_down</mat-icon>
+        <button mat-button color="accent" *ngIf="user !== null;else signin" [matMenuTriggerFor]="toolbarUserMenu">
+                {{accountName}}
             </button>
-            <mat-menu #envPicker="matMenu">
-                <button mat-menu-item *ngFor="let env of scatterService.networks" (click)="onenvChanged(env)">
-                    {{env.name}}
-                </button>
-            </mat-menu>
-        </div>
-    
-        <figure class="action scatter" *ngIf="scatterService?.scatter?.identity">
-            <button mat-button [matMenuTriggerFor]="account">
-                {{scatterService.accountName}}
-            </button>
-            <mat-menu #account="matMenu">
+                <mat-menu #toolbarUserMenu="matMenu">
                 <button mat-menu-item (click)="viewAccount()">View Account</button>
-                <button mat-menu-item (click)="logout()">Log out</button>
+
+              <button mat-menu-item (click)="onLogoutClick()">
+                <span>Logout</span>
+              </button>
             </mat-menu>
-        </figure>
-    
-        <figure class="action scatter" *ngIf="!(scatterService.scatter.identity)">
-            <button mat-button  (click)="login()">Login</button>
-        </figure>
+            <ng-template #signin>
+                <button mat-button mat-stroked-button color="accent" (click)="onLoginClick()">
+                    Sign in
+                </button>
+            </ng-template>
     </div>
 </div>
 

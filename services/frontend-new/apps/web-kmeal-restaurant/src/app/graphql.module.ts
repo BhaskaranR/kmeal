@@ -11,7 +11,7 @@ import { SubscriptionClient } from "subscriptions-transport-ws";
 import { WebSocketLink } from "apollo-link-ws";
 import { HttpHeaders } from "@angular/common/http";
 import { createDfuseClient } from "@dfuse/client";
-import { environment } from '../environments/environment';
+import { environment } from "@env/restaurant";
 
 
 

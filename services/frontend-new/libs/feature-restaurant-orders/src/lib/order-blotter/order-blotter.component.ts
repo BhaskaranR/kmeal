@@ -8,8 +8,8 @@ import { OrderBlotterDataSource } from "./order-blotter-datasource";
   styleUrls: ["./order-blotter.component.scss"]
 })
 export class OrderBlotterComponent implements OnInit {
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
   dataSource: OrderBlotterDataSource;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */

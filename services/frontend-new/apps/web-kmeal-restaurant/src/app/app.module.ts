@@ -18,43 +18,45 @@ import { HttpClientModule } from "@angular/common/http";
 import { RouterModule } from "@angular/router";
 import { NavBarComponent } from "./nav/nav.component";
 import { FlexLayoutModule } from "@angular/flex-layout";
-import { ScatterModule, ScatterService } from '@kmeal-nx/scatter';
 import { UalModule } from 'ual-ngx-material-renderer';
 import { Chain } from 'universal-authenticator-library';
 import { Scatter } from 'ual-scatter';
 import { EOSIOAuth } from 'ual-eosio-reference-authenticator';
 
+import { ServiceWorkerModule } from '@angular/service-worker';
+import * as Eos from 'eosjs';
+import { environment } from "@env/restaurant";
+
+
 
 const appName = 'demo';
 const chain: Chain = {
-  chainId: "5fff1dae8dc8e2fc4d5b23b2c7665c97f9e9d8edf2b6485a86ba311c25639191",
+  chainId: environment.CHAIN_ID,
   rpcEndpoints: [{
-    protocol: "https",
-    host: "api.kylin.alohaeos.com",
-    port: 443
+    protocol: environment.RPC_PROTOCOL,
+    host: environment.RPC_HOST,
+    port: environment.RPC_PORT
   }]
 };
+
 
 // const lynx = new Lynx([exampleNet])
 // const ledger = new Ledger([exampleNet])
 const scatter = new Scatter([chain], {appName});
 const eosioAuth = new EOSIOAuth([chain], { appName, protocol: 'eosio' });
 
-export function init_app(scatterService: ScatterService) {
-  return () => scatterService.initScatter('Kylin');
-}
 
 @NgModule({
   declarations: [AppComponent, NavBarComponent],
   imports: [
     BrowserModule,
     NxModule.forRoot(),
-    
     UalModule.forRoot({
       chains: [chain],
       authenticators: [scatter, eosioAuth],
       appName
     }),
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     HttpClientModule,
     ApiModule,
     FlexLayoutModule,
@@ -65,7 +67,6 @@ export function init_app(scatterService: ScatterService) {
     MatButtonModule,
     MatSidenavModule,
     MatMenuModule,
-    ScatterModule,
     RouterModule.forRoot(
       [
         {
@@ -81,7 +82,7 @@ export function init_app(scatterService: ScatterService) {
           path: "profile",
           loadChildren: "@kmeal-nx/feature-restaurant-profile#FeatureRestaurantProfileModule"
         },
-        { path: "orders", loadChildren: "@kmeal-nx/feature-restaurant-orders#FeatureRestaurantOrdersModule" },
+        { path: "orders", loadChildren: "@kmeal-nx/feature-restaurant-orders#FeatureRestaurantOrdersModule" } ,
         { path: 'menus', loadChildren: '@kmeal-nx/feature-restaurant-menu#FeatureRestaurantMenuModule' },
       
       ],
@@ -89,9 +90,6 @@ export function init_app(scatterService: ScatterService) {
     ),
     BrowserAnimationsModule,
     LayoutModule
-  ],
-  providers: [
-    { provide: APP_INITIALIZER, useFactory: init_app, deps: [ScatterService], multi: true },
   ],
   bootstrap: [AppComponent]
 })

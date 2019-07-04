@@ -1,21 +1,12 @@
 import { Component } from '@angular/core';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
+import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'kmeal-nx-root',
   templateUrl: './app.component.html',
-  styles:[`
-  .main-content{
-    height:calc(100vh - 65px) !important;
-    overflow-y:auto;
-  }
-
-  .mat-toolbar{
-    background:white !important;
-  }
-  `]
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
 
@@ -24,6 +15,6 @@ export class AppComponent {
       map(result => result.matches)
     );
 
-  constructor(private breakpointObserver: BreakpointObserver) { }
+  constructor(private breakpointObserver: BreakpointObserver) {}
 
 }

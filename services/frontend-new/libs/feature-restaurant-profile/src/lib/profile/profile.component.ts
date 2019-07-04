@@ -32,8 +32,8 @@ export class ProfileComponent {
   category: string[] = [];
   allCategories: string[] = [];
 
-  @ViewChild('fruitInput') fruitInput: ElementRef<HTMLInputElement>;
-  @ViewChild('auto') matAutocomplete: MatAutocomplete;
+  @ViewChild('fruitInput', { static: true }) fruitInput: ElementRef<HTMLInputElement>;
+  @ViewChild('auto', { static: true }) matAutocomplete: MatAutocomplete;
   cuisinesObs: Observable<{
     alias: string,
     title: string

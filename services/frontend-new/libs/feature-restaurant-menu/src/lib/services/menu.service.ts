@@ -1,282 +1,329 @@
 import { Injectable } from "@angular/core";
-import { ScatterService } from "@kmeal-nx/scatter";
 import * as Eos from 'eosjs';
 import { Book } from '../model/books';
-import { Section} from '../model/section';
-import {Item } from '../model/item';
-const {format} = Eos.modules;
+import { Section } from '../model/section';
+import { Item } from '../model/item';
+import { UalService } from 'ual-ngx-material-renderer';
+import { environment } from "@env/restaurant";
+import { Subject } from "rxjs";
+import { takeUntil } from 'rxjs/operators';
+import { read, generateTransaction, transactionConfig } from '@utils';
+const { format } = Eos.modules;
 
 @Injectable()
 export class MenuService {
 
-    constructor(private scatterService: ScatterService) {}
-
-    async getAccountName() {
-        const identity = await this.scatterService.scatter.getIdentity({
-            accounts: [this.scatterService.selectedNetwork]
-        });
-        const account = identity.accounts[0];
-        return account.name;
-    }
-
-    async createbook(bookname: string) {
-        try {
-            const identity = await this.scatterService.scatter.getIdentity({
-                accounts: [this.scatterService.selectedNetwork]
-            });
-            const account = identity.accounts[0];
-            const opts = { authorization: `${account.name}@${account.authority}` };
-            const resp = await this.scatterService.eos.transaction([this.scatterService.code], contracts => {
-                
-                const res = contracts[this.scatterService.code].createbook(
-                    account.name,
-                    bookname,
-                    opts);
-                return res;
-            }, opts);
-            return resp;
-        }
-        catch (e) {
-            throw e;
-        }
-    }
-
-    async deleteBook(bookId: string) {
-        try {
-            const identity = await this.scatterService.scatter.getIdentity({
-                accounts: [this.scatterService.selectedNetwork]
-            });
-            const account = identity.accounts[0];
-            const opts = { authorization: `${account.name}@${account.authority}` };
-            const resp = await this.scatterService.eos.transaction([this.scatterService.code], contracts => {
-                
-                const res = contracts[this.scatterService.code].delbook(
-                    bookId,
-                    opts);
-                return res;
-            }, opts);
-            return resp;
-        }
-        catch (e) {
-            throw e;
-        }
-    }
-
-    async addSection(bookid, sectionname){
-        try {
-            const identity = await this.scatterService.scatter.getIdentity({
-                accounts: [this.scatterService.selectedNetwork]
-            });
-            const account = identity.accounts[0];
-            const opts = { authorization: `${account.name}@${account.authority}` };
-            const resp = await this.scatterService.eos.transaction([this.scatterService.code], contracts => {
-                const res = contracts[this.scatterService.code].addsections(
-                    bookid,
-                    sectionname,
-                    opts);
-                return res;
-            }, opts);
-            return resp;
-        }
-        catch (e) {
-            throw e;
-        }
-    }
-
-    async setSecOrder(bookid, sectionid, secOrder){
-        try {
-            const identity = await this.scatterService.scatter.getIdentity({
-                accounts: [this.scatterService.selectedNetwork]
-            });
-            const account = identity.accounts[0];
-            const opts = { authorization: `${account.name}@${account.authority}` };
-            const resp = await this.scatterService.eos.transaction([this.scatterService.code], contracts => {
-                
-                const res = contracts[this.scatterService.code].setsecorder(
-                    bookid,
-                    sectionid,
-                    secOrder,
-                    opts);
-                return res;
-            }, opts);
-            return resp;
-        }
-        catch (e) {
-            throw e;
-        }
-    }
+    reader;
+    constructor(private ualService: UalService) {
+       this.reader = Eos({httpEndpoint: `${environment.RPC_PROTOCOL}://${environment.RPC_HOST}:${environment.RPC_PORT}`, chainId:environment.CHAIN_ID});
+     }
 
 
-    async createItem(
-        itemname, 
-        description, 
-        photo = '', 
-        spice_level = 0, 
-        vegetarian, 
-        cooking_time, 
-        types){
-        try {
-            const identity = await this.scatterService.scatter.getIdentity({
-                accounts: [this.scatterService.selectedNetwork]
-            });
-            const account = identity.accounts[0];
-            const opts = { authorization: `${account.name}@${account.authority}` };
-            const resp = await this.scatterService.eos.transaction([this.scatterService.code], contracts => {
-                
-                const res = contracts[this.scatterService.code].createitem(
-                    account.name,
-                    itemname,
-                    description,
-                    photo,
-                    spice_level,
-                    vegetarian,
-                    cooking_time,
-                    types,
-                    opts);
-                return res;
-            }, opts);
-            return resp;
-        }
-        catch (e) {
-            console.log(e);
-            throw e;
-        }
-    }
-
-    async addToSection(bookId, sectionId, itemId, order){
-        try {
-            const identity = await this.scatterService.scatter.getIdentity({
-                accounts: [this.scatterService.selectedNetwork]
-            });
-            const account = identity.accounts[0];
-            const opts = { authorization: `${account.name}@${account.authority}` };
-            const resp = await this.scatterService.eos.transaction([this.scatterService.code], contracts => {
-                
-                const res = contracts[this.scatterService.code].addtosection(
-                    bookId,
-                    sectionId,
-                    itemId,
-                    order,
-                    opts);
-                return res;
-            }, opts);
-            return resp;
-        }
-        catch (e) {
-            throw e;
-        }
-    }
-
-    async deleteSection(bookid, sectionid){
-        try {
-            const identity = await this.scatterService.scatter.getIdentity({
-                accounts: [this.scatterService.selectedNetwork]
-            });
-            const account = identity.accounts[0];
-            const opts = { authorization: `${account.name}@${account.authority}` };
-            const resp = await this.scatterService.eos.transaction([this.scatterService.code], contracts => {
-                
-                const res = contracts[this.scatterService.code].delsec(
-                    bookid,
-                    sectionid,
-                    opts);
-                return res;
-            }, opts);
-            return resp;
-        }
-        catch (e) {
-            throw e;
-        }
-    }
-
-    async editItem(itemId, itemName, description, photo, spice_level, vegetarian, cooking_time,types){
-        try {
-            const identity = await this.scatterService.scatter.getIdentity({
-                accounts: [this.scatterService.selectedNetwork]
-            });
-            const account = identity.accounts[0];
-            const opts = { authorization: `${account.name}@${account.authority}` };
-            const resp = await this.scatterService.eos.transaction([this.scatterService.code], contracts => {
-                
-                const res = contracts[this.scatterService.code].edititem(
-                    itemId,
-                    itemName,
-                    description,
-                    photo,
-                    spice_level,
-                    vegetarian,
-                    cooking_time,
-                    types,
-                    opts);
-                return res;
-            }, opts);
-            return resp;
-        }
-        catch (e) {
-            throw e;
-        }
-    }
-
-    async removeFromSection(bookId, sectionId, itemId){
-        try {
-            const identity = await this.scatterService.scatter.getIdentity({
-                accounts: [this.scatterService.selectedNetwork]
-            });
-            const account = identity.accounts[0];
-            const opts = { authorization: `${account.name}@${account.authority}` };
-            const resp = await this.scatterService.eos.transaction([this.scatterService.code], contracts => {
-                
-                const res = contracts[this.scatterService.code].removefromsec(
-                    bookId,
-                    sectionId,
-                    itemId,
-                    opts);
-                return res;
-            }, opts);
-            return resp;
-        }
-        catch (e) {
-            throw e;
-        }
-    }
-
-    async createListing(bookId, 
-        itemId, 
-        sectionId, 
-        listType, 
-        listPrice,
-        minPrice,
-        qty,expires,
-        slidingRate,
-        sides){
+    createbook(bookname: string) {
+        const unsubscribe$ = new Subject();
+        return new Promise((resolve, reject) => {
             try {
-                const identity = await this.scatterService.scatter.getIdentity({
-                    accounts: [this.scatterService.selectedNetwork]
+                this.ualService.users$.pipe(takeUntil(unsubscribe$)).subscribe(async val => {
+                    if (val !== null && val.length > 0) {
+                        unsubscribe$.next();
+                        unsubscribe$.complete();
+                        const user = val[val.length - 1];
+                        const accountName = await user.getAccountName();
+                        const transaction = generateTransaction(accountName, "createbook", {
+                            account: accountName,
+                            bookname: bookname
+                        });
+                        const res = await user.signTransaction(transaction, transactionConfig);
+                        resolve(res);
+                    } else {
+                        this.ualService.showModal();
+                    }
                 });
-                const account = identity.accounts[0];
-                const opts = { authorization: `${account.name}@${account.authority}` };
-                const resp = await this.scatterService.eos.transaction([this.scatterService.code], contracts => {
-                    
-                    const res = contracts[this.scatterService.code].listitem(
-                        bookId,
-                        itemId,
-                        sectionId,
-                        listType,
-                        listPrice,
-                        minPrice,
-                        qty,
-                        expires,
-                        slidingRate,
-                        sides,
-                        opts);
-                    return res;
-                }, opts);
-                return resp;
             }
             catch (e) {
-                throw e;
+                reject(e);
             }
-        }
+        });
+    }
+
+    async deleteBook(bookid: string) {
+        const unsubscribe$ = new Subject();
+        return new Promise((resolve, reject) => {
+            try {
+                this.ualService.users$.pipe(takeUntil(unsubscribe$)).subscribe(async val => {
+                    if (val !== null && val.length > 0) {
+                        unsubscribe$.next();
+                        unsubscribe$.complete();
+                        const user = val[val.length - 1];
+                        const accountName = await user.getAccountName();
+                        const transaction = generateTransaction(accountName, "delbook", {
+                            bookid: bookid
+                        });
+                        const res = await user.signTransaction(transaction, transactionConfig);
+                        resolve(res);
+                    } else {
+                        this.ualService.showModal();
+                    }
+                });
+            }
+            catch (e) {
+                reject(e);
+            }
+        });
+    }
+
+    async addSection(bookid, sectionname) {
+
+        const unsubscribe$ = new Subject();
+        return new Promise((resolve, reject) => {
+            try {
+                this.ualService.users$.pipe(takeUntil(unsubscribe$)).subscribe(async val => {
+                    if (val !== null && val.length > 0) {
+
+                        unsubscribe$.next();
+                        unsubscribe$.complete();
+                        const user = val[val.length - 1];
+                        const accountName = await user.getAccountName();
+                        const transaction = generateTransaction(accountName, "addsections", {
+                            bookid: bookid,
+                            sectionname: sectionname
+                        });
+                        const res = await user.signTransaction(transaction, transactionConfig);
+                        resolve(res);
+                    } else {
+                        this.ualService.showModal();
+                    }
+                });
+            }
+            catch (e) {
+                reject(e);
+            }
+        });
+    }
+
+    async setSecOrder(bookid, sectionid, secOrder) {
+
+        const unsubscribe$ = new Subject();
+        return new Promise((resolve, reject) => {
+            try {
+                this.ualService.users$.pipe(takeUntil(unsubscribe$)).subscribe(async val => {
+                    if (val !== null && val.length > 0) {
+                        
+                        unsubscribe$.next();
+                        unsubscribe$.complete();
+                        const user = val[val.length - 1];
+                        const accountName = await user.getAccountName();
+                        const transaction = generateTransaction(accountName, "setsecorder", {
+                            bookid: bookid,
+                            sectionid: sectionid,
+                            sortorder: secOrder
+                        });
+                        const res = await user.signTransaction(transaction, transactionConfig);
+                        resolve(res);
+                    } else {
+                        this.ualService.showModal();
+                    }
+                });
+            }
+            catch (e) {
+                reject(e);
+            }
+        });
+    }
+
+    async createItem(itemname, description, photo = '', spice_level = 0, vegetarian, cooking_time, types) {
+
+        const unsubscribe$ = new Subject();
+        return new Promise((resolve, reject) => {
+            try {
+                this.ualService.users$.pipe(takeUntil(unsubscribe$)).subscribe(async val => {
+                    if (val !== null && val.length > 0) {
+
+                        unsubscribe$.next();
+                        unsubscribe$.complete();
+                        const user = val[val.length - 1];
+                        const accountName = await user.getAccountName();
+                        const transaction = generateTransaction(accountName, "createitem", {
+                            account: accountName,
+                            itemname: itemname,
+                            description: description,
+                            photo: photo,
+                            spicy_level: spice_level,
+                            vegetarian: vegetarian,
+                            cooking_time: cooking_time,
+                            types: types
+                        });
+                        const res = await user.signTransaction(transaction, transactionConfig);
+                        resolve(res);
+                    } else {
+                        this.ualService.showModal();
+                    }
+                });
+            }
+            catch (e) {
+                reject(e);
+            }
+        });
+    }
+
+    async addToSection(bookId, sectionId, itemId, order) {
+
+        const unsubscribe$ = new Subject();
+        return new Promise((resolve, reject) => {
+            try {
+                this.ualService.users$.pipe(takeUntil(unsubscribe$)).subscribe(async val => {
+                    if (val !== null && val.length > 0) {
+
+                        unsubscribe$.next();
+                        unsubscribe$.complete();
+                        const user = val[val.length - 1];
+                        const accountName = await user.getAccountName();
+                        const transaction = generateTransaction(accountName, "addtosection", {
+                            bookid: bookId,
+                            sectionid: sectionId,
+                            itemid: itemId,
+                            sortorder: order
+                        });
+                        const res = await user.signTransaction(transaction, transactionConfig);
+                        resolve(res);
+                    } else {
+                        this.ualService.showModal();
+                    }
+                });
+            }
+            catch (e) {
+                reject(e);
+            }
+        });
+    }
+
+    async deleteSection(bookid, sectionid) {
+        const unsubscribe$ = new Subject();
+        return new Promise((resolve, reject) => {
+            try {
+                this.ualService.users$.pipe(takeUntil(unsubscribe$)).subscribe(async val => {
+                    if (val !== null && val.length > 0) {
+
+                        unsubscribe$.next();
+                        unsubscribe$.complete();
+                        const user = val[val.length - 1];
+                        const accountName = await user.getAccountName();
+                        const transaction = generateTransaction(accountName, "delsec", {
+                            bookid: bookid,
+                            secid: sectionid,
+                        });
+                        const res = await user.signTransaction(transaction, transactionConfig);
+                        resolve(res);
+                    } else {
+                        this.ualService.showModal();
+                    }
+                });
+            }
+            catch (e) {
+                reject(e);
+            }
+        });
+    }
+
+    async editItem(itemid, itemname, description, photo, spice_level, vegetarian, cooking_time, types) {
+
+        const unsubscribe$ = new Subject();
+        return new Promise((resolve, reject) => {
+            try {
+                this.ualService.users$.pipe(takeUntil(unsubscribe$)).subscribe(async val => {
+                    if (val !== null && val.length > 0) {
+
+                        unsubscribe$.next();
+                        unsubscribe$.complete();
+                        const user = val[val.length - 1];
+                        const accountName = await user.getAccountName();
+                        const transaction = generateTransaction(accountName, "edititem", {
+                            itemid: itemid,
+                            itemname: itemname,
+                            description: description,
+                            photo: photo,
+                            spicy_level: spice_level,
+                            vegetarian: vegetarian,
+                            cooking_time: cooking_time,
+                            types: types
+                        });
+                        const res = await user.signTransaction(transaction, transactionConfig);
+                        resolve(res);
+                    } else {
+                        this.ualService.showModal();
+                    }
+                });
+            }
+            catch (e) {
+                reject(e);
+            }
+        });
+    }
+
+    async removeFromSection(bookid, sectionid, itemid) {
+
+        const unsubscribe$ = new Subject();
+        return new Promise((resolve, reject) => {
+            try {
+                this.ualService.users$.pipe(takeUntil(unsubscribe$)).subscribe(async val => {
+                    if (val !== null && val.length > 0) {
+
+                        unsubscribe$.next();
+                        unsubscribe$.complete();
+                        const user = val[val.length - 1];
+                        const accountName = await user.getAccountName();
+                        const transaction = generateTransaction(accountName, "removefromsec", {
+                            bookid: bookid,
+                            sectionid: sectionid,
+                            itemid: itemid,
+                        });
+                        const res = await user.signTransaction(transaction, transactionConfig);
+                        resolve(res);
+                    } else {
+                        this.ualService.showModal();
+                    }
+                });
+            }
+            catch (e) {
+                reject(e);
+            }
+        });
+    }
+
+    async createListing(bookId, itemId, sectionId, listType, listPrice, minPrice, qty, expires, slidingRate, sides) {
+        const unsubscribe$ = new Subject();
+        return new Promise((resolve, reject) => {
+            try {
+                this.ualService.users$.pipe(takeUntil(unsubscribe$)).subscribe(async val => {
+                    if (val !== null && val.length > 0) {
+                        unsubscribe$.next();
+                        unsubscribe$.complete();
+                        const user = val[val.length - 1];
+                        const accountName = await user.getAccountName();
+                        const transaction = generateTransaction(accountName, "listitem", {
+                            book_id: bookId,
+                            item_id: itemId,
+                            section_id: sectionId,
+                            list_type: listType,
+                            list_price: listPrice,
+                            min_price: minPrice,
+                            quantity: qty,
+                            expires: expires,
+                            sliding_rate: slidingRate,
+                            sides: sides
+                        });
+                        const res = await user.signTransaction(transaction, transactionConfig);
+                        resolve(res);
+                    } else {
+                        this.ualService.showModal();
+                    }
+                });
+            }
+            catch (e) {
+                reject(e);
+            }
+        });
+    }
 
 
 
@@ -285,53 +332,60 @@ export class MenuService {
     /**               READ                  **/
     /*****************************************/
 
-    async getMyBooks(){
-        const identity = await this.scatterService.scatter.getIdentity({
-            accounts: [this.scatterService.selectedNetwork]
-        });
-        const account = identity.accounts[0];
-        return await this.scatterService.read({
-            table:'books',
-            limit:100,
-            rowsOnly:true,
-            key_type:'i64',
+    async getMyBooks() {
+        const users = this.ualService.users$.value;
+         if (users == null || users.length <=0) {
+             return;
+         }
+        const accountName = await users[0].getAccountName();
+        const books = await read({
+            reader: this.reader,
+            table: 'books',
+            limit: 100,
+            rowsOnly: true,
+            key_type: 'i64',
             model: Book,
-            index_position:2,
-            index:format.encodeName(account.name, false)
+            index_position: 2,
+            index: format.encodeName(accountName, false)
         });
+        return books;
     }
 
 
 
-    async getMySections(){
-        const identity = await this.scatterService.scatter.getIdentity({
-            accounts: [this.scatterService.selectedNetwork]
-        });
-        const account = identity.accounts[0];
-        return await this.scatterService.read({
-            table:'sec',
-            limit:100,
-            rowsOnly:true,
-            key_type:'i64',
+    async getMySections() {
+        const users = this.ualService.users$.value;
+         if (users == null || users.length <=0) {
+             return;
+         }
+        const accountName = await users[0].getAccountName();
+        return await read({
+            reader: this.reader,
+            table: 'sec',
+            limit: 100,
+            rowsOnly: true,
+            key_type: 'i64',
             model: Section,
-            index_position:2,
-            index:format.encodeName(account.name, false)
+            index_position: 2,
+            index: format.encodeName(accountName, false)
         });
     }
 
-    async getMyItems(){
-        const identity = await this.scatterService.scatter.getIdentity({
-            accounts: [this.scatterService.selectedNetwork]
-        });
-        const account = identity.accounts[0];
-        return await this.scatterService.read({
-            table:'items',
-            limit:100,
-            rowsOnly:true,
-            key_type:'i64',
+    async getMyItems() {
+        const users = this.ualService.users$.value;
+        if (users == null || users.length <=0) {
+            return;
+        }
+       const accountName = await users[0].getAccountName();
+        return await read({
+            reader: this.reader,
+            table: 'items',
+            limit: 100,
+            rowsOnly: true,
+            key_type: 'i64',
             model: Item,
-            index_position:2,
-            index:format.encodeName(account.name, false)
+            index_position: 2,
+            index: format.encodeName(accountName, false)
         });
     }
 }

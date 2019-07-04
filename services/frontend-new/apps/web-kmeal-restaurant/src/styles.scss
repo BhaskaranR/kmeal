@@ -2,6 +2,8 @@
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
 @import '~@angular/material/theming';
+
+@import '~ual-ngx-material-renderer/theme';
 // Plus imports for other components in your app.
 
 // Include the common styles for Angular Material. We include this here so that you only
@@ -25,6 +27,8 @@ $web-kmeal-restaurant-theme: mat-light-theme($web-kmeal-restaurant-primary, $web
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
 @include angular-material-theme($web-kmeal-restaurant-theme);
+
+@include ual-theme($web-kmeal-restaurant-theme);
 
 /* You can add global styles to this file, and also import other style files */
 @import 'scss/index';

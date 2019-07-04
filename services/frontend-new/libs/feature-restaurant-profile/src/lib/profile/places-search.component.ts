@@ -16,9 +16,9 @@ export class PlacesSearchComponent  implements OnInit{
     geometry: any;
     
     userInput:string;
-    isLoaded:boolean = true;
+    isLoaded = true;
     @Output() public onAddressChangeEvent = new EventEmitter<{[key:string]:string}>();
-    @ViewChild("placesRef") placesRef : GooglePlaceDirective;
+    @ViewChild("placesRef", {static: true}) placesRef : GooglePlaceDirective;
     @Input() searchOnBlur;
     
     constructor() {}

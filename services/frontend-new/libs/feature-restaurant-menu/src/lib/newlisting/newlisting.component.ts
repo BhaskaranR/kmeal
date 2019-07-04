@@ -7,7 +7,6 @@ import { Section } from '../model/section';
 import { Item } from '../model/item';
 import * as moment from 'moment';
 import { SearchTransactionsForwardGQL } from '../generated/graphql';
-import { ScatterService } from '@kmeal-nx/scatter';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -18,19 +17,25 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class NewlistingComponent implements OnInit , OnDestroy{
 
-  menubooks       : Book[] = [];
-  isNonLinear     : boolean = false;
-  isNonEditable   : boolean = false;
-  pricetype       : string = 'Regular';
-  @ViewChild('linearVerticalStepper') stepper: MatStepper;
-  selectedMenuBook: Book;
-  selectedSection : Section;
-  priceHeader     : string = "Enter pricing information";
-  isReady         : boolean = false;
-  unSubscription$ : Subject<any> = new Subject();
-
   /** Returns a FormArray with the name 'formArray'. */
   get formArray(): AbstractControl | null { return this.pricingForm.get('formArray'); }
+
+  constructor(private fb: FormBuilder,
+    public menuService:MenuService,
+    public snackBar: MatSnackBar,
+    private searchTransactionsForwardGQL: SearchTransactionsForwardGQL,
+    ) {}
+
+  menubooks       : Book[] = [];
+  isNonLinear = false;
+  isNonEditable = false;
+  pricetype = 'Regular';
+  @ViewChild('linearVerticalStepper', { static: true }) stepper: MatStepper;
+  selectedMenuBook: Book;
+  selectedSection : Section;
+  priceHeader = "Enter pricing information";
+  isReady = false;
+  unSubscription$ : Subject<any> = new Subject();
 
   dynamicPricingForm = {
     "list_type": ['1', Validators.required],
@@ -67,6 +72,11 @@ export class NewlistingComponent implements OnInit , OnDestroy{
     ])
   });
 
+  sections:Section[];
+  selectedSections: Section[];
+  items:Item[];
+  selectedItems: Item[];
+
   
 
   
@@ -102,34 +112,22 @@ export class NewlistingComponent implements OnInit , OnDestroy{
     (<FormArray>item.get("sides")).removeAt(indx);
   }
 
-  constructor(private fb: FormBuilder,
-    public menuService:MenuService,
-    public snackBar: MatSnackBar,
-    private scatterService: ScatterService,
-    private searchTransactionsForwardGQL: SearchTransactionsForwardGQL,
-    ) {}
-
   formatLabel(value: number | null) {
     return value + "%";
   }
-
-  sections:Section[];
-  selectedSections: Section[];
-  items:Item[];
-  selectedItems: Item[];
   async ngOnInit() {
     this.menubooks = await this.menuService.getMyBooks();
     this.sections = await this.menuService.getMySections();
     this.items = await this.menuService.getMyItems();
     console.log(this.menubooks, this.sections, this.items);
 
-    const accountName = await this.menuService.getAccountName();
-    const sub = this.searchTransactionsForwardGQL.subscribe({
-      "query": `receiver:${this.scatterService.code} auth:${accountName} status:executed  db.table:sec/${this.scatterService.code}`,
-    }).pipe(takeUntil(this.unSubscription$));
-    sub.subscribe((next) => {
-      console.log(next, 'update ?');
-    });
+    //const accountName = await this.menuService.getAccountName();
+    // const sub = this.searchTransactionsForwardGQL.subscribe({
+    //   "query": `receiver:${this.scatterService.code} auth:${accountName} status:executed  db.table:sec/${this.scatterService.code}`,
+    // }).pipe(takeUntil(this.unSubscription$));
+    // sub.subscribe((next) => {
+    //   console.log(next, 'update ?');
+    // });
 
     this.isReady = true;
   }
@@ -220,11 +218,11 @@ export class NewlistingComponent implements OnInit , OnDestroy{
 
   private convertDatesToSeconds(date, time){
     time = time + ":00";
-    let now = moment();
-    let end = moment(moment(date).format('MM/DD/YYYY') + ' ' + time);
+    const now = moment();
+    const end = moment(moment(date).format('MM/DD/YYYY') + ' ' + time);
     console.log(end, time);
-    let duration = moment.duration(end.diff(now) );
-    let secs = duration.asSeconds();
+    const duration = moment.duration(end.diff(now) );
+    const secs = duration.asSeconds();
     return secs.toString();
   }
 
