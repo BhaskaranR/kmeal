@@ -89,7 +89,7 @@
         "subscriptions-transport-ws": "^0.9.15",
         "terser": "^3.14.1",
         "ual-eosio-reference-authenticator": "^0.1.1",
-        "ual-ngx-material-renderer": "^1.0.1",
+        "ual-ngx-material-renderer": "^1.0.2",
         "ual-plainjs-renderer": "^0.1.0",
         "ual-scatter": "^0.1.3",
         "ual-token-pocket": "^0.1.1",

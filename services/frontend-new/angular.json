@@ -162,7 +162,11 @@
                         "assets": [
                             "apps/web-kmeal-restaurant/src/favicon.ico",
                             "apps/web-kmeal-restaurant/src/assets",
-                            "apps/web-kmeal-restaurant/src/manifest.webmanifest"
+                            "apps/web-kmeal-restaurant/src/manifest.webmanifest",
+                            "apps/web-kmeal-restaurant/src/app-metadata.json",
+                            "apps/web-kmeal-restaurant/src/chain-manifests.json",
+                            "apps/web-kmeal-restaurant/src/icon.png",
+                            "apps/web-kmeal-restaurant/src/eosiologo.png"
                         ],
                         "styles": [
                             "apps/web-kmeal-restaurant/src/styles.scss"
