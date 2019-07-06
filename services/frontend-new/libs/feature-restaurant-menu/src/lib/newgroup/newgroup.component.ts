@@ -29,30 +29,42 @@ export class NewgroupComponent implements OnInit, OnDestroy {
   menubooks: Book[];
   isReady = false;
 
+  code  = 'kmealowner12';
+    coincode = 'kmealcoin1io';
+
   constructor(
     private searchTransactionsForwardGQL: SearchTransactionsForwardGQL,
     public dialog: MatDialog,
-    private ualService: UalService,
     private menuService: MenuService,
     public snackBar: MatSnackBar,
     private fb: FormBuilder) {
   }
 
+  user;
+  accountName;
   async ngOnInit() {
+    this.user = await this.menuService.getUser();
+    this.accountName = await this.menuService.getAccountName();
+    console.log(this.user, this.accountName);
+
     const books = await this.menuService.getMyBooks();
     if (books === void 0) {
       return;
     }
     this.menubooks = books.filter(mb => !!mb.is_active);
-    // const accountName = await this.ualService.getAccountName();
-    // const sub = this.searchTransactionsForwardGQL.subscribe({
-    //   "query": `receiver:${this.scatterService.code} auth:${accountName} status:executed  db.table:sec/${this.scatterService.code}`,
-    // }).pipe(takeUntil(this.unSubscription$));
-    // sub.subscribe((next) => {
-    //   console.log(next, 'update ?');
-    // });
+    console.log(this.menubooks);
+
+    const sub = this.searchTransactionsForwardGQL
+    .subscribe({
+       "query": `receiver:kmealowner12 auth:${this.accountName} status:executed  db.table:sec/kmealowner12`,
+    }).pipe(takeUntil(this.unSubscription$));
+    sub.subscribe((next) => {
+       console.log(next, 'update ?');
+     });
+
     this.isReady = true;
   }
+
 
   async onBookSubmit() {
     try {

@@ -26,6 +26,7 @@ import { EOSIOAuth } from 'ual-eosio-reference-authenticator';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import * as Eos from 'eosjs';
 import { environment } from "@env/restaurant";
+import {AuthGuard} from './app.guard';
 
 
 
@@ -80,10 +81,18 @@ const eosioAuth = new EOSIOAuth([chain], { appName, protocol: 'eosio' });
         },
         {
           path: "profile",
-          loadChildren: "@kmeal-nx/feature-restaurant-profile#FeatureRestaurantProfileModule"
+          loadChildren: "@kmeal-nx/feature-restaurant-profile#FeatureRestaurantProfileModule",
+          canActivate:[AuthGuard],
         },
-        { path: "orders", loadChildren: "@kmeal-nx/feature-restaurant-orders#FeatureRestaurantOrdersModule" } ,
-        { path: 'menus', loadChildren: '@kmeal-nx/feature-restaurant-menu#FeatureRestaurantMenuModule' },
+        { 
+          path: "orders", 
+          loadChildren: "@kmeal-nx/feature-restaurant-orders#FeatureRestaurantOrdersModule",
+          canActivate:[AuthGuard] 
+        } ,
+        { 
+          path: 'menus', 
+          loadChildren: '@kmeal-nx/feature-restaurant-menu#FeatureRestaurantMenuModule',
+          canActivate:[AuthGuard] },
       
       ],
       { paramsInheritanceStrategy: "always" }
@@ -91,6 +100,7 @@ const eosioAuth = new EOSIOAuth([chain], { appName, protocol: 'eosio' });
     BrowserAnimationsModule,
     LayoutModule
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  providers:[AuthGuard]
 })
 export class AppModule { }

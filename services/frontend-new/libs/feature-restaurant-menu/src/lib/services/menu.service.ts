@@ -14,6 +14,8 @@ const { format } = Eos.modules;
 export class MenuService {
 
     reader;
+    user;
+    accountName;
     constructor(private ualService: UalService) {
        this.reader = Eos({httpEndpoint: `${environment.RPC_PROTOCOL}://${environment.RPC_HOST}:${environment.RPC_PORT}`, chainId:environment.CHAIN_ID});
      }
@@ -46,7 +48,7 @@ export class MenuService {
         });
     }
 
-    async deleteBook(bookid: string) {
+    deleteBook(bookid: string) {
         const unsubscribe$ = new Subject();
         return new Promise((resolve, reject) => {
             try {
@@ -72,7 +74,7 @@ export class MenuService {
         });
     }
 
-    async addSection(bookid, sectionname) {
+    addSection(bookid, sectionname) {
 
         const unsubscribe$ = new Subject();
         return new Promise((resolve, reject) => {
@@ -101,7 +103,7 @@ export class MenuService {
         });
     }
 
-    async setSecOrder(bookid, sectionid, secOrder) {
+    setSecOrder(bookid, sectionid, secOrder) {
 
         const unsubscribe$ = new Subject();
         return new Promise((resolve, reject) => {
@@ -131,7 +133,7 @@ export class MenuService {
         });
     }
 
-    async createItem(itemname, description, photo = '', spice_level = 0, vegetarian, cooking_time, types) {
+    createItem(itemname, description, photo = '', spice_level = 0, vegetarian, cooking_time, types) {
 
         const unsubscribe$ = new Subject();
         return new Promise((resolve, reject) => {
@@ -166,7 +168,7 @@ export class MenuService {
         });
     }
 
-    async addToSection(bookId, sectionId, itemId, order) {
+    addToSection(bookId, sectionId, itemId, order) {
 
         const unsubscribe$ = new Subject();
         return new Promise((resolve, reject) => {
@@ -197,7 +199,7 @@ export class MenuService {
         });
     }
 
-    async deleteSection(bookid, sectionid) {
+    deleteSection(bookid, sectionid) {
         const unsubscribe$ = new Subject();
         return new Promise((resolve, reject) => {
             try {
@@ -225,7 +227,7 @@ export class MenuService {
         });
     }
 
-    async editItem(itemid, itemname, description, photo, spice_level, vegetarian, cooking_time, types) {
+    editItem(itemid, itemname, description, photo, spice_level, vegetarian, cooking_time, types) {
 
         const unsubscribe$ = new Subject();
         return new Promise((resolve, reject) => {
@@ -260,7 +262,7 @@ export class MenuService {
         });
     }
 
-    async removeFromSection(bookid, sectionid, itemid) {
+    removeFromSection(bookid, sectionid, itemid) {
 
         const unsubscribe$ = new Subject();
         return new Promise((resolve, reject) => {
@@ -290,7 +292,7 @@ export class MenuService {
         });
     }
 
-    async createListing(bookId, itemId, sectionId, listType, listPrice, minPrice, qty, expires, slidingRate, sides) {
+    createListing(bookId, itemId, sectionId, listType, listPrice, minPrice, qty, expires, slidingRate, sides) {
         const unsubscribe$ = new Subject();
         return new Promise((resolve, reject) => {
             try {
@@ -351,8 +353,6 @@ export class MenuService {
         return books;
     }
 
-
-
     async getMySections() {
         const users = this.ualService.users$.value;
          if (users == null || users.length <=0) {
@@ -386,6 +386,38 @@ export class MenuService {
             model: Item,
             index_position: 2,
             index: format.encodeName(accountName, false)
+        });
+    }
+
+    getUser(){
+        return new Promise((res, rej) => {
+            if (this.user) res(this.user);
+
+            const unsubscribe$ = new Subject();
+            try{
+                this.ualService.users$.pipe(takeUntil(unsubscribe$)).subscribe(async val => {
+                    if (val !== null && val.length > 0) {
+                        unsubscribe$.next();
+                        unsubscribe$.complete();
+                        this.user = val[val.length - 1];
+                        this.accountName = await this.user.getAccountName();
+                        res(this.user);
+                    }
+                })
+            }
+            catch(e){
+                rej(e);
+            }
+            
+        })
+    }
+
+    getAccountName(){
+        return new Promise(async (res, rej)=>{
+            if (this.accountName) res(this.accountName);
+
+            const user = await this.getUser();
+            res(this.accountName);
         });
     }
 }

@@ -1,25 +1,29 @@
 subscription  searchTransactionsForward($query: String! ) {
- searchTransactionsForward(query: $query, limit: 1) {
-       cursor
-       irreversibleBlockNum
-     trace {
-       matchingActions {
-         receiver
-         account
-         name
-         json
-         dbOps {
+searchTransactionsForward(query: "receiver:kmealowner12 status:executed  db.table:sec/kmealowner12", limit: 1) 
+  {
+    cursor
+    irreversibleBlockNum
+    trace {
+      matchingActions {
+        receiver
+        account
+        name
+        json
+        dbOps {
            operation
            key {
              code
              table
              scope
            }
-           newJSON
+           newJSON {
+             object
+             error
+           }
            oldData
            newData
-         }
-       }
-     }
-   }
+        }
+      }
+    }
+  }
 }

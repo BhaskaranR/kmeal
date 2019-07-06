@@ -5,11 +5,9 @@ import { InMemoryCache } from "apollo-cache-inmemory";
 import { split, from, ApolloLink } from "apollo-link";
 import { getMainDefinition } from "apollo-utilities";
 import { OperationDefinitionNode } from "graphql";
-
 import { onError } from "apollo-link-error";
 import { SubscriptionClient } from "subscriptions-transport-ws";
 import { WebSocketLink } from "apollo-link-ws";
-import { HttpHeaders } from "@angular/common/http";
 import { createDfuseClient } from "@dfuse/client";
 import { environment } from "@env/restaurant";
 

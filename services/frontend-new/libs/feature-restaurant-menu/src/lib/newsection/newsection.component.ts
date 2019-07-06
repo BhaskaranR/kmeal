@@ -32,7 +32,6 @@ export class NewsectionComponent implements OnInit, OnDestroy {
 
   constructor(
     public dialog: MatDialog,
-    private searchTransactionsForwardGQL: SearchTransactionsForwardGQL,
     private menuService: MenuService,
     public snackBar: MatSnackBar,
     private fb: FormBuilder) {
