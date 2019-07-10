@@ -88,3 +88,137 @@ export type Uint64 = any;
 
 /** Block number in the chain */
 export type Json = any;
+
+// ====================================================
+// Documents
+// ====================================================
+
+export namespace SearchTransactionsForward {
+  export type Variables = {
+    query: string;
+  };
+
+  export type Subscription = {
+    __typename?: "Subscription";
+
+    searchTransactionsForward: SearchTransactionsForward;
+  };
+
+  export type SearchTransactionsForward = {
+    __typename?: "SearchTransactionForwardResponse";
+
+    cursor: string;
+
+    irreversibleBlockNum: Uint32;
+
+    trace: Trace | null;
+  };
+
+  export type Trace = {
+    __typename?: "TransactionTrace";
+
+    matchingActions: MatchingActions[];
+  };
+
+  export type MatchingActions = {
+    __typename?: "ActionTrace";
+
+    receiver: string;
+
+    account: string;
+
+    name: string;
+
+    json: Json | null;
+
+    dbOps: DbOps[];
+  };
+
+  export type DbOps = {
+    __typename?: "DBOp";
+
+    operation: DbOperation;
+
+    key: Key;
+
+    newJSON: NewJson;
+
+    oldData: string | null;
+
+    newData: string | null;
+  };
+
+  export type Key = {
+    __typename?: "DBOpKey";
+
+    code: string;
+
+    table: string;
+
+    scope: string;
+  };
+
+  export type NewJson = {
+    __typename?: "DecodedObject";
+
+    object: Json | null;
+
+    error: string | null;
+  };
+}
+
+// ====================================================
+// START: Apollo Angular template
+// ====================================================
+
+import { Injectable } from "@angular/core";
+import * as Apollo from "apollo-angular";
+
+import gql from "graphql-tag";
+
+// ====================================================
+// Apollo Services
+// ====================================================
+
+@Injectable({
+  providedIn: "root"
+})
+export class SearchTransactionsForwardGQL extends Apollo.Subscription<
+  SearchTransactionsForward.Subscription,
+  SearchTransactionsForward.Variables
+> {
+  document: any = gql`
+    subscription searchTransactionsForward($query: String!) {
+      searchTransactionsForward(query: $query, limit: 1) {
+        cursor
+        irreversibleBlockNum
+        trace {
+          matchingActions {
+            receiver
+            account
+            name
+            json
+            dbOps {
+              operation
+              key {
+                code
+                table
+                scope
+              }
+              newJSON {
+                object
+                error
+              }
+              oldData
+              newData
+            }
+          }
+        }
+      }
+    }
+  `;
+}
+
+// ====================================================
+// END: Apollo Angular template
+// ====================================================

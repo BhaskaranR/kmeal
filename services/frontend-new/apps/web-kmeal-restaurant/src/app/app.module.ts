@@ -24,7 +24,6 @@ import { Scatter } from 'ual-scatter';
 import { EOSIOAuth } from 'ual-eosio-reference-authenticator';
 
 import { ServiceWorkerModule } from '@angular/service-worker';
-import * as Eos from 'eosjs';
 import { environment } from "@env/restaurant";
 import {AuthGuard} from './app.guard';
 
