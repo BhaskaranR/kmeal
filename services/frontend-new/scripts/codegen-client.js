@@ -14,7 +14,7 @@ function generateLib(lib) {
     mkdirSync(generatedDirPath);
   }
   return {
-    output: resolve(__dirname, `libs/${lib}/src/lib/generated/graphql.ts`),
+    output: resolve(__dirname, `../libs/${lib}/src/lib/generated/graphql.ts`),
     config: {
       documents: `./libs/${lib}/src/lib/graphql/**/*.graphql`,
       plugins: [
