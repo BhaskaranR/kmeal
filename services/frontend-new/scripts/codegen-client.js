@@ -1,15 +1,12 @@
 const { resolve, join, relative } = require('path');
 const { lstatSync, readdirSync, existsSync, mkdirSync } = require('fs');
 
-function listLibs() {
-  const libs = resolve(__dirname, 'libs');
-  const isDirectory = source => lstatSync(source).isDirectory();
-
-  return readdirSync(libs)
-    .map(name => join(libs, name))
-    .filter(isDirectory)
-    .map(source => relative(libs, source));
-}
+const libs = [
+'feature-home',
+'feature-restaurant',
+'feature-order',
+'feature-profile', 
+'feature-search']
 
 function generateLib(lib) {
   const generatedDirPath = `libs/${lib}/src/lib/generated`;
@@ -32,7 +29,7 @@ function generateLib(lib) {
 module.exports = {
   schema: "https://kmeal-api.herokuapp.com/v1alpha1/graphql",
   overwrite: true,
-  generates: listLibs()
+  generates: libs
     .map(generateLib)
     .reduce(
       (generates, lib) => ({

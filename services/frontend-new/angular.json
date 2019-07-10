@@ -608,34 +608,6 @@
                 }
             }
         },
-        "feature-core": {
-            "root": "libs/feature-core",
-            "sourceRoot": "libs/feature-core/src",
-            "projectType": "library",
-            "prefix": "kmeal-nx",
-            "architect": {
-                "test": {
-                    "builder": "@angular-devkit/build-angular:karma",
-                    "options": {
-                        "main": "libs/feature-core/src/test.ts",
-                        "tsConfig": "libs/feature-core/tsconfig.spec.json",
-                        "karmaConfig": "libs/feature-core/karma.conf.js"
-                    }
-                },
-                "lint": {
-                    "builder": "@angular-devkit/build-angular:tslint",
-                    "options": {
-                        "tsConfig": [
-                            "libs/feature-core/tsconfig.lib.json",
-                            "libs/feature-core/tsconfig.spec.json"
-                        ],
-                        "exclude": [
-                            "**/node_modules/**"
-                        ]
-                    }
-                }
-            }
-        },
         "feature-search": {
             "root": "libs/feature-search",
             "sourceRoot": "libs/feature-search/src",

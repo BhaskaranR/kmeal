@@ -2,24 +2,27 @@ subscription  searchTransactionsForward($query: String! ) {
  searchTransactionsForward(query: $query, limit: 1) {
        cursor
        irreversibleBlockNum
-     trace {
-       matchingActions {
-         receiver
-         account
-         name
-         json
-         dbOps {
-           operation
-           key {
-             code
-             table
-             scope
-           }
-           newJSON
-           oldData
-           newData
-         }
-       }
-     }
+       trace {
+        matchingActions {
+          receiver
+          account
+          name
+          json
+          dbOps {
+            operation
+            key {
+              code
+              table
+              scope
+            }
+            newJSON {
+              object
+              error
+            }
+            oldData
+            newData
+          }
+        }
+      }
    }
 }

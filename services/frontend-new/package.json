@@ -30,7 +30,8 @@
         "build-prod.web-restaurant": "ng build --prod web-kmeal-restaurant",
         "deploy.web.kmeal.prod": "ng build --prod web-kmeal && rm -rf firebase.json && cp firebase.kmeal.json firebase.json || true && firebase use web.kmeal-prod && firebase deploy || true",
         "deploy.web.kmeal-restaurant.prod": "ng build --prod web-kmeal-restaurant && rm -rf firebase.json && cp firebase.kmeal-restaurant.json firebase.json || true && firebase use web.kmeal-restaurant-prod && firebase deploy || true",
-        "gen-apollo-angular": "gql-gen --config codegen-client.js",
+        "gen-apollo-client": "gql-gen --config ./scripts/codegen-client.js",
+        "gen-apollo-restaurant": "node ./scripts/codegen-restaurant.js",
         "postinstall": "node patch.js"
     },
     "private": true,
@@ -103,14 +104,17 @@
         "@angular/compiler-cli": "^7.0.0",
         "@angular/language-service": "^7.0.0",
         "@babel/runtime": "^7.2.0",
+        "@graphql-codegen/cli": "^1.3.1",
         "@ngrx/store-devtools": "6.1.0",
         "@nrwl/schematics": "7.0.2",
         "@types/bignumber.js": "^5.0.0",
+        "@types/dotenv": "^6.1.1",
         "@types/jasmine": "~2.8.6",
         "@types/jasminewd2": "~2.0.3",
         "@types/node": "^12.0.2",
         "cipher-base": "^1.0.4",
         "codelyzer": "~4.5.0",
+        "dotenv": "^8.0.0",
         "jasmine-core": "~2.99.1",
         "jasmine-marbles": "0.4.0",
         "jasmine-spec-reporter": "~4.2.1",
@@ -120,10 +124,12 @@
         "karma-jasmine": "~1.1.0",
         "karma-jasmine-html-reporter": "^0.2.2",
         "ngrx-store-freeze": "0.2.4",
+        "node-fetch": "^2.6.0",
         "prettier": "1.13.7",
         "protractor": "~5.4.0",
         "ts-node": "~7.0.0",
         "tslint": "~5.11.0",
-        "typescript": "~3.1.3"
+        "typescript": "~3.1.3",
+        "ws": "^7.1.0"
     }
 }
