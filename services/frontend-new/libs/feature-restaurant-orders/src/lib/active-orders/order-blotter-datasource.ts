@@ -7,30 +7,31 @@ import { Observable, of as observableOf, merge } from "rxjs";
 export interface OrderBlotterItem {
   name: string;
   id: number;
+  status:string;
 }
 
 // TODO: replace this with real data from your application
 const EXAMPLE_DATA: OrderBlotterItem[] = [
-  { id: 1, name: "Hydrogen" },
-  { id: 2, name: "Helium" },
-  { id: 3, name: "Lithium" },
-  { id: 4, name: "Beryllium" },
-  { id: 5, name: "Boron" },
-  { id: 6, name: "Carbon" },
-  { id: 7, name: "Nitrogen" },
-  { id: 8, name: "Oxygen" },
-  { id: 9, name: "Fluorine" },
-  { id: 10, name: "Neon" },
-  { id: 11, name: "Sodium" },
-  { id: 12, name: "Magnesium" },
-  { id: 13, name: "Aluminum" },
-  { id: 14, name: "Silicon" },
-  { id: 15, name: "Phosphorus" },
-  { id: 16, name: "Sulfur" },
-  { id: 17, name: "Chlorine" },
-  { id: 18, name: "Argon" },
-  { id: 19, name: "Potassium" },
-  { id: 20, name: "Calcium" }
+  { id: 1, name: "Hydrogen" ,status:'Requested'},
+  { id: 2, name: "Helium",status:'Requested' },
+  { id: 3, name: "Lithium",status:'Requested' },
+  { id: 4, name: "Beryllium",status:'Requested' },
+  { id: 5, name: "Boron" ,status:'Requested'},
+  { id: 6, name: "Carbon" ,status:'Requested'},
+  { id: 7, name: "Nitrogen",status:'Requested' },
+  { id: 8, name: "Oxygen",status:'Requested' },
+  { id: 9, name: "Fluorine" ,status:'Requested'},
+  { id: 10, name: "Neon",status:'Requested' },
+  { id: 11, name: "Sodium" ,status:'Requested'},
+  { id: 12, name: "Magnesium" ,status:'Requested'},
+  { id: 13, name: "Aluminum" ,status:'Requested'},
+  { id: 14, name: "Silicon" ,status:'Requested'},
+  { id: 15, name: "Phosphorus" ,status:'Requested'},
+  { id: 16, name: "Sulfur",status:'Requested' },
+  { id: 17, name: "Chlorine",status:'Requested' },
+  { id: 18, name: "Argon",status:'Requested' },
+  { id: 19, name: "Potassium",status:'Requested' },
+  { id: 20, name: "Calcium",status:'Requested' }
 ];
 
 /**

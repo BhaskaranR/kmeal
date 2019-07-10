@@ -2,7 +2,6 @@ import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { RouterModule, Routes } from "@angular/router";
 import { ResComponent } from "./restaurant/restaurant.component";
-import { FeatureCoreModule } from "@kmeal-nx/feature-core";
 import { UiModule } from "@kmeal-nx/ui";
 
 export const featureRestaurantRoutes : Routes = [{
@@ -17,7 +16,6 @@ export const featureRestaurantRoutes : Routes = [{
 @NgModule({
   imports: [
     CommonModule,
-    FeatureCoreModule,
     UiModule
   ],
   declarations:[ResComponent]
