@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild,OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild,OnDestroy ,ViewChildren } from '@angular/core';
 import { FormBuilder, Validators, FormArray, FormGroup, AbstractControl, FormControl } from '@angular/forms';
 import { MatStepper, MatButtonToggleChange, MatSnackBar } from '@angular/material';
 import { Book } from '../model/books';
@@ -76,7 +76,7 @@ export class NewlistingComponent implements OnInit , OnDestroy{
   selectedSections: Section[];
   items:Item[];
   selectedItems: Item[];
-
+  accountName;
   
 
   
@@ -115,21 +115,22 @@ export class NewlistingComponent implements OnInit , OnDestroy{
   formatLabel(value: number | null) {
     return value + "%";
   }
+
   async ngOnInit() {
+    this.isReady = true;
     this.menubooks = await this.menuService.getMyBooks();
     this.sections = await this.menuService.getMySections();
     this.items = await this.menuService.getMyItems();
-    console.log(this.menubooks, this.sections, this.items);
+    this.accountName = await this.menuService.getAccountName();
+    console.log(this.menubooks, this.sections, this.items, this.accountName);
 
-    //const accountName = await this.menuService.getAccountName();
-    // const sub = this.searchTransactionsForwardGQL.subscribe({
-    //   "query": `receiver:${this.scatterService.code} auth:${accountName} status:executed  db.table:sec/${this.scatterService.code}`,
-    // }).pipe(takeUntil(this.unSubscription$));
-    // sub.subscribe((next) => {
-    //   console.log(next, 'update ?');
-    // });
-
-    this.isReady = true;
+    const sub = this.searchTransactionsForwardGQL
+    .subscribe({
+       "query": `receiver:kmealowner12 auth:${this.accountName} status:executed  db.table:sec/kmealowner12`,
+    }).pipe(takeUntil(this.unSubscription$));
+    sub.subscribe((next) => {
+       console.log(next, 'update ?');
+     });
   }
 
   onMenuBookChange(evt) {
@@ -138,22 +139,22 @@ export class NewlistingComponent implements OnInit , OnDestroy{
     this.selectedSections = this.sections.filter(sec => book.sections.includes(sec.section_id));
   }
 
-  onSectionChange(evt){
+  onSectionChange(evt, stepper:MatStepper){
     const secId = evt.value;
     const section = this.selectedSections.filter(sec => sec.section_id === secId)[0];
     this.selectedItems = this.items.filter(item => section.items.includes(item.item_id));
-    this.stepper.next();
+    stepper.next();
   }   
 
-  listItemSelected(id: number) {
+  listItemSelected(id: number, stepper:MatStepper) {
     (<FormArray>this.pricingForm.get("formArray")).controls[1].get("item_id").setValue(id);
     this.priceTypeChanged({value:'Regular'} as any);
-    this.stepper.next();
+    stepper.next();
   }
 
-  priceSet(evt) {
-    this.stepper.next();
+  priceSet(evt, stepper:MatStepper) {
     evt.preventDefault();
+    stepper.next();
   }
 
   priceTypeChanged($event: MatButtonToggleChange) {
@@ -206,7 +207,17 @@ export class NewlistingComponent implements OnInit , OnDestroy{
     '\n sides : ', sides);
 
     try{
-      const reps = await this.menuService.createListing(bookId, sectionId,itemId, listType, listPrice,minPrice,qty, expires, slidingRate, sides  );
+      const reps = await this.menuService.createListing(
+        bookId, 
+        itemId, 
+        sectionId,
+        listType, 
+        listPrice,
+        minPrice,
+        qty, 
+        expires, 
+        slidingRate, 
+        sides  );
       console.log('done!?', reps);
       this.openSnackBar('Created listing',"");
     }

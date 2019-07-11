@@ -292,7 +292,17 @@ export class MenuService {
         });
     }
 
-    createListing(bookId, itemId, sectionId, listType, listPrice, minPrice, qty, expires, slidingRate, sides) {
+    createListing(
+        bookId, 
+        itemId, 
+        sectionId, 
+        listType, 
+        listPrice, 
+        minPrice, 
+        qty, 
+        expires, 
+        slidingRate, 
+        sides) {
         const unsubscribe$ = new Subject();
         return new Promise((resolve, reject) => {
             try {
