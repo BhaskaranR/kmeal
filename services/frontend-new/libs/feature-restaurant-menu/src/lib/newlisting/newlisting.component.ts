@@ -20,25 +20,26 @@ export class NewlistingComponent implements OnInit , OnDestroy{
   /** Returns a FormArray with the name 'formArray'. */
   get formArray(): AbstractControl | null { return this.pricingForm.get('formArray'); }
 
-  constructor(private fb: FormBuilder,
+  constructor(
+    private fb: FormBuilder,
     public menuService:MenuService,
     public snackBar: MatSnackBar,
-    private searchTransactionsForwardGQL: SearchTransactionsForwardGQL,
-    ) {}
+    private searchTransactionsForwardGQL: SearchTransactionsForwardGQL) {}
+
 
   menubooks       : Book[] = [];
-  isNonLinear = false;
-  isNonEditable = false;
-  pricetype = 'Regular';
+  isNonLinear     : boolean = false;
+  isNonEditable   : boolean = false;
+  pricetype       : number = 1;
   @ViewChild('linearVerticalStepper', { static: true }) stepper: MatStepper;
   selectedMenuBook: Book;
   selectedSection : Section;
-  priceHeader = "Enter pricing information";
-  isReady = false;
+  priceHeader     : string = "Enter pricing information";
+  isReady         : boolean = false;
   unSubscription$ : Subject<any> = new Subject();
 
   dynamicPricingForm = {
-    "list_type": ['1', Validators.required],
+    "list_type": [1, Validators.required],
     "isactive": [true, Validators.required],
     "list_price": [null, Validators.required],
     "min_price": [null, Validators.required],
@@ -79,8 +80,6 @@ export class NewlistingComponent implements OnInit , OnDestroy{
   accountName;
   
 
-  
-
   createItemGroup() {
     const itemGroup = (<FormArray>this.pricingForm.get("formArray")).controls[3] as FormGroup;
     const groups = itemGroup.get("side_groups") as FormArray;
@@ -117,10 +116,9 @@ export class NewlistingComponent implements OnInit , OnDestroy{
   }
 
   async ngOnInit() {
-    this.isReady = true;
-    this.menubooks = await this.menuService.getMyBooks();
-    this.sections = await this.menuService.getMySections();
-    this.items = await this.menuService.getMyItems();
+    this.menubooks  = await this.menuService.getMyBooks();
+    this.sections   = await this.menuService.getMySections();
+    this.items      = await this.menuService.getMyItems();
     this.accountName = await this.menuService.getAccountName();
     console.log(this.menubooks, this.sections, this.items, this.accountName);
 
@@ -131,6 +129,8 @@ export class NewlistingComponent implements OnInit , OnDestroy{
     sub.subscribe((next) => {
        console.log(next, 'update ?');
      });
+
+     this.isReady = true;
   }
 
   onMenuBookChange(evt) {
@@ -148,7 +148,7 @@ export class NewlistingComponent implements OnInit , OnDestroy{
 
   listItemSelected(id: number, stepper:MatStepper) {
     (<FormArray>this.pricingForm.get("formArray")).controls[1].get("item_id").setValue(id);
-    this.priceTypeChanged({value:'Regular'} as any);
+    this.priceTypeChanged({value:1} as any);
     stepper.next();
   }
 
@@ -158,10 +158,9 @@ export class NewlistingComponent implements OnInit , OnDestroy{
   }
 
   priceTypeChanged($event: MatButtonToggleChange) {
-    console.log($event);
     (<FormArray>this.pricingForm.get("formArray")).controls[2].get("list_type").setValue($event.value);
     const fb: FormGroup = <FormGroup>(<FormArray>this.pricingForm.get("formArray")).controls[2];
-    if ($event.value !== "1") {
+    if ($event.value != 1) {
       Object.keys(this.dynamicPricingForm).forEach(key => {
         fb.controls[key].setValidators(this.dynamicPricingForm[key][1]);
         fb.controls[key].updateValueAndValidity();
@@ -171,27 +170,41 @@ export class NewlistingComponent implements OnInit , OnDestroy{
         fb.controls[key].setValidators(null);
         fb.controls[key].updateValueAndValidity();
       });
+
+      fb.controls['list_price'].setValidators(this.dynamicPricingForm['list_price'][1]);
+      fb.controls['list_price'].updateValueAndValidity();
     }
-    this.pricetype = $event.value;
+    this.pricetype = Number($event.value);
   }
 
-  async onSubmit() {
+  async onSubmit(form) {
     if (!this.pricingForm.valid) {
       return;
     }
 
+    let listType    = Number((<FormArray>this.pricingForm.get('formArray')).controls[2].get('list_type').value);
     const bookId    = (<FormArray>this.pricingForm.get('formArray')).controls[0].get('book_id').value;
     const sectionId = (<FormArray>this.pricingForm.get('formArray')).controls[0].get('section_id').value;
     const itemId    = (<FormArray>this.pricingForm.get('formArray')).controls[1].get("item_id").value;
-    const listType  = (<FormArray>this.pricingForm.get('formArray')).controls[2].get('list_type').value;
     const listPrice = (<FormArray>this.pricingForm.get('formArray')).controls[2].get('list_price').value;
-    const minPrice  = (<FormArray>this.pricingForm.get('formArray')).controls[2].get('min_price').value;
-    const qty       = (<FormArray>this.pricingForm.get('formArray')).controls[2].get('quantity').value;
-    const slidingRate = (<FormArray>this.pricingForm.get('formArray')).controls[2].get('sliding_rate').value;
-    const endDate   = (<FormArray>this.pricingForm.get('formArray')).controls[2].get('end_date').value;
-    const endTime   = (<FormArray>this.pricingForm.get('formArray')).controls[2].get('end_time').value;
     const sides     = this.generateSidesJson();
-    const expires = parseFloat(this.convertDatesToSeconds(endDate, endTime));
+
+    let minPrice = 0, 
+        qty = 0, 
+        slidingRate = 0, 
+        endTime , 
+        endDate, 
+        expires = 0;
+
+    if (listType == 0) {
+      minPrice  = (<FormArray>this.pricingForm.get('formArray')).controls[2].get('min_price').value;
+      qty       = (<FormArray>this.pricingForm.get('formArray')).controls[2].get('quantity').value;
+      slidingRate = (<FormArray>this.pricingForm.get('formArray')).controls[2].get('sliding_rate').value;
+      endDate   = (<FormArray>this.pricingForm.get('formArray')).controls[2].get('end_date').value;
+      endTime   = (<FormArray>this.pricingForm.get('formArray')).controls[2].get('end_time').value;
+      expires     = parseInt(this.convertDatesToSeconds(endDate, endTime).toString());
+    }
+    
 
     console.log("book id : ",bookId,
     "\n section id : ", sectionId,
@@ -202,8 +215,6 @@ export class NewlistingComponent implements OnInit , OnDestroy{
     "\n qty : ", qty,
     "\n sliding rate : ", slidingRate, 
     "\n expires : ", expires,
-    "\n end date : ", endDate,
-    "\n end time : ", endTime,
     '\n sides : ', sides);
 
     try{
@@ -220,6 +231,9 @@ export class NewlistingComponent implements OnInit , OnDestroy{
         sides  );
       console.log('done!?', reps);
       this.openSnackBar('Created listing',"");
+      this.pricingForm.markAsPristine();
+      this.pricingForm.reset();
+      this.stepper.selectedIndex = 0;
     }
     catch(e){
       this.openSnackBar(e,"");
@@ -234,7 +248,7 @@ export class NewlistingComponent implements OnInit , OnDestroy{
     console.log(end, time);
     const duration = moment.duration(end.diff(now) );
     const secs = duration.asSeconds();
-    return secs.toString();
+    return secs
   }
 
   private openSnackBar(message: string, action: string) {
@@ -253,4 +267,5 @@ export class NewlistingComponent implements OnInit , OnDestroy{
     this.unSubscription$.next();
     this.unSubscription$.complete();
   }
+
 }
