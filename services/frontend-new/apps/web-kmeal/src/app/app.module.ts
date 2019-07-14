@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { NxModule } from '@nrwl/nx';
 import { ApiModule } from './graphql.module';
 import { APP_BASE_HREF } from '@angular/common';
-import { environment } from '../environments/environment';
+import { environment } from '../../../../environments/environment';
 import { RouterModule } from '@angular/router';
 import { FeatureNavigationBarModule } from '@kmeal-nx/feature-navigation-bar';
 import { SharedModule } from './app.shared';
@@ -14,12 +14,12 @@ import { FeatureSearchModule ,featureSearchRoutes} from '@kmeal-nx/feature-searc
 import {featureRestaurantRoutes, FeatureRestaurantModule} from '@kmeal-nx/feature-restaurant';
 import { ErrorComponent } from './error.component';
 import { FeatureOrderModule, CheckoutComponent, OrderHistoryClientComponent } from '@kmeal-nx/feature-order';
-import { ScatterModule, ScatterService } from '@kmeal-nx/scatter';
 import { FeatureProfileModule, ProfileClientComponent } from '@kmeal-nx/feature-profile';
 
+/*
 export function init_app(scatterService: ScatterService) {
   return () => scatterService.initScatter('Kylin');
-}
+}*/
 
 @NgModule({
   declarations: [AppComponent, ErrorComponent],
@@ -29,7 +29,6 @@ export function init_app(scatterService: ScatterService) {
     NxModule.forRoot(),
     ApiModule,
     SharedModule,
-    ScatterModule,
     FeatureHomeModule,
     FeatureSearchModule,
     FeatureRestaurantModule,
@@ -79,7 +78,7 @@ export function init_app(scatterService: ScatterService) {
     )
   ],
   providers: [
-    { provide: APP_INITIALIZER, useFactory: init_app, deps: [ScatterService], multi: true },
+  //  { provide: APP_INITIALIZER, useFactory: init_app, deps: [ScatterService], multi: true },
     {
       provide: APP_BASE_HREF,
       useValue: '/'

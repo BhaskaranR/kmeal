@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild,OnDestroy ,ViewChildren } from '@angular/core';
+import { Component, OnInit, ViewChild,OnDestroy , AfterViewInit } from '@angular/core';
 import { FormBuilder, Validators, FormArray, FormGroup, AbstractControl, FormControl } from '@angular/forms';
 import { MatStepper, MatButtonToggleChange, MatSnackBar } from '@angular/material';
 import { Book } from '../model/books';
@@ -31,7 +31,7 @@ export class NewlistingComponent implements OnInit , OnDestroy{
   isNonLinear     : boolean = false;
   isNonEditable   : boolean = false;
   pricetype       : number = 1;
-  @ViewChild('linearVerticalStepper', { static: true }) stepper: MatStepper;
+  stepper         : MatStepper;
   selectedMenuBook: Book;
   selectedSection : Section;
   priceHeader     : string = "Enter pricing information";
@@ -143,6 +143,7 @@ export class NewlistingComponent implements OnInit , OnDestroy{
     const secId = evt.value;
     const section = this.selectedSections.filter(sec => sec.section_id === secId)[0];
     this.selectedItems = this.items.filter(item => section.items.includes(item.item_id));
+    this.stepper = stepper;
     stepper.next();
   }   
 
@@ -232,6 +233,7 @@ export class NewlistingComponent implements OnInit , OnDestroy{
       console.log('done!?', reps);
       this.openSnackBar('Created listing',"");
       this.pricingForm.markAsPristine();
+      this.pricingForm.markAsUntouched();
       this.pricingForm.reset();
       this.stepper.selectedIndex = 0;
     }

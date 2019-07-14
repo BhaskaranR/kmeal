@@ -42,23 +42,27 @@ export class NewgroupComponent implements OnInit, OnDestroy {
 
   user;
   accountName;
+  sub;
   async ngOnInit() {
     this.user = await this.menuService.getUser();
     this.accountName = await this.menuService.getAccountName();
-    console.log(this.user, this.accountName);
-
     const books = await this.menuService.getMyBooks();
     if (books === void 0) {
+      this.sub = this.searchTransactionsForwardGQL.subscribe({
+        "query": `receiver:kmealowner12 auth:${this.accountName} status:executed  db.table:sec/kmealowner12`,
+     }).pipe(takeUntil(this.unSubscription$));
+     this.sub.subscribe((next) => {
+        console.log(next, 'update ?');
+      });
       return;
     }
-    this.menubooks = books.filter(mb => !!mb.is_active);
-    console.log(this.menubooks);
 
-    const sub = this.searchTransactionsForwardGQL
+    this.menubooks = books.filter(mb => !!mb.is_active);
+    this.sub = this.searchTransactionsForwardGQL
     .subscribe({
        "query": `receiver:kmealowner12 auth:${this.accountName} status:executed  db.table:sec/kmealowner12`,
     }).pipe(takeUntil(this.unSubscription$));
-    sub.subscribe((next) => {
+    this.sub.subscribe((next) => {
        console.log(next, 'update ?');
      });
 
@@ -97,6 +101,9 @@ export class NewgroupComponent implements OnInit, OnDestroy {
     try {
       const resp = await this.menuService.deleteBook(id);
       this.menubooks = this.menubooks.filter(book => book.book_id !== id);
+      this.menuBookForm.markAsPristine();
+      this.menuBookForm.markAsUntouched();
+      this.menuBookForm.reset();
       this.openSnackBar('Deleted','');
     }
     catch(e){

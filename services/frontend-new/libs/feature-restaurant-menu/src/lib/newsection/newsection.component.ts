@@ -29,27 +29,32 @@ export class NewsectionComponent implements OnInit, OnDestroy {
   selectedSections: Section[];
   selectedMenuBook: Book;
   isReady = false;
-
+  sub;
+  user;
+  accountName;
   constructor(
     public dialog: MatDialog,
     private menuService: MenuService,
+    private searchTransactionsForwardGQL: SearchTransactionsForwardGQL,
     public snackBar: MatSnackBar,
     private fb: FormBuilder) {
   }
 
   async ngOnInit() {
+    this.user = await this.menuService.getUser();
+    this.accountName = await this.menuService.getAccountName();
     this.menubooks = await this.menuService.getMyBooks();
     const sections = await this.menuService.getMySections();
     this.sections = sections.filter(sec => !!sec.is_active);
     this.selectedSections = this.sections;
     this.isReady = true;
-    //const accountName = await this.menuService.getAccountName();
-    // const sub = this.searchTransactionsForwardGQL.subscribe({
-    //   "query": `receiver:${this.scatterService.code} auth:${accountName} status:executed  db.table:sec/${this.scatterService.code}`,
-    // }).pipe(takeUntil(this.unSubscription$));
-    // sub.subscribe((next) => {
-    //   console.log(next, 'update ?');
-    // })
+    this.sub = this.searchTransactionsForwardGQL
+    .subscribe({
+       "query": `receiver:kmealowner12 auth:${this.accountName} status:executed  db.table:sec/kmealowner12`,
+    }).pipe(takeUntil(this.unSubscription$));
+    this.sub.subscribe((next) => {
+       console.log(next, 'update ?');
+     });
   }
 
   async dropSections(evt: CdkDragDrop<Section[]>) {
@@ -108,6 +113,8 @@ export class NewsectionComponent implements OnInit, OnDestroy {
       const resp = await this.menuService.deleteSection(this.selectedMenuBook.book_id,id);
       this.sections = this.sections.filter(sec => sec.section_id !== id); 
       this.selectedSections = this.sections.filter(sec => this.selectedMenuBook.sections.includes(sec.section_id) && sec.section_id !== id );
+      this.sectionsForm.markAsUntouched();
+      this.sectionsForm.reset();
       this.openSnackBar('Deleted',"");
     }
     catch (e) {

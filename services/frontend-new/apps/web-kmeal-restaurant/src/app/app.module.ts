@@ -26,6 +26,7 @@ import { EOSIOAuth } from 'ual-eosio-reference-authenticator';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from "@env/restaurant";
 import {AuthGuard} from './app.guard';
+import { WelcomeGuard } from "./welcome.guard";
 
 
 
@@ -71,8 +72,13 @@ const eosioAuth = new EOSIOAuth([chain], { appName, protocol: 'eosio' });
       [
         {
           path: "",
-          redirectTo: "/dashboard",
+          redirectTo: "/welcome",
           pathMatch: "full"
+        },
+        {
+          path:'welcome',
+          loadChildren: "@kmeal-nx/feature-restaurant-dashboard#FeatureRestaurantDashboardModule",
+          canActivate:[WelcomeGuard],
         },
         {
           path: "dashboard",
@@ -100,6 +106,6 @@ const eosioAuth = new EOSIOAuth([chain], { appName, protocol: 'eosio' });
     LayoutModule
   ],
   bootstrap: [AppComponent],
-  providers:[AuthGuard]
+  providers:[AuthGuard, WelcomeGuard]
 })
 export class AppModule { }

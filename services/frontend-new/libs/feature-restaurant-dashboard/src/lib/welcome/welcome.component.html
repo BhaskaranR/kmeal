@@ -1,0 +1,41 @@
+<header class="header-background">
+    <div class="header-section">
+        <div class="header-headline">
+            <h1 class="mat-h1">Kmeal</h1>
+            <h2> Discover restaurants around you</h2>
+        </div>
+        <div class="header-start" style="width:50%; margin-left:auto; margin-right:auto">
+            <kmeal-nx-search-bar (onAddressChangeEvent)="onAddressChange($event)"></kmeal-nx-search-bar>
+        </div>
+    </div>
+</header>
+
+<div class="homepage-promo">
+    <div class="homepage-row">
+        <div class="homepage-promo-img">
+            <kmeal-nx-svg-viewer src="../assets/homepage/sprintzerotoapp.svg" scaleToContainer="true"></kmeal-nx-svg-viewer>
+        </div>
+        <div class="homepage-promo-desc">
+            <h2>Discover the power of shared economy</h2>
+            <p>Order food from your favorite restaurant at a price cheaper than ever.</p>
+        </div>
+    </div>
+    <div class="homepage-row homepage-reverse-row">
+        <div class="homepage-promo-img">
+            <kmeal-nx-svg-viewer src="../assets/homepage/fastandconsistent.svg" scaleToContainer="true"></kmeal-nx-svg-viewer>
+        </div>
+        <div class="homepage-promo-desc">
+            <h2>Experience the power of blockchain</h2>
+            <p>Peer to peer transactions enabled with the power of blockchain.</p>
+        </div>
+    </div>
+    <div class="homepage-row">
+        <div class="homepage-promo-img">
+            <kmeal-nx-svg-viewer src="../assets/homepage/versatile.svg" scaleToContainer="true"></kmeal-nx-svg-viewer>
+        </div>
+        <div class="homepage-promo-desc">
+            <h2>Versatile</h2>
+            <p>Get the app (coming soon).</p>
+        </div>
+    </div>
+</div>
