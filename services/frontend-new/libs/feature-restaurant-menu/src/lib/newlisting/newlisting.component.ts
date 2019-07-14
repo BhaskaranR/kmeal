@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild,OnDestroy , AfterViewInit } from '@angular/core';
+import { Component, OnInit, OnDestroy  } from '@angular/core';
 import { FormBuilder, Validators, FormArray, FormGroup, AbstractControl, FormControl } from '@angular/forms';
 import { MatStepper, MatButtonToggleChange, MatSnackBar } from '@angular/material';
 import { Book } from '../model/books';
@@ -38,7 +38,7 @@ export class NewlistingComponent implements OnInit , OnDestroy{
   isReady         : boolean = false;
   unSubscription$ : Subject<any> = new Subject();
 
-  dynamicPricingForm = {
+  dynamicPricingValidator = {
     "list_type": [1, Validators.required],
     "isactive": [true, Validators.required],
     "list_price": [null, Validators.required],
@@ -51,27 +51,36 @@ export class NewlistingComponent implements OnInit , OnDestroy{
     "sliding_rate": [null, Validators.required]
   };
 
-  side = {
+  sideValidator = {
     "item_name": [null, Validators.required],
     "list_price": [null, Validators.required]
   };
 
+  bookAndSectionForm = this.fb.group({
+    book_id: [null, Validators.required],
+    section_id: [null, Validators.required],
+  });
+
+  itemForm = this.fb.group({
+    item_id: [null, Validators.required],
+  })
+
+  dynamicPricingForm = this.fb.group(this.dynamicPricingValidator);
+
+  sidesForm = this.fb.group({
+    "side_groups": this.fb.array([])
+  });
+
   pricingForm = this.fb.group({
     formArray: this.fb.array([
-      this.fb.group({
-        book_id: [null, Validators.required],
-        section_id: [null, Validators.required],
-      }),
-      this.fb.group({
-        item_id: [null, Validators.required],
-      }),
-      this.fb.group(this.dynamicPricingForm),
-      this.fb.group({
-        "side_groups": this.fb.array([
-        ])
-      })
+      this.bookAndSectionForm,
+      this.itemForm,
+      this.dynamicPricingForm,
+      this.sidesForm
     ])
   });
+
+  
 
   sections:Section[];
   selectedSections: Section[];
@@ -80,14 +89,13 @@ export class NewlistingComponent implements OnInit , OnDestroy{
   accountName;
   
 
-  createItemGroup() {
+  createSideGroup() {
     const itemGroup = (<FormArray>this.pricingForm.get("formArray")).controls[3] as FormGroup;
     const groups = itemGroup.get("side_groups") as FormArray;
     groups.push(this.fb.group({
       "max_selection": [null, Validators.required],
       "group": [null, Validators.required],
-      "sides": this.fb.array(
-        [this.fb.group(this.side)])
+      "sides": this.fb.array([this.fb.group(this.sideValidator)])
     }));
   }
 
@@ -95,7 +103,7 @@ export class NewlistingComponent implements OnInit , OnDestroy{
     const itemGroup = (<FormArray>this.pricingForm.get("formArray")).controls[3] as FormGroup;
     const groups = itemGroup.get("side_groups") as FormArray;
     const item = groups.controls[indx] as FormGroup;
-    (<FormArray>item.get("sides")).push(this.fb.group(this.side));
+    (<FormArray>item.get("sides")).push(this.fb.group(this.sideValidator));
   }
 
   deleteItemGroup(index) {
@@ -112,9 +120,10 @@ export class NewlistingComponent implements OnInit , OnDestroy{
   }
 
   formatLabel(value: number | null) {
-    return value + "%";
+    return (value/100) + "%";
   }
 
+  sub;
   async ngOnInit() {
     this.menubooks  = await this.menuService.getMyBooks();
     this.sections   = await this.menuService.getMySections();
@@ -122,28 +131,33 @@ export class NewlistingComponent implements OnInit , OnDestroy{
     this.accountName = await this.menuService.getAccountName();
     console.log(this.menubooks, this.sections, this.items, this.accountName);
 
-    const sub = this.searchTransactionsForwardGQL
+    this.sub = this.searchTransactionsForwardGQL
     .subscribe({
        "query": `receiver:kmealowner12 auth:${this.accountName} status:executed  db.table:sec/kmealowner12`,
     }).pipe(takeUntil(this.unSubscription$));
-    sub.subscribe((next) => {
+    this.sub.subscribe((next) => {
        console.log(next, 'update ?');
      });
 
      this.isReady = true;
   }
 
-  onMenuBookChange(evt) {
+  onMenuBookChange(evt, stepper) {
     const bookId = evt.value;
     const book = this.menubooks.filter(book => book.book_id === bookId)[0];
     this.selectedSections = this.sections.filter(sec => book.sections.includes(sec.section_id));
+    if (!this.stepper){
+      this.stepper = stepper;
+    }
   }
 
   onSectionChange(evt, stepper:MatStepper){
     const secId = evt.value;
     const section = this.selectedSections.filter(sec => sec.section_id === secId)[0];
     this.selectedItems = this.items.filter(item => section.items.includes(item.item_id));
-    this.stepper = stepper;
+    if (!this.stepper){
+      this.stepper = stepper;
+    }
     stepper.next();
   }   
 
@@ -153,26 +167,21 @@ export class NewlistingComponent implements OnInit , OnDestroy{
     stepper.next();
   }
 
-  priceSet(evt, stepper:MatStepper) {
-    evt.preventDefault();
-    stepper.next();
-  }
-
   priceTypeChanged($event: MatButtonToggleChange) {
     (<FormArray>this.pricingForm.get("formArray")).controls[2].get("list_type").setValue($event.value);
     const fb: FormGroup = <FormGroup>(<FormArray>this.pricingForm.get("formArray")).controls[2];
     if ($event.value != 1) {
-      Object.keys(this.dynamicPricingForm).forEach(key => {
-        fb.controls[key].setValidators(this.dynamicPricingForm[key][1]);
+      Object.keys(this.dynamicPricingValidator).forEach(key => {
+        fb.controls[key].setValidators(this.dynamicPricingValidator[key][1]);
         fb.controls[key].updateValueAndValidity();
       });
     } else {
-      Object.keys(this.dynamicPricingForm).forEach(key => {
+      Object.keys(this.dynamicPricingValidator).forEach(key => {
         fb.controls[key].setValidators(null);
         fb.controls[key].updateValueAndValidity();
       });
 
-      fb.controls['list_price'].setValidators(this.dynamicPricingForm['list_price'][1]);
+      fb.controls['list_price'].setValidators(this.dynamicPricingValidator['list_price'][1]);
       fb.controls['list_price'].updateValueAndValidity();
     }
     this.pricetype = Number($event.value);
@@ -232,9 +241,15 @@ export class NewlistingComponent implements OnInit , OnDestroy{
         sides  );
       console.log('done!?', reps);
       this.openSnackBar('Created listing',"");
-      this.pricingForm.markAsPristine();
-      this.pricingForm.markAsUntouched();
+
       this.pricingForm.reset();
+      console.log(this.formArray);
+      this.formArray['controls'].forEach( form => {
+        form.markAsPristine();
+        form.markAsUntouched();
+      })
+      
+      
       this.stepper.selectedIndex = 0;
     }
     catch(e){
@@ -268,6 +283,7 @@ export class NewlistingComponent implements OnInit , OnDestroy{
   ngOnDestroy(){
     this.unSubscription$.next();
     this.unSubscription$.complete();
+    this.sub();
   }
 
 }
