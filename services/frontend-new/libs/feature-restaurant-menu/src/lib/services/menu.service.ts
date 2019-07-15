@@ -8,6 +8,7 @@ import { environment } from "@env/restaurant";
 import { Subject } from "rxjs";
 import { takeUntil } from 'rxjs/operators';
 import { read, generateTransaction, transactionConfig } from '@utils';
+import { DeleteBookDialog } from "../newgroup/newgroup.component";
 const { format } = Eos.modules;
 
 @Injectable()
@@ -133,7 +134,7 @@ export class MenuService {
         });
     }
 
-    createItem(itemname, description, photo = '', spice_level = 0, vegetarian, cooking_time, types) {
+    createItem(itemname, description, photo = '', spice_level = 0, vegetarian, cooking_time, types, bookId, sectionId) {
 
         const unsubscribe$ = new Subject();
         return new Promise((resolve, reject) => {
@@ -153,7 +154,9 @@ export class MenuService {
                             spicy_level: spice_level,
                             vegetarian: vegetarian,
                             cooking_time: cooking_time,
-                            types: types
+                            types: types,
+                            book_id:bookId,
+                            section_id:sectionId
                         });
                         const res = await user.signTransaction(transaction, transactionConfig);
                         resolve(res);

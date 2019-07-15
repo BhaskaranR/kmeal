@@ -1,3 +1,8 @@
+<mat-toolbar class="mat-elevation-z0">
+    Create your menu sections
+</mat-toolbar>
+<mat-divider></mat-divider>
+
 <div *ngIf="!isReady; else main">
     <mat-spinner style="margin:30px auto 30px auto;" [diameter]="25" mode="indeterminate"></mat-spinner>
 </div>
@@ -8,9 +13,6 @@
             <form [formGroup]="sectionsForm" novalidate (ngSubmit)="onSectionsSubmit()">
                 <div class="container">
                     <div class="header-section">
-                        <div class="header-headline">
-                            <h1 class="mat-h2">Add menu section</h1>
-                        </div>
                         <div class="row">
                             <div class="col">
                                 <mat-form-field class="full-width">

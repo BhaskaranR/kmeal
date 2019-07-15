@@ -17,7 +17,6 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class NewlistingComponent implements OnInit , OnDestroy{
 
-  /** Returns a FormArray with the name 'formArray'. */
   get formArray(): AbstractControl | null { return this.pricingForm.get('formArray'); }
 
   constructor(
@@ -80,8 +79,6 @@ export class NewlistingComponent implements OnInit , OnDestroy{
     ])
   });
 
-  
-
   sections:Section[];
   selectedSections: Section[];
   items:Item[];
@@ -113,9 +110,11 @@ export class NewlistingComponent implements OnInit , OnDestroy{
   }
 
   deleteItemSide(grpIndx, indx) {
+    console.log(grpIndx, indx);
+
     const itemGroup = (<FormArray>this.pricingForm.get("formArray")).controls[3] as FormGroup;
     const groups = itemGroup.get("side_groups") as FormArray;
-    const item = groups[grpIndx] as FormGroup;
+    const item = groups.controls[grpIndx] as FormGroup;
     (<FormArray>item.get("sides")).removeAt(indx);
   }
 
@@ -123,19 +122,18 @@ export class NewlistingComponent implements OnInit , OnDestroy{
     return (value/100) + "%";
   }
 
-  sub;
+
   async ngOnInit() {
     this.menubooks  = await this.menuService.getMyBooks();
     this.sections   = await this.menuService.getMySections();
     this.items      = await this.menuService.getMyItems();
     this.accountName = await this.menuService.getAccountName();
-    console.log(this.menubooks, this.sections, this.items, this.accountName);
 
-    this.sub = this.searchTransactionsForwardGQL
+    const sub = this.searchTransactionsForwardGQL
     .subscribe({
        "query": `receiver:kmealowner12 auth:${this.accountName} status:executed  db.table:sec/kmealowner12`,
     }).pipe(takeUntil(this.unSubscription$));
-    this.sub.subscribe((next) => {
+    sub.subscribe((next) => {
        console.log(next, 'update ?');
      });
 
@@ -199,20 +197,20 @@ export class NewlistingComponent implements OnInit , OnDestroy{
     const listPrice = (<FormArray>this.pricingForm.get('formArray')).controls[2].get('list_price').value;
     const sides     = this.generateSidesJson();
 
-    let minPrice = 0, 
-        qty = 0, 
+    let minPrice    = 0, 
+        qty         = 0, 
         slidingRate = 0, 
         endTime , 
         endDate, 
-        expires = 0;
+        expires     = 0;
 
     if (listType == 0) {
-      minPrice  = (<FormArray>this.pricingForm.get('formArray')).controls[2].get('min_price').value;
-      qty       = (<FormArray>this.pricingForm.get('formArray')).controls[2].get('quantity').value;
-      slidingRate = (<FormArray>this.pricingForm.get('formArray')).controls[2].get('sliding_rate').value;
-      endDate   = (<FormArray>this.pricingForm.get('formArray')).controls[2].get('end_date').value;
-      endTime   = (<FormArray>this.pricingForm.get('formArray')).controls[2].get('end_time').value;
-      expires     = parseInt(this.convertDatesToSeconds(endDate, endTime).toString());
+      minPrice      = (<FormArray>this.pricingForm.get('formArray')).controls[2].get('min_price').value;
+      qty           = (<FormArray>this.pricingForm.get('formArray')).controls[2].get('quantity').value;
+      slidingRate   = ((<FormArray>this.pricingForm.get('formArray')).controls[2].get('sliding_rate').value)/100;
+      endDate       = (<FormArray>this.pricingForm.get('formArray')).controls[2].get('end_date').value;
+      endTime       = (<FormArray>this.pricingForm.get('formArray')).controls[2].get('end_time').value;
+      expires       = parseInt(this.convertDatesToSeconds(endDate, endTime).toString());
     }
     
 
@@ -239,18 +237,12 @@ export class NewlistingComponent implements OnInit , OnDestroy{
         expires, 
         slidingRate, 
         sides  );
-      console.log('done!?', reps);
       this.openSnackBar('Created listing',"");
-
-      this.pricingForm.reset();
-      console.log(this.formArray);
+      this.resetForm();
       this.formArray['controls'].forEach( form => {
         form.markAsPristine();
         form.markAsUntouched();
       })
-      
-      
-      this.stepper.selectedIndex = 0;
     }
     catch(e){
       this.openSnackBar(e,"");
@@ -258,11 +250,16 @@ export class NewlistingComponent implements OnInit , OnDestroy{
    
   }
 
+  resetForm(){
+    this.pricingForm.reset();
+      this.pricingForm.markAsUntouched();
+      this.stepper.reset();
+  }
+
   private convertDatesToSeconds(date, time){
     time = time + ":00";
     const now = moment();
     const end = moment(moment(date).format('MM/DD/YYYY') + ' ' + time);
-    console.log(end, time);
     const duration = moment.duration(end.diff(now) );
     const secs = duration.asSeconds();
     return secs
@@ -283,7 +280,6 @@ export class NewlistingComponent implements OnInit , OnDestroy{
   ngOnDestroy(){
     this.unSubscription$.next();
     this.unSubscription$.complete();
-    this.sub();
   }
 
 }

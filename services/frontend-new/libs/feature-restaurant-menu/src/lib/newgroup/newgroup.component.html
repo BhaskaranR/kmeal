@@ -1,6 +1,12 @@
+<mat-toolbar class="mat-elevation-z0">
+    Create your menu books
+</mat-toolbar>
+<mat-divider></mat-divider>
+
 <div *ngIf="!isReady; else main">
     <mat-spinner style="margin:30px auto 30px auto;" [diameter]="25" mode="indeterminate"></mat-spinner>
 </div>
+
 
 <ng-template #main>
     <div class="homepage-promo" *ngIf="isReady">
@@ -8,10 +14,6 @@
             <form [formGroup]="menuBookForm" novalidate (ngSubmit)="onBookSubmit()">
                 <div class="container">
                     <div class="header-section">
-                        <div class="header-headline">
-                            <h1 class="mat-h2">Menu Book</h1>
-                            <h2> Add menu book title</h2>
-                        </div>
                         <div class="row">
                             <div class="col">
                                 <mat-form-field class="full-width">

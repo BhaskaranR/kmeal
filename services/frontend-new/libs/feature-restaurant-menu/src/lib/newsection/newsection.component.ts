@@ -113,8 +113,8 @@ export class NewsectionComponent implements OnInit, OnDestroy {
       const resp = await this.menuService.deleteSection(this.selectedMenuBook.book_id,id);
       this.sections = this.sections.filter(sec => sec.section_id !== id); 
       this.selectedSections = this.sections.filter(sec => this.selectedMenuBook.sections.includes(sec.section_id) && sec.section_id !== id );
-      this.sectionsForm.markAsUntouched();
       this.sectionsForm.reset();
+      this.sectionsForm.markAsUntouched();
       this.openSnackBar('Deleted',"");
     }
     catch (e) {

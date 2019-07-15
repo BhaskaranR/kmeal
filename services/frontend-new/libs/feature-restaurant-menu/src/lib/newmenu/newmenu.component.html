@@ -6,29 +6,31 @@
     <mat-drawer-container class="drawer-container">
         <mat-toolbar *ngIf="formSubmitted;else preview">
             <button (click)="start2.toggle();formSubmitted = false;" mat-icon-button>
-      <mat-icon>edit</mat-icon>
-    </button>
+                <mat-icon>edit</mat-icon>
+            </button>
             <span class="fill-remaining"></span>
 
             <button (click)="deletemenu()" mat-icon-button>
-      <mat-icon>delete</mat-icon>
-    </button>
+                <mat-icon>delete</mat-icon>
+            </button>
         </mat-toolbar>
         <ng-template #preview>
             <mat-toolbar class="toolbar-preview">
                 <span>Preview</span>
             </mat-toolbar>
+            <mat-divider></mat-divider>
         </ng-template>
         <mat-drawer #start2 [opened]="!formSubmitted" mode="side" style="width:280px">
+            <mat-toolbar class="mat-elevation-z0">
+                Create your dishes
+            </mat-toolbar>
+            <mat-divider></mat-divider>
             <form [formGroup]="menuForm" novalidate (ngSubmit)="onSubmit()">
                 <mat-card class="menu-card">
-                    <mat-card-header>
-                        <mat-card-title>Create new Menu</mat-card-title>
-                    </mat-card-header>
                     <mat-card-content>
                         <div class="header-section">
                             <div class="header-headline">
-                                <h2> Add a new dish</h2>
+                                <h2> Which is the title of the dish?</h2>
                             </div>
                             <div class="row">
                                 <div class="col">

@@ -17,11 +17,11 @@ export class NewmenuComponent implements OnInit, OnDestroy {
 
   selectedMenuBook : Book;
   selectedSection  : Section;
-  formSubmitted = false;
+  formSubmitted    : boolean = false;
   menubooks        : Book[] = [];
   sections         : Section[];
   selectedSections : Section[];
-  isReady = false;
+  isReady          : boolean = false;
 
   menuForm = this.fb.group({
     itemName       : [null, Validators.required],
@@ -42,11 +42,12 @@ export class NewmenuComponent implements OnInit, OnDestroy {
 
   unSubscription$ = new Subject();
 
-  constructor(private fb: FormBuilder,
-    public snackBar: MatSnackBar,
+  constructor(
+    private fb: FormBuilder,
+    public  snackBar: MatSnackBar,
     private menuService: MenuService,
     private searchTransactionsForwardGQL: SearchTransactionsForwardGQL,
-    public dialog: MatDialog,) { }
+    public  dialog: MatDialog,) { }
 
   get itemName() {
     return this.menuForm.get("itemName").value;
@@ -79,13 +80,13 @@ export class NewmenuComponent implements OnInit, OnDestroy {
     this.menubooks = await this.menuService.getMyBooks();
     const sections = await this.menuService.getMySections();
     this.sections = sections.filter(sec => !!sec.is_active);
-    // const accountName = await this.menuService.getAccountName();
-    // const sub = this.searchTransactionsForwardGQL.subscribe({
-    //   "query": `receiver:${this.scatterService.code} auth:${accountName} status:executed  db.table:sec/${this.scatterService.code}`,
-    // }).pipe(takeUntil(this.unSubscription$));
-    // sub.subscribe((next) => {
-    //   console.log(next, 'update ?');
-    // });
+    const accountName = await this.menuService.getAccountName();
+    const sub = this.searchTransactionsForwardGQL.subscribe({
+      "query": `receiver:kmealowner12 auth:${accountName} status:executed  db.table:sec/kmealowner12`,
+    }).pipe(takeUntil(this.unSubscription$));
+    sub.subscribe((next) => {
+       console.log(next, 'update ?');
+     });
     this.isReady = true;
   }
 
@@ -94,9 +95,7 @@ export class NewmenuComponent implements OnInit, OnDestroy {
   }
 
   async onSubmit() {
-    
     try{
-      
       const resp = await this.menuService.createItem(
         this.menuForm.get('itemName').value, 
         this.menuForm.get('description').value, 
@@ -104,21 +103,24 @@ export class NewmenuComponent implements OnInit, OnDestroy {
         this.menuForm.get('spicy_level').value,
         this.menuForm.get('vegetarian').value,
         this.menuForm.get('cooking_time').value,
+        this.menuForm.get('book_id').value,
+        this.menuForm.get('section_id').value,
         '');
 
-      const resp2 = await this.menuService.addToSection(this.menuForm.get('book_id').value, this.menuForm.get('section_id').value, 0, 0);
       this.openSnackBar('Created new item',"");
       this.formSubmitted = true;
 
     }catch(e){
       this.openSnackBar('ERROR creating menu ' +  e, "");
-    }
-    
-    
+    } 
   }
 
   deletemenu() {
-    
+    try{
+      
+    }catch(e){
+
+    }
   }
 
   openSnackBar(message: string, action: string) {
