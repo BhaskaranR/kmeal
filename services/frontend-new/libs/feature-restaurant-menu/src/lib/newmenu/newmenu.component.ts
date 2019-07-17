@@ -78,17 +78,20 @@ export class NewmenuComponent implements OnInit, OnDestroy {
 
   async ngOnInit() {
     this.menubooks = await this.menuService.getMyBooks();
-    const sections = await this.menuService.getMySections();
-    this.sections = sections.filter(sec => !!sec.is_active);
+    this.sections = await this.menuService.getMySections();
     const accountName = await this.menuService.getAccountName();
     const sub = this.searchTransactionsForwardGQL.subscribe({
       "query": `receiver:kmealowner12 auth:${accountName} status:executed  db.table:sec/kmealowner12`,
-    }).pipe(takeUntil(this.unSubscription$));
-    sub.subscribe((next) => {
-       console.log(next, 'update ?');
-     });
+    })
+    .pipe(takeUntil(this.unSubscription$))
+    .subscribe(this.updateHandler.bind(this));
     this.isReady = true;
   }
+
+  private updateHandler(update){
+    console.log('update ? ', update);
+  }
+
 
   setInitialDetails() {
 
@@ -130,8 +133,7 @@ export class NewmenuComponent implements OnInit, OnDestroy {
   }
 
   onChanegMenuBook(e){
-    const bookId = e.value;
-    const secs = this.menubooks.filter(book => book.book_id === bookId)[0].sections;
+    const secs = this.menubooks.find(book => book.book_id === e.value).sections;
     this.selectedSections = this.sections.filter(sec=> secs.includes(sec.section_id));
   }
 

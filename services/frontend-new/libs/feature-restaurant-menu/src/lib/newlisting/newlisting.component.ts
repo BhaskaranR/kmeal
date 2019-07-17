@@ -110,8 +110,6 @@ export class NewlistingComponent implements OnInit , OnDestroy{
   }
 
   deleteItemSide(grpIndx, indx) {
-    console.log(grpIndx, indx);
-
     const itemGroup = (<FormArray>this.pricingForm.get("formArray")).controls[3] as FormGroup;
     const groups = itemGroup.get("side_groups") as FormArray;
     const item = groups.controls[grpIndx] as FormGroup;
@@ -124,9 +122,15 @@ export class NewlistingComponent implements OnInit , OnDestroy{
 
 
   async ngOnInit() {
-    this.menubooks  = await this.menuService.getMyBooks();
-    this.sections   = await this.menuService.getMySections();
-    this.items      = await this.menuService.getMyItems();
+    const menubooks  = await this.menuService.getMyBooks();
+    this.menubooks = menubooks.filter(bk => !!bk.is_active);
+
+    const sections   = await this.menuService.getMySections();
+    this.sections = sections.filter(sec => !!sec.is_active);
+
+    const items      = await this.menuService.getMyItems();
+    this.items = items.filter(i => !!i.is_active);
+
     this.accountName = await this.menuService.getAccountName();
 
     const sub = this.searchTransactionsForwardGQL

@@ -20,6 +20,14 @@ interface DeleteDialog {
   styleUrls: ["./newgroup.component.scss"]
 })
 export class NewgroupComponent implements OnInit, OnDestroy {
+
+  constructor(
+    private searchTransactionsForwardGQL: SearchTransactionsForwardGQL,
+    public  dialog: MatDialog,
+    private menuService: MenuService,
+    public  snackBar: MatSnackBar,
+    private fb: FormBuilder) {}
+
   unSubscription$ = new Subject();
 
   menuBookForm = this.fb.group({
@@ -29,52 +37,28 @@ export class NewgroupComponent implements OnInit, OnDestroy {
   menubooks: Book[];
   isReady = false;
 
-  code  = 'kmealowner12';
-    coincode = 'kmealcoin1io';
+  async ngOnInit() {
+    const accountName = await this.menuService.getAccountName();
 
-  constructor(
-    private searchTransactionsForwardGQL: SearchTransactionsForwardGQL,
-    public dialog: MatDialog,
-    private menuService: MenuService,
-    public snackBar: MatSnackBar,
-    private fb: FormBuilder) {
+    const sub = this.searchTransactionsForwardGQL.subscribe({
+      "query": `receiver:kmealowner12 auth:${accountName} status:executed  db.table:sec/kmealowner12`,
+    })
+    .pipe(takeUntil(this.unSubscription$))
+    .subscribe(this.updateHandler.bind(this));
+
+    this.menubooks = await this.menuService.getMyBooks();
+    this.isReady = true;
   }
 
-  user;
-  accountName;
-  sub;
-  async ngOnInit() {
-    this.user = await this.menuService.getUser();
-    this.accountName = await this.menuService.getAccountName();
-    const books = await this.menuService.getMyBooks();
-    if (books === void 0) {
-      this.sub = this.searchTransactionsForwardGQL.subscribe({
-        "query": `receiver:kmealowner12 auth:${this.accountName} status:executed  db.table:sec/kmealowner12`,
-     }).pipe(takeUntil(this.unSubscription$));
-     this.sub.subscribe((next) => {
-        console.log(next, 'update ?');
-      });
-      return;
-    }
-
-    this.menubooks = books.filter(mb => !!mb.is_active);
-    this.sub = this.searchTransactionsForwardGQL
-    .subscribe({
-       "query": `receiver:kmealowner12 auth:${this.accountName} status:executed  db.table:sec/kmealowner12`,
-    }).pipe(takeUntil(this.unSubscription$));
-    this.sub.subscribe((next) => {
-       console.log(next, 'update ?');
-     });
-
-    this.isReady = true;
+  private updateHandler(data){
+    console.log('update ? ', data);
   }
 
 
   async onBookSubmit() {
     try {
      const resp = await this.menuService.createbook(this.menuBookForm.value.menubook);
-     const books = await this.menuService.getMyBooks();
-     this.menubooks = books.filter(mb => !!mb.is_active);
+     this.menubooks = await this.menuService.getMyBooks();
      this.menuBookForm.get('menubook').setValue(null);
      this.openSnackBar("Menu Book is created", "");
     }
@@ -98,6 +82,13 @@ export class NewgroupComponent implements OnInit, OnDestroy {
   }
 
   async callContactToDeleteBook(id){
+    const book = this.menubooks.find(b => b.book_id == id);
+
+    if (book.sections.length > 0){
+      alert('Failed to delete, this book has sections, clear the sections before deleting');
+      return;
+    }
+
     try {
       const resp = await this.menuService.deleteBook(id);
       this.menubooks = this.menubooks.filter(book => book.book_id !== id);

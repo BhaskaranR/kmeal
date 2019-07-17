@@ -29,9 +29,7 @@ export class NewsectionComponent implements OnInit, OnDestroy {
   selectedSections: Section[];
   selectedMenuBook: Book;
   isReady = false;
-  sub;
-  user;
-  accountName;
+
   constructor(
     public dialog: MatDialog,
     private menuService: MenuService,
@@ -41,47 +39,41 @@ export class NewsectionComponent implements OnInit, OnDestroy {
   }
 
   async ngOnInit() {
-    this.user = await this.menuService.getUser();
-    this.accountName = await this.menuService.getAccountName();
+    const accountName = await this.menuService.getAccountName();
+
     this.menubooks = await this.menuService.getMyBooks();
-    const sections = await this.menuService.getMySections();
-    this.sections = sections.filter(sec => !!sec.is_active);
+    this.sections = await this.menuService.getMySections();
     this.selectedSections = this.sections;
-    this.isReady = true;
-    this.sub = this.searchTransactionsForwardGQL
+    
+    const sub = this.searchTransactionsForwardGQL
     .subscribe({
-       "query": `receiver:kmealowner12 auth:${this.accountName} status:executed  db.table:sec/kmealowner12`,
-    }).pipe(takeUntil(this.unSubscription$));
-    this.sub.subscribe((next) => {
-       console.log(next, 'update ?');
-     });
+       "query": `receiver:kmealowner12 auth:${accountName} status:executed  db.table:sec/kmealowner12`,
+    })
+    .pipe(takeUntil(this.unSubscription$))
+    .subscribe(this.updateHandler.bind(this));
+
+    this.isReady = true;
+  }
+
+  private updateHandler(update){
+    console.log('update ?! ', update);
   }
 
   async dropSections(evt: CdkDragDrop<Section[]>) {
-    const prev = evt.previousIndex;
-    const prevItem = this.selectedSections[prev];
-    try{
-      const resp = await this.menuService.setSecOrder(this.selectedMenuBook.book_id, prevItem.section_id, evt.currentIndex);
-      const sections = await this.menuService.getMySections();
-      this.sections = sections.filter(sec => !!sec.is_active);
-      this.openSnackBar('Order Changed',"");
-    }
-    catch(e){
-      this.openSnackBar('Error : ' + e , '');
-    }
+    
   }
 
   async onSectionsSubmit() {
     try {
-      const resp = await this.menuService.addSection(this.selectedMenuBook.book_id, this.sectionsForm.get('section').value);
-      console.log(this.menubooks, this.sections, this.selectedSections);
-       const newSec = new Section();
-       newSec.section_name = this.sectionsForm.get('section').value;
-       newSec.section_id   = this.sections[this.sections.length-1].section_id + 1;
-       newSec.is_active    = 1;
+      const resp = await this.menuService.addSection(this.sectionsForm.get('menuBook').value, this.sectionsForm.get('section').value);
+      const newSec = new Section();
+      newSec.section_name = this.sectionsForm.get('section').value;
+      newSec.section_id   = this.sections[this.sections.length-1].section_id + 1;
+      newSec.is_active    = 1;
       this.selectedSections.push(newSec);
       this.sections.push(newSec);
       this.selectedMenuBook.sections.push(newSec.section_id);
+      this.sectionsForm.get('menubook').setValue(null);
       this.sectionsForm.get('section').setValue(null);
       
     }
@@ -91,8 +83,8 @@ export class NewsectionComponent implements OnInit, OnDestroy {
   }
 
   async onBookChange(evt) {
-    const secs = evt.value.sections;
-    this.selectedSections = this.sections.filter(sec => secs.includes(sec.section_id)) as any;
+    const book = this.menubooks.find(b => b.book_id == evt.value);
+    this.selectedSections = this.sections.filter(sec => book.sections.includes(sec.section_id)) as any;
   }
 
 
@@ -109,12 +101,23 @@ export class NewsectionComponent implements OnInit, OnDestroy {
   }
 
   async callContactToDeleteSection(id){
+    const sec = this.sections.find(s => s.section_id === id);
+    if(sec.items.length > 0){
+      alert(' Failed to delete, this section has items, please clear items before deleting');
+      return ;
+    }
+
+    let book;
+    if (!this.selectedMenuBook){
+      book = this.menubooks.find(b => b.sections.includes(id));
+    }
+
     try {
-      const resp = await this.menuService.deleteSection(this.selectedMenuBook.book_id,id);
+      const resp = await this.menuService.deleteSection(this.selectedMenuBook? this.selectedMenuBook.book_id : book.book_id, id);
       this.sections = this.sections.filter(sec => sec.section_id !== id); 
       this.selectedSections = this.sections.filter(sec => this.selectedMenuBook.sections.includes(sec.section_id) && sec.section_id !== id );
-      this.sectionsForm.reset();
-      this.sectionsForm.markAsUntouched();
+      this.sectionsForm.get('section').setValue(null);
+      this.sectionsForm.get('menubook').setValue(null);
       this.openSnackBar('Deleted',"");
     }
     catch (e) {

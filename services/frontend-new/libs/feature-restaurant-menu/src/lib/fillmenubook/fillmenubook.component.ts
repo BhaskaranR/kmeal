@@ -33,9 +33,8 @@ export class FillmenubookComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.menubooks = await this.menuService.getMyBooks();
-    this.sections = await this.menuService.getMySections();
-    this.sections = this.sections.filter(sec=>!!sec.is_active);
+    this.menubooks = (await this.menuService.getMyBooks()).filter(b => b.is_active);
+    this.sections = (await this.menuService.getMySections()).filter(s => s.is_active);
     this.selectedSections = this.sections;
   }
 
