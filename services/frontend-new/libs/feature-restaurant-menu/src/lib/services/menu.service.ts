@@ -265,8 +265,7 @@ export class MenuService {
         });
     }
 
-    removeFromSection(bookid, sectionid, itemid) {
-
+    removeFromSection(sectionid, itemid) {
         const unsubscribe$ = new Subject();
         return new Promise((resolve, reject) => {
             try {
@@ -278,7 +277,6 @@ export class MenuService {
                         const user = val[val.length - 1];
                         const accountName = await user.getAccountName();
                         const transaction = generateTransaction(accountName, "removefromsec", {
-                            bookid: bookid,
                             sectionid: sectionid,
                             itemid: itemid,
                         });
@@ -326,6 +324,32 @@ export class MenuService {
                             expires: expires,
                             sliding_rate: slidingRate,
                             sides: sides
+                        });
+                        const res = await user.signTransaction(transaction, transactionConfig);
+                        resolve(res);
+                    } else {
+                        this.ualService.showModal();
+                    }
+                });
+            }
+            catch (e) {
+                reject(e);
+            }
+        });
+    }
+
+    deleteItem(itemId) {
+        const unsubscribe$ = new Subject();
+        return new Promise((resolve, reject) => {
+            try {
+                this.ualService.users$.pipe(takeUntil(unsubscribe$)).subscribe(async val => {
+                    if (val !== null && val.length > 0) {
+                        unsubscribe$.next();
+                        unsubscribe$.complete();
+                        const user = val[val.length - 1];
+                        const accountName = await user.getAccountName();
+                        const transaction = generateTransaction(accountName, "deleteitem", {
+                            item_id: itemId
                         });
                         const res = await user.signTransaction(transaction, transactionConfig);
                         resolve(res);

@@ -17,7 +17,7 @@ import { NewlistingComponent } from './newlisting/newlisting.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { CdkSelectionModule } from '@kmeal-nx/ui';
 import { NewmenuComponent } from './newmenu/newmenu.component';
-import { FillmenubookComponent } from './fillmenubook/fillmenubook.component';
+import { FillmenubookComponent, DeleteItemDialog } from './fillmenubook/fillmenubook.component';
 import { MenuSidenavComponent } from './sidenav/sidenav.component';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { NewsectionComponent } from './newsection/newsection.component';
@@ -62,8 +62,8 @@ export const restaurantMenuRoutes: Routes = [
     CdkSelectionModule,
     DragDropModule,
     RouterModule.forChild(restaurantMenuRoutes)],
-  declarations: [MenuSidenavComponent, NewmenuComponent, HomeComponent, NewgroupComponent, NewlistingComponent, FillmenubookComponent, NewsectionComponent, DeleteBookDialog],
-  entryComponents:[DeleteBookDialog],
+  declarations: [MenuSidenavComponent, NewmenuComponent, HomeComponent, NewgroupComponent, NewlistingComponent, DeleteItemDialog,FillmenubookComponent, NewsectionComponent, DeleteBookDialog],
+  entryComponents:[DeleteBookDialog, DeleteItemDialog],
   providers: [MenuService]
 })
 export class FeatureRestaurantMenuModule { }

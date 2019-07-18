@@ -104,7 +104,7 @@ export class NewmenuComponent implements OnInit, OnDestroy {
         this.menuForm.get('description').value, 
         this.menuForm.get('photo').value || 'random string', 
         this.menuForm.get('spicy_level').value,
-        this.menuForm.get('vegetarian').value,
+        Number(this.menuForm.get('vegetarian').value),
         this.menuForm.get('cooking_time').value,
         this.menuForm.get('book_id').value,
         this.menuForm.get('section_id').value,
