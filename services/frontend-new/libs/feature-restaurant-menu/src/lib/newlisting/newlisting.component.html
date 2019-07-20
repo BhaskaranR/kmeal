@@ -17,8 +17,8 @@
                             <div class="col">
                                 <mat-form-field class="full-width">
                                     <mat-label>Select menu book</mat-label>
-                                    <mat-select [(value)]="selectedMenuBook" formControlName="book_id" (selectionChange)="onMenuBookChange($event, stepper)">
-                                        <mat-option *ngFor="let item of menubooks" [value]="item.book_id">
+                                    <mat-select [(value)]="selectedMenuBook" formControlName="book" (selectionChange)="onMenuBookChange($event, stepper)">
+                                        <mat-option *ngFor="let item of menubooks" [value]="item">
                                             {{ item.book_name }}
                                         </mat-option>
                                     </mat-select>
@@ -30,8 +30,8 @@
                             <div class="col">
                                 <mat-form-field class="full-width">
                                     <mat-label>Select section</mat-label>
-                                    <mat-select formControlName="section_id" [(value)]="selectedSection" (selectionChange)="onSectionChange($event,stepper)">
-                                        <mat-option *ngFor="let item of selectedSections" [value]="item.section_id">
+                                    <mat-select [(value)]="selectedSection" formControlName="section" (selectionChange)="onSectionChange($event,stepper)">
+                                        <mat-option *ngFor="let item of selectedSections" [value]="item">
                                             {{ item.section_name }}
                                         </mat-option>
                                     </mat-select>
@@ -47,7 +47,7 @@
                 <mat-card class="pricing-card mat-card-flat">
                     <mat-card-content>
                         <mat-action-list dense class="full-width" *ngIf="selectedItems?.length > 0">
-                            <button mat-list-item *ngFor="let item of selectedItems" (click)="listItemSelected(item.item_id, stepper)">
+                            <button mat-list-item *ngFor="let item of selectedItems" (click)="listItemSelected(item, stepper)">
                                 <h4 mat-line>{{item.item_name}}</h4>
                                 <p mat-line class="secondary-text"> {{item.description}} </p>
                             </button>

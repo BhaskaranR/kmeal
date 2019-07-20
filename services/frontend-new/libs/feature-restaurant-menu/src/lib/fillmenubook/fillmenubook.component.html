@@ -16,7 +16,7 @@
                             <div class="col">
                                 <mat-form-field class="full-width">
                                     <mat-label>Select menu book</mat-label>
-                                    <mat-select [(value)]="selectedMenuBook" formControlName="book_id" (selectionChange)="OnBookChange($event)">
+                                    <mat-select [(value)]="selectedMenuBook" formControlName="book" (selectionChange)="OnBookChange($event)">
                                         <mat-option *ngFor="let item of menubooks" [value]="item">
                                             {{ item.book_name }}
                                         </mat-option>
@@ -28,7 +28,7 @@
                             <div class="col">
                                 <mat-form-field class="full-width">
                                     <mat-label>Select section</mat-label>
-                                    <mat-select formControlName="section_id" (selectionChange)="onSectionChange($event)" [(value)]="selectedSection" matNativeControl>
+                                    <mat-select formControlName="section" (selectionChange)="onSectionChange($event)" [(value)]="selectedSection" matNativeControl>
                                         <mat-option *ngFor="let item of selectedSections" [value]="item">
                                             {{ item.section_name }}
                                         </mat-option>
@@ -39,13 +39,13 @@
                         <div class="row">
                             <div class="col">
                                 <mat-form-field class="full-width">
-                                    <input matInput placeholder="Select Item" aria-label="Select Item" [matAutocomplete]="auto" formControlName="item_id">
-                                    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="newItemSelected($event)">
-                                        <mat-option *ngFor="let item of items" [value]="item.item_id">
+                                    <mat-label>Select an Item</mat-label>
+                                    <mat-select formControlName="item" [(value)]="selectedItem" matNativeControl>
+                                        <mat-option *ngFor="let item of items" [value]="item">
                                             <span>{{item.item_name}}</span> |
                                             <small>{{item.description}}</small>
                                         </mat-option>
-                                    </mat-autocomplete>
+                                    </mat-select>
                                 </mat-form-field>
                             </div>
                         </div>

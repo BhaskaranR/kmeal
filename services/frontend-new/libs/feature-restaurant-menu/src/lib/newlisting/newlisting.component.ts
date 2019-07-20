@@ -21,56 +21,65 @@ export class NewlistingComponent implements OnInit , OnDestroy{
 
   constructor(
     private fb: FormBuilder,
-    public menuService:MenuService,
-    public snackBar: MatSnackBar,
+    public  menuService:MenuService,
+    public  snackBar: MatSnackBar,
     private searchTransactionsForwardGQL: SearchTransactionsForwardGQL) {}
 
 
-  menubooks       : Book[] = [];
+  menubooks       : Book[];
+  selectedMenuBook: Book;
+
+  sections        : Section[];
+  selectedSection : Section;
+  selectedSections: Section[];
+
+  items           : Item[];
+  selectedItems   : Item[];
+  selectedItem    : Item;
+
   isNonLinear     : boolean = false;
   isNonEditable   : boolean = false;
   pricetype       : number = 1;
   stepper         : MatStepper;
-  selectedMenuBook: Book;
-  selectedSection : Section;
+  
   priceHeader     : string = "Enter pricing information";
   isReady         : boolean = false;
   unSubscription$ : Subject<any> = new Subject();
 
-  dynamicPricingValidator = {
-    "list_type": [1, Validators.required],
-    "isactive": [true, Validators.required],
-    "list_price": [null, Validators.required],
-    "min_price": [null, Validators.required],
-    "quantity": [null, Validators.required],
-    "start_date": [{value: '', disabled: true}, Validators.required],
-    "start_time": [{value: '', disabled: true}, Validators.required],
-    "end_date": [null, Validators.required],
-    "end_time": [null, Validators.required],
+  dynamicPricingValidator: {[key:string]: any[]} = {
+    "list_type"   : [1, Validators.required],
+    "isactive"    : [true, Validators.required],
+    "list_price"  : [null, Validators.required],
+    "min_price"   : [null, Validators.required],
+    "quantity"    : [null, Validators.required],
+    "start_date"  : [{value: '', disabled: true}, Validators.required],
+    "start_time"  : [{value: '', disabled: true}, Validators.required],
+    "end_date"    : [null, Validators.required],
+    "end_time"    : [null, Validators.required],
     "sliding_rate": [null, Validators.required]
   };
 
-  sideValidator = {
-    "item_name": [null, Validators.required],
-    "list_price": [null, Validators.required]
+  sideValidator   : {[key:string]: any[]} = {
+    "item_name"   : [null, Validators.required],
+    "list_price"  : [null, Validators.required]
   };
 
-  bookAndSectionForm = this.fb.group({
-    book_id: [null, Validators.required],
-    section_id: [null, Validators.required],
+  bookAndSectionForm : FormGroup = this.fb.group({
+    "book"        : [null, Validators.required],
+    "section"     : [null, Validators.required],
   });
 
-  itemForm = this.fb.group({
-    item_id: [null, Validators.required],
+  itemForm        : FormGroup = this.fb.group({
+    "item"        : [null, Validators.required],
   })
 
-  dynamicPricingForm = this.fb.group(this.dynamicPricingValidator);
+  dynamicPricingForm : FormGroup  = this.fb.group(this.dynamicPricingValidator);
 
-  sidesForm = this.fb.group({
-    "side_groups": this.fb.array([])
+  sidesForm       : FormGroup = this.fb.group({
+    "side_groups" : this.fb.array([])
   });
 
-  pricingForm = this.fb.group({
+  pricingForm     : FormGroup  = this.fb.group({
     formArray: this.fb.array([
       this.bookAndSectionForm,
       this.itemForm,
@@ -79,12 +88,6 @@ export class NewlistingComponent implements OnInit , OnDestroy{
     ])
   });
 
-  sections:Section[];
-  selectedSections: Section[];
-  items:Item[];
-  selectedItems: Item[];
-  accountName;
-  
 
   createSideGroup() {
     const itemGroup = (<FormArray>this.pricingForm.get("formArray")).controls[3] as FormGroup;
@@ -122,49 +125,43 @@ export class NewlistingComponent implements OnInit , OnDestroy{
 
 
   async ngOnInit() {
-    const menubooks  = await this.menuService.getMyBooks();
-    this.menubooks = menubooks.filter(bk => !!bk.is_active);
+    this.menubooks = await this.menuService.getMyBooks();
+    this.sections = await this.menuService.getMySections();
+    this.items = await this.menuService.getMyItems();
 
-    const sections   = await this.menuService.getMySections();
-    this.sections = sections.filter(sec => !!sec.is_active);
-
-    const items      = await this.menuService.getMyItems();
-    this.items = items.filter(i => !!i.is_active);
-
-    this.accountName = await this.menuService.getAccountName();
+    const accountName = await this.menuService.getAccountName();
 
     const sub = this.searchTransactionsForwardGQL
     .subscribe({
-       "query": `receiver:kmealowner12 auth:${this.accountName} status:executed  db.table:sec/kmealowner12`,
-    }).pipe(takeUntil(this.unSubscription$));
-    sub.subscribe((next) => {
-       console.log(next, 'update ?');
-     });
+       "query": `receiver:kmealowner12 auth:${accountName} status:executed  db.table:sec/kmealowner12`,
+    })
+    .pipe(takeUntil(this.unSubscription$))
+    .subscribe(this.updateHandler.bind(this));
 
-     this.isReady = true;
+    this.isReady = true;
+  }
+
+  private updateHandler(update) {
+    console.log('update ? ', update);
   }
 
   onMenuBookChange(evt, stepper) {
-    const bookId = evt.value;
-    const book = this.menubooks.filter(book => book.book_id === bookId)[0];
-    this.selectedSections = this.sections.filter(sec => book.sections.includes(sec.section_id));
+    this.selectedSections = this.sections.filter(sec => this.selectedMenuBook.sections.includes(sec.section_id));
     if (!this.stepper){
       this.stepper = stepper;
     }
   }
 
   onSectionChange(evt, stepper:MatStepper){
-    const secId = evt.value;
-    const section = this.selectedSections.filter(sec => sec.section_id === secId)[0];
-    this.selectedItems = this.items.filter(item => section.items.includes(item.item_id));
+    this.selectedItems = this.items.filter(item => this.selectedSection.items.includes(item.item_id));
     if (!this.stepper){
       this.stepper = stepper;
     }
     stepper.next();
   }   
 
-  listItemSelected(id: number, stepper:MatStepper) {
-    (<FormArray>this.pricingForm.get("formArray")).controls[1].get("item_id").setValue(id);
+  listItemSelected(item: Item, stepper:MatStepper) {
+    (<FormArray>this.pricingForm.get("formArray")).controls[1].get("item").setValue(item);
     this.priceTypeChanged({value:1} as any);
     stepper.next();
   }
@@ -195,9 +192,9 @@ export class NewlistingComponent implements OnInit , OnDestroy{
     }
 
     let listType    = Number((<FormArray>this.pricingForm.get('formArray')).controls[2].get('list_type').value);
-    const bookId    = (<FormArray>this.pricingForm.get('formArray')).controls[0].get('book_id').value;
-    const sectionId = (<FormArray>this.pricingForm.get('formArray')).controls[0].get('section_id').value;
-    const itemId    = (<FormArray>this.pricingForm.get('formArray')).controls[1].get("item_id").value;
+    const bookId    = this.selectedMenuBook.book_id;
+    const sectionId = this.selectedSection.section_id;
+    const itemId    = this.selectedItem.item_id;
     const listPrice = (<FormArray>this.pricingForm.get('formArray')).controls[2].get('list_price').value;
     const sides     = this.generateSidesJson();
 
@@ -255,35 +252,34 @@ export class NewlistingComponent implements OnInit , OnDestroy{
   }
 
   resetForm(){
-    this.pricingForm.reset();
+      this.pricingForm.reset();
       this.pricingForm.markAsUntouched();
       this.stepper.reset();
   }
 
   private convertDatesToSeconds(date, time){
-    time = time + ":00";
-    const now = moment();
-    const end = moment(moment(date).format('MM/DD/YYYY') + ' ' + time);
-    const duration = moment.duration(end.diff(now) );
-    const secs = duration.asSeconds();
-    return secs
+      time = time + ":00";
+      const now = moment();
+      const end = moment(moment(date).format('MM/DD/YYYY') + ' ' + time);
+      const duration = moment.duration(end.diff(now) );
+      const secs = duration.asSeconds();
+      return secs
   }
 
   private openSnackBar(message: string, action: string) {
-    this.snackBar.open(message, action, {
-      duration: 2000,
-    });
+      this.snackBar.open(message, action, {
+        duration: 2000,
+      });
   }
 
   private generateSidesJson(){
-    let sides = (<FormArray>this.pricingForm.get('formArray')).controls[3].get('side_groups').value;
-    sides = sides.map(s => JSON.stringify(s));
-    return sides;
+      let sides = (<FormArray>this.pricingForm.get('formArray')).controls[3].get('side_groups').value;
+      sides = sides.map(s => JSON.stringify(s));
+      return sides;
   }
 
   ngOnDestroy(){
-    this.unSubscription$.next();
-    this.unSubscription$.complete();
+      this.unSubscription$.next();
+      this.unSubscription$.complete();
   }
-
 }

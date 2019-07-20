@@ -19,26 +19,31 @@ export class FillmenubookComponent implements OnInit {
   
 
   sectionsForm = this.fb.group({
-    section_id: [null, Validators.required],
-    book_id: [null, Validators.required],
-    item_id:[null, Validators.required]
+    section: [null, Validators.required],
+    book: [null, Validators.required],
+    item:[null, Validators.required]
   });
 
-  menubooks         : Book[] ;
+  menubooks         : Book[];
+  selectedMenuBook  : Book;
+
   sections          : Section[];
   selectedSections  : Section[];
-  items             : Item[];
-  selectedItems     : Item[];
-  selectedItemId    : number;
-  isReady           : boolean = true;
-  selectedMenuBook  : Book;
   selectedSection   : Section;
+
+  items             : Item[];
+  selectedItem      : Item;
+  selectedItems     : Item[];
+
+  isReady           : boolean = true;
+
   unSubscription$ = new Subject();
 
-  constructor(public menuService: MenuService,
+  constructor(
+    public  menuService: MenuService,
     private searchTransactionsForwardGQL: SearchTransactionsForwardGQL,
     public  dialog: MatDialog,
-    public snackBar: MatSnackBar,
+    public  snackBar: MatSnackBar,
     private fb: FormBuilder) {}
 
   async ngOnInit() {
@@ -65,8 +70,12 @@ export class FillmenubookComponent implements OnInit {
     
   }
 
-  onSectionChange(ev: MatSelectChange) {
-    this.selectedItems = this.items.filter( item => this.selectedSection.items.includes(item.item_id));
+  OnBookChange(evt: MatSelectChange){
+    this.selectedSections = this.sections.filter( sec => this.selectedMenuBook.sections.includes(sec.section_id));
+  }
+
+  onSectionChange(evt: MatSelectChange) {
+    this.selectedItems = this.items.filter(i => this.selectedSection.items.includes(i.item_id))
   }
 
   onRemoveItemFromSection(ev) {
@@ -79,52 +88,36 @@ export class FillmenubookComponent implements OnInit {
       if (!result) return;
       this.callContactToDeleteItem(ev.item_id);
     });
-
-    
   }
 
-  private async callContactToDeleteItem(id){
+  private async callContactToDeleteItem(item){
     try{
-      const resp = await this.menuService.removeFromSection(this.selectedSection.section_id, id);
-      this.items = this.items.filter(i => i.item_id !== id);
-      this.selectedItems = this.selectedItems.filter(i => i.item_id !== id);
+      const resp = await this.menuService.removeFromSection(this.selectedSection.section_id, item.item_id);
+      this.selectedItems = this.selectedItems.filter( i => i.item_id !== item.item_id);
       this.openSnackBar('Deleted','');
-    }
-    catch(e){
+    } catch(e){
       this.openSnackBar('Failed to delete item', '');
     }
   }
 
-  newItemSelected(et: MatAutocompleteSelectedEvent) {
-    const indx = this.items.findIndex(i => i.item_name === et.option.value) ;
-    this.selectedItemId  = this.items[indx].item_id;
-  }
 
   async onSubmit() {
-    
     try {
-      const resp = await this.menuService.addToSection(this.selectedMenuBook.book_id, this.selectedSection.section_id, this.sectionsForm.get('item_id').value, 0);
+      const resp = await this.menuService.addToSection(this.selectedMenuBook.book_id, this.selectedSection.section_id, this.selectedItem.item_id, 0);
+      this.selectedItems.push(this.selectedItem);
+      this.sectionsForm.reset();
+      this.sectionsForm.markAsUntouched();
       this.openSnackBar('added selected item to the section','');
-    }
-    catch(e){
+    } catch(e){
       this.openSnackBar(e,'');
-    }
-    
+    } 
   }
 
-  submitItems(objects, optype) {
-    
-  }
 
   private openSnackBar(message: string, action: string) {
     this.snackBar.open(message, action, {
       duration: 2000,
     });
-  }
-
-  OnBookChange(evt){
-    this.selectedSections = this.sections.filter( sec => this.selectedMenuBook.sections.includes(sec.section_id));
-
   }
 }
 
