@@ -103,7 +103,7 @@ export class NewsectionComponent implements OnInit, OnDestroy {
   async callContactToDeleteSection(id){
     const sec = this.sections.find(s => s.section_id === id);
     if(sec.items.length > 0){
-      alert(' Failed to delete, this section has items, please clear items before deleting');
+      this.openSnackBar('Failed to delete this section as it has items in it','');
       return ;
     }
 

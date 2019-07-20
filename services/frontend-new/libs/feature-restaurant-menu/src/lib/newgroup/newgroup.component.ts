@@ -85,7 +85,7 @@ export class NewgroupComponent implements OnInit, OnDestroy {
     const book = this.menubooks.find(b => b.book_id == id);
 
     if (book.sections.length > 0){
-      alert('Failed to delete, this book has sections, clear the sections before deleting');
+      this.openSnackBar('Failed to delete this menu book because it has sections in it','');
       return;
     }
 
