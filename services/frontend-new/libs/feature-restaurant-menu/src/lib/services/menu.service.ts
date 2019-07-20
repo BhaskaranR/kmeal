@@ -134,7 +134,16 @@ export class MenuService {
         });
     }
 
-    createItem(itemname, description, photo = '', spice_level = 0, vegetarian, cooking_time, types, bookId, sectionId) {
+    createItem(
+        itemname, 
+        description, 
+        photo = '', 
+        spice_level = 0, 
+        vegetarian, 
+        cooking_time, 
+        types, 
+        bookId, 
+        sectionId) {
 
         const unsubscribe$ = new Subject();
         return new Promise((resolve, reject) => {
@@ -348,8 +357,8 @@ export class MenuService {
                         unsubscribe$.complete();
                         const user = val[val.length - 1];
                         const accountName = await user.getAccountName();
-                        const transaction = generateTransaction(accountName, "deleteitem", {
-                            item_id: itemId
+                        const transaction = generateTransaction(accountName, "delitem", {
+                            itemid: itemId
                         });
                         const res = await user.signTransaction(transaction, transactionConfig);
                         resolve(res);

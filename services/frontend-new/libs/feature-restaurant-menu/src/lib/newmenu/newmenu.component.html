@@ -1,6 +1,7 @@
 <div *ngIf="!isReady; else main">
     <mat-spinner style="margin:30px auto 30px auto;" [diameter]="25" mode="indeterminate"></mat-spinner>
 </div>
+
 <ng-template #main>
 
     <mat-drawer-container class="drawer-container">
@@ -57,9 +58,8 @@
                                 <div class="col">
                                     <mat-form-field class="full-width">
                                         <mat-label>Select menu book</mat-label>
-
-                                        <mat-select [(value)]="selectedMenuBook" formControlName="book_id" (selectionChange)="onChanegMenuBook($event)">
-                                            <mat-option *ngFor="let item of menubooks" [value]="item.book_id">
+                                        <mat-select [(value)]="selectedMenuBook" formControlName="book" (selectionChange)="onChanegMenuBook($event)">
+                                            <mat-option *ngFor="let item of menubooks" [value]="item">
                                                 {{ item.book_name }}
                                             </mat-option>
                                         </mat-select>
@@ -69,9 +69,9 @@
                             <div class="row">
                                 <div class="col">
                                     <mat-form-field class="full-width">
-                                        <mat-label>Select section</mat-label>
-                                        <mat-select formControlName="section_id" matNativeControl>
-                                            <mat-option *ngFor="let item of selectedSections" [value]="item.section_id">
+                                        <mat-label>Select a Section</mat-label>
+                                        <mat-select [(value)]="selectedSection" formControlName="section" (selectionChange)="onSectionChange($event)">
+                                            <mat-option *ngFor="let item of selectedSections" [value]="item">
                                                 {{ item.section_name }}
                                             </mat-option>
                                         </mat-select>
@@ -98,7 +98,7 @@
                                 <div class="col">
                                     <mat-label>Spice level</mat-label>
                                     <br>
-                                    <mat-slider [min]="0" [max]="3" [tickInterval]="1" class="full-width" color="warn" value="0" formControlName="spicy_level" thumbLabel aria-label="spiceness level">
+                                    <mat-slider [min]="0" [max]="3" [tickInterval]="1" [displayWith]="formatSpicyLevel" class="full-width" color="warn" value="0" formControlName="spicy_level" thumbLabel aria-label="spiceness level">
                                     </mat-slider>
                                 </div>
                             </div>
@@ -139,7 +139,7 @@
                     <mat-card-subtitle>
                         {{description}}
                     </mat-card-subtitle>
-                    <mat-card-subtitle> {{spicyLevel}} {{vegetarian}}</mat-card-subtitle>
+                    <mat-card-subtitle> {{spicyLevelDisplay}} {{vegetarian}}</mat-card-subtitle>
                     <img mat-card-lg-image>
                 </mat-card-title-group>
             </mat-card>

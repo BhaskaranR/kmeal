@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit} from "@angular/core";
-import { FormBuilder, Validators } from "@angular/forms";
+import { FormBuilder, Validators, FormGroup } from "@angular/forms";
 import { MatSnackBar, MatDialog } from "@angular/material";
 import { MenuService } from "../services/menu.service";
 import { Book } from "../model/books";
@@ -15,23 +15,25 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class NewmenuComponent implements OnInit, OnDestroy {
 
+  menubooks        : Book[];
   selectedMenuBook : Book;
-  selectedSection  : Section;
-  formSubmitted    : boolean = false;
-  menubooks        : Book[] = [];
+
   sections         : Section[];
+  selectedSection  : Section;
   selectedSections : Section[];
+
+  formSubmitted    : boolean = false;
   isReady          : boolean = false;
 
-  menuForm = this.fb.group({
+  menuForm         : FormGroup = this.fb.group({
     itemName       : [null, Validators.required],
     description    : [null, Validators.required],
     photo          : null,
     spicy_level    : 0,
     vegetarian     : 3,
     cooking_time   : [null, Validators.required],
-    book_id        : null,
-    section_id     : null
+    book           : [null, Validators.required],
+    section        : [null, Validators.required]
   });
 
   CONST_VEGETARIAN : any = {
@@ -106,9 +108,9 @@ export class NewmenuComponent implements OnInit, OnDestroy {
         this.menuForm.get('spicy_level').value,
         Number(this.menuForm.get('vegetarian').value),
         this.menuForm.get('cooking_time').value,
-        this.menuForm.get('book_id').value,
-        this.menuForm.get('section_id').value,
-        '');
+        [],
+        this.selectedMenuBook.book_id,
+        this.selectedSection.section_id);
 
       this.openSnackBar('Created new item',"");
       this.formSubmitted = true;
@@ -118,23 +120,58 @@ export class NewmenuComponent implements OnInit, OnDestroy {
     } 
   }
 
-  deletemenu() {
-    try{
-      
-    }catch(e){
+  async deletemenu() {
+    const items = await this.menuService.getMyItems();
 
+    try{
+       const resp = this.menuService.deleteItem(items[items.length - 1].item_id);
+       this.formSubmitted = false;
+       this.menuForm.reset();
+       this.menuForm.markAsPristine();
+    }catch(e){
+      this.openSnackBar('Syetem failed to delete this item','');
     }
   }
 
-  openSnackBar(message: string, action: string) {
+  editItem(){
+    this.formSubmitted = false;
+  }
+
+  get spicyLevelDisplay(){
+    if (!this.spicyLevel) return ;
+    return this.spicyLevelConsts[this.spicyLevel]
+  }
+
+  spicyLevelConsts = {
+    0:'',
+    1:'Mild Spicy',
+    2:'Medium Spicy',
+    3:'Hot'
+  }
+
+  formatSpicyLevel(val){
+    const SPICY = {
+      0:'',
+      1:'Mild Spicy',
+      2:'Medium Spicy',
+      3:'Hot'
+    }
+    return SPICY[val];
+  }
+
+  private openSnackBar(message: string, action: string) {
     this.snackBar.open(message, action, {
       duration: 6000,
     });
   }
 
   onChanegMenuBook(e){
-    const secs = this.menubooks.find(book => book.book_id === e.value).sections;
-    this.selectedSections = this.sections.filter(sec=> secs.includes(sec.section_id));
+    this.selectedSections = this.sections.filter(sec=> this.selectedMenuBook.sections.includes(sec.section_id));
+  }
+
+  onSectionChange(e){
+    console.log('on section change ? ', e);
+    console.log('form ?! ', this.menuForm.get('section').value, this.selectedSection);
   }
 
   ngOnDestroy(){
