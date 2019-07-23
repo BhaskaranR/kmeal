@@ -5,8 +5,8 @@
 <ng-template #main>
 
     <mat-drawer-container class="drawer-container">
-        <mat-toolbar *ngIf="formSubmitted;else preview">
-            <button (click)="start2.toggle();formSubmitted = false;" mat-icon-button>
+        <mat-toolbar *ngIf="isFormSubmitted;else preview">
+            <button (click)="editItem()" mat-icon-button>
                 <mat-icon>edit</mat-icon>
             </button>
             <span class="fill-remaining"></span>
@@ -21,7 +21,7 @@
             </mat-toolbar>
             <mat-divider></mat-divider>
         </ng-template>
-        <mat-drawer #start2 [opened]="!formSubmitted" mode="side" style="width:280px">
+        <mat-drawer #start2 [opened]="!isFormSubmitted" mode="side" style="width:280px">
             <mat-toolbar class="mat-elevation-z0">
                 Create your dishes
             </mat-toolbar>

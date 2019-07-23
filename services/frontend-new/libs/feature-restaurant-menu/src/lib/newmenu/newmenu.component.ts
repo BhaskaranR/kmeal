@@ -95,7 +95,7 @@ export class NewmenuComponent implements OnInit, OnDestroy {
   private updateHandler(update){
     console.log('update ? ', update);
     if (this.isFormSubmitted){
-      this.newItemId = update.data.searchTransactions.trace.matchingActions[0].dbOps[0].newJSON.object.item_id;
+      this.newItemId = update.data.searchTransactionsForward.trace.matchingActions[0].dbOps[0].newJSON.object.item_id;
     }
   }
 
