@@ -1,7 +1,0 @@
-sudo: required
-
-services:
-  - docker
-
-install:
-  - docker build -t kmeal/frontend ./services/frontend
