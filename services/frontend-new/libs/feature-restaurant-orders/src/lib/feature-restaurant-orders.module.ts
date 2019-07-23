@@ -8,6 +8,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatCardModule} from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
+import { OrderService } from './services/order.service';
 
 @NgModule({
   imports: [
@@ -24,6 +25,7 @@ import {MatButtonModule} from '@angular/material/button';
     MatSortModule,
     MatTabsModule
   ],
-  declarations: [OrderBlotterComponent, ActiveOrdersComponent]
+  declarations: [OrderBlotterComponent, ActiveOrdersComponent],
+  providers:[OrderService]
 })
 export class FeatureRestaurantOrdersModule { }

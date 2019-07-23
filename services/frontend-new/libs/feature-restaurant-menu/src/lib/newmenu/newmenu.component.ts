@@ -146,6 +146,7 @@ export class NewmenuComponent implements OnInit, OnDestroy {
         Number(this.menuForm.get('vegetarian').value),
         this.menuForm.get('cooking_time').value,
         []);
+        
         this.openSnackBar('Saved this item',"");
         this.isFormSubmitted = true;
     } catch(e){

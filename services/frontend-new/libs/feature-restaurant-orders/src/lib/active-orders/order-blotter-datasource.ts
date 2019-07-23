@@ -12,9 +12,9 @@ export interface OrderBlotterItem {
 
 // TODO: replace this with real data from your application
 const EXAMPLE_DATA: OrderBlotterItem[] = [
-  { id: 1, name: "Hydrogen" ,status:'Requested'},
-  { id: 2, name: "Helium",status:'Requested' },
-  { id: 3, name: "Lithium",status:'Requested' },
+  { id: 1, name: "Order" ,status:'Requested'},
+  { id: 2, name: "Order 2 ",status:'Requested' },
+  { id: 3, name: "Order 3",status:'Requested' },
   { id: 4, name: "Beryllium",status:'Requested' },
   { id: 5, name: "Boron" ,status:'Requested'},
   { id: 6, name: "Carbon" ,status:'Requested'},
