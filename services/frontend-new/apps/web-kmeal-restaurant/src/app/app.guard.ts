@@ -25,26 +25,17 @@ export class AuthGuard implements CanActivate {
                 if (this.isLoggedIn) {
                     res(true);
                 }
-                this.ualService.users$.pipe(takeUntil(this.unsubscribe$)).subscribe(async val => {
-                    if (val !== null && val.length > 0) {
-    
-                        this.unsubscribe$.next();
-                        this.unsubscribe$.complete();
-                        const user = val[val.length - 1];
-                        const accountName = await user.getAccountName();
-                        if (accountName) {
-                            this.isLoggedIn = true;
-                            res(true);
-                        }
-
-                        rej(false);
-                    } else {
-                        rej(false);
-                    }
-                });
+                console.log(this.ualService.users$.value, 'app' );
+                
+                if (this.ualService.users$.value) {
+                    this.isLoggedIn = true;
+                    res(true);
+                } else {
+                    rej('not logged in');
+                }
     
             }catch(e) {
-                rej(false)
+                rej('not logged in')
             }
         })
     }

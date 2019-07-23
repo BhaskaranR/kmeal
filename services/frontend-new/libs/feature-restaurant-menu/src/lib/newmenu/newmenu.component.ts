@@ -22,8 +22,10 @@ export class NewmenuComponent implements OnInit, OnDestroy {
   selectedSection  : Section;
   selectedSections : Section[];
 
-  formSubmitted    : boolean = false;
+  isFormSubmitted  : boolean = false;
   isReady          : boolean = false;
+  isEditing        : boolean = false;
+  newItemId        : number;
 
   menuForm         : FormGroup = this.fb.group({
     itemName       : [null, Validators.required],
@@ -83,7 +85,7 @@ export class NewmenuComponent implements OnInit, OnDestroy {
     this.sections = await this.menuService.getMySections();
     const accountName = await this.menuService.getAccountName();
     const sub = this.searchTransactionsForwardGQL.subscribe({
-      "query": `receiver:kmealowner12 auth:${accountName} status:executed  db.table:sec/kmealowner12`,
+      "query": `receiver:kmealowner12 auth:${accountName} status:executed  db.table:items/kmealowner12`,
     })
     .pipe(takeUntil(this.unSubscription$))
     .subscribe(this.updateHandler.bind(this));
@@ -92,6 +94,9 @@ export class NewmenuComponent implements OnInit, OnDestroy {
 
   private updateHandler(update){
     console.log('update ? ', update);
+    if (this.isFormSubmitted){
+      this.newItemId = update.data.searchTransactions.trace.matchingActions[0].dbOps[0].newJSON.object.item_id;
+    }
   }
 
 
@@ -99,7 +104,17 @@ export class NewmenuComponent implements OnInit, OnDestroy {
 
   }
 
-  async onSubmit() {
+  onSubmit() {
+    if (this.isEditing) {
+      if (this.newItemId) {
+        this.onEdit();
+      }
+    } else {
+      this.onCreate();
+    } 
+  }
+
+  async onCreate(){
     try{
       const resp = await this.menuService.createItem(
         this.menuForm.get('itemName').value, 
@@ -113,19 +128,36 @@ export class NewmenuComponent implements OnInit, OnDestroy {
         this.selectedSection.section_id);
 
       this.openSnackBar('Created new item',"");
-      this.formSubmitted = true;
+      this.isFormSubmitted = true;
 
     }catch(e){
       this.openSnackBar('ERROR creating menu ' +  e, "");
     } 
   }
 
-  async deletemenu() {
-    const items = await this.menuService.getMyItems();
+  async onEdit(){
+    try{
+      const resp = await this.menuService.editItem(
+        this.newItemId,
+        this.menuForm.get('itemName').value,
+        this.menuForm.get('description').value,
+        this.menuForm.get('photo').value || 'random string', 
+        this.menuForm.get('spicy_level').value,
+        Number(this.menuForm.get('vegetarian').value),
+        this.menuForm.get('cooking_time').value,
+        []);
+        this.openSnackBar('Saved this item',"");
+        this.isFormSubmitted = true;
+    } catch(e){
+      this.openSnackBar(e,'');
+    }
+  }
+
+  async onDeleteItem() {
 
     try{
-       const resp = this.menuService.deleteItem(items[items.length - 1].item_id);
-       this.formSubmitted = false;
+       const resp = this.menuService.deleteItem(this.newItemId);
+       this.isFormSubmitted = false;
        this.menuForm.reset();
        this.menuForm.markAsPristine();
     }catch(e){
@@ -134,7 +166,8 @@ export class NewmenuComponent implements OnInit, OnDestroy {
   }
 
   editItem(){
-    this.formSubmitted = false;
+    this.isFormSubmitted = false;
+    this.isEditing = true;
   }
 
   get spicyLevelDisplay(){
