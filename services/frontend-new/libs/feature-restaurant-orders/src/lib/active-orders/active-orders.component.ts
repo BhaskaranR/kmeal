@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
-import { MatPaginator, MatSort } from "@angular/material";
+import { MatPaginator, MatSort, MatTableDataSource } from "@angular/material";
 import { OrderBlotterDataSource } from "./order-blotter-datasource";
+import { OrderService } from "../services/order.service";
+import {PageEvent} from '@angular/material';
 
 
 @Component({
@@ -14,8 +16,14 @@ export class ActiveOrdersComponent implements OnInit {
   
     /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
     displayedColumns = ["id", "name"];
+
+    orderList;
+    constructor(private orderService: OrderService){}
   
-    ngOnInit() {
+    async ngOnInit() {
       this.dataSource = new OrderBlotterDataSource(this.paginator, this.sort);
+
+      this.orderList = await this.orderService.getMyOrders();
+      console.log(this.orderList, ' order list');
     }
 }

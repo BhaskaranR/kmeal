@@ -8,7 +8,6 @@ import { environment } from "@env/restaurant";
 import { Subject } from "rxjs";
 import { takeUntil } from 'rxjs/operators';
 import { read, generateTransaction, transactionConfig } from '@utils';
-import { DeleteBookDialog } from "../newgroup/newgroup.component";
 const { format } = Eos.modules;
 
 @Injectable()
@@ -19,29 +18,24 @@ export class MenuService {
     accountName;
     constructor(private ualService: UalService) {
        this.reader = Eos({httpEndpoint: `${environment.RPC_PROTOCOL}://${environment.RPC_HOST}:${environment.RPC_PORT}`, chainId:environment.CHAIN_ID});
-     }
+    }
 
 
     createbook(bookname: string) {
-        const unsubscribe$ = new Subject();
-        return new Promise((resolve, reject) => {
+        return new Promise(async (resolve, reject) => {
             try {
-                this.ualService.users$.pipe(takeUntil(unsubscribe$)).subscribe(async val => {
-                    if (val !== null && val.length > 0) {
-                        unsubscribe$.next();
-                        unsubscribe$.complete();
-                        const user = val[val.length - 1];
-                        const accountName = await user.getAccountName();
-                        const transaction = generateTransaction(accountName, "createbook", {
-                            account: accountName,
-                            bookname: bookname
-                        });
-                        const res = await user.signTransaction(transaction, transactionConfig);
-                        resolve(res);
-                    } else {
-                        this.ualService.showModal();
-                    }
+
+                if (!this.user || this.accountName) {
+                    this.user = await this.getUser();
+                    this.accountName = await this.user.getAccountName();
+                }
+
+                const transaction = generateTransaction(this.accountName, "createbook", {
+                    account: this.accountName,
+                    bookname: bookname
                 });
+                const res = await this.user.signTransaction(transaction, transactionConfig);
+                resolve(res);
             }
             catch (e) {
                 reject(e);
@@ -51,25 +45,19 @@ export class MenuService {
 
     deleteBook(bookid: string) {
         const unsubscribe$ = new Subject();
-        return new Promise((resolve, reject) => {
-            try {
-                this.ualService.users$.pipe(takeUntil(unsubscribe$)).subscribe(async val => {
-                    if (val !== null && val.length > 0) {
-                        unsubscribe$.next();
-                        unsubscribe$.complete();
-                        const user = val[val.length - 1];
-                        const accountName = await user.getAccountName();
-                        const transaction = generateTransaction(accountName, "delbook", {
-                            bookid: bookid
-                        });
-                        const res = await user.signTransaction(transaction, transactionConfig);
-                        resolve(res);
-                    } else {
-                        this.ualService.showModal();
-                    }
+        return new Promise(async (resolve, reject) => {
+            try{
+                if (!this.user || this.accountName) {
+                    this.user = await this.getUser();
+                    this.accountName = await this.user.getAccountName();
+                }
+
+                const transaction = generateTransaction(this.accountName, "delbook", {
+                    bookid: bookid
                 });
-            }
-            catch (e) {
+                const res = await this.user.signTransaction(transaction, transactionConfig);
+                resolve(res);
+            } catch(e){
                 reject(e);
             }
         });
@@ -77,26 +65,19 @@ export class MenuService {
 
     addSection(bookid, sectionname) {
 
-        const unsubscribe$ = new Subject();
-        return new Promise((resolve, reject) => {
+        return new Promise(async (resolve, reject) => {
             try {
-                this.ualService.users$.pipe(takeUntil(unsubscribe$)).subscribe(async val => {
-                    if (val !== null && val.length > 0) {
+                if (!this.user || this.accountName) {
+                    this.user = await this.getUser();
+                    this.accountName = await this.user.getAccountName();
+                }
 
-                        unsubscribe$.next();
-                        unsubscribe$.complete();
-                        const user = val[val.length - 1];
-                        const accountName = await user.getAccountName();
-                        const transaction = generateTransaction(accountName, "addsections", {
-                            bookid: bookid,
-                            sectionname: sectionname
-                        });
-                        const res = await user.signTransaction(transaction, transactionConfig);
-                        resolve(res);
-                    } else {
-                        this.ualService.showModal();
-                    }
+                const transaction = generateTransaction(this.accountName, "addsections", {
+                    bookid: bookid,
+                    sectionname: sectionname
                 });
+                const res = await this.user.signTransaction(transaction, transactionConfig);
+                resolve(res);
             }
             catch (e) {
                 reject(e);
