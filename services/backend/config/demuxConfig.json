@@ -1,7 +1,0 @@
-{
-  "nodeosEndpoint": "ec2-184-72-239-186.compute-1.amazonaws.com",
-  "startAtBlock": "48675706",
-  "onlyIrreversible": false,
-  "pollInterval": 250,
-  "endpointPort": 8282
-}
