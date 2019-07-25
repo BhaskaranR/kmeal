@@ -18,7 +18,7 @@ import { HttpClientModule } from "@angular/common/http";
 import { RouterModule } from "@angular/router";
 import { NavBarComponent } from "./nav/nav.component";
 import { FlexLayoutModule } from "@angular/flex-layout";
-import { UalModule } from 'ual-ngx-material-renderer';
+import { UalModule, UalService } from 'ual-ngx-material-renderer';
 import { Chain } from 'universal-authenticator-library';
 import { Scatter } from 'ual-scatter';
 import { EOSIOAuth } from 'ual-eosio-reference-authenticator';
@@ -37,6 +37,23 @@ const chain: Chain = {
     port: environment.RPC_PORT
   }]
 };
+
+
+export function init_ual(ualservice: UalService) {
+  return () =>  new Promise((resolve, reject) => {
+    if (ualservice.loginStatus$.value && !ualservice.loginStatus$.value.loading) {
+      resolve();
+      return;
+    }
+    ualservice.loginStatus$.subscribe(val => {
+      if (!val.loading) {
+        resolve();
+      }
+    }, (err) => {
+      reject(err);
+    });
+  });
+}
 
 // const lynx = new Lynx([exampleNet])
 // const ledger = new Ledger([exampleNet])
@@ -104,6 +121,9 @@ const eosioAuth = new EOSIOAuth([chain], { appName, protocol: 'eosio' });
     LayoutModule
   ],
   bootstrap: [AppComponent],
-  providers:[AuthGuard]
+  providers:[
+    
+    { provide: APP_INITIALIZER, useFactory: init_ual, deps: [UalService], multi: true },
+    AuthGuard]
 })
 export class AppModule { }
