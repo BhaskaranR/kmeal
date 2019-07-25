@@ -25,7 +25,7 @@ export class MenuService {
         return new Promise(async (resolve, reject) => {
             try {
 
-                if (!this.user || this.accountName) {
+                if (!this.user || !this.accountName) {
                     this.user = await this.getUser();
                     this.accountName = await this.user.getAccountName();
                 }
@@ -44,10 +44,9 @@ export class MenuService {
     }
 
     deleteBook(bookid: string) {
-        const unsubscribe$ = new Subject();
         return new Promise(async (resolve, reject) => {
             try{
-                if (!this.user || this.accountName) {
+                if (!this.user || !this.accountName) {
                     this.user = await this.getUser();
                     this.accountName = await this.user.getAccountName();
                 }
@@ -67,7 +66,7 @@ export class MenuService {
 
         return new Promise(async (resolve, reject) => {
             try {
-                if (!this.user || this.accountName) {
+                if (!this.user || !this.accountName) {
                     this.user = await this.getUser();
                     this.accountName = await this.user.getAccountName();
                 }
@@ -86,28 +85,19 @@ export class MenuService {
     }
 
     setSecOrder(bookid, sectionid, secOrder) {
-
-        const unsubscribe$ = new Subject();
-        return new Promise((resolve, reject) => {
+        return new Promise(async (resolve, reject) => {
             try {
-                this.ualService.users$.pipe(takeUntil(unsubscribe$)).subscribe(async val => {
-                    if (val !== null && val.length > 0) {
-                        
-                        unsubscribe$.next();
-                        unsubscribe$.complete();
-                        const user = val[val.length - 1];
-                        const accountName = await user.getAccountName();
-                        const transaction = generateTransaction(accountName, "setsecorder", {
-                            bookid: bookid,
-                            sectionid: sectionid,
-                            sortorder: secOrder
-                        });
-                        const res = await user.signTransaction(transaction, transactionConfig);
-                        resolve(res);
-                    } else {
-                        this.ualService.showModal();
-                    }
+                if (!this.user || !this.accountName) {
+                    this.user = await this.getUser();
+                }
+
+                const transaction = generateTransaction(this.accountName, "setsecorder", {
+                    bookid: bookid,
+                    sectionid: sectionid,
+                    sortorder: secOrder
                 });
+                const res = await this.user.signTransaction(transaction, transactionConfig);
+                resolve(res);
             }
             catch (e) {
                 reject(e);
@@ -127,33 +117,26 @@ export class MenuService {
         sectionId) {
 
         const unsubscribe$ = new Subject();
-        return new Promise((resolve, reject) => {
+        return new Promise(async (resolve, reject) => {
             try {
-                this.ualService.users$.pipe(takeUntil(unsubscribe$)).subscribe(async val => {
-                    if (val !== null && val.length > 0) {
+                if (!this.user || !this.accountName) {
+                    this.user = await this.getUser();
+                }
 
-                        unsubscribe$.next();
-                        unsubscribe$.complete();
-                        const user = val[val.length - 1];
-                        const accountName = await user.getAccountName();
-                        const transaction = generateTransaction(accountName, "createitem", {
-                            account: accountName,
-                            itemname: itemname,
-                            description: description,
-                            photo: photo,
-                            spicy_level: spice_level,
-                            vegetarian: vegetarian,
-                            cooking_time: cooking_time,
-                            types: types,
-                            book_id:bookId,
-                            section_id:sectionId
-                        });
-                        const res = await user.signTransaction(transaction, transactionConfig);
-                        resolve(res);
-                    } else {
-                        this.ualService.showModal();
-                    }
+                const transaction = generateTransaction(this.accountName, "createitem", {
+                    account: this.accountName,
+                    itemname: itemname,
+                    description: description,
+                    photo: photo,
+                    spicy_level: spice_level,
+                    vegetarian: vegetarian,
+                    cooking_time: cooking_time,
+                    types: types,
+                    book_id:bookId,
+                    section_id:sectionId
                 });
+                const res = await this.user.signTransaction(transaction, transactionConfig);
+                resolve(res);
             }
             catch (e) {
                 reject(e);
@@ -162,29 +145,20 @@ export class MenuService {
     }
 
     addToSection(bookId, sectionId, itemId, order) {
-
-        const unsubscribe$ = new Subject();
-        return new Promise((resolve, reject) => {
+        return new Promise(async (resolve, reject) => {
             try {
-                this.ualService.users$.pipe(takeUntil(unsubscribe$)).subscribe(async val => {
-                    if (val !== null && val.length > 0) {
+                if (!this.user || !this.accountName) {
+                    this.user = await this.getUser();
+                }
 
-                        unsubscribe$.next();
-                        unsubscribe$.complete();
-                        const user = val[val.length - 1];
-                        const accountName = await user.getAccountName();
-                        const transaction = generateTransaction(accountName, "addtosection", {
-                            bookid: bookId,
-                            sectionid: sectionId,
-                            itemid: itemId,
-                            sortorder: order
-                        });
-                        const res = await user.signTransaction(transaction, transactionConfig);
-                        resolve(res);
-                    } else {
-                        this.ualService.showModal();
-                    }
+                const transaction = generateTransaction(this.accountName, "addtosection", {
+                    bookid: bookId,
+                    sectionid: sectionId,
+                    itemid: itemId,
+                    sortorder: order
                 });
+                const res = await this.user.signTransaction(transaction, transactionConfig);
+                resolve(res);
             }
             catch (e) {
                 reject(e);
@@ -193,26 +167,18 @@ export class MenuService {
     }
 
     deleteSection(bookid, sectionid) {
-        const unsubscribe$ = new Subject();
-        return new Promise((resolve, reject) => {
+        return new Promise(async (resolve, reject) => {
             try {
-                this.ualService.users$.pipe(takeUntil(unsubscribe$)).subscribe(async val => {
-                    if (val !== null && val.length > 0) {
+                if (!this.user || !this.accountName) {
+                    this.user = await this.getUser();
+                }
 
-                        unsubscribe$.next();
-                        unsubscribe$.complete();
-                        const user = val[val.length - 1];
-                        const accountName = await user.getAccountName();
-                        const transaction = generateTransaction(accountName, "delsec", {
-                            bookid: bookid,
-                            secid: sectionid,
-                        });
-                        const res = await user.signTransaction(transaction, transactionConfig);
-                        resolve(res);
-                    } else {
-                        this.ualService.showModal();
-                    }
+                const transaction = generateTransaction(this.accountName, "delsec", {
+                    bookid: bookid,
+                    secid: sectionid,
                 });
+                const res = await this.user.signTransaction(transaction, transactionConfig);
+                resolve(res);
             }
             catch (e) {
                 reject(e);
@@ -221,33 +187,24 @@ export class MenuService {
     }
 
     editItem(itemid, itemname, description, photo, spice_level, vegetarian, cooking_time, types) {
-
-        const unsubscribe$ = new Subject();
-        return new Promise((resolve, reject) => {
+        return new Promise(async (resolve, reject) => {
             try {
-                this.ualService.users$.pipe(takeUntil(unsubscribe$)).subscribe(async val => {
-                    if (val !== null && val.length > 0) {
+                if (!this.user || !this.accountName) {
+                    this.user = await this.getUser();
+                }
 
-                        unsubscribe$.next();
-                        unsubscribe$.complete();
-                        const user = val[val.length - 1];
-                        const accountName = await user.getAccountName();
-                        const transaction = generateTransaction(accountName, "edititem", {
-                            itemid: itemid,
-                            itemname: itemname,
-                            description: description,
-                            photo: photo,
-                            spicy_level: spice_level,
-                            vegetarian: vegetarian,
-                            cooking_time: cooking_time,
-                            types: types
-                        });
-                        const res = await user.signTransaction(transaction, transactionConfig);
-                        resolve(res);
-                    } else {
-                        this.ualService.showModal();
-                    }
+                const transaction = generateTransaction(this.accountName, "edititem", {
+                    itemid: itemid,
+                    itemname: itemname,
+                    description: description,
+                    photo: photo,
+                    spicy_level: spice_level,
+                    vegetarian: vegetarian,
+                    cooking_time: cooking_time,
+                    types: types
                 });
+                const res = await this.user.signTransaction(transaction, transactionConfig);
+                resolve(res);
             }
             catch (e) {
                 reject(e);
@@ -256,26 +213,18 @@ export class MenuService {
     }
 
     removeFromSection(sectionid, itemid) {
-        const unsubscribe$ = new Subject();
-        return new Promise((resolve, reject) => {
+        return new Promise(async (resolve, reject) => {
             try {
-                this.ualService.users$.pipe(takeUntil(unsubscribe$)).subscribe(async val => {
-                    if (val !== null && val.length > 0) {
+                if (!this.user || !this.accountName) {
+                    this.user = await this.getUser();
+                }
 
-                        unsubscribe$.next();
-                        unsubscribe$.complete();
-                        const user = val[val.length - 1];
-                        const accountName = await user.getAccountName();
-                        const transaction = generateTransaction(accountName, "removefromsec", {
-                            sectionid: sectionid,
-                            itemid: itemid,
-                        });
-                        const res = await user.signTransaction(transaction, transactionConfig);
-                        resolve(res);
-                    } else {
-                        this.ualService.showModal();
-                    }
+                const transaction = generateTransaction(this.accountName, "removefromsec", {
+                    sectionid: sectionid,
+                    itemid: itemid,
                 });
+                const res = await this.user.signTransaction(transaction, transactionConfig);
+                resolve(res);
             }
             catch (e) {
                 reject(e);
@@ -294,59 +243,45 @@ export class MenuService {
         expires, 
         slidingRate, 
         sides) {
-        const unsubscribe$ = new Subject();
-        return new Promise((resolve, reject) => {
-            try {
-                this.ualService.users$.pipe(takeUntil(unsubscribe$)).subscribe(async val => {
-                    if (val !== null && val.length > 0) {
-                        unsubscribe$.next();
-                        unsubscribe$.complete();
-                        const user = val[val.length - 1];
-                        const accountName = await user.getAccountName();
-                        const transaction = generateTransaction(accountName, "listitem", {
-                            book_id: bookId,
-                            item_id: itemId,
-                            section_id: sectionId,
-                            list_type: listType,
-                            list_price: listPrice,
-                            min_price: minPrice,
-                            quantity: qty,
-                            expires: expires,
-                            sliding_rate: slidingRate,
-                            sides: sides
-                        });
-                        const res = await user.signTransaction(transaction, transactionConfig);
-                        resolve(res);
-                    } else {
-                        this.ualService.showModal();
+            return new Promise(async (resolve, reject) => {
+                try {
+                    if (!this.user || !this.accountName) {
+                        this.user = await this.getUser();
                     }
-                });
-            }
-            catch (e) {
-                reject(e);
-            }
-        });
+    
+                    const transaction = generateTransaction(this.accountName, "listitem", {
+                        book_id: bookId,
+                        item_id: itemId,
+                        section_id: sectionId,
+                        list_type: listType,
+                        list_price: listPrice,
+                        min_price: minPrice,
+                        quantity: qty,
+                        expires: expires,
+                        sliding_rate: slidingRate,
+                        sides: sides
+                    });
+                    const res = await this.user.signTransaction(transaction, transactionConfig);
+                    resolve(res);
+                }
+                catch (e) {
+                    reject(e);
+                }
+            });
     }
 
     deleteItem(itemId) {
-        const unsubscribe$ = new Subject();
-        return new Promise((resolve, reject) => {
+        return new Promise(async (resolve, reject) => {
             try {
-                this.ualService.users$.pipe(takeUntil(unsubscribe$)).subscribe(async val => {
-                    if (val !== null && val.length > 0) {
-                        unsubscribe$.next();
-                        unsubscribe$.complete();
-                        const user = val[val.length - 1];
-                        const accountName = await user.getAccountName();
-                        const transaction = generateTransaction(accountName, "delitem", {
-                            itemid: itemId
-                        });
-                        const res = await user.signTransaction(transaction, transactionConfig);
-                        resolve(res);
-                    } else {
-                        this.ualService.showModal();
-                    }
+                if (!this.user || !this.accountName) {
+                    this.user = await this.getUser();
+                }
+
+                const transaction = generateTransaction(this.accountName, "delitem", {
+                    itemid: itemId
                 });
+                const res = await this.user.signTransaction(transaction, transactionConfig);
+                resolve(res);
             }
             catch (e) {
                 reject(e);

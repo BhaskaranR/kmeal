@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { OrderBlotterComponent } from './order-blotter/order-blotter.component';
-import { MatTableModule, MatPaginatorModule, MatSortModule, MatTabsModule } from '@angular/material';
+import { MatTableModule, MatPaginatorModule, MatSortModule, MatTabsModule, MatInputModule } from '@angular/material';
 import { ActiveOrdersComponent } from './active-orders/active-orders.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import {MatToolbarModule} from '@angular/material/toolbar';
@@ -16,6 +16,7 @@ import { OrderService } from './services/order.service';
     FlexLayoutModule,
     MatToolbarModule,
     MatCardModule,
+    MatInputModule,
     MatButtonModule,
     RouterModule.forChild([
        {path: '', pathMatch: 'full', component: OrderBlotterComponent} 
