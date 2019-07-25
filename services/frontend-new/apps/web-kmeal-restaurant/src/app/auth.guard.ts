@@ -7,10 +7,6 @@ import { takeUntil } from 'rxjs/operators';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-
-    isLoggedIn:boolean = false;
-    unsubscribe$ = new Subject();
-
     constructor(public ualService: UalService, private router: Router){}
     canActivate(
         next: ActivatedRouteSnapshot,
