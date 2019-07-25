@@ -68,5 +68,6 @@ export class NavBarComponent implements OnInit {
 
   async onLogoutClick() {
     this.ualService.logoutUser();
+    this.router.navigate(['/welcome'])
   }
 }

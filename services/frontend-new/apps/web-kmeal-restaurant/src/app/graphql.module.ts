@@ -9,7 +9,7 @@ import { onError } from "apollo-link-error";
 import { SubscriptionClient } from "subscriptions-transport-ws";
 import { WebSocketLink } from "apollo-link-ws";
 import { createDfuseClient } from "@dfuse/client";
-import { environment } from "@env/restaurant";
+import { environment } from '@env/restaurant';
 
 
 

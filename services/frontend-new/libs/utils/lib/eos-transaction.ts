@@ -1,4 +1,4 @@
-import { environment } from "@env/restaurant";
+import { environment } from '@env/restaurant';
 
 export const generateTransaction = (account, name, data) => ({
     actions: [{

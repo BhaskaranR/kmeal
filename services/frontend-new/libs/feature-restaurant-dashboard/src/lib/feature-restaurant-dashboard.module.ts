@@ -4,7 +4,6 @@ import { RouterModule } from "@angular/router";
 import { DashboardComponent } from "./dashboard/dashboard.component";
 import { MatGridListModule, MatCardModule, MatMenuModule, MatIconModule, MatButtonModule } from "@angular/material";
 import { LayoutModule } from "@angular/cdk/layout";
-import { WelcomeComponent } from "./welcome/welcome.component";
 
 @NgModule({
   imports: [
@@ -17,11 +16,10 @@ import { WelcomeComponent } from "./welcome/welcome.component";
     LayoutModule,
     RouterModule.forChild([
       { path: "", pathMatch: "full", component: DashboardComponent, canActivate:[] },
-      { path: 'welcome', pathMatch:'full', component:WelcomeComponent}
     ]),
 
     
   ],
-  declarations: [DashboardComponent, WelcomeComponent]
+  declarations: [DashboardComponent]
 })
 export class FeatureRestaurantDashboardModule {}

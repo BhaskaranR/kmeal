@@ -90,7 +90,7 @@
                         "scripts": [],
                         "assets": [
                             "apps/web-kmeal/src/favicon.ico",
-                            "apps/web-kmeal/src/assets"
+                            "assets"
                         ]
                     }
                 },
@@ -176,8 +176,8 @@
                     "configurations": {
                         "production": {
                             "fileReplacements": [{
-                                "replace": "environments/environment-restaurant.ts",
-                                "with": "environments/environment-restaurant.prod.ts"
+                                "replace": "environments/environment.ts",
+                                "with": "environments/environment.prod.ts"
                             }],
                             "optimization": true,
                             "outputHashing": "all",

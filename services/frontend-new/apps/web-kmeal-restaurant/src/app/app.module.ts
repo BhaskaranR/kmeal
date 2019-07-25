@@ -24,12 +24,10 @@ import { Scatter } from 'ual-scatter';
 import { EOSIOAuth } from 'ual-eosio-reference-authenticator';
 
 import { ServiceWorkerModule } from '@angular/service-worker';
-import { environment } from "@env/restaurant";
-import {AuthGuard} from './app.guard';
-import { WelcomeGuard } from "./welcome.guard";
-
-
-
+import {AuthGuard} from './auth.guard';
+import { Welcomepage } from "./welcomepage/welcomepage";
+import { environment } from '@env/restaurant';
+import { SvgViewerModule } from "@kmeal-nx/ui";
 const appName = 'demo';
 const chain: Chain = {
   chainId: environment.CHAIN_ID,
@@ -40,7 +38,6 @@ const chain: Chain = {
   }]
 };
 
-
 // const lynx = new Lynx([exampleNet])
 // const ledger = new Ledger([exampleNet])
 const scatter = new Scatter([chain], {appName});
@@ -48,9 +45,10 @@ const eosioAuth = new EOSIOAuth([chain], { appName, protocol: 'eosio' });
 
 
 @NgModule({
-  declarations: [AppComponent, NavBarComponent],
+  declarations: [AppComponent, NavBarComponent, Welcomepage],
   imports: [
     BrowserModule,
+    SvgViewerModule,
     NxModule.forRoot(),
     UalModule.forRoot({
       chains: [chain],
@@ -72,17 +70,17 @@ const eosioAuth = new EOSIOAuth([chain], { appName, protocol: 'eosio' });
       [
         {
           path: "",
-          redirectTo: "/welcome",
+          redirectTo: "/dashboard",
           pathMatch: "full"
         },
         {
           path:'welcome',
-          loadChildren: "@kmeal-nx/feature-restaurant-dashboard#FeatureRestaurantDashboardModule",
-          canActivate:[WelcomeGuard],
+          component: Welcomepage
         },
         {
           path: "dashboard",
-          loadChildren: "@kmeal-nx/feature-restaurant-dashboard#FeatureRestaurantDashboardModule"
+          loadChildren: "@kmeal-nx/feature-restaurant-dashboard#FeatureRestaurantDashboardModule",
+          canActivate:[AuthGuard]
         },
         {
           path: "profile",
@@ -106,6 +104,6 @@ const eosioAuth = new EOSIOAuth([chain], { appName, protocol: 'eosio' });
     LayoutModule
   ],
   bootstrap: [AppComponent],
-  providers:[AuthGuard, WelcomeGuard]
+  providers:[AuthGuard]
 })
 export class AppModule { }

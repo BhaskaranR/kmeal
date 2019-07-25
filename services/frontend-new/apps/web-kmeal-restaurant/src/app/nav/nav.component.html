@@ -8,9 +8,11 @@
             <span>KMEAL</span>
         </a>
     </div>
-    <div  *ngFor="let key of sectionKeys">
-        <a mat-button class="button" [routerLink]="key" aria-label="Kmeal restaurant">{{sections[key].name}}</a>
-    </div>
+    <ng-container *ngIf="user != undefined && user != null">
+        <div  *ngFor="let key of sectionKeys">
+            <a mat-button class="button" [routerLink]="key" aria-label="Kmeal restaurant">{{sections[key].name}}</a>
+        </div>
+    </ng-container>
     <div fxFlex="75%" 
         fxFlex.sm="20%" 
         fxFlex.xs="20%" 

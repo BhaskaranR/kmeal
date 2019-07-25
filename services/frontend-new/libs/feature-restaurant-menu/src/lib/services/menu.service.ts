@@ -4,10 +4,10 @@ import { Book } from '../model/books';
 import { Section } from '../model/section';
 import { Item } from '../model/item';
 import { UalService } from 'ual-ngx-material-renderer';
-import { environment } from "@env/restaurant";
 import { Subject } from "rxjs";
 import { takeUntil } from 'rxjs/operators';
 import { read, generateTransaction, transactionConfig } from '@utils';
+import { environment } from '@env/restaurant';
 const { format } = Eos.modules;
 
 @Injectable()

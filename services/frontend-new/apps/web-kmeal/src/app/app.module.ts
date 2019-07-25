@@ -5,16 +5,16 @@ import { AppComponent } from './app.component';
 import { NxModule } from '@nrwl/nx';
 import { ApiModule } from './graphql.module';
 import { APP_BASE_HREF } from '@angular/common';
-import { environment } from '../../../../environments/environment';
 import { RouterModule } from '@angular/router';
 import { FeatureNavigationBarModule } from '@kmeal-nx/feature-navigation-bar';
 import { SharedModule } from './app.shared';
 import { homeRoutes, FeatureHomeModule } from '@kmeal-nx/feature-home';
-import { FeatureSearchModule ,featureSearchRoutes} from '@kmeal-nx/feature-search';
-import {featureRestaurantRoutes, FeatureRestaurantModule} from '@kmeal-nx/feature-restaurant';
+import { FeatureSearchModule, featureSearchRoutes } from '@kmeal-nx/feature-search';
+import { featureRestaurantRoutes, FeatureRestaurantModule } from '@kmeal-nx/feature-restaurant';
 import { ErrorComponent } from './error.component';
 import { FeatureOrderModule, CheckoutComponent, OrderHistoryClientComponent } from '@kmeal-nx/feature-order';
 import { FeatureProfileModule, ProfileClientComponent } from '@kmeal-nx/feature-profile';
+import { environment } from '@env/frontend';
 
 /*
 export function init_app(scatterService: ScatterService) {
@@ -44,41 +44,41 @@ export function init_app(scatterService: ScatterService) {
         },
         {
           path: 'home',
-          children:homeRoutes
+          children: homeRoutes
         },
         {
           path: 'search',
-          children:featureSearchRoutes
+          children: featureSearchRoutes
         },
         {
-          path: 'restaurant', 
-          children:featureRestaurantRoutes,
+          path: 'restaurant',
+          children: featureRestaurantRoutes,
         },
         {
-          path: 'checkout', 
-          component:CheckoutComponent
+          path: 'checkout',
+          component: CheckoutComponent
         },
         {
-          path: 'orders', 
-          component:OrderHistoryClientComponent
+          path: 'orders',
+          component: OrderHistoryClientComponent
         },
         {
-          path: 'wallet', 
-          component:ProfileClientComponent
+          path: 'wallet',
+          component: ProfileClientComponent
         },
         {
-          path: '**', 
-          component:ErrorComponent
+          path: '**',
+          component: ErrorComponent
         }
       ],
-      { 
+      {
         paramsInheritanceStrategy: 'always',
-        enableTracing:false 
+        enableTracing: false
       }
     )
   ],
   providers: [
-  //  { provide: APP_INITIALIZER, useFactory: init_app, deps: [ScatterService], multi: true },
+    //  { provide: APP_INITIALIZER, useFactory: init_app, deps: [ScatterService], multi: true },
     {
       provide: APP_BASE_HREF,
       useValue: '/'

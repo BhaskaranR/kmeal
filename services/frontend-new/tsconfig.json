@@ -18,10 +18,10 @@
     "baseUrl": ".",
     "paths": {
       "*": ["types/*"],
-      "@kmeal-env/*": ["apps/web-kmeal/src/environments/*"],
-      "@kmeal-restaurant-env/*": ["apps/web-kmeal-restaurant/src/environments/*"],
-      "@env/frontend": ["environments/environment.ts"],
-      "@env/restaurant": ["environments/environment-restaurant.ts"],
+      "@kmeal-env/*": ["apps/web-kmeal/src/environments/kmeal/*"],
+      "@kmeal-restaurant-env/*": ["apps/web-kmeal-restaurant/src/environments/restaurant/*"],
+      "@env/frontend": ["environments/kmeal/environment.ts"],
+      "@env/restaurant": ["environments/restaurant/environment.ts"],
       "@utils": ["libs/utils"],
       "@kmeal-nx/feature-order": [
         "libs/feature-order/src/index.ts"

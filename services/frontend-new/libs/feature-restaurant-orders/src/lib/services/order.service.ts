@@ -1,11 +1,11 @@
 import { Injectable } from "@angular/core";
 import * as Eos from 'eosjs';
 import { UalService } from 'ual-ngx-material-renderer';
-import { environment } from "@env/restaurant";
 import { Subject } from "rxjs";
 import { takeUntil } from 'rxjs/operators';
 import { read, generateTransaction, transactionConfig } from '@utils';
 import { Order } from "../models/Order";
+import { environment } from "@env/frontend";
 
 const { format } = Eos.modules;
 
