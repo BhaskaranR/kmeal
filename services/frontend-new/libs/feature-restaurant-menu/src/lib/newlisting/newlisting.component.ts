@@ -162,6 +162,7 @@ export class NewlistingComponent implements OnInit , OnDestroy{
 
   listItemSelected(item: Item, stepper:MatStepper) {
     (<FormArray>this.pricingForm.get("formArray")).controls[1].get("item").setValue(item);
+    this.selectedItem = item;
     this.priceTypeChanged({value:1} as any);
     stepper.next();
   }
