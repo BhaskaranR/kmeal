@@ -1,6 +1,5 @@
 import { Injectable } from "@angular/core";
 import * as Eos from 'eosjs';
-import { Book } from '../model/books';
 import { Section } from '../model/section';
 import { Item } from '../model/item';
 import { UalService } from 'ual-ngx-material-renderer';
@@ -21,48 +20,7 @@ export class MenuService {
     }
 
 
-    createbook(bookname: string) {
-        return new Promise(async (resolve, reject) => {
-            try {
-
-                if (!this.user || !this.accountName) {
-                    this.user = await this.getUser();
-                    this.accountName = await this.user.getAccountName();
-                }
-
-                const transaction = generateTransaction(this.accountName, "createbook", {
-                    account: this.accountName,
-                    bookname: bookname
-                });
-                const res = await this.user.signTransaction(transaction, transactionConfig);
-                resolve(res);
-            }
-            catch (e) {
-                reject(e);
-            }
-        });
-    }
-
-    deleteBook(bookid: string) {
-        return new Promise(async (resolve, reject) => {
-            try{
-                if (!this.user || !this.accountName) {
-                    this.user = await this.getUser();
-                    this.accountName = await this.user.getAccountName();
-                }
-
-                const transaction = generateTransaction(this.accountName, "delbook", {
-                    bookid: bookid
-                });
-                const res = await this.user.signTransaction(transaction, transactionConfig);
-                resolve(res);
-            } catch(e){
-                reject(e);
-            }
-        });
-    }
-
-    addSection(bookid, sectionname) {
+    addSection( sectionname) {
 
         return new Promise(async (resolve, reject) => {
             try {
@@ -72,7 +30,7 @@ export class MenuService {
                 }
 
                 const transaction = generateTransaction(this.accountName, "addsections", {
-                    bookid: bookid,
+                    account: this.accountName,
                     sectionname: sectionname
                 });
                 const res = await this.user.signTransaction(transaction, transactionConfig);
@@ -112,9 +70,7 @@ export class MenuService {
         spice_level = 0, 
         vegetarian, 
         cooking_time, 
-        types, 
-        bookId, 
-        sectionId) {
+        types) {
 
         const unsubscribe$ = new Subject();
         return new Promise(async (resolve, reject) => {
@@ -131,9 +87,7 @@ export class MenuService {
                     spicy_level: spice_level,
                     vegetarian: vegetarian,
                     cooking_time: cooking_time,
-                    types: types,
-                    book_id:bookId,
-                    section_id:sectionId
+                    types: types
                 });
                 const res = await this.user.signTransaction(transaction, transactionConfig);
                 resolve(res);
@@ -233,7 +187,6 @@ export class MenuService {
     }
 
     createListing(
-        bookId, 
         itemId, 
         sectionId, 
         listType, 
@@ -250,7 +203,6 @@ export class MenuService {
                     }
     
                     const transaction = generateTransaction(this.accountName, "listitem", {
-                        book_id: bookId,
                         item_id: itemId,
                         section_id: sectionId,
                         list_type: listType,
@@ -296,24 +248,6 @@ export class MenuService {
     /**               READ                  **/
     /*****************************************/
 
-    async getMyBooks() {
-        const users = this.ualService.users$.value;
-         if (users == null || users.length <=0) {
-             return;
-         }
-        const accountName = await users[0].getAccountName();
-        const books = await read({
-            reader: this.reader,
-            table: 'books',
-            limit: 100,
-            rowsOnly: true,
-            key_type: 'i64',
-            model: Book,
-            index_position: 2,
-            index: format.encodeName(accountName, false)
-        });
-        return books;
-    }
 
     async getMySections() {
         const users = this.ualService.users$.value;
@@ -342,6 +276,25 @@ export class MenuService {
         return await read({
             reader: this.reader,
             table: 'items',
+            limit: 100,
+            rowsOnly: true,
+            key_type: 'i64',
+            model: Item,
+            index_position: 2,
+            index: format.encodeName(accountName, false)
+        });
+    }
+
+
+    async getMyListings() {
+        const users = this.ualService.users$.value;
+        if (users == null || users.length <=0) {
+            return;
+        }
+       const accountName = await users[0].getAccountName();
+        return await read({
+            reader: this.reader,
+            table: 'listings',
             limit: 100,
             rowsOnly: true,
             key_type: 'i64',

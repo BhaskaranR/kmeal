@@ -48,37 +48,6 @@
                                     <button mat-raised-button disabled color="primary" type="button">Add photo</button>
                                 </div>
                             </div>
-
-                        </div>
-                        <div class="header-section">
-                            <div class="header-headline">
-                                <h2> Which menu and section?</h2>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    <mat-form-field class="full-width">
-                                        <mat-label>Select menu book</mat-label>
-                                        <mat-select [(value)]="selectedMenuBook" formControlName="book" (selectionChange)="onChanegMenuBook($event)">
-                                            <mat-option *ngFor="let item of menubooks" [value]="item">
-                                                {{ item.book_name }}
-                                            </mat-option>
-                                        </mat-select>
-                                    </mat-form-field>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    <mat-form-field class="full-width">
-                                        <mat-label>Select a Section</mat-label>
-                                        <mat-select [(value)]="selectedSection" formControlName="section" (selectionChange)="onSectionChange($event)">
-                                            <mat-option *ngFor="let item of selectedSections" [value]="item">
-                                                {{ item.section_name }}
-                                            </mat-option>
-                                        </mat-select>
-                                    </mat-form-field>
-                                </div>
-                            </div>
-
                         </div>
                         <div class="header-section">
                             <div class="header-headline">

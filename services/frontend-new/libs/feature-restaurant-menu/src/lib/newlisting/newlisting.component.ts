@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy  } from '@angular/core';
 import { FormBuilder, Validators, FormArray, FormGroup, AbstractControl, FormControl } from '@angular/forms';
 import { MatStepper, MatButtonToggleChange, MatSnackBar } from '@angular/material';
-import { Book } from '../model/books';
 import { MenuService } from '../services/menu.service';
 import { Section } from '../model/section';
 import { Item } from '../model/item';
@@ -9,6 +8,7 @@ import * as moment from 'moment';
 import { SearchTransactionsForwardGQL } from '../generated/graphql';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { environment } from '@env/restaurant';
 
 @Component({
   selector: 'kmeal-nx-newlisting',
@@ -26,9 +26,6 @@ export class NewlistingComponent implements OnInit , OnDestroy{
     private searchTransactionsForwardGQL: SearchTransactionsForwardGQL) {}
 
 
-  menubooks       : Book[];
-  selectedMenuBook: Book;
-
   sections        : Section[];
   selectedSection : Section;
   selectedSections: Section[];
@@ -37,13 +34,13 @@ export class NewlistingComponent implements OnInit , OnDestroy{
   selectedItems   : Item[];
   selectedItem    : Item;
 
-  isNonLinear     : boolean = false;
-  isNonEditable   : boolean = false;
-  pricetype       : number = 1;
+  isNonLinear = false;
+  isNonEditable = false;
+  pricetype = 1;
   stepper         : MatStepper;
   
-  priceHeader     : string = "Enter pricing information";
-  isReady         : boolean = false;
+  priceHeader = "Enter pricing information";
+  isReady = false;
   unSubscription$ : Subject<any> = new Subject();
 
   dynamicPricingValidator: {[key:string]: any[]} = {
@@ -65,7 +62,6 @@ export class NewlistingComponent implements OnInit , OnDestroy{
   };
 
   bookAndSectionForm : FormGroup = this.fb.group({
-    "book"        : [null, Validators.required],
     "section"     : [null, Validators.required],
   });
 
@@ -125,7 +121,6 @@ export class NewlistingComponent implements OnInit , OnDestroy{
 
 
   async ngOnInit() {
-    this.menubooks = await this.menuService.getMyBooks();
     this.sections = await this.menuService.getMySections();
     this.items = await this.menuService.getMyItems();
 
@@ -133,7 +128,7 @@ export class NewlistingComponent implements OnInit , OnDestroy{
 
     const sub = this.searchTransactionsForwardGQL
     .subscribe({
-       "query": `receiver:kmealowner12 auth:${accountName} status:executed  db.table:sec/kmealowner12`,
+       "query": `receiver:${environment.CONTRACT_NAME} auth:${accountName} status:executed  db.table:sec/${environment.CONTRACT_NAME}`,
     })
     .pipe(takeUntil(this.unSubscription$))
     .subscribe(this.updateHandler.bind(this));
@@ -145,15 +140,8 @@ export class NewlistingComponent implements OnInit , OnDestroy{
     console.log('update ? ', update);
   }
 
-  onMenuBookChange(evt, stepper) {
-    this.selectedSections = this.sections.filter(sec => this.selectedMenuBook.sections.includes(sec.section_id));
-    if (!this.stepper){
-      this.stepper = stepper;
-    }
-  }
-
   onSectionChange(evt, stepper:MatStepper){
-    this.selectedItems = this.items.filter(item => this.selectedSection.items.includes(item.item_id));
+    this.selectedItems = this.items;
     if (!this.stepper){
       this.stepper = stepper;
     }
@@ -192,8 +180,7 @@ export class NewlistingComponent implements OnInit , OnDestroy{
       return;
     }
 
-    let listType    = Number((<FormArray>this.pricingForm.get('formArray')).controls[2].get('list_type').value);
-    const bookId    = this.selectedMenuBook.book_id;
+    const listType    = Number((<FormArray>this.pricingForm.get('formArray')).controls[2].get('list_type').value);
     const sectionId = this.selectedSection.section_id;
     const itemId    = this.selectedItem.item_id;
     const listPrice = (<FormArray>this.pricingForm.get('formArray')).controls[2].get('list_price').value;
@@ -206,30 +193,19 @@ export class NewlistingComponent implements OnInit , OnDestroy{
         endDate, 
         expires     = 0;
 
-    if (listType == 0) {
+    if (listType === 0) {
       minPrice      = (<FormArray>this.pricingForm.get('formArray')).controls[2].get('min_price').value;
       qty           = (<FormArray>this.pricingForm.get('formArray')).controls[2].get('quantity').value;
       slidingRate   = ((<FormArray>this.pricingForm.get('formArray')).controls[2].get('sliding_rate').value)/100;
       endDate       = (<FormArray>this.pricingForm.get('formArray')).controls[2].get('end_date').value;
       endTime       = (<FormArray>this.pricingForm.get('formArray')).controls[2].get('end_time').value;
+      // tslint:disable-next-line: radix
       expires       = parseInt(this.convertDatesToSeconds(endDate, endTime).toString());
     }
     
 
-    console.log("book id : ",bookId,
-    "\n section id : ", sectionId,
-    '\n item id :', itemId, 
-    '\n list type : ',listType, 
-    "\n list price : ",listPrice, 
-    "\n min price : ",minPrice, 
-    "\n qty : ", qty,
-    "\n sliding rate : ", slidingRate, 
-    "\n expires : ", expires,
-    '\n sides : ', sides);
-
     try{
       const reps = await this.menuService.createListing(
-        bookId, 
         itemId, 
         sectionId,
         listType, 

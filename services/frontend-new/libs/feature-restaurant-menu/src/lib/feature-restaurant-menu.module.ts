@@ -11,13 +11,11 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 import { LayoutModule } from '@angular/cdk/layout';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { NewgroupComponent, DeleteBookDialog } from './newgroup/newgroup.component';
 import { HomeComponent } from './home/home.component';
 import { NewlistingComponent } from './newlisting/newlisting.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { CdkSelectionModule } from '@kmeal-nx/ui';
 import { NewmenuComponent } from './newmenu/newmenu.component';
-import { FillmenubookComponent, DeleteItemDialog } from './fillmenubook/fillmenubook.component';
 import { MenuSidenavComponent } from './sidenav/sidenav.component';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { NewsectionComponent } from './newsection/newsection.component';
@@ -31,9 +29,7 @@ export const restaurantMenuRoutes: Routes = [
       { path: '', component: HomeComponent },
       { path: 'newmenu', component: NewmenuComponent },
       { path: 'newsection', component: NewsectionComponent },
-      { path: 'newgroup', component: NewgroupComponent },
-      { path: 'newlisting', component: NewlistingComponent },
-      { path: 'fillmenubook', component: FillmenubookComponent }
+      { path: 'newlisting', component: NewlistingComponent }
     ]
   }
 ]
@@ -62,8 +58,10 @@ export const restaurantMenuRoutes: Routes = [
     CdkSelectionModule,
     DragDropModule,
     RouterModule.forChild(restaurantMenuRoutes)],
-  declarations: [MenuSidenavComponent, NewmenuComponent, HomeComponent, NewgroupComponent, NewlistingComponent, DeleteItemDialog,FillmenubookComponent, NewsectionComponent, DeleteBookDialog],
-  entryComponents:[DeleteBookDialog, DeleteItemDialog],
+  declarations: [MenuSidenavComponent, NewmenuComponent, HomeComponent,  NewlistingComponent, 
+    // DeleteItemDialog, 
+    NewsectionComponent],
+  //entryComponents:[ DeleteItemDialog],
   providers: [MenuService]
 })
 export class FeatureRestaurantMenuModule { }

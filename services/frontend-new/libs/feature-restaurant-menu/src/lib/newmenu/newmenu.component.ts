@@ -2,11 +2,10 @@ import { Component, OnDestroy, OnInit} from "@angular/core";
 import { FormBuilder, Validators, FormGroup } from "@angular/forms";
 import { MatSnackBar, MatDialog } from "@angular/material";
 import { MenuService } from "../services/menu.service";
-import { Book } from "../model/books";
-import { Section } from "../model/section";
 import { SearchTransactionsForwardGQL } from "../generated/graphql";
 import { Subject } from "rxjs";
 import { takeUntil } from 'rxjs/operators';
+import { environment } from "@env/restaurant";
 
 @Component({
   selector: "kmeal-nx-newmenu",
@@ -14,37 +13,6 @@ import { takeUntil } from 'rxjs/operators';
   styleUrls: ["./newmenu.component.scss"]
 })
 export class NewmenuComponent implements OnInit, OnDestroy {
-
-  menubooks        : Book[];
-  selectedMenuBook : Book;
-
-  sections         : Section[];
-  selectedSection  : Section;
-  selectedSections : Section[];
-
-  isFormSubmitted  : boolean = false;
-  isReady          : boolean = false;
-  isEditing        : boolean = false;
-  newItemId        : number;
-
-  menuForm         : FormGroup = this.fb.group({
-    itemName       : [null, Validators.required],
-    description    : [null, Validators.required],
-    photo          : null,
-    spicy_level    : 0,
-    vegetarian     : 3,
-    cooking_time   : [null, Validators.required],
-    book           : [null, Validators.required],
-    section        : [null, Validators.required]
-  });
-
-  CONST_VEGETARIAN : any = {
-    3:'Other',
-    2:'Vegetarian',
-    1:'Vegan'
-  }
-
-  unSubscription$ = new Subject();
 
   constructor(
     private fb: FormBuilder,
@@ -66,12 +34,12 @@ export class NewmenuComponent implements OnInit, OnDestroy {
   }
 
   get spicyLevel() {
-    if (this.menuForm.get("spicy_level").value == "0") return;
+    if (this.menuForm.get("spicy_level").value === "0") return;
     return this.menuForm.get("spicy_level").value;
   }
   
   get vegetarian() {
-    if (this.menuForm.get("vegetarian").value == 3) return;
+    if (this.menuForm.get("vegetarian").value === 3) return;
     const idx = this.menuForm.get("vegetarian").value;
     return this.CONST_VEGETARIAN[idx];
   }
@@ -80,12 +48,45 @@ export class NewmenuComponent implements OnInit, OnDestroy {
     return this.menuForm.get("cooking_time").value;
   }
 
+  get spicyLevelDisplay(){
+    if (!this.spicyLevel) return ;
+    return this.spicyLevelConsts[this.spicyLevel]
+  }
+
+
+  isFormSubmitted = false;
+  isReady = false;
+  isEditing = false;
+  newItemId        : number;
+
+  menuForm         : FormGroup = this.fb.group({
+    itemName       : [null, Validators.required],
+    description    : [null, Validators.required],
+    photo          : null,
+    spicy_level    : 0,
+    vegetarian     : 3,
+    cooking_time   : [null, Validators.required]
+  });
+
+  CONST_VEGETARIAN : any = {
+    3:'Other',
+    2:'Vegetarian',
+    1:'Vegan'
+  }
+
+  unSubscription$ = new Subject();
+
+  spicyLevelConsts = {
+    0:'',
+    1:'Mild Spicy',
+    2:'Medium Spicy',
+    3:'Hot'
+  }
+
   async ngOnInit() {
-    this.menubooks = await this.menuService.getMyBooks();
-    this.sections = await this.menuService.getMySections();
     const accountName = await this.menuService.getAccountName();
     const sub = this.searchTransactionsForwardGQL.subscribe({
-      "query": `receiver:kmealowner12 auth:${accountName} status:executed  db.table:items/kmealowner12`,
+      "query": `receiver:${environment.CONTRACT_NAME} auth:${accountName} status:executed  db.table:items/${environment.CONTRACT_NAME}`,
     })
     .pipe(takeUntil(this.unSubscription$))
     .subscribe(this.updateHandler.bind(this));
@@ -123,9 +124,7 @@ export class NewmenuComponent implements OnInit, OnDestroy {
         this.menuForm.get('spicy_level').value,
         Number(this.menuForm.get('vegetarian').value),
         this.menuForm.get('cooking_time').value,
-        [],
-        this.selectedMenuBook.book_id,
-        this.selectedSection.section_id);
+        []);
 
       this.openSnackBar('Created new item',"");
       this.isFormSubmitted = true;
@@ -155,9 +154,8 @@ export class NewmenuComponent implements OnInit, OnDestroy {
   }
 
   async onDeleteItem() {
-
     try{
-       const resp = this.menuService.deleteItem(this.newItemId);
+       const resp = await this.menuService.deleteItem(this.newItemId);
        this.isFormSubmitted = false;
        this.menuForm.reset();
        this.menuForm.markAsPristine();
@@ -169,18 +167,6 @@ export class NewmenuComponent implements OnInit, OnDestroy {
   editItem(){
     this.isFormSubmitted = false;
     this.isEditing = true;
-  }
-
-  get spicyLevelDisplay(){
-    if (!this.spicyLevel) return ;
-    return this.spicyLevelConsts[this.spicyLevel]
-  }
-
-  spicyLevelConsts = {
-    0:'',
-    1:'Mild Spicy',
-    2:'Medium Spicy',
-    3:'Hot'
   }
 
   formatSpicyLevel(val){
@@ -197,15 +183,6 @@ export class NewmenuComponent implements OnInit, OnDestroy {
     this.snackBar.open(message, action, {
       duration: 6000,
     });
-  }
-
-  onChanegMenuBook(e){
-    this.selectedSections = this.sections.filter(sec=> this.selectedMenuBook.sections.includes(sec.section_id));
-  }
-
-  onSectionChange(e){
-    console.log('on section change ? ', e);
-    console.log('form ?! ', this.menuForm.get('section').value, this.selectedSection);
   }
 
   ngOnDestroy(){
