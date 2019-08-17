@@ -151,14 +151,14 @@ export class NewlistingComponent implements OnInit , OnDestroy{
   listItemSelected(item: Item, stepper:MatStepper) {
     (<FormArray>this.pricingForm.get("formArray")).controls[1].get("item").setValue(item);
     this.selectedItem = item;
-    this.priceTypeChanged({value:1} as any);
+    this.priceTypeChanged( {value: this.selectedSection.section_name === "kmeal" ? 0 : 1} as any);
     stepper.next();
   }
 
   priceTypeChanged($event: MatButtonToggleChange) {
     (<FormArray>this.pricingForm.get("formArray")).controls[2].get("list_type").setValue($event.value);
     const fb: FormGroup = <FormGroup>(<FormArray>this.pricingForm.get("formArray")).controls[2];
-    if ($event.value != 1) {
+    if ($event.value !== 1) {
       Object.keys(this.dynamicPricingValidator).forEach(key => {
         fb.controls[key].setValidators(this.dynamicPricingValidator[key][1]);
         fb.controls[key].updateValueAndValidity();
