@@ -69,7 +69,7 @@ export class NewsectionComponent implements OnInit, OnDestroy {
       this.sections.push(newSec);
       this.sectionsForm.get('menubook').setValue(null);
       this.sectionsForm.get('section').setValue(null);
-      
+      this.openSnackBar('new section created',"");
     }
     catch (e) {
       this.openSnackBar(e, '');

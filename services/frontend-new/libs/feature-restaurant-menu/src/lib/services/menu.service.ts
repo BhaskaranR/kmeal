@@ -257,7 +257,7 @@ export class MenuService {
         const accountName = await users[0].getAccountName();
         return await read({
             reader: this.reader,
-            table: 'sec',
+            table: 'secs',
             limit: 100,
             rowsOnly: true,
             key_type: 'i64',
