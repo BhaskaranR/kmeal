@@ -98,7 +98,7 @@ const eosioAuth = new EOSIOAuth([chain], { appName, protocol: 'eosio' });
           path: "dashboard",
           loadChildren: "@kmeal-nx/feature-restaurant-dashboard#FeatureRestaurantDashboardModule",
           canActivate:[AuthGuard]
-        },
+        },                             
         {
           path: "profile",
           loadChildren: "@kmeal-nx/feature-restaurant-profile#FeatureRestaurantProfileModule",

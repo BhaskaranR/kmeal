@@ -16,11 +16,11 @@ export class MenuService {
     user;
     accountName;
     constructor(private ualService: UalService) {
-       this.reader = Eos({httpEndpoint: `${environment.RPC_PROTOCOL}://${environment.RPC_HOST}:${environment.RPC_PORT}`, chainId:environment.CHAIN_ID});
+        this.reader = Eos({ httpEndpoint: `${environment.RPC_PROTOCOL}://${environment.RPC_HOST}:${environment.RPC_PORT}`, chainId: environment.CHAIN_ID });
     }
 
 
-    addSection( sectionname) {
+    addSection(sectionname) {
 
         return new Promise(async (resolve, reject) => {
             try {
@@ -64,12 +64,12 @@ export class MenuService {
     }
 
     createItem(
-        itemname, 
-        description, 
-        photo = '', 
-        spice_level = 0, 
-        vegetarian, 
-        cooking_time, 
+        itemname,
+        description,
+        photo = '',
+        spice_level = 0,
+        vegetarian,
+        cooking_time,
         types) {
 
         const unsubscribe$ = new Subject();
@@ -187,39 +187,44 @@ export class MenuService {
     }
 
     createListing(
-        itemId, 
-        sectionId, 
-        listType, 
-        listPrice, 
-        minPrice, 
-        qty, 
-        expires, 
-        slidingRate, 
+        itemId,
+        sectionId,
+        listType,
+        listPrice,
+        minPrice,
+        qty,
+        start_time,
+        expires,
+        slidingRate,
         sides) {
-            return new Promise(async (resolve, reject) => {
-                try {
-                    if (!this.user || !this.accountName) {
-                        this.user = await this.getUser();
-                    }
-    
-                    const transaction = generateTransaction(this.accountName, "listitem", {
-                        item_id: itemId,
-                        section_id: sectionId,
-                        list_type: listType,
-                        list_price: listPrice,
-                        min_price: minPrice,
-                        quantity: qty,
-                        expires: expires,
-                        sliding_rate: slidingRate,
-                        sides: sides
-                    });
-                    const res = await this.user.signTransaction(transaction, transactionConfig);
-                    resolve(res);
+        return new Promise(async (resolve, reject) => {
+            try {
+                if (!this.user || !this.accountName) {
+                    this.user = await this.getUser();
                 }
-                catch (e) {
-                    reject(e);
+                let api = "listitem";
+                const param: any = {
+                    item_id: itemId,
+                    section_id: sectionId,
+                    list_price: listPrice,
+                    sides: sides
+                };
+                if (listType === 0)  {
+                    param.min_price = minPrice,
+                    param.quantity = qty,
+                    param.expires = expires,
+                    param.start_time = start_time;
+                    param.sliding_rate = slidingRate
+                    api = "listdpitem";
                 }
-            });
+                const transaction = generateTransaction(this.accountName, api, param);
+                const res = await this.user.signTransaction(transaction, transactionConfig);
+                resolve(res);
+            }
+            catch (e) {
+                reject(e);
+            }
+        });
     }
 
     deleteItem(itemId) {
@@ -251,9 +256,9 @@ export class MenuService {
 
     async getMySections() {
         const users = this.ualService.users$.value;
-         if (users == null || users.length <=0) {
-             return;
-         }
+        if (users == null || users.length <= 0) {
+            return;
+        }
         const accountName = await users[0].getAccountName();
         return await read({
             reader: this.reader,
@@ -269,10 +274,10 @@ export class MenuService {
 
     async getMyItems() {
         const users = this.ualService.users$.value;
-        if (users == null || users.length <=0) {
+        if (users == null || users.length <= 0) {
             return;
         }
-       const accountName = await users[0].getAccountName();
+        const accountName = await users[0].getAccountName();
         return await read({
             reader: this.reader,
             table: 'items',
@@ -288,10 +293,10 @@ export class MenuService {
 
     async getMyListings() {
         const users = this.ualService.users$.value;
-        if (users == null || users.length <=0) {
+        if (users == null || users.length <= 0) {
             return;
         }
-       const accountName = await users[0].getAccountName();
+        const accountName = await users[0].getAccountName();
         return await read({
             reader: this.reader,
             table: 'listings',
@@ -304,12 +309,12 @@ export class MenuService {
         });
     }
 
-    getUser(){
+    getUser() {
         return new Promise((res, rej) => {
             if (this.user) res(this.user);
 
             const unsubscribe$ = new Subject();
-            try{
+            try {
                 this.ualService.users$.pipe(takeUntil(unsubscribe$)).subscribe(async val => {
                     if (val !== null && val.length > 0) {
                         unsubscribe$.next();
@@ -320,15 +325,15 @@ export class MenuService {
                     }
                 })
             }
-            catch(e){
+            catch (e) {
                 rej(e);
             }
-            
+
         })
     }
 
-    getAccountName(){
-        return new Promise(async (res, rej)=>{
+    getAccountName() {
+        return new Promise(async (res, rej) => {
             if (this.accountName) res(this.accountName);
 
             const user = await this.getUser();

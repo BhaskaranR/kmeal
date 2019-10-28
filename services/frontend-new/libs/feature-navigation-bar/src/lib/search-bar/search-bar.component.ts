@@ -12,9 +12,15 @@ import {User} from '@kmeal-nx/ui';
 export class SearchBarComponent  implements OnInit{
     
     userInput:string;
-    isLoaded:boolean = true;
-    @Output() public onAddressChangeEvent = new EventEmitter<{[key:string]:string}>();
-    @ViewChild("placesRef") placesRef : GooglePlaceDirective;
+    isLoaded = true;
+
+    // tslint:disable-next-line: no-output-on-prefix
+    @Output() 
+    public onAddressChangeEvent = new EventEmitter<{[key:string]:string}>();
+
+    @ViewChild("placesRef", {static: false}) 
+    placesRef : GooglePlaceDirective;
+
     @Input() searchOnBlur;
     
     constructor(public localStorage: LocalStorage) {}

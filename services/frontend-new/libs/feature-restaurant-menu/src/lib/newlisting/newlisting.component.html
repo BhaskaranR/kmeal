@@ -17,7 +17,8 @@
                             <div class="col">
                                 <mat-form-field class="full-width">
                                     <mat-label>Select section</mat-label>
-                                    <mat-select [(value)]="selectedSection" formControlName="section" (selectionChange)="onSectionChange($event,stepper)">
+                                    <mat-select [(value)]="selectedSection" formControlName="section"
+                                        (selectionChange)="onSectionChange($event,stepper)">
                                         <mat-option *ngFor="let item of sections" [value]="item">
                                             {{ item.section_name }}
                                         </mat-option>
@@ -34,7 +35,8 @@
                 <mat-card class="pricing-card mat-card-flat">
                     <mat-card-content>
                         <mat-action-list dense class="full-width" *ngIf="selectedItems?.length > 0">
-                            <button mat-list-item *ngFor="let item of selectedItems" (click)="listItemSelected(item, stepper)">
+                            <button mat-list-item *ngFor="let item of selectedItems"
+                                (click)="listItemSelected(item, stepper)">
                                 <h4 mat-line>{{item.item_name}}</h4>
                                 <p mat-line class="secondary-text"> {{item.description}} </p>
                             </button>
@@ -60,7 +62,9 @@
                         <div class="row">
                             <div class="col">
                                 <mat-form-field class="full-width">
-                                    <input matInput formControlName="list_price" type="number" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01" required placeholder="List price">
+                                    <input matInput formControlName="list_price" type="number"
+                                        ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01" required
+                                        placeholder="List price">
                                     <span matPrefix>$&nbsp;</span>
                                 </mat-form-field>
                             </div>
@@ -69,13 +73,16 @@
                         <div class="row" *ngIf="pricetype === 0 ">
                             <div class="col">
                                 <mat-form-field class="full-width">
-                                    <input matInput formControlName="min_price" type="number" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01" required placeholder="Minimum price">
+                                    <input matInput formControlName="min_price" type="number"
+                                        ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01" required
+                                        placeholder="Minimum price">
                                     <span matPrefix>$&nbsp;</span>
                                 </mat-form-field>
                             </div>
                             <div class="col">
                                 <mat-form-field class="full-width">
-                                    <input matInput formControlName="quantity" type="number" step="1" required placeholder="Maximum Qty">
+                                    <input matInput formControlName="quantity" type="number" step="1" required
+                                        placeholder="Maximum Qty">
                                 </mat-form-field>
                             </div>
                         </div>
@@ -84,14 +91,17 @@
                             <div class="col">
                                 <mat-label>Sliding rate</mat-label>
                                 <br>
-                                <mat-slider [min]="1" [max]="50" [tickInterval]="5" class="full-width" [displayWith]="formatLabel" color="warn" class="full-width" thumbLabel formControlName="sliding_rate" aria-label="Slider with thumb label"></mat-slider>
+                                <mat-slider [min]="1" [max]="50" [tickInterval]="5" class="full-width"
+                                    [displayWith]="formatLabel" color="warn" class="full-width" thumbLabel
+                                    formControlName="sliding_rate" aria-label="Slider with thumb label"></mat-slider>
                             </div>
                         </div>
 
                         <div class="row" *ngIf="pricetype === 0">
                             <div class="col">
                                 <mat-form-field class="full-width">
-                                    <input matInput formControlName="start_date" [matDatepicker]="picker" placeholder="Start date">
+                                    <input matInput formControlName="start_date" [matDatepicker]="picker"
+                                        placeholder="Start date">
                                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                     <mat-datepicker #picker></mat-datepicker>
                                 </mat-form-field>
@@ -100,7 +110,8 @@
                                 <mat-form-field class="full-width">
 
                                     <!-- <div class="ngx-material-timepicker__form-group"> -->
-                                    <input matInput formControlName="start_time" required placeholder="Start time" [ngxTimepicker]="startTimePicker">
+                                    <input matInput formControlName="start_time" required placeholder="Start time"
+                                        [ngxTimepicker]="startTimePicker">
                                     <ngx-material-timepicker #startTimePicker></ngx-material-timepicker>
                                 </mat-form-field>
                                 <!-- </div> -->
@@ -110,7 +121,8 @@
                         <div class="row" *ngIf="pricetype === 0">
                             <div class="col ">
                                 <mat-form-field class="full-width">
-                                    <input matInput formControlName="end_date" [matDatepicker]="picker1" placeholder="End date">
+                                    <input matInput formControlName="end_date" [matDatepicker]="picker1"
+                                        placeholder="End date">
                                     <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                                     <mat-datepicker #picker1></mat-datepicker>
                                 </mat-form-field>
@@ -120,7 +132,8 @@
                                 <div class="ngx-material-timepicker__form-group">
 
                                     <mat-form-field class="full-width">
-                                        <input matInput formControlName="end_time" required placeholder="End time" [ngxTimepicker]="endTimePicker" [format]="24">
+                                        <input matInput formControlName="end_time" required placeholder="End time"
+                                            [ngxTimepicker]="endTimePicker" >
                                         <ngx-material-timepicker #endTimePicker></ngx-material-timepicker>
                                     </mat-form-field>
                                 </div>
@@ -130,14 +143,16 @@
 
                         <div class="row">
                             <div class="col">
-                                <mat-slide-toggle class="full-width" checked="true" labelPosition="after" formControlName="isactive">
+                                <mat-slide-toggle class="full-width" checked="true" labelPosition="after"
+                                    formControlName="isactive">
                                     Active
                                 </mat-slide-toggle>
                             </div>
                         </div>
                     </mat-card-content>
                     <mat-card-actions>
-                        <button mat-raised-button [disabled]="pricingForm.get('formArray').controls[2].invalid" color="primary" (click)="$event.preventDefault(); stepper.next()">Next</button>
+                        <button mat-raised-button [disabled]="pricingForm.get('formArray').controls[2].invalid"
+                            color="primary" (click)="$event.preventDefault(); stepper.next()">Next</button>
                     </mat-card-actions>
                 </mat-card>
             </mat-step>
@@ -149,7 +164,8 @@
 
                 <mat-card class="pricing-card mat-card-flat">
                     <mat-card-content>
-                        <div class="row dashboard-card" formArrayName="side_groups" *ngFor="let grp of formArray?.get([3])?.get('side_groups')?.controls; let i = index;">
+                        <div class="row dashboard-card" formArrayName="side_groups"
+                            *ngFor="let grp of formArray?.get([3])?.get('side_groups')?.controls; let i = index;">
                             <div class="col" [formGroupName]="i">
                                 <mat-card class="mat-card-flat">
                                     <mat-card-header>
@@ -161,7 +177,8 @@
                                         <div class="row">
                                             <div class="col">
                                                 <mat-form-field class="half-width">
-                                                    <input matInput placeholder="Group name" required="true" formControlName="group">
+                                                    <input matInput placeholder="Group name" required="true"
+                                                        formControlName="group">
                                                     <mat-error *ngIf="grp.controls['group'].hasError('required')">
                                                         Group name is <strong>required</strong>
                                                     </mat-error>
@@ -172,8 +189,10 @@
                                             <div class="col">
                                                 <mat-form-field class="half-width">
                                                     <mat-label>Max Selection</mat-label>
-                                                    <input matInput type="number" required="true" formControlName="max_selection">
-                                                    <mat-error *ngIf="grp.controls['max_selection'].hasError('required')">
+                                                    <input matInput type="number" required="true"
+                                                        formControlName="max_selection">
+                                                    <mat-error
+                                                        *ngIf="grp.controls['max_selection'].hasError('required')">
                                                         Max selection is <strong>required</strong>
                                                     </mat-error>
                                                 </mat-form-field>
@@ -181,37 +200,41 @@
                                         </div>
                                         <div class="row">
                                             <div class="col">
-                                                <button mat-button type="button" (click)="createItemSide(i)">+ Add side</button>
+                                                <button mat-button type="button" (click)="createItemSide(i)">+ Add
+                                                    side</button>
                                             </div>
                                         </div>
 
-                                        <div class="row dashboard-card" formArrayName="sides" *ngFor="let side of grp.get('sides').controls; let j = index;">
+                                        <div class="row dashboard-card" formArrayName="sides"
+                                            *ngFor="let side of grp.get('sides').controls; let j = index;">
                                             <div class="row" [formGroupName]="j">
                                                 <div class="col">
                                                     <mat-form-field class="full-width">
-                                                        <input matInput placeholder="name" required="true" formControlName="item_name">
-                                                        <mat-error *ngIf="side.controls['item_name'].hasError('required')">
+                                                        <input matInput placeholder="name" required="true"
+                                                            formControlName="item_name">
+                                                        <mat-error
+                                                            *ngIf="side.controls['item_name'].hasError('required')">
                                                             name is <strong>required</strong>
                                                         </mat-error>
                                                     </mat-form-field>
                                                 </div>
                                                 <div class="col">
                                                     <mat-form-field class="full-width">
-                                                        <input matInput formControlName="list_price" type="number" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01" placeholder="List price">
+                                                        <input matInput formControlName="list_price" type="number"
+                                                            ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01"
+                                                            placeholder="List price">
                                                         <span matPrefix>$&nbsp;</span>
                                                     </mat-form-field>
                                                 </div>
                                                 <div class="col">
                                                     <button mat-icon-button (click)="deleteItemSide(i,j)">
-                          <mat-icon>close</mat-icon>
-                        </button>
+                                                        <mat-icon>close</mat-icon>
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
                                     </mat-card-content>
-
                                 </mat-card>
-
                             </div>
                         </div>
                     </mat-card-content>

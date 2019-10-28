@@ -1,7 +1,6 @@
 import { Component, Output, EventEmitter, OnInit } from '@angular/core';
-import { ScatterService } from '@kmeal-nx/scatter';
 import { Router } from '@angular/router';
-import { CartService } from '../../../../../libs/ui/src/lib/cart.service';
+import { CartService } from '@kmeal-nx/ui';
 
 
 @Component({
@@ -11,15 +10,18 @@ import { CartService } from '../../../../../libs/ui/src/lib/cart.service';
     styleUrls: ['../feature-navigation-bar.scss']
 })
 export class NavBarComponent{
-    isSideNavOpen: boolean = false;
-    isLoggedIn: boolean = false;
-    cnt:number = 0;
-    @Output() toggleSidenavEvent: EventEmitter<boolean> = new EventEmitter();
-    @Output() onAddressChangeEvent: EventEmitter<{ [key: string]: string }> = new EventEmitter();
+    isSideNavOpen = false;
+    isLoggedIn = false;
+    cnt = 0;
+    @Output() 
+    toggleSidenavEvent: EventEmitter<boolean> = new EventEmitter();
+
+    @Output() 
+    onAddressChangeEvent: EventEmitter<{ [key: string]: string }> = new EventEmitter();
+    
     constructor(
         private router: Router,
-        public cartService:CartService,
-        public scatterService: ScatterService) { }
+        public cartService:CartService) { }
 
     toggleSideNav() {
         this.isSideNavOpen = !this.isSideNavOpen;
@@ -30,11 +32,11 @@ export class NavBarComponent{
         this.onAddressChangeEvent.emit(e);
     }    
 
-    async login() {
-        await this.scatterService.loginorlogout();
-    }
+    // async login() {
+    //     await this.scatterService.loginorlogout();
+    // }
 
-    async logout() {
-        await this.scatterService.loginorlogout();
-    }
+    // async logout() {
+    //     await this.scatterService.loginorlogout();
+    // }
 } 

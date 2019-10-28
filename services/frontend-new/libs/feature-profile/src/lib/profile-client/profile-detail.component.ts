@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ScatterService } from '@kmeal-nx/scatter';
 
 
 @Component({
@@ -25,18 +24,19 @@ import { ScatterService } from '@kmeal-nx/scatter';
     }
     `]
 })
+// tslint:disable-next-line: component-class-suffix
 export class ProfileDetailCompoonent implements OnInit {
-    isLoggedIn:boolean = false;
+    isLoggedIn = false;
     identity:any;
     constructor(
-        public scatterService:ScatterService
+       // public scatterService:ScatterService
     ){}
 
     ngOnInit(){
-        console.log('lazy loading ?!');
-      this.isLoggedIn = this.scatterService.scatter ?  this.scatterService.scatter.identity ? true: false : false;
-      console.log(this.scatterService.scatter.identity);
-      if (!this.isLoggedIn) return;
-      this.identity = this.scatterService.scatter.identity;
+    //     console.log('lazy loading ?!');
+    //   this.isLoggedIn = this.scatterService.scatter ?  this.scatterService.scatter.identity ? true: false : false;
+    //   console.log(this.scatterService.scatter.identity);
+    //   if (!this.isLoggedIn) return;
+    //   this.identity = this.scatterService.scatter.identity;
     }
 }

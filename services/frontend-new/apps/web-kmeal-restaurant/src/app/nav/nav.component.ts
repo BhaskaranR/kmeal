@@ -20,7 +20,7 @@ export class NavBarComponent implements OnInit {
   _sections = SECTIONS;
   _sectionKeys = SECTIONS_KEYS;
 
-  get sections() {
+  get sections() {                  
     return this._sections;
   }
 
