@@ -39,7 +39,7 @@ export const restaurantMenuRoutes: Routes = [
     CommonModule, MatInputModule, MatButtonModule, MatSelectModule, MatRadioModule,
     //MatChipsModule,
     MatAutocompleteModule,
-    NgxMaterialTimepickerModule.forRoot(),
+    NgxMaterialTimepickerModule,
     MatProgressSpinnerModule,
     MatSliderModule,
     MatNativeDateModule,

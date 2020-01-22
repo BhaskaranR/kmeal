@@ -7,7 +7,7 @@ import { read, generateTransaction, transactionConfig } from '@utils';
 import { Order } from "../models/Order";
 import { environment } from "@env/frontend";
 
-const { format } = Eos.modules;
+import {JsonRpc} from 'eosjs';
 
 @Injectable()
 export class OrderService {
@@ -16,7 +16,8 @@ export class OrderService {
     user;
     accountName;
     constructor(private ualService: UalService) {
-       this.reader = Eos({httpEndpoint: `${environment.RPC_PROTOCOL}://${environment.RPC_HOST}:${environment.RPC_PORT}`, chainId:environment.CHAIN_ID});
+       
+        this.reader = new JsonRpc(`${environment.RPC_PROTOCOL}://${environment.RPC_HOST}:${environment.RPC_PORT}`);
     }
 
     async getMyOrders() {
@@ -35,7 +36,7 @@ export class OrderService {
             key_type: 'i64',
             model: Order,
             index_position: 2,
-            index: format.encodeName(this.accountName, false)
+            index: this.accountName
         });
     }
 

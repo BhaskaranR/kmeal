@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { RouterModule, Routes } from "@angular/router";
+import { Routes } from "@angular/router";
 import { ResComponent } from "./restaurant/restaurant.component";
 import { UiModule } from "@kmeal-nx/ui";
 

@@ -1,7 +1,6 @@
 import { Component, Output, EventEmitter, OnInit } from "@angular/core";
 import { SECTIONS, PROFILESECTION } from '../menu-items/menu-items';
 
-import { Network } from "scatterjs-core";
 import { Router, ActivatedRoute } from '@angular/router';
 import { UalService } from "ual-ngx-material-renderer";
 

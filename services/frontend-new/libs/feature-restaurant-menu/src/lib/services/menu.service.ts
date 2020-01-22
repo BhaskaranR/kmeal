@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import * as Eos from 'eosjs';
+import {JsonRpc} from 'eosjs';
 import { Section } from '../model/section';
 import { Item } from '../model/item';
 import { UalService } from 'ual-ngx-material-renderer';
@@ -7,7 +7,6 @@ import { Subject } from "rxjs";
 import { takeUntil } from 'rxjs/operators';
 import { read, generateTransaction, transactionConfig } from '@utils';
 import { environment } from '@env/restaurant';
-const { format } = Eos.modules;
 
 @Injectable()
 export class MenuService {
@@ -16,7 +15,7 @@ export class MenuService {
     user;
     accountName;
     constructor(private ualService: UalService) {
-        this.reader = Eos({ httpEndpoint: `${environment.RPC_PROTOCOL}://${environment.RPC_HOST}:${environment.RPC_PORT}`, chainId: environment.CHAIN_ID });
+        this.reader = new JsonRpc(`${environment.RPC_PROTOCOL}://${environment.RPC_HOST}:${environment.RPC_PORT}`);
     }
 
 
@@ -268,7 +267,7 @@ export class MenuService {
             key_type: 'i64',
             model: Section,
             index_position: 2,
-            index: format.encodeName(accountName, false)
+            index: accountName
         });
     }
 
@@ -286,7 +285,7 @@ export class MenuService {
             key_type: 'i64',
             model: Item,
             index_position: 2,
-            index: format.encodeName(accountName, false)
+            index: accountName
         });
     }
 
@@ -305,7 +304,7 @@ export class MenuService {
             key_type: 'i64',
             model: Item,
             index_position: 2,
-            index: format.encodeName(accountName, false)
+            index: accountName
         });
     }
 

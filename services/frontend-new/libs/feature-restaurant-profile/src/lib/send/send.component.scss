@@ -30,7 +30,7 @@ form {
     display: inline-block;
 }
 
-/deep/ .mat-form-field-appearance-legacy .mat-hint {
+ .mat-form-field-appearance-legacy .mat-hint {
     color: #b1b1b1;
 }
 
@@ -118,7 +118,7 @@ mat-option:not(.last) {
     border-bottom: 1px solid #404040;
 }
 
-/deep/ .mat-autocomplete-panel .mat-option.mat-selected:not(.mat-active):not(:hover) {
+ .mat-autocomplete-panel .mat-option.mat-selected:not(.mat-active):not(:hover) {
     background: #3a3a3a;
 }
 
