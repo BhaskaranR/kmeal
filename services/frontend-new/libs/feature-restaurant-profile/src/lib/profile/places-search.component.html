@@ -8,7 +8,7 @@
         fxFlexAlign="start center" 
         class="search-bar-search">    
         <mat-icon  fxFlex="40px" style="position:absolute; margin-top:6px;margin-left:15px">search</mat-icon>
-        <input fxFlex="100%" 
+        <!-- <input fxFlex="100%" 
             ngx-google-places-autocomplete 
             [(ngModel)]="userInput" 
             [options]='options' 
@@ -18,7 +18,7 @@
             name="search-bar" 
             id="search-bar" 
             (blur)="onBlur($event)" 
-            (focus)="onFocus($event)"/>
+            (focus)="onFocus($event)"/> -->
         <div fxFlex="40px" style="position:relative; right:35px; margin-top:10px">
              <mat-spinner *ngIf="!isLoaded"  class="small-spinner" [diameter]="25"></mat-spinner>
         </div> 

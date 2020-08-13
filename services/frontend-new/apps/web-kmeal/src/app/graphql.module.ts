@@ -9,12 +9,12 @@ import { OperationDefinitionNode } from 'graphql';
 import { onError } from 'apollo-link-error';
 import { SubscriptionClient } from 'subscriptions-transport-ws';
 import { WebSocketLink } from 'apollo-link-ws';
-import { HttpHeaders } from '@angular/common/http';
+import { HttpHeaders, HttpClientModule } from '@angular/common/http';
 import { environment } from '@env/frontend';
 
 @NgModule({
   declarations: [],
-  imports: [],
+  imports: [HttpClientModule],
   exports: [ApolloModule, HttpLinkModule],
   providers: []
 })

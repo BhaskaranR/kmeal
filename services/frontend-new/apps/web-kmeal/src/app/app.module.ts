@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, APP_INITIALIZER } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
 import { NxModule } from '@nrwl/nx';
@@ -7,7 +7,6 @@ import { ApiModule } from './graphql.module';
 import { APP_BASE_HREF } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FeatureNavigationBarModule } from '@kmeal-nx/feature-navigation-bar';
-import { SharedModule } from './app.shared';
 import { homeRoutes, FeatureHomeModule } from '@kmeal-nx/feature-home';
 import { FeatureSearchModule, featureSearchRoutes } from '@kmeal-nx/feature-search';
 import { featureRestaurantRoutes, FeatureRestaurantModule } from '@kmeal-nx/feature-restaurant';
@@ -15,6 +14,7 @@ import { ErrorComponent } from './error.component';
 import { FeatureOrderModule, CheckoutComponent, OrderHistoryClientComponent } from '@kmeal-nx/feature-order';
 import { FeatureProfileModule, ProfileClientComponent } from '@kmeal-nx/feature-profile';
 import { environment } from '@env/frontend';
+import { MatDividerModule, MatSidenavModule, MatListModule, MatIconModule, MatToolbarModule } from '@angular/material';
 
 /*
 export function init_app(scatterService: ScatterService) {
@@ -27,8 +27,9 @@ export function init_app(scatterService: ScatterService) {
     BrowserModule,
     BrowserAnimationsModule,
     NxModule.forRoot(),
+    MatDividerModule,
+    MatSidenavModule,MatListModule,MatIconModule,MatToolbarModule,
     ApiModule,
-    SharedModule,
     FeatureHomeModule,
     FeatureSearchModule,
     FeatureRestaurantModule,

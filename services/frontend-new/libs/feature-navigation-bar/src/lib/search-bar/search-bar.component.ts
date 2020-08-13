@@ -40,10 +40,9 @@ export class SearchBarComponent  implements OnInit{
     async populateAddress() : Promise<any> { 
         return new Promise((res, rej)=>{
             this.localStorage.getItem('user').subscribe((user:User ) => {
-                if (!user) {
+                if (user == null) {
                     res(null);
-                }
-                if (user['address']){
+                } else if (user['address']){
                     res(user['address']);
                 }
             })

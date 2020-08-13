@@ -3,6 +3,7 @@ import { CommonModule } from "@angular/common";
 import { Routes } from "@angular/router";
 import { ResComponent } from "./restaurant/restaurant.component";
 import { UiModule } from "@kmeal-nx/ui";
+import { MatProgressSpinnerModule, MatDividerModule, MatTabsModule, MatGridListModule } from "@angular/material";
 
 export const featureRestaurantRoutes : Routes = [{
   path: ':id',
@@ -16,6 +17,10 @@ export const featureRestaurantRoutes : Routes = [{
 @NgModule({
   imports: [
     CommonModule,
+    MatProgressSpinnerModule,
+    MatDividerModule,
+    MatTabsModule,
+    MatGridListModule,
     UiModule
   ],
   declarations:[ResComponent]

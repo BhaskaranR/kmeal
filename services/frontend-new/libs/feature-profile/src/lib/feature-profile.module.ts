@@ -10,9 +10,17 @@ import { CreditCardService } from './services/credit-card.servies';
 import { ProfileDetailCompoonent } from './profile-client/profile-detail.component';
 import { ProfileTokenTransferComponent } from './profile-client/profile-token-transfer.component';
 import { NgXCreditCardsModule } from 'ngx-credit-cards';
+import { MatToolbarModule, MatDividerModule, MatTabsModule, MatChipsModule, MatFormFieldModule, MatCardModule, MatOptionModule, MatSelectModule, MatSidenavModule } from '@angular/material';
 
 @NgModule({
-  imports: [CommonModule,FlexLayoutModule, ReactiveFormsModule,NgXCreditCardsModule],
+  imports: [CommonModule,FlexLayoutModule, ReactiveFormsModule,NgXCreditCardsModule, MatToolbarModule, MatDividerModule, 
+    MatChipsModule,
+    MatFormFieldModule,
+    MatCardModule,
+    MatOptionModule,
+    MatSelectModule,
+    MatSidenavModule,
+    MatTabsModule],
   declarations: [ProfileComponent, ProfileClientComponent, ProfileCreditCardComponent, ProfileDetailCompoonent, ProfileTokenTransferComponent],
   exports:[ProfileComponent, ProfileClientComponent, ProfileCreditCardComponent, ProfileTokenTransferComponent],
   providers:[AccountService, CreditCardService]
